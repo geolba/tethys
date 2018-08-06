@@ -16,7 +16,6 @@ class LicenseController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $test = "test";
     }
 
     public function index() : View
