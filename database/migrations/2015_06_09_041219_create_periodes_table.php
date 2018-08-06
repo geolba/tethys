@@ -14,6 +14,7 @@ class CreatePeriodesTable extends Migration {
 	{
 		Schema::create('periodes', function(Blueprint $table)
 		{
+			$table->increments('id');
 			$table->integer('days');
 			$table->timestamps();
 		});

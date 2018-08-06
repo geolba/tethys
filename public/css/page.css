@@ -1,0 +1,374 @@
+/* Start Reset CSS */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strong, sub, sup, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    /*font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;*/
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: #222;
+    text-rendering: optimizeLegibility;
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+h4 {
+    font-size: 1.1875rem;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+    blockquote:before, blockquote:after, q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 2px;
+}
+
+html, body  
+{
+    font-family:"Raleway", sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+}
+h1, h2, h3, h4, h5, h6, pre, code, address, caption, cite, code, em, th, a, button, input, select, textarea, .pure-g [class *= "pure-u"], .pure-g-r [class *= "pure-u"]  {
+    font-weight: normal;
+    font-style: normal;
+    /*font-family: Arial, Helvetica, sans-serif;*/
+       font-family: 'Open Sans', sans-serif;
+}
+
+fieldset, img, hr {
+    border: none;
+    outline: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+td {
+    vertical-align: top;
+}
+
+a {
+    color: #000;
+}
+
+h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+/* End Reset CSS */
+
+.fontface1
+{
+    font-family: "Raleway", sans-serif;
+    font-size: 26px;
+    color: #99cc00;
+}
+
+.title{
+    margin-top: 1em;
+    margin-bottom: 50px;
+    padding-bottom: 1em;
+    text-align: center;
+    line-height: 1;
+    border-bottom: 1px solid red;
+    font-family: "Marvel", sans-serif;
+  }
+
+  .marvel{
+    color: #E41030;
+    font-family: "Raleway", sans-serif;
+    font-weight: normal;
+  }
+
+/*header, footer, nav {*/
+header, footer {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 150;
+}
+nav{position:relative;}
+
+footer{
+    text-align:center;
+}
+
+header .fm_title_bar {
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+    margin: 0 auto;
+}
+
+nav .div_nav {
+    height: 100%;
+}
+
+.fm_container {
+    margin: 10px;
+}
+    
+header, footer {
+    background-color: #222;
+    color: white;
+}
+
+footer {
+    bottom: 0;
+    height: 1.5em;
+}
+
+.container {
+    display: block;
+    position: absolute;
+    overflow: auto;
+    left: 0;
+    right: 0;
+}
+.maincontent { padding: 4em;  }
+
+
+
+
+
+.is-center {
+    text-align: center;
+}
+.content-subhead {
+    color: #1f8dd6;
+}
+.l-box-lrg {
+    border: none;   
+    border-radius:4px;
+    text-align: justify;
+    font-size: 0.9em;
+}
+.l-box {
+    border: none;    
+    margin:5px;
+    text-align: justify;
+    font-size: 0.9em;
+}
+.add {
+    text-align: right;
+    margin-top: 1.6em;
+}
+
+
+
+
+/* TABLE */
+/*a { color: #4183c4; text-decoration: none; }
+a:hover { text-decoration: none; }*/
+.pure-button:hover { text-decoration: none; }
+/*table { width: 100%; margin: 2em 0; }*/
+.pure-table  a { color: #333;  text-decoration: none;}
+.pure-table  a:hover { text-decoration: none; color: #4183c4; }
+.pure-table { border: none; }
+.pure-table td, .pure-table th {  padding: 0.8em; border: none; border-bottom: 1px solid #f6f6f6; text-align: left; }
+.pure-table thead { background-color:#F2F9EF }
+.pure-table th { font-weight: 300; }
+
+table td .view:before { font-family: FontAwesome; top: 0; content: "\f05a";}
+table td .edit:before { font-family: FontAwesome; top: 0; content: "\f044";}
+table td .delete:before { font-family: FontAwesome; top: 0; content: "\f014"; }
+table .action { width: 1em; }
+
+.pure-form .checkboxlist > label, .pure-form .checkboxlist > .field-validation-error, .pure-form .checkboxlist > i.fa-info-circle { vertical-align: top !important; }
+.pure-form .checkboxlist ul { max-height: 8.5em; overflow: auto; width: 17em; display: inline-block; padding: 0; margin: 0 0 1em 0; }
+.pure-form .checkboxlist ul li { margin-bottom: 3px; list-style: none; }
+.pure-form .checkboxlist ul li label { width: 14em; }
+.pure-form em, .pure-form i.fa-info-circle { color: silver; padding-left: 0.3em; }
+.pure-form .pure-button { margin-right: 1em; }
+
+.pure-form.detail span { vertical-align: middle; line-height: 2em; }
+.pure-form.detail label { color: silver; }
+textarea.medium, select.medium { width: 25em; }
+textarea.large, input.large { width: 40em;height: 17em; }
+div.pure-control-group.checkboxlist>span { display: inline-block; }
+
+
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-error {
+    background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+
+
+/* .field-validation-error { color: #a94442; margin-left: 0.7em; }
+.field-validation-valid { display: none; }
+.input-validation-error { border: 1px solid #a94442 !important; background-color: #fdf7f7; } */
+
+.validation-summary-errors, .summary-error { border-left: 3px solid #d9534f; background: #fdf7f7; padding: 1em; margin-bottom: 2em; }
+.validation-summary-errors ul { margin: 0.75em 1em; }
+.validation-summary-valid { display: none; }
+
+.summary-success { border-left: 3px solid #009900; background: #F2F9EF; padding: 1em; margin-bottom: 2em; }
+
+
+
+footer .wrapper{
+	font-size: 12px;
+    color: white;	
+    overflow: hidden;
+}
+footer .wrapper a{
+	color: #dee5eb;
+    background-color: transparent;
+    text-decoration: none ;
+}
+footer .wrapper a:hover{
+	text-decoration: underline;
+}
+#secondary-nav li{
+	float: left;
+	margin: 0px 9px;
+	/* background: url("../img/theme/footer-separator.jpg") no-repeat right center; */
+}
+#secondary-nav li.first{
+	padding-left: 0;
+}
+#secondary-nav li.last{
+	background-image: none;
+}
+
+
+/* .maincontent .wrapper{
+	font-size: 0.8em;
+} */
+.wrapper,
+.messages,
+#page-footer .wrapper{
+	max-width: 960px;
+	min-width: 800px;
+	padding: 0 20px;
+	margin: auto;
+}
+
+
+
+
+#search_results {
+    float: left;
+    width: 100%;
+}
+
+.result_box dt {
+    background: #f3f6f8 no-repeat 24px 4px;
+    padding: 4px 8px 0 41px;
+}
+
+.results_title img {
+    float: left;
+    cursor: pointer;
+    margin: -14px 0 0 -50px;
+    vertical-align: bottom;
+}
+
+dl.result_box {
+    border-top: 1px solid #e2e6e9;
+}
+
+.result_box .results_title {
+    background-image: url(../img/theme/icon-title.gif);
+}
+
+.results_title a {
+    font-weight: bold;
+}
+
+.result_box .results_author {
+    padding-bottom: 5px;
+    background-image: url(../img/theme/icon-author.gif);
+}
+
+.results_seriesnumber + .results_title {
+    padding-right: 75px !important;
+}
+
+.result_box .results_seriesnumber {
+    float: right;
+    text-align: right;
+    min-width: 50px;
+    padding: 4px 8px 0 12px;
+    color: black;
+}
+
+.result_box dd {
+    padding: 3px 6px;
+    margin: 0;
+    line-height: 1.5em;
+}

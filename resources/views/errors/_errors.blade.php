@@ -1,8 +1,7 @@
 
-	
 	@if($errors->any())
 		
-		<ul class="alert alert-danger">
+		<ul class="alert validation-summary-errors">
 			
 			@foreach($errors->all() as $error)
 

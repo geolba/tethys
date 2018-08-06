@@ -1,3 +1,3 @@
-##LMS
+##RDR
 
-Library Management System build with Laravel 5.0
+Research Data Repository build with Laravel 5.5

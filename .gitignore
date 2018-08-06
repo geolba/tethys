@@ -1,2 +1,21 @@
-/vendor
 /node_modules
+/Properties
+
+/.vs/lms/v15
+/lms.user
+/lms.sln
+/lms.phpproj.user
+/lms.phpproj
+
+# Composer
+/composer.lock
+/composer.phar
+/vendor
+
+# Linux
+*~
+*.swp
+
+# Windows
+Thumbs.db
+desktop.ini

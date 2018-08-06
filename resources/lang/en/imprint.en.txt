@@ -1,0 +1,15 @@
+<p>
+<i>Geologische Bundesanstalt</i> 
+<br /><i>Neulinggasse 38</i>
+<br /><i>1030 Vienna</i>
+</p>
+
+<p>Telephone: +43-1-7125674</p>
+<p>Fax: +43-1-7125674-56</p>
+<p>E-Mail: repository@geologie.ac.at</p>
+
+<p>USt-Id-Nr.: </p>
+
+<p><i>GBA</i> is a corporation under public law.</p>
+
+<p>The care of the hardware and software of this server is up to <i>GBA</i>.</p>
