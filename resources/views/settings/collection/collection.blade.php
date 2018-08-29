@@ -1,15 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.settings.layout')
 
 @section('content')
-	
-    <h1 class="title">Collections</h1>
+<div class="header">
+	<h3 class="header-title">
+		<i class="fa fa-archive"></i> Collections
+	</h3>
+</div>	
+    
 
-	<div class="col-md-8">
+<div class="pure-g box-content">
 
+	<div class="pure-u-1 pure-u-md-3-3"> 
 		<a href="{{ route('settings.project.add') }}" class="pure-button button-small is-primary">
 			<i class="fa fa-plus-circle"></i>ADD NEW COLLECTION
-		</a>
-		
+		</a>		
 		<br><br>
 
 		<table class="pure-table pure-table-horizontal">
@@ -39,7 +43,7 @@
 							<a class="delete" href="{{ route('settings.collection.delete', $collection->id) }}"><span aria-hidden="true"></span></a>
 
 
-                            
+							
 
 						</td>
 						</td>
@@ -50,11 +54,11 @@
 			</tbody>
 			
 		</table>
-
-	    <div class="pure-u-1">
-            {{ $collections->links('vendor.pagination.default') }}
-        </div>
-
 	</div>
 
+	<div class="pure-u-1 pure-u-md-3-3">
+		{{ $collections->links('vendor.pagination.default') }}
+	</div>
+
+</div>
 @stop

@@ -2,27 +2,28 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Library\Xml\DatasetExtension;
-use phpDocumentor\Reflection\Types\Null_;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Title;
 
 class Dataset extends Model
 {
     use DatasetExtension;
     protected $table = 'documents';
-    
+
     //public $timestamps = false; //default true
     // customize the names of the columns used to store the timestamps:
-    const CREATED_AT = 'server_date_created';
+    const CREATED_AT = 'created_at';
     const UPDATED_AT = 'server_date_modified';
     const PUBLISHED_AT = 'server_date_published';
 
     protected $fillable = [
         'type',
-        'publication_state',
-        'thesis_year_accepted',
+        'server_state',
+        'creating_corporation',
         'project_id',
-        'embargo_date'
+        'embargo_date',
+        'belongs_to_bibliography'
     ];
     /**
      * The attributes that should be mutated to dates.
@@ -32,10 +33,9 @@ class Dataset extends Model
     protected $dates = [
         'server_date_created',
         'server_date_modified',
-        'server_date_published'
+        'server_date_published',
     ];
     //protected $dateFormat = 'Y-m-d';
-
 
     public function __construct(array $attributes = array())
     {
@@ -43,6 +43,9 @@ class Dataset extends Model
         // $this->_init();
     }
 
+    /**
+     * Get the project that the product belongs to.
+     */
     public function project()
     {
         return $this->belongsTo(\App\Project::class, 'project_id', 'id');
@@ -82,7 +85,7 @@ class Dataset extends Model
      *
      * @return void
      */
-    public function addAuthor(\App\User $user) : void
+    public function addAuthor(\App\User $user): void
     {
         $this->persons()->save($user, ['role' => 'author']);
     }
@@ -102,16 +105,22 @@ class Dataset extends Model
     #endregion
 
     #region title table:
+    public function titlesAbstracts()
+    {
+        return $this->hasMany(Title::class, 'document_id', 'id');
+    }
 
     public function titles()
     {
-        return $this->hasMany(\App\Title::class, 'document_id', 'id')
+        return $this->hasMany(Title::class, 'document_id', 'id')
             ->where('type', 'main');
     }
-    // public function addTitle(\App\Title $title)
-    // {
-    //     $this->persons()->save($title, ['type' => 'main']);
-    // }
+    public function addMainTitle(Title $title)
+    {
+        $title->type = 'main';
+        $this->titlesAbstracts()->save($title);
+        // $this->titles()->save($title, ['type' => 'main']);
+    }
 
     /**
      * Relation abstracts
@@ -120,15 +129,17 @@ class Dataset extends Model
      */
     public function abstracts()
     {
-        return $this->hasMany(\App\Title::class, 'document_id', 'id')
+        return $this->hasMany(Title::class, 'document_id', 'id')
             ->where('type', 'abstract');
     }
-    // public function addAbstract (\App\Title $title)
-    // {
-    //     $this->persons()->save($title, ['type' => 'abstract']);
-    // }
+    public function addMainAbstract(Title $title)
+    {
+        $title->type = 'abstract';
+        $this->titlesAbstracts()->save($title);
+        // $this->abstracts()->save($title, ['type' => 'abstract']);
+    }
 
-    #endregion
+    #endregion title table
 
     public function licenses()
     {
@@ -137,7 +148,7 @@ class Dataset extends Model
 
     public function files()
     {
-        return $this->hasMany(\App\File::class, 'document_id', 'id');
+        return $this->hasMany(\App\Models\File::class, 'document_id', 'id');
     }
 
     /**
@@ -149,8 +160,6 @@ class Dataset extends Model
     {
         return $this->hasOne(\App\XmlCache::class, 'document_id', 'id');
     }
-
-
 
     public function scopeOrderByType($query)
     {

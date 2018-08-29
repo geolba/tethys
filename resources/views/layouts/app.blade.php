@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8">    
     <meta http-equiv="Content-Language" content="de">
    
     <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
@@ -13,8 +13,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}"> --}}
 
-    <link rel='stylesheet' href="{{ asset('css/pure.css') }}" />
-    <link rel='stylesheet' href="{{ asset('css/grids-responsive.css') }}" />
+    <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
+    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />
     <!--<link href="{{ asset('css/app1.css') }}" rel="stylesheet" />-->
     <!--<link rel='stylesheet' href="{{ asset('css/page.css') }}" />--> 
     <link rel='stylesheet' href="{{ asset('css/styles.css') }}" />

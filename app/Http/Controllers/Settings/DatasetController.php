@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Dataset;
 use App\Project;
 use App\License;
-use App\Title;
+use App\Models\Title;
 use App\Http\Requests\DocumentRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -27,7 +27,14 @@ class DatasetController extends Controller
         //$registers = array();
 
         $filter = $request->input('search');
-        $state =  (strlen($request->input('state')) > 0) ? $request->input('state') : "published";
+        
+        if (null !== ($request->input('state'))) {
+            $state = $request->input('state');
+        } else {
+            $state =  "published";
+        }
+        
+       
 
         $data =  $request->all();
 
@@ -131,7 +138,10 @@ class DatasetController extends Controller
         // for($jahr = 1990; $jahr <= $nowYear; $jahr++){
         // $years[$jahr] = $jahr;
         // }
-        return view('settings.document.edit', compact('document', 'projects', 'options', 'checkeds', 'years', 'languages'));
+        return view(
+            'settings.document.edit',
+            compact('document', 'projects', 'options', 'checkeds', 'years', 'languages')
+        );
     }
 
     //https://stackoverflow.com/questions/17480200/using-laravel-how-do-i-create-a-view-that-will-update-a-one-to-many-relationshi?rq=1
@@ -145,18 +155,18 @@ class DatasetController extends Controller
      */
     public function update(DocumentRequest $request, $id) : RedirectResponse
     {
-        $document = Dataset::findOrFail($id);
+        $dataset = Dataset::findOrFail($id);
         //$input = $request->all();
         $input = $request->except('licenses', 'titles');
-        $document->update($input);
-        // $document->type = $input['type'];
-        // $document->thesis_year_accepted = $input['thesis_year_accepted'];
-        // $document->project_id = $input['project_id'];
-        // $document->save();
+        $dataset->update($input);
+        // $dataset->type = $input['type'];
+        // $dataset->thesis_year_accepted = $input['thesis_year_accepted'];
+        // $dataset->project_id = $input['project_id'];
+        // $dataset->save();
 
         $licenses = $request->input('licenses');
         //$licenses = $input['licenses'];
-        $document->licenses()->sync($licenses);
+        $dataset->licenses()->sync($licenses);
 
         //save the titles:
         $titles = $request->input('titles');

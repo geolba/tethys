@@ -1,10 +1,10 @@
 <fieldset>
-
+    <legend>General</legend>
     <div class="pure-g">
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('name', 'Lizenzname') !!}
-            {!! Form::text('name_long', null, ['class' => 'pure-u-23-24']) !!}
+            {!! Form::label('name_long', 'Lizenzname') !!}
+            {!! Form::text('name_long', null, ['class' => 'pure-u-23-24', 'placeholder' => '--no language--']) !!}
         </div>
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -64,14 +64,10 @@
         <input name="pod_allowed" value="1" {{ ($license->pod_allowed == 1) ? 'checked="checked" ' : '' }} type="checkbox" class="form-check-input">
         Print on Demand
     </label>
-
-
-    <br />
-    <div class="pure-controls">
-        {!! Form::submit($submitButtonText, ['class' => 'pure-button button-small']) !!}
-    </div>
-
-
 </fieldset>
 
+<br />
+<div class="pure-controls">
+    {!! Form::submit($submitButtonText, ['class' => 'pure-button button-small']) !!}
+</div>
 @include('errors._errors')

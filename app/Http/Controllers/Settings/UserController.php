@@ -1,15 +1,18 @@
 <?php
 namespace App\Http\Controllers\Settings;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\User;
-//use Spatie\Permission\Models\Role;
-use App\Role;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:settings');
+    // }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +25,11 @@ class UserController extends Controller
         //    return abort(401, 'Unauthorized action.');
         //}
 
-        $users = User::orderBy('id', 'DESC')->paginate(5);
+        $users = User::with('roles')
+        ->orderBy('id', 'DESC')
+        ->paginate(5);
         return view('settings.user.user', compact('users'))
-                ->with('i', ($request->input('page', 1) - 1) * 5);
+            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -35,7 +40,7 @@ class UserController extends Controller
     public function create()
     {
         //$roles = Role::pluck('name','name')->all();
-         $roles = Role::all('id', 'name');
+        $roles = Role::all('id', 'name');
         return view('settings.user.create', compact('roles'));
     }
 
@@ -56,7 +61,7 @@ class UserController extends Controller
         $this->validate($request, [
             'login' => 'required',
             'email' => 'required|email|unique:accounts',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
             //'roles' => 'required'
         ]);
 
@@ -64,14 +69,13 @@ class UserController extends Controller
         $input = $request->only(['login', 'email', 'password']); //Retreive the name, email and password fields
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-       
 
-        $roles = $request['roles']; //Retrieving the roles field
+        $roles = $request['roles']; //Retrieving roles
         //Checking if a role was selected
         if (isset($roles)) {
             foreach ($roles as $role) {
                 $role_r = Role::where('id', '=', $role)->firstOrFail();
-                $user->assignRole($role_r); //Assigning role to user
+                $user->attachRole($role_r); //Assigning role to user
             }
         }
 
@@ -122,11 +126,11 @@ class UserController extends Controller
         $this->validate(request(), [
             'login' => 'required',
             'email' => 'required|email|unique:accounts,email,' . $id,
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
         ]);
-       
-         $user = User::findOrFail($id);
-         // $input = $request->except('roles');
+
+        $user = User::findOrFail($id);
+        // $input = $request->except('roles');
         // $user->fill($input)->save();
 
         $input = $request->only(['login', 'email', 'password']); //Retreive the name, email and password fields
@@ -139,11 +143,11 @@ class UserController extends Controller
         $roles = $request['roles']; //Retreive all roles
 
         if (isset($roles)) {
-            $user->roles()->sync($roles);//If one or more role is selected associate user to roles
+            $user->roles()->sync($roles); //If one or more role is selected associate user to roles
         } else {
             $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
         }
-             
+
         //return back()->with('flash_message', 'user successfully updated.');
         return redirect()
             ->route('user.index')

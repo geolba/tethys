@@ -6,15 +6,19 @@ return [
         "accepted" => "accepted",
         'submitted' => 'submitted',
         'published' => 'published',
-        'updated' => 'updated'
+        'updated' => 'updated',
     ],
-     'server_states' => [
+    'server_states' => [
         "audited" => "audited",
         "published" => "published",
         'restricted' => 'restricted',
         'inprogress' => 'inprogress',
         'unpublished' => 'unpublished',
-         'deleted' => 'deleted',
-         'temporary' => 'temporary'
-        ]
+        'deleted' => 'deleted',
+        'temporary' => 'temporary',
+    ],
+    'filetypes_allowed' => [
+        "pdf", "txt", "html", "htm", "png", "jpeg",
+    ],
+    'max_filesize' => '2048',
 ];

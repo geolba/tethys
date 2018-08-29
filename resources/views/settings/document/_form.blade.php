@@ -118,6 +118,3 @@
         <span>{!! $submitButtonText !!}</span>
     </button>
 </div>
-
-
-@include('errors._errors')

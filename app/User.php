@@ -2,21 +2,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-#use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Collection;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, AuthorizableContract
+class User extends Authenticatable
 {
+    // use Authenticatable, CanResetPassword, Authorizable;
+    use Notifiable;
 
-    use Authenticatable, CanResetPassword, Authorizable;
-    use HasRoles;
+    // use HasRoles;
+    use EntrustUserTrait;
+
 
     /**
      * The database table used by the model.
@@ -45,6 +44,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($password) {
             $this->attributes['password'] = app('hash')->needsRehash($password) ? Hash::make($password) : $password;
         }
+    }
+    
+    public function getAvatarUrl()
+    {
+        return "https://www.gravatar.com/avatar/" . md5($this->email) . "?d=mm";
+    }
+
+    public function getRoleNames(): Collection
+    {
+        return $this->roles->pluck('name');
     }
 
      //public function roles()

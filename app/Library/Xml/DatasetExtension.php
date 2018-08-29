@@ -47,7 +47,7 @@ trait DatasetExtension
             'fetch' => 'eager'
         ),
         'File' => array(
-            'model' => 'App\File',
+            'model' => 'App\Models\File',
             'relation' => 'files',
             'fetch' => 'eager'
         ),

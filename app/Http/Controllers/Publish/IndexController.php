@@ -2,10 +2,19 @@
 //https://www.5balloons.info/multi-page-step-form-in-laravel-with-validation/
 namespace App\Http\Controllers\Publish;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Dataset;
+use App\Http\Controllers\Controller;
+use App\License;
+use App\Models\File;
+use App\Person;
+use App\Models\Title;
+use App\Rules\RdrFiletypes;
+use App\Rules\RdrFilesize;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class IndexController extends Controller
 {
@@ -26,8 +35,17 @@ class IndexController extends Controller
      */
     public function createStep1(Request $request)
     {
-        $dataset = $request->session()->get('dataset');
-        return view('publish.create-step1', compact('dataset', $dataset));
+        #$dataset = $request->session()->get('dataset');
+        $licenses = License::all('id', 'name_long');
+        $languages = DB::table('languages')
+            ->where('active', true)
+            ->pluck('part2_t', 'part2_t');
+        // ->toArray();
+
+        $persons = Person::where('status', 1)
+            ->pluck('last_name', 'id');
+
+        return view('publish.create-step1', compact('licenses', 'languages', 'persons'));
     }
 
     /**
@@ -40,7 +58,7 @@ class IndexController extends Controller
     {
         $validatedData = $this->validate($request, [
             'Type' => 'required|min:4',
-            'rights' => 'required|boolean|in:1'
+            'rights' => 'required|boolean|in:1',
         ]);
         // $validatedData = $request->validate([
         //     'name' => 'required|unique:products',
@@ -100,21 +118,21 @@ class IndexController extends Controller
             "TitleMain.Value" => 'required|min:5|max:255',
             "TitleMain.Language" => 'required|min:3',
             "TitleAbstract.Value" => 'required|min:5|max:255',
-            "TitleAbstract.Language" => 'required|min:3'
+            "TitleAbstract.Language" => 'required|min:3',
         ]);
         $optionalData = $request->all();
-        
+
         // $dataset = $request->except('rights', '_token', 'input_img');
 
         $dataset = $request->session()->get('dataset');
-        
+
         //update dataset with validated data
-        $dataset['Type'] =  $validatedData['Type'];
-        $dataset['BelongsToBibliography'] =  $validatedData['BelongsToBibliography'];
-        $dataset['TitleMain']['Value'] =  $validatedData['TitleMain']['Value'];
-        $dataset['TitleMain']['Language'] =  $validatedData['TitleMain']['Language'];
-        $dataset['TitleAbstract']['Value'] =  $validatedData['TitleAbstract']['Value'];
-        $dataset['TitleAbstract']['Language'] =  $validatedData['TitleAbstract']['Language'];
+        $dataset['Type'] = $validatedData['Type'];
+        $dataset['BelongsToBibliography'] = $validatedData['BelongsToBibliography'];
+        $dataset['TitleMain']['Value'] = $validatedData['TitleMain']['Value'];
+        $dataset['TitleMain']['Language'] = $validatedData['TitleMain']['Language'];
+        $dataset['TitleAbstract']['Value'] = $validatedData['TitleAbstract']['Value'];
+        $dataset['TitleAbstract']['Language'] = $validatedData['TitleAbstract']['Language'];
         if (isset($optionalData['CreatingCorporation'])) {
             $dataset['CreatingCorporation'] = $optionalData['CreatingCorporation'];
         }
@@ -124,8 +142,8 @@ class IndexController extends Controller
 
         if (!isset($dataset['DatasetFile'])) {
             $this->validate($request, [
-                'dataset_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);           
+                'dataset_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
 
             //update session variable
             // $dataset = $request->session()->get('dataset');
@@ -151,7 +169,7 @@ class IndexController extends Controller
      */
     public function createStep3(Request $request)
     {
-         //if no dataset is'nt in session variable return to step1
+        //if no dataset is'nt in session variable return to step1
         if (empty($request->session()->get('dataset'))) {
             return redirect()->route('dataset.create1');
         }
@@ -159,17 +177,157 @@ class IndexController extends Controller
         return view('publish.create-step3', compact('dataset'));
     }
 
-     /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function storeTest(Request $request)
+    {
+        //$data = $request->all();
+        $data = json_decode($request->getContent(), true);
+
+        $validator = Validator::make($data, [
+            'type' => 'required|min:4',
+            'belongs_to_bibliography' => 'required|boolean',
+        ]);
+        if ($validator->passes()) {
+            //TODO Handle your data
+            return response()->json(array(
+                'response' => 'success'));
+        } else {
+            //TODO Handle your error
+            //pass validator errors as errors object for ajax response
+            return response()->json(['errors' => $validator->errors()->all()], 422);
+        }
+    }
+
+    //https://laravel.io/forum/06-11-2014-how-to-save-eloquent-model-with-relations-in-one-go
+    //attach vs save https://stackoverflow.com/questions/35756469/laravel-5-many-to-many-attach-versus-save
     public function store(Request $request)
     {
-        $dataset = $request->session()->get('dataset');
-        // $product->save();
-        // return redirect('/dataset');
+        $data = $request->all();
+        // $validatedData = $this->validate($request, [
+        //     'type' => 'required|min:4',
+        //     'rights' => 'required|boolean|in:1',
+        // ]);
+        $rules = [
+            'server_state' => 'required',
+            'type' => 'required|min:5',
+            'rights' => 'required|boolean|in:1',
+            'belongs_to_bibliography' => 'required|boolean',
+            'title_main.value' => 'required|min:5',
+            'title_main.language' => 'required',
+        ];
+        if (null != $request->file('files')) {
+            $files = count($request->file('files')) - 1;
+            foreach (range(0, $files) as $index) {
+                // $rules['files.' . $index] = 'image|max:2048';
+                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize()];
+            }
+        }
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->passes()) {
+            //store dataset todo
+            //$data = $request->all();
+            $input = $request->except('files', 'licenses', 'abstract_main', 'title_main');
+            // array_push($input, "Himbeere");
+            $dataset = new Dataset($input);
+
+            DB::beginTransaction(); //Start transaction!
+            try {
+                $dataset->save();
+               
+                //store related files
+                if (null != $data['files']) {
+                    foreach ($data['files'] as $uploadedFile) {
+                        $file = $uploadedFile['file'];
+                        $label = urldecode($uploadedFile['label']);
+                        $sorting = $uploadedFile['sorting'];
+                        $fileName = "productImage-" . time() . '.' . $file->getClientOriginalExtension();
+                        $mimeType = $file->getMimeType();
+                        $datasetFolder = 'files/' . $dataset->id;
+                        $path = $file->storeAs($datasetFolder, $fileName);
+                        $size = Storage::size($path);
+                        //$path = Storage::putFile('files', $image, $fileName);
+                        $file = new File([
+                            'path_name' => $path,
+                            'file_size' => $size,
+                            'mime_type' => $mimeType,
+                            'label' => $label,
+                            'sort_order' => $sorting,
+                            'visible_in_frontdoor' => 1,
+                            'visible_in_oai' => 1
+                        ]);
+                        //$test = $file->path_name;
+                        $dataset->files()->save($file);
+                        $file->createHashValues();
+                    }
+                }
+
+                 //store licenses:
+                 $licenses = $request->input('licenses');
+                 $dataset->licenses()->sync($licenses);
+
+                //save main title:
+                if (isset($data['title_main'])) {
+                    $formTitle = $request->input('title_main');
+                    $title = new Title();
+                    $title->value = $formTitle['value'];
+                    $title->language = $formTitle['language'];
+                    $dataset->addMainTitle($title);
+                }
+
+                //save main abstract:
+                if (isset($data['abstract_main'])) {
+                    $formAbstract = $request->input('abstract_main');
+                    $abstract = new Title();
+                    $abstract->value = $formAbstract['value'];
+                    $abstract->language = $formAbstract['language'];
+                    $dataset->addMainAbstract($abstract);
+                }
+                                 
+                // $error = 'Always throw this error';
+                // throw new \Exception($error);
+
+                // all good//commit everything
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                Storage::deleteDirectory($datasetFolder);
+                return response()->json([
+                    'success' => false,
+                    'error' => [
+                        'code' => $e->getCode(),
+                        'message' => $e->getMessage(),
+                    ],
+                ], 422);
+                //throw $e;
+            } catch (\Throwable $e) {
+                DB::rollback();
+                Storage::deleteDirectory($datasetFolder);
+                return response()->json([
+                    'success' => false,
+                    'error' => [
+                        'code' => $e->getCode(),
+                        'message' => $e->getMessage(),
+                    ],
+                ], 422);
+                //throw $e;
+            }
+
+            return response()->json(array(
+                'redirect' =>  route('settings.document', ['state' => $dataset->server_state]),
+            ));
+        } else {
+            //TODO Handle validation error
+            //pass validator errors as errors object for ajax response
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all(),
+            ], 422);
+        }
     }
 
     /**

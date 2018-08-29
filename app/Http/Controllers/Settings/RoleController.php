@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\Settings;
 
-use App\Role;
-use App\Permission;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,7 +38,28 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'display_name' => 'max:255',
+            'description' => 'max:255'
+        ]);
+        //$input = $request->all();
+        $input = $request->except('permissions');
+        //$input = $request->only(['name']); //Retreive the name field
+        $role = Role::create($input);
+
+        $permissions = $request['permissions']; //Retrieving permissions
+        //Checking if a role was selected
+        if (isset($permissions)) {
+            foreach ($permissions as $permission) {
+                $permission_r = Permission::where('id', '=', $permission)->firstOrFail();
+                $role->attachPermission($permission_r); //Assigning permission to role
+            }
+        }
+
+        return redirect()
+        ->route('role.index')
+        ->with('success', 'Role has been created successfully');
     }
 
     /**
@@ -64,7 +85,7 @@ class RoleController extends Controller
         $permissions = Permission::all('id', 'name');
 
         //$userRoles = $user->roles->pluck('name','name')->all();
-        $checkeds = $role->permissions->pluck('id')->toArray();
+        $checkeds = $role->perms->pluck('id')->toArray();
         return view('settings.role.edit', compact('role', 'permissions', 'checkeds'));
     }
 
@@ -78,7 +99,9 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate(request(), [
-            'name' => 'required'
+            'name' => 'required',
+            'display_name' => 'max:255',
+            'description' => 'max:255'
         ]);
         $role = Role::findOrFail($id);
         $role->update($request->except('permissions'));
@@ -86,9 +109,9 @@ class RoleController extends Controller
         $permissions = $request->input('permissions') ? $request->input('permissions') : [];
         //$role->syncPermissions($permissions);
         if (isset($permissions)) {
-            $role->permissions()->sync($permissions);//If one or more role is selected associate user to roles
+            $role->perms()->sync($permissions);//If one or more role is selected associate user to roles
         } else {
-            $role->permissions()->detach(); //If no role is selected remove exisiting role associated to a user
+            $role->perms()->detach(); //If no role is selected remove exisiting role associated to a user
         }
 
         return redirect()->route('role.index')

@@ -12,10 +12,11 @@ let mix = require('laravel-mix');
  */
 // mix.setPublicPath('../');
 
-mix.js('resources/assets/js/lib.js', 'public/js')
-.sass('resources/assets/sass/app1.scss', 'public/css')
-.options({
-    //publicPath: '../'
-    processCssUrls: false
-});
-mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/fonts/bootstrap');
+// .sass('resources/assets/sass/app1.scss', 'public/css')
+
+mix.js('resources/assets/js/app.js', 'public/js');
+// .options({
+//     //publicPath: '../'
+//     processCssUrls: false
+// });
+// mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/fonts/bootstrap');

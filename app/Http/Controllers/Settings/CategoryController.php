@@ -1,13 +1,12 @@
 <?php
 namespace App\Http\Controllers\Settings;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Project;
 use App\Http\Requests\ProjectRequest;
-use Illuminate\View\View;
+use App\Project;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
@@ -17,7 +16,7 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() : View
+    public function index(): View
     {
         $projects = Project::get();
         return view('settings.project.category', compact('projects'));
@@ -28,12 +27,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add() : View
+    public function add(): View
     {
         return view('settings.project.add');
     }
 
-    public function store(ProjectRequest $request) : RedirectResponse
+    public function store(ProjectRequest $request): RedirectResponse
     {
         $input = $request->all();
         Project::create($input);
@@ -47,7 +46,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) : View
+    public function edit($id): View
     {
         $project = Project::findOrFail($id);
         return view('settings.project.edit', compact('project'));
@@ -60,7 +59,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, ProjectRequest $request) : RedirectResponse
+    public function update($id, ProjectRequest $request): RedirectResponse
     {
         $project = Project::findOrFail($id);
         $input = $request->all();
@@ -75,16 +74,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id) : RedirectResponse
+    public function delete($id): RedirectResponse
     {
         $project = Project::with('documents')->findOrFail($id);
         if ($project->documents->count() > 0) {
             session()->flash(
                 'flash_message',
                 'You cannot delete this project!'
-                    . ' There are '
-                    . $project->documents->count()
-                    . ' documents in this project!'
+                . ' There are '
+                . $project->documents->count()
+                . ' documents in this project!'
             );
             return redirect()->route('settings.project');
         } else {

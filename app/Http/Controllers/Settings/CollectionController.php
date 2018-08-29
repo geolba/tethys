@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -24,8 +24,8 @@ class CollectionController extends Controller
         //$collections = Collection::take(10)->get();
         //$collections = Collection::get();
         $collections = Collection::with('documents')
-            ->paginate(8); //get();
-        return view('rdr.settings.collection.collection', compact('collections'));
+        ->paginate(8); //get();
+        return view('settings.collection.collection', compact('collections'));
     }
 
     /**

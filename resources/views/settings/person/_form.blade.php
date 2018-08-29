@@ -39,9 +39,8 @@
         </label>
     </div>
 
-  <!--  <div class="pure-controls">-->
+
   {!! Form::submit($submitButtonText, ['class' => 'pure-button button-small']) !!}
-   <!-- </div>-->
 </fieldset>
 
 @include('errors._errors')

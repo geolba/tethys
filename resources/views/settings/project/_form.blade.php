@@ -9,10 +9,7 @@
         {{ Form::text('label', null, ['class' => 'form-control']) }}
         <em>*</em>
     </div>
-
-  <!--  <div class="pure-controls">-->
-        {{ Form::submit($submitButtonText, ['class' => 'pure-button button-small']) }}
-    <!--</div>-->
+    {{ Form::submit($submitButtonText, ['class' => 'pure-button button-small']) }}
 </fieldset>
 
 @include('errors._errors')

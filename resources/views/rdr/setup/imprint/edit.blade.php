@@ -16,7 +16,7 @@
 
                 <div class="pure-control-group">
                     <label for="data-en-key-home_index_imprint_title" class="optional">Titel auf der Seite</label>
-                    <input name="data[de][key][home_index_imprint_title]" id="data-de-key-home_index_imprint_title" value="Impressum nach §5 Telemediengesetz" class="pure-input-1" type="text">
+                    <input name="data[de][key][home_index_imprint_title]" id="data-de-key-home_index_imprint_title" value="Impressum nach ï¿½5 Telemediengesetz" class="pure-input-1" type="text">
                 </div>
 
             </fieldset>

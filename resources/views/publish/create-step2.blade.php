@@ -1,14 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.settings.layout')
 
 @section('title', 'Publish')
 
 @section('content')
-
-<div class="title">		
-    <h2><i class="fa fa-upload"></i> Publish New Dataset - Step 2</h2>
-</div>	
-
-<h3 class="document-type">Attribute eingeben</h3>
+<div class="header">
+    <h3 class="header-title">
+        <i class="fa fa-upload"></i> Publish New Dataset - Step 2
+    </h3>
+</div>
+    
+<div class="box-content">
 {{-- <div method="post" enctype="multipart/from-data" class="pure-form"> --}}
 {!! Form::model($dataset, ['method' => 'post', 'files' => true , 'route' => ['dataset.store2'], 'class' => 'pure-form']) !!}
   
@@ -20,6 +21,7 @@
                 {!! Form::label('Type', 'Type..') !!}
                 <div class="select  pure-u-23-24">
                 {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --']) !!}
+                </div>
             </div>
 
             <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -33,12 +35,14 @@
                 <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
             </div>
 
-            <!-- checkboxes -->
-            <label for="BelongsToBibliography" class="pure-checkbox">
-                <input type="hidden" name="BelongsToBibliography" value="0">
-                <input name="BelongsToBibliography" value="1" type="checkbox" class="form-check-input"> 
-                Belongs To Bibliography?
-            </label>
+            <div class="pure-u-1 pure-u-md-1 checkboxlist">
+                <!-- checkboxes -->
+                <label for="BelongsToBibliography" class="pure-checkbox">
+                    <input type="hidden" name="BelongsToBibliography" value="0">
+                    <input name="BelongsToBibliography" value="1" type="checkbox" class="form-check-input"> 
+                    Belongs To Bibliography?
+                </label>
+            </div>
         
         </div>
     </fieldset>
@@ -60,8 +64,8 @@
             </div>
 
             <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                {!! Form::label('TitleAbstract', 'Main Abstract ') !!}           
-                {!! Form::text('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24']) !!}
+                {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
+                {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24', 'size' => '70x6']) }}
             </div>
             <div class="pure-u-1 pure-u-md-1-2 pure-div">
                 {!! Form::label('language', 'Abstract Language..') !!}
@@ -82,9 +86,7 @@
             </div>
         </div>
     </fieldset>
-
-    
-
+   
     <br />
     <div class="pure-controls">
         <button type="submit" class="pure-button button-small">
@@ -102,5 +104,6 @@
     <button type="submit" class="btn btn-danger">Remove Image</button>
     </form>
  @endif
+ <div class="box-content">
 
 @stop

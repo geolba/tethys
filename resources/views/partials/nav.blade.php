@@ -65,7 +65,7 @@
                                         </a>
                                         <ul class="pure-menu-children" role="menu">
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ URL::route('oai') }}" target="_blank"> OAI-PMH 2.0</a></li>
-                                            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ URL::route('dataset.create1') }}">PUBLISH</a></li>
+                                            {{-- <li class="pure-menu-item"><a class="pure-menu-link" href="{{ URL::route('dataset.create1') }}">PUBLISH</a></li> --}}
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ URL::route('home.news') }}">NEWS</a></li>
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('documents') }}">DATASETS</a></li>
                                         </ul>

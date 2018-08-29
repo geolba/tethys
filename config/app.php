@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +178,7 @@ return [
 
          // List off others providers...
          App\Providers\SolariumServiceProvider::class,
-         Spatie\Permission\PermissionServiceProvider::class,
+         Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 

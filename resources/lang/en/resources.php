@@ -44,4 +44,3 @@ return [
       'default_auth_index' => 'Login',
       'auth_pagetitle' => 'User Login',
 ];
-?>
