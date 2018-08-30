@@ -1,6 +1,8 @@
 <?php
 namespace App\Library\Xml;
 
+use App\Models\Title;
+
 /**
  * DatasetExtension short summary.
  *
@@ -13,12 +15,12 @@ trait DatasetExtension
 {
     protected $_externalFields = array(
         'TitleMain' => array(
-            'model' => 'App\Title',
+            'model' => Title::class,
             'options' => array('type' => 'main'),
             'fetch' => 'eager'
         ),
         'TitleAbstract' => array(
-            'model' => 'App\Title',
+            'model' => Title::class,
             'options' => array('type' => 'abstract'),
             'fetch' => 'eager'
         ),
@@ -52,7 +54,6 @@ trait DatasetExtension
             'fetch' => 'eager'
         ),
     );
-
 
     protected $_internalFields = array();
 

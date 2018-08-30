@@ -97,11 +97,11 @@
                     </p>-->
                 </div>
                 <div class="pure-u-1 pure-u-md-1-4 footer-funded">
-                @hasrole('administrator')
+                @role('administrator')
                     I'm an administrator!
                 @else
                     I'm not an administrator...
-                @endhasrole
+                @endrole
                 </div>
                 <div class="pure-u-1 pure-u-md-1-4 footer-funded">
                 </div>
