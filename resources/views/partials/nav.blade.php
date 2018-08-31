@@ -91,9 +91,9 @@
                             <li class="pure-menu-item pure-menu-allow-hover custom-can-transform">
                                 <a href="#" class="pure-menu-link">{{ Auth::user()->login }} <span class="fa fa-angle-down"></span></a>
                                 <ul class="pure-menu-children" role="menu">
-                                    <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> </li>
+                                    <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('settings.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> </li>
                                      @role('administrator')
-                                    <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('user.index') }}"><i class="fa fa-users"></i> EDIT USERS</a></li>
+                                    <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('settings.user.index') }}"><i class="fa fa-users"></i> EDIT USERS</a></li>
                                     <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('role.index') }}"><i class="fa fa-key"></i> EDIT ROLES</a></li>
                                     @endrole
                                     <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> LOG OUT</a></li>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,6 +22,6 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        return view('settings.home.index');
+        return view('settings.dashboard');
     }
 }

@@ -16,41 +16,49 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
 
-Route::group(['middleware' => ['permission:review'], 'prefix' => 'publish'], function () {
-    Route::get('/dataset/create-step1', ['as' => 'dataset.create1', 'uses' => 'Publish\IndexController@createStep1']);
-    Route::post('/dataset/store-step1', ['as' => 'dataset.store1', 'uses' => 'Publish\IndexController@storeStep1']);
+Route::group(
+    [
+        'namespace' => 'Publish',
+        'middleware' => ['permission:review'],
+        'prefix' => 'publish',
+        'as' => 'publish.'
+    ],
+    function () {
+        Route::get('dataset/create-step1', ['as' => 'dataset.create', 'uses' => 'IndexController@createStep1']);
+        Route::post('dataset/store-step1', ['as' => 'dataset.store1', 'uses' => 'IndexController@storeStep1']);
 
-    Route::get('/dataset/create-step2', ['as' => 'dataset.create2', 'uses' => 'Publish\IndexController@createStep2']);
-    Route::post('/dataset/store-step2', ['as' => 'dataset.store2', 'uses' => 'Publish\IndexController@storeStep2']);
+        Route::get('dataset/create-step2', ['as' => 'dataset.create2', 'uses' => 'IndexController@createStep2']);
+        Route::post('dataset/store-step2', ['as' => 'dataset.store2', 'uses' => 'IndexController@storeStep2']);
 
-    Route::get('/dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'Publish\IndexController@createStep3']);
-    Route::post('/dataset/store', ['as' => 'dataset.store', 'uses' => 'Publish\IndexController@store']);
-});
+        Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
+        Route::post('dataset/store', ['as' => 'dataset.store', 'uses' => 'IndexController@store']);
+    }
+);
 
 //=================================================setting users====================================================
 Route::get('settings/', [
-    'as' => 'settings.home.index', 'uses' => 'Settings\HomeController@index',
+    'as' => 'settings.dashboard', 'uses' => 'Settings\DashboardController@index',
 ]);
 
 Route::group(['middleware' => ['permission:settings']], function () {
     //Route::resource('users','UserController');
     Route::get('settings/user', [
-        'as' => 'user.index', 'uses' => 'Settings\UserController@index',
+        'as' => 'settings.user.index', 'uses' => 'Settings\UserController@index',
     ]);
     Route::get('settings/user/create', [
-        'as' => 'user.create', 'uses' => 'Settings\UserController@create',
+        'as' => 'settings.user.create', 'uses' => 'Settings\UserController@create',
     ]);
     Route::post('settings/user/store', [
-        'as' => 'user.store', 'uses' => 'Settings\UserController@store',
+        'as' => 'settings.user.store', 'uses' => 'Settings\UserController@store',
     ]);
     Route::get('settings/user/edit/{id}', [
-        'as' => 'user.edit', 'uses' => 'Settings\UserController@edit',
+        'as' => 'settings.user.edit', 'uses' => 'Settings\UserController@edit',
     ]);
     Route::patch('settings/user/update/{id}', [
-        'as' => 'user.update', 'uses' => 'Settings\UserController@update',
+        'as' => 'settings.user.update', 'uses' => 'Settings\UserController@update',
     ]);
     Route::get('settings/user/destroy/{id}', [
-        'as' => 'user.destroy', 'uses' => 'Settings\UserController@destroy',
+        'as' => 'settings.user.destroy', 'uses' => 'Settings\UserController@destroy',
     ]);
 
     //Route::resource('users','RoleController');

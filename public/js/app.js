@@ -32,6 +32,7 @@ const app = new Vue({
                 type: '',
                 state: '',
                 rights: 0,
+                project_id: '',
 
                 creating_corporation: "GBA",
                 embargo_date: '',
@@ -107,6 +108,7 @@ const app = new Vue({
             formData.append('server_state', this.dataset.state);
             formData.append('rights', this.dataset.rights);
             formData.append('creating_corporation', this.dataset.creating_corporation);
+            formData.append('project_id', this.dataset.project_id);
             formData.append('embargo_date', this.dataset.embargo_date);
             formData.append('belongs_to_bibliography', this.dataset.belongs_to_bibliography);
             formData.append('title_main[value]', this.dataset.title_main.value);
@@ -217,14 +219,3 @@ const app = new Vue({
         }
     }
 });
-
-// const app = new Vue({
-//     el: '#app',
-
-//     data: { 
-//         loading: false,    
-//         downloading: false,    
-//         items: [],
-//         message: "Just a test",
-//     }
-// });

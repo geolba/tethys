@@ -1,4 +1,4 @@
-@extends('layouts.settings.layout')
+@extends('settings.layouts.app')
 
 @section('content')
 <div class="header">
@@ -20,12 +20,12 @@
 
 <div class="box-content">	
     <div>		
-        <a href="{{ route('user.index') }}" class="pure-button button-small">           
+        <a href="{{ route('settings.user.index') }}" class="pure-button button-small">           
             <i class="fa fa-chevron-left"></i>
             <span>BACK</span>
         </a>
     </div>
-    {!! Form::open(['route' => 'user.store', 'method'=>'POST', 'class' => 'pure-form pure-form-aligned']) !!}
+    {!! Form::open(['route' => 'settings.user.store', 'method'=>'POST', 'class' => 'pure-form pure-form-aligned']) !!}
  
         <div class="pure-control-group @if ($errors->has('login')) field-validation-error @endif">
             <label>Login:</label>

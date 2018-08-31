@@ -1,4 +1,6 @@
-@extends('layouts.settings.layout')
+@extends('settings.layouts.app')
+
+{{-- @section('breadcrumbs', Breadcrumbs::render('settings.dashboard')) --}}
 
 @section('content')
 <div class="header">

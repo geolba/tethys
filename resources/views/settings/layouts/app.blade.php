@@ -35,8 +35,8 @@
             
             <h2 class="pure-menu-heading">Home</h2>
             <ul class="pure-menu-list">
-                <li class="pure-menu-item {{ Route::is('settings.home.index') ? 'active' : '' }}">
-                    <a href="{{ route('settings.home.index') }}" class="pure-menu-link">Reports</a>
+                <li class="pure-menu-item {{ Route::is('settings.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('settings.dashboard') }}" class="pure-menu-link">Reports</a>
                 </li>				
             </ul>
 
@@ -65,13 +65,13 @@
             @permission('review')
             <h2 class="pure-menu-heading">Publish</h2>
             <ul class="pure-menu-list">		
-                <li class="pure-menu-item {{ Route::is('dataset.*') ? 'active' : '' }}">
-                    <a class="pure-menu-link" href="{{ URL::route('dataset.create1') }}"><i class="fa fa-upload"></i> Publish</a>
+                <li class="pure-menu-item {{ Route::is('publish.dataset.*') ? 'active' : '' }}">
+                    <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Publish</a>
                 </li>		
             </ul>
             @endpermission
 
-            <h2 class="pure-menu-heading">User</h2>
+            <h2 class="pure-menu-heading">Access Management</h2>
             <ul class="pure-menu-list">
                 @if (Auth::guest())
                 <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
@@ -79,14 +79,14 @@
                 </li>
                 @else
                 @permission('settings')
-                <li class="pure-menu-item {{ Route::is('user.*') ? 'active' : '' }}">
-                        <a class="pure-menu-link" href="{{route('user.index') }}"><i class="fa fa-users"></i> Edit Users</a>
+                <li class="pure-menu-item {{ Route::is('settings.user.*') ? 'active' : '' }}">
+                        <a class="pure-menu-link" href="{{route('settings.user.index') }}"><i class="fa fa-users"></i> User Management</a>
                     </li>
                     <li class="pure-menu-item {{ Route::is('role.*') ? 'active' : '' }}">
-                        <a class="pure-menu-link" href="{{route('role.index') }}"><i class="fa fa-key"></i> Edit Roles</a>
+                        <a class="pure-menu-link" href="{{route('role.index') }}"><i class="fa fa-key"></i> Role Management</a>
                     </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{{ route('user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> 
+                    <a class="pure-menu-link" href="{{ route('settings.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> 
                 </li>	
                 @endpermission			
                 <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
@@ -113,10 +113,14 @@
         </div>
 
         <div class="content">
-            <div class="breadcrumb">
+            {{-- <div class="breadcrumb">
                 <i class="fa fa-home"></i><a href="#" rel="Dashboard">Dashboard</a>
                 <i class="fa fa-angle-right"></i><a href="#" rel="Dashboard">Sales</a>
-            </div>
+            </div> --}}
+            {{-- @yield('breadcrumbs') --}}
+            @if(Breadcrumbs::exists())
+                {!! Breadcrumbs::render() !!}
+            @endif
             {{-- <div class="pure-g"> --}}
             <div class="box">
                 <div class="l-box">		

@@ -80,7 +80,7 @@ class UserController extends Controller
         }
 
         return redirect()
-            ->route('user.index')
+            ->route('settings.user.index')
             ->with('success', 'User has been created successfully');
     }
 
@@ -150,7 +150,7 @@ class UserController extends Controller
 
         //return back()->with('flash_message', 'user successfully updated.');
         return redirect()
-            ->route('user.index')
+            ->route('settings.user.index')
             ->with('flash_message', 'User successfully edited.');
     }
 
@@ -167,7 +167,7 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()
-            ->route('user.index')
+            ->route('settings.user.index')
             ->with('flash_message', 'User successfully deleted.');
     }
 }

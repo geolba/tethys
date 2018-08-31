@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\License;
 use App\Models\File;
 use App\Person;
+use App\Project;
 use App\Models\Title;
 use App\Rules\RdrFiletypes;
 use App\Rules\RdrFilesize;
@@ -44,8 +45,9 @@ class IndexController extends Controller
 
         $persons = Person::where('status', 1)
             ->pluck('last_name', 'id');
+        $projects = Project::pluck('label', 'id');
 
-        return view('publish.create-step1', compact('licenses', 'languages', 'persons'));
+        return view('publish.create-step1', compact('licenses', 'languages', 'persons', 'projects'));
     }
 
     /**
@@ -219,6 +221,8 @@ class IndexController extends Controller
             'belongs_to_bibliography' => 'required|boolean',
             'title_main.value' => 'required|min:5',
             'title_main.language' => 'required',
+            'abstract_main.value' => 'required|min:5',
+            'abstract_main.language' => 'required',
         ];
         if (null != $request->file('files')) {
             $files = count($request->file('files')) - 1;
@@ -288,8 +292,8 @@ class IndexController extends Controller
                     $dataset->addMainAbstract($abstract);
                 }
                                  
-                // $error = 'Always throw this error';
-                // throw new \Exception($error);
+                $error = 'Always throw this error';
+                throw new \Exception($error);
 
                 // all good//commit everything
                 DB::commit();
@@ -318,6 +322,7 @@ class IndexController extends Controller
             }
 
             return response()->json(array(
+                'success' => true,
                 'redirect' =>  route('settings.document', ['state' => $dataset->server_state]),
             ));
         } else {

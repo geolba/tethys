@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -140,7 +140,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        'Illuminate\Auth\AuthServiceProvider',
+        Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         'Illuminate\Bus\BusServiceProvider',
         'Illuminate\Cache\CacheServiceProvider',
@@ -164,8 +164,12 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
 
+         /*
+         * Package Service Providers...
+         */
         // 'Illuminate\Html\HtmlServiceProvider',
         // 'Collective\Html\HtmlServiceProvider',
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,7 +182,7 @@ return [
 
          // List off others providers...
          App\Providers\SolariumServiceProvider::class,
-         Zizaco\Entrust\EntrustServiceProvider::class,
+        
 
     ],
 
@@ -228,10 +232,14 @@ return [
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View'      => 'Illuminate\Support\Facades\View',
 
+         /*
+         * Third Party Aliases
+         */
         // 'Form' => 'Illuminate\Html\FormFacade',
         // 'HTML' => 'Illuminate\Html\HtmlFacade',
         // 'Form' => 'Collective\Html\FormFacade',
         // 'Html' => 'Collective\Html\HtmlFacade',
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
     ],
 

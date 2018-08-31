@@ -46,6 +46,6 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/settings');
+        return redirect('/');
     }
 }

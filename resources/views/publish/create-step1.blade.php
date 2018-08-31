@@ -1,4 +1,4 @@
-@extends('layouts.settings.layout')
+@extends('settings.layouts.app')
 
 @section('title', 'Publish')
 
@@ -10,7 +10,7 @@
 </div>
 
 <div id="app" class="box-content">
-    <form action={{ route('dataset.store1') }} method="post" class="pure-form" enctype="multipart/form-data">   
+    <form action={{ route('publish.dataset.store1') }} method="post" class="pure-form" enctype="multipart/form-data">   
         {{ csrf_field() }}
 
         <div v-if="step === 1">
@@ -85,6 +85,14 @@
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('CreatingCorporation', 'Creating Corporation') !!}
                         {!! Form::text('CreatingCorporation', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.creating_corporation']) !!}
+                    </div>
+
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('project_id', 'Project..') !!}
+                        <div class="select pure-u-23-24">
+                        {!! Form::select('project_id', $projects, null, ['id' => 'project_id', 'placeholder' => '--no project--', 'v-model' => 'dataset.project_id']) !!}
+                        </div>
+                        <small id="projectHelp" class="pure-form-message-inline">project is optional</small>
                     </div>
         
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">

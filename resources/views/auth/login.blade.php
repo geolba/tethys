@@ -1,7 +1,6 @@
-@extends('layouts.settings.layout')
+@extends('settings.layouts.app')
 
 @section('content')
-
 
 <div class="pure-g  box-content">
 
