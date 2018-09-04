@@ -83,8 +83,8 @@
                     <nav class="pure-menu pure-menu-horizontal custom-menu-right">
                         <ul class="pure-menu-list">
                             @if (Auth::guest())
-                            <li class="pure-menu-item {{ Route::currentRouteName() == 'access.login' ? 'active' : '' }}">
-                                <a class="pure-menu-link" href="{{ route('access.login') }}">LOGIN</a>
+                            <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
+                                <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
                             </li>
                             <!--<li class="pure-menu-item"><a class="pure-menu-link" href="{{ url('register') }}">REGISTER</a></li>-->
                             @else

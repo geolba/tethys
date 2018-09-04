@@ -89,8 +89,8 @@
                     <h2 class="pure-menu-heading">Access Management <span class="fa fa-angle-down"></h2>              
                     <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('access.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('access.*'), 'display: block;') }}">
                         @if (Auth::guest())
-                        <li class="pure-menu-item {{ Route::currentRouteName() == 'access.login' ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ route('access.login') }}">LOGIN</a>
+                        <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
                         </li>
                         @else  
                         @permission('settings')
