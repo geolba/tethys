@@ -20,12 +20,12 @@
 
 <div class="box-content">	
     <div>		
-        <a href="{{ route('settings.user.index') }}" class="pure-button button-small">           
+        <a href="{{ route('access.user.index') }}" class="pure-button button-small">           
             <i class="fa fa-chevron-left"></i>
             <span>BACK</span>
         </a>
     </div>
-    {!! Form::open(['route' => 'settings.user.store', 'method'=>'POST', 'class' => 'pure-form pure-form-aligned']) !!}
+    {!! Form::open(['route' => 'access.user.store', 'method'=>'POST', 'class' => 'pure-form pure-form-aligned']) !!}
  
         <div class="pure-control-group @if ($errors->has('login')) field-validation-error @endif">
             <label>Login:</label>

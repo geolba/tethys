@@ -11,7 +11,7 @@
 <div class="pure-g box-content">
 
     <div class="pure-u-1 pure-u-md-2-3">  
-            <a class="pure-button button-small is-primary" href="{{ route('settings.user.create') }}">
+            <a class="pure-button button-small is-primary" href="{{ route('access.user.create') }}">
             <i class="fa fa-plus-circle"></i>
             <span>Create New User</span>
         </a>
@@ -47,9 +47,9 @@
                     @endif
                 </td>
                 <td>                      
-                        <a class="edit" href="{{ route('settings.user.edit', $user->id) }}">&nbsp;Edit</a>
+                        <a class="edit" href="{{ route('access.user.edit', $user->id) }}">&nbsp;Edit</a>
                         <span>&nbsp;</span>
-                        <a class="delete" href="{{ route('settings.user.destroy', $user->id) }}"><span>&nbsp;Delete</span></a> 
+                        <a class="delete" href="{{ route('access.user.destroy', $user->id) }}"><span>&nbsp;Delete</span></a> 
                 </td>
                 </tr>
                 @endforeach

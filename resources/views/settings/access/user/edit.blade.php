@@ -11,7 +11,7 @@
 <div class="pure-g box-content">
   <div class="pure-u-1 pure-u-md-2-3">  
             <div>
-                <a href="{{ route('settings.user.index') }}" class="pure-button button-small">
+                <a href="{{ route('access.user.index') }}" class="pure-button button-small">
                     <i class="fa fa-chevron-left"></i>
                     <span>BACK</span>
                 </a>
@@ -29,7 +29,7 @@
             @endif
 
             <div>
-                {!! Form::model($user, ['method' => 'PATCH','route' => ['settings.user.update', $user->id], 'class' => 'pure-form pure-form-aligned']) !!}
+                {!! Form::model($user, ['method' => 'PATCH','route' => ['access.user.update', $user->id], 'class' => 'pure-form pure-form-aligned']) !!}
                 
                     <fieldset>
                     <div class="pure-control-group @if ($errors->has('login')) field-validation-error @endif">

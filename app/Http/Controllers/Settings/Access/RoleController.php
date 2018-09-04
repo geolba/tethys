@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers\Settings\Access;
 
 use App\Models\Role;
 use App\Models\Permission;
@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('settings.role.role', compact('roles'));
+        return view('settings.access.role.role', compact('roles'));
     }
 
     /**
@@ -27,7 +27,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all('id', 'name');
-        return view('settings.role.create', compact('permissions'));
+        return view('settings.access.role.create', compact('permissions'));
     }
 
     /**
@@ -58,7 +58,7 @@ class RoleController extends Controller
         }
 
         return redirect()
-        ->route('role.index')
+        ->route('access.role.index')
         ->with('success', 'Role has been created successfully');
     }
 
@@ -86,7 +86,7 @@ class RoleController extends Controller
 
         //$userRoles = $user->roles->pluck('name','name')->all();
         $checkeds = $role->perms->pluck('id')->toArray();
-        return view('settings.role.edit', compact('role', 'permissions', 'checkeds'));
+        return view('settings.access.role.edit', compact('role', 'permissions', 'checkeds'));
     }
 
     /**
@@ -114,7 +114,7 @@ class RoleController extends Controller
             $role->perms()->detach(); //If no role is selected remove exisiting role associated to a user
         }
 
-        return redirect()->route('role.index')
+        return redirect()->route('access.role.index')
             ->with('flash_message', 'Role successfully edited.');
     }
 

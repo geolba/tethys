@@ -29,74 +29,105 @@
     </a>
 
     <div id="menu">
-        <nav class="pure-menu">
+        <nav class="pure-menu sidebar-menu">
             <h1 class="site-logo">Admin<strong>Rdr</strong></h1>
             <div class="menu-item-divided"></div>
             
-            <h2 class="pure-menu-heading">Home</h2>
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item {{ Route::is('settings.dashboard') ? 'active' : '' }}">
+            {{-- <h2 class="pure-menu-heading">Home</h2> --}}
+            <ul class=" pure-menu-list sidebar-menu">
+                <h2 class="pure-menu-heading">Home</h2> 
+
+                {{-- <li class="pure-menu-item {{ Route::is('settings.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('settings.dashboard') }}" class="pure-menu-link">Reports</a>
-                </li>				
-            </ul>
-
-            @permission('settings')
-            <h2 class="pure-menu-heading">Settings</h2>
-            <ul class="pure-menu-list">				
-                <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
-                    <a class="pure-menu-link" href="{{ route('settings.document') }}"><i class="fa fa-database"></i> Datasets</a>
-                </li>
-                <li class="pure-menu-item {{ Route::is('settings.collection*') ? 'active' : '' }}">
-                    <a class="pure-menu-link" href="{{ route('settings.collection') }}"><i class="fa fa-archive"></i> Collections</a>
-                </li>
-                <li class="pure-menu-item {{ Route::is('settings.license*') ? 'active' : '' }}">
-                    <a href="{{ route('settings.license') }}" class="pure-menu-link"><i class="fa fa-file"></i> Licenses</a>
-                </li>
-                <li class="pure-menu-item {{ Route::is('settings.person*') ? 'active' : '' }}">
-                    <a href="{{ route('settings.person') }}" class="pure-menu-link"><i class="fa fa-edit"></i> Persons</a>
-                </li>
-                <li class="pure-menu-item {{ Route::is('settings.project*') ? 'active' : '' }}">
-                    <a class="pure-menu-link" href="{{ route('settings.project') }}"><i class="fa fa-tasks"></i> Projects</a>
-                </li>
+                </li>	 --}}
+               
                 
-            </ul>
-            @endpermission
-
-            @permission('review')
-            <h2 class="pure-menu-heading">Publish</h2>
-            <ul class="pure-menu-list">		
-                <li class="pure-menu-item {{ Route::is('publish.dataset.*') ? 'active' : '' }}">
-                    <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Publish</a>
-                </li>		
-            </ul>
-            @endpermission
-
-            <h2 class="pure-menu-heading">Access Management</h2>
-            <ul class="pure-menu-list">
-                @if (Auth::guest())
-                <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
-                    <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
+                <li class="{{ active_class(Route::is('settings.dashboard')) }}">
+                    <a href="{{ route('settings.dashboard') }}">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Reports</span>
+                    </a>
                 </li>
-                @else
+
                 @permission('settings')
-                <li class="pure-menu-item {{ Route::is('settings.user.*') ? 'active' : '' }}">
-                        <a class="pure-menu-link" href="{{route('settings.user.index') }}"><i class="fa fa-users"></i> User Management</a>
-                    </li>
-                    <li class="pure-menu-item {{ Route::is('role.*') ? 'active' : '' }}">
-                        <a class="pure-menu-link" href="{{route('role.index') }}"><i class="fa fa-key"></i> Role Management</a>
-                    </li>
-                <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{{ route('settings.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> 
-                </li>	
-                @endpermission			
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
-                @endif
+                <li class="treeview">
+                    <h2 class="pure-menu-heading">Settings  <span class="fa fa-angle-down"></h2>
+                    <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('settings.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('settings.*'), 'display: block;') }}">				
+                        <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('settings.document') }}"><i class="fa fa-database"></i> Datasets</a>
+                        </li>
+                        <li class="pure-menu-item {{ Route::is('settings.collection*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('settings.collection') }}"><i class="fa fa-archive"></i> Collections</a>
+                        </li>
+                        <li class="pure-menu-item {{ Route::is('settings.license*') ? 'active' : '' }}">
+                            <a href="{{ route('settings.license') }}" class="pure-menu-link"><i class="fa fa-file"></i> Licenses</a>
+                        </li>
+                        <li class="pure-menu-item {{ Route::is('settings.person*') ? 'active' : '' }}">
+                            <a href="{{ route('settings.person') }}" class="pure-menu-link"><i class="fa fa-edit"></i> Persons</a>
+                        </li>
+                        <li class="pure-menu-item {{ Route::is('settings.project*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('settings.project') }}"><i class="fa fa-tasks"></i> Projects</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                @endpermission
+
+                @permission('review')
+                <li class="{{ active_class(Active::checkUriPattern('publish/dataset/*')) }}">
+                    <h2 class="pure-menu-heading">Publish</h2>
+                    <ul class="pure-menu-list">		
+                        <li class="pure-menu-item {{ Route::is('publish.dataset.*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Publish</a>
+                        </li>		
+                    </ul>
+                </li>
+                @endpermission
+
+              
+                <li class="treeview">
+                    <h2 class="pure-menu-heading">Access Management <span class="fa fa-angle-down"></h2>              
+                    <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('access.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('access.*'), 'display: block;') }}">
+                        @if (Auth::guest())
+                        <li class="pure-menu-item {{ Route::currentRouteName() == 'access.login' ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('access.login') }}">LOGIN</a>
+                        </li>
+                        @else  
+                        @permission('settings')
+                        <li class="pure-menu-item {{ Route::is('access.user.*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{route('access.user.index') }}"><i class="fa fa-users"></i> User Management</a>
+                        </li>
+                        <li class="pure-menu-item {{ Route::is('access.role.*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{route('access.role.index') }}"><i class="fa fa-key"></i> Role Management</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="{{ route('access.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> 
+                        </li>	  
+                        @endpermission
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a>
+                        </li> 
+                        @endif
+
+
+
+                        {{-- @if (Auth::guest())
+                        <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
+                        </li>                
+                        @else 
+                        <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
+                        @endif --}}
+                    </ul>
+                </li>
+              
+
             </ul>
         </nav>
+   
     </div>
 
     <div id="main">
-
         <div class="header">
             <div class="pure-g">
                 <div class="pure-u-1-2"><h1>Dashboard</h1></div>
@@ -121,100 +152,22 @@
             @if(Breadcrumbs::exists())
                 {!! Breadcrumbs::render() !!}
             @endif
-            {{-- <div class="pure-g"> --}}
-            <div class="box">
-                <div class="l-box">		
-                            @include('partials.flash')
-                            @yield('content')						
-                </div>
+            <div class="l-box">		
+                        @include('partials.flash')
+                        @yield('content')						
             </div>
-                {{-- <div class="pure-u-1-2 box">
-                    <div class="l-box">
-                        <div class="header">
-                            <h3 class="header-title">Message</h3>
-                        </div>
-                        <div class="box-content">
-                            
-                            <form class="pure-form pure-form-stacked">
-                                <div class="pure-g">
-                                    <div class="pure-u-1-1">
-                                        <label for="title">Title</label>
-                                        <input id="title" type="text" class="pure-u-1-1">
-
-                                        <label for="post">Post Content</label>
-                                        <textarea id="post" rows="10" class="pure-u-1-1"></textarea>
-
-                                        <hr>
-
-                                        <button class="pure-button pure-button-primary">Save</button>
-                                        <button class="pure-button">Save in Draft</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> --}}
-            {{-- </div> --}}
-
-            {{-- <div class="pure-g">
-                <div class="pure-u-1-2 box">
-                    <div class="l-box">
-                        <div class="header">
-                            <h3 class="header-title">Messages</h3>
-                        </div>
-                        <div class="box-content">
-                            <span class="msg success"><i class="fa fa-check"></i>Message sending success!</span>
-                            <span class="msg error"><i class="fa fa-ban"></i>Message NOT sending verify errors!</span>
-                            <span class="msg alert"><i class="fa fa-exclamation-triangle"></i>Your permit geolocalization?</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="pure-u-1-2 box">
-                    <div class="l-box">
-                        <div class="header">
-                            <h3 class="header-title">Lists Content</h3>
-                        </div>
-                        <div class="box-content">
-                            <p>adfas</p>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- <div class="pure-g">
-                <div class="pure-u-4-5">
-                    <div class="l-box">
-                        <div class="header">
-                            <h3 class="header-title">Edit Item</h3>
-                        </div>
-                        <div class="box-content">
-                            <p>Content</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="pure-u-1-5">
-                    <div class="l-box">
-                        <div class="header">
-                            <h3 class="header-title">Sidebar</h3>
-                        </div>
-                        <div class="box-content">
-                            <p>Sidebar content</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div> --}}
-
+            </div>
         </div>
     </div>
 
-
+<!-- JavaScripts -->
+@yield('before-scripts')
 <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script>
 <script type="text/javascript">
     $('div.alert').not('alert-important');//.delay(3000).slideUp(300);
 </script>
 <script type="text/javascript" src="{{ asset('assets/functions.js') }}"></script>
-@yield('scripts')
+@yield('after-scripts')
 </div>
 
 </body>

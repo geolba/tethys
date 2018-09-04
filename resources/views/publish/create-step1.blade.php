@@ -241,7 +241,7 @@
 
 @stop
 
-@section('scripts')
+@section('after-scripts')
     {{-- <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script> --}}
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

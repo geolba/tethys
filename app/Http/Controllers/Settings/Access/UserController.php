@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers\Settings\Access;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
@@ -28,7 +28,7 @@ class UserController extends Controller
         $users = User::with('roles')
         ->orderBy('id', 'DESC')
         ->paginate(5);
-        return view('settings.user.user', compact('users'))
+        return view('settings.access.user.user', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         //$roles = Role::pluck('name','name')->all();
         $roles = Role::all('id', 'name');
-        return view('settings.user.create', compact('roles'));
+        return view('settings.access.user.create', compact('roles'));
     }
 
     /**
@@ -80,7 +80,7 @@ class UserController extends Controller
         }
 
         return redirect()
-            ->route('settings.user.index')
+            ->route('access.user.index')
             ->with('success', 'User has been created successfully');
     }
 
@@ -93,7 +93,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('settings.user.show', compact('user'));
+        return view('settings.access.user.show', compact('user'));
     }
 
     /**
@@ -110,7 +110,7 @@ class UserController extends Controller
         //$userRoles = $user->roles->pluck('name','name')->all();
         $checkeds = $user->roles->pluck('id')->toArray();
 
-        return view('settings.user.edit', compact('user', 'roles', 'checkeds'));
+        return view('settings.access.user.edit', compact('user', 'roles', 'checkeds'));
     }
 
     /**
@@ -150,7 +150,7 @@ class UserController extends Controller
 
         //return back()->with('flash_message', 'user successfully updated.');
         return redirect()
-            ->route('settings.user.index')
+            ->route('access.user.index')
             ->with('flash_message', 'User successfully edited.');
     }
 
@@ -167,7 +167,7 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()
-            ->route('settings.user.index')
+            ->route('access.user.index')
             ->with('flash_message', 'User successfully deleted.');
     }
 }

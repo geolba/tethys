@@ -10,7 +10,7 @@
 
 <div class="pure-g box-content">
     <div class="pure-u-1 pure-u-md-2-3">  
-        <a class="pure-button button-small is-primary" href="{{ route('role.create') }}">
+        <a class="pure-button button-small is-primary" href="{{ route('access.role.create') }}">
             <i class="fa fa-plus-circle"></i>
             <span>Create New Role</span>
         </a> 
@@ -34,7 +34,7 @@
                         @endforeach
                     </td>  
                     <td>                      
-                        <a class="edit" href="{{ route('role.edit', $role->id) }}">&nbsp;Edit Role</a>
+                        <a class="edit" href="{{ route('access.role.edit', $role->id) }}">&nbsp;Edit Role</a>
                     </td>                
                 
                 </tr>

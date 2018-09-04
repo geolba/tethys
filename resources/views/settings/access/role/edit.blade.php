@@ -11,7 +11,7 @@
 
     <div class="pure-u-1 pure-u-md-2-3">  
         <div>
-            <a href="{{ route('role.index') }}" class="pure-button button-small">
+            <a href="{{ route('access.role.index') }}" class="pure-button button-small">
                 <i class="fa fa-chevron-left"></i>
                 <span>BACK</span>
             </a>
@@ -29,7 +29,7 @@
         @endif
 
         <div>
-        {!! Form::model($role, ['method' => 'PATCH','route' => ['role.update', $role->id], 'class' => 'pure-form pure-form-aligned']) !!}
+        {!! Form::model($role, ['method' => 'PATCH','route' => ['access.role.update', $role->id], 'class' => 'pure-form pure-form-aligned']) !!}
         
             <fieldset>
             <div class="pure-control-group @if ($errors->has('name')) field-validation-error @endif">

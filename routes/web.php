@@ -36,47 +36,59 @@ Route::group(
 );
 
 //=================================================setting users====================================================
+Route::group(
+    [
+        'namespace' => 'Settings\Access',
+        'middleware' => ['permission:settings'],
+        'prefix' => 'settings/access',
+        'as' => 'access.'
+    ],
+    function () {
+        //Route::resource('users','UserController');
+        Route::get('user', [
+            'as' => 'user.index', 'uses' => 'UserController@index',
+        ]);
+        Route::get('user/create', [
+            'as' => 'user.create', 'uses' => 'UserController@create',
+        ]);
+        Route::post('user/store', [
+            'as' => 'user.store', 'uses' => 'UserController@store',
+        ]);
+        Route::get('user/edit/{id}', [
+            'as' => 'user.edit', 'uses' => 'UserController@edit',
+        ]);
+        Route::patch('user/update/{id}', [
+            'as' => 'user.update', 'uses' => 'UserController@update',
+        ]);
+        Route::get('user/destroy/{id}', [
+            'as' => 'user.destroy', 'uses' => 'UserController@destroy',
+        ]);
+
+         //Route::resource('users','RoleController');
+        Route::get('role', [
+            'as' => 'role.index', 'uses' => 'RoleController@index',
+        ]);
+        Route::get('role/create', [
+            'as' => 'role.create', 'uses' => 'RoleController@create',
+        ]);
+        Route::post('role/store', [
+            'as' => 'role.store', 'uses' => 'RoleController@store',
+        ]);
+        Route::get('role/edit/{id}', [
+            'as' => 'role.edit', 'uses' => 'RoleController@edit',
+        ]);
+        Route::patch('role/update/{id}', [
+            'as' => 'role.update', 'uses' => 'RoleController@update',
+        ]);
+    }
+);
+
+//=================================================setting dashboard====================================================
 Route::get('settings/', [
     'as' => 'settings.dashboard', 'uses' => 'Settings\DashboardController@index',
 ]);
 
 Route::group(['middleware' => ['permission:settings']], function () {
-    //Route::resource('users','UserController');
-    Route::get('settings/user', [
-        'as' => 'settings.user.index', 'uses' => 'Settings\UserController@index',
-    ]);
-    Route::get('settings/user/create', [
-        'as' => 'settings.user.create', 'uses' => 'Settings\UserController@create',
-    ]);
-    Route::post('settings/user/store', [
-        'as' => 'settings.user.store', 'uses' => 'Settings\UserController@store',
-    ]);
-    Route::get('settings/user/edit/{id}', [
-        'as' => 'settings.user.edit', 'uses' => 'Settings\UserController@edit',
-    ]);
-    Route::patch('settings/user/update/{id}', [
-        'as' => 'settings.user.update', 'uses' => 'Settings\UserController@update',
-    ]);
-    Route::get('settings/user/destroy/{id}', [
-        'as' => 'settings.user.destroy', 'uses' => 'Settings\UserController@destroy',
-    ]);
-
-    //Route::resource('users','RoleController');
-    Route::get('settings/role', [
-        'as' => 'role.index', 'uses' => 'Settings\RoleController@index',
-    ]);
-    Route::get('settings/role/create', [
-        'as' => 'role.create', 'uses' => 'Settings\RoleController@create',
-    ]);
-    Route::post('settings/role/store', [
-        'as' => 'role.store', 'uses' => 'Settings\RoleController@store',
-    ]);
-    Route::get('settings/role/edit/{id}', [
-        'as' => 'role.edit', 'uses' => 'Settings\RoleController@edit',
-    ]);
-    Route::patch('settings/role/update/{id}', [
-        'as' => 'role.update', 'uses' => 'Settings\RoleController@update',
-    ]);
 
     //=============================================================================================================
     //=================================================setting dataset=============================================
@@ -282,7 +294,7 @@ Route::get('settings/book/delete/{id}', [
 // 'password' => 'Auth\PasswordController',
 // ]);
 //Auth::routes();
-$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+$this->get('login', 'Auth\LoginController@showLoginForm')->name('access.login');
 $this->post('login', 'Auth\LoginController@login');
 $this->get('logout', 'Auth\LoginController@logout')->name('logout');
 // Registration Routes...

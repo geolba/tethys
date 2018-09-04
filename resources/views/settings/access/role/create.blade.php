@@ -8,13 +8,13 @@
 </div>
 <div class="box-content">	
     <div>		
-            <a href="{{ route('role.index') }}" class="pure-button button-small">           
+            <a href="{{ route('access.role.index') }}" class="pure-button button-small">           
             <i class="fa fa-chevron-left"></i>
             <span>BACK</span>
         </a>
     </div>
 
-    {!! Form::open(['route' => 'role.store', 'method'=>'POST', 'class' => 'pure-form pure-form-aligned']) !!}
+    {!! Form::open(['route' => 'access.role.store', 'method'=>'POST', 'class' => 'pure-form pure-form-aligned']) !!}
         
         <div class="pure-control-group @if ($errors->has('name')) field-validation-error @endif">
             {!! Form::label('name', 'Name:', ['class' => 'control-label']) !!}
