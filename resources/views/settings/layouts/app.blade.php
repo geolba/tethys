@@ -8,16 +8,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
-    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />
-    
-    <!-- <script src="bower_components/chart.js/dist/Chart.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
+    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />   
     <!--<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">-->
     <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" />
     
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/pagination.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/backend/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/backend/pagination.css') }}">
 </head>
 <body>
 
@@ -84,9 +81,26 @@
                 </li>
                 @endpermission
 
+                @permission('page')
+                <li class="{{ active_class(Active::checkUriPattern('settings/page*')) }}">
+                    <a class="pure-menu-link" href="{{ route('settings.page.index') }}">
+                        <i class="fa fa-file-text"></i>
+                        <span>{{ trans('labels.backend.pages.title') }}</span>
+                    </a>
+                </li>
+                @endpermission
+
               
                 <li class="treeview">
-                    <h2 class="pure-menu-heading">Access Management <span class="fa fa-angle-down"></h2>              
+                    <h2 class="pure-menu-heading">                       
+                        <span>{{ trans('menus.backend.access.title') }}</span>
+                        <i class="fa fa-angle-down"></i>
+                    </h2>    
+                    {{-- <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>{{ trans('menus.backend.access.title') }}</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>              --}}
                     <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('access.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('access.*'), 'display: block;') }}">
                         @if (Auth::guest())
                         <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
@@ -108,16 +122,6 @@
                             <a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a>
                         </li> 
                         @endif
-
-
-
-                        {{-- @if (Auth::guest())
-                        <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
-                        </li>                
-                        @else 
-                        <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
-                        @endif --}}
                     </ul>
                 </li>
               
@@ -144,18 +148,23 @@
         </div>
 
         <div class="content">
-            {{-- <div class="breadcrumb">
-                <i class="fa fa-home"></i><a href="#" rel="Dashboard">Dashboard</a>
-                <i class="fa fa-angle-right"></i><a href="#" rel="Dashboard">Sales</a>
-            </div> --}}
-            {{-- @yield('breadcrumbs') --}}
-            @if(Breadcrumbs::exists())
-                {!! Breadcrumbs::render() !!}
-            @endif
-            <div class="l-box">		
-                        @include('partials.flash')
-                        @yield('content')						
-            </div>
+                <section class="content-header">
+                    @yield('page-header')
+                    {{-- <div class="breadcrumb">
+                        <i class="fa fa-home"></i><a href="#" rel="Dashboard">Dashboard</a>
+                        <i class="fa fa-angle-right"></i><a href="#" rel="Dashboard">Sales</a>
+                    </div> --}}
+                    {{-- @yield('breadcrumbs') --}}                   
+                    <!-- Breadcrumbs would render from routes/breadcrumb.php -->
+                    @if(Breadcrumbs::exists())
+                        {!! Breadcrumbs::render() !!}
+                    @endif
+                </section>
+            
+                <section class="l-box">		
+                            @include('partials.flash')
+                            @yield('content')						
+                </section>
             </div>
         </div>
     </div>
@@ -166,7 +175,7 @@
 <script type="text/javascript">
     $('div.alert').not('alert-important');//.delay(3000).slideUp(300);
 </script>
-<script type="text/javascript" src="{{ asset('assets/functions.js') }}"></script>
+<script type="text/javascript" src="{{ asset('backend/functions.js') }}"></script>
 @yield('after-scripts')
 </div>
 

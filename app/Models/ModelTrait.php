@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
+
 trait ModelTrait
 {
     /**
@@ -9,7 +11,7 @@ trait ModelTrait
      */
     public function getEditButtonAttribute($permission, $route)
     {
-        if (access()->allow($permission)) {
+        if (Auth::user()->can($permission)) {
             return '<a href="'.route($route, $this).'" class="btn btn-flat btn-default">
                     <i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-pencil"></i>
                 </a>';
@@ -21,7 +23,7 @@ trait ModelTrait
      */
     public function getDeleteButtonAttribute($permission, $route)
     {
-        if (access()->allow($permission)) {
+        if (Auth::user()->can($permission)) {
             return '<a href="'.route($route, $this).'" 
                     class="btn btn-flat btn-default" data-method="delete"
                     data-trans-button-cancel="'.trans('buttons.general.cancel').'"

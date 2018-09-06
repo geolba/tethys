@@ -1,8 +1,12 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+
+use App\Exceptions\GeneralException;
+use App\Models\Page;
 
 class HomeController extends Controller
 {
@@ -40,7 +44,7 @@ class HomeController extends Controller
         // }
 
         // }
-        return view('rdr.home.index');
+        return view('frontend.home.index');
     }
 
      /**
@@ -50,7 +54,7 @@ class HomeController extends Controller
      */
     public function contact(): View
     {
-        return view('rdr.home.contact');
+        return view('frontend.home.contact');
     }
 
     /**
@@ -60,7 +64,7 @@ class HomeController extends Controller
      */
     public function imprint(): View
     {
-        return view('rdr.home.imprint');
+        return view('frontend.home.imprint');
     }
 
     /**
@@ -70,7 +74,7 @@ class HomeController extends Controller
      */
     public function about(): View
     {
-        return view('rdr.home.about');
+        return view('frontend.home.about');
     }
 
     /**
@@ -80,6 +84,21 @@ class HomeController extends Controller
      */
     public function news(): View
     {
-        return view('rdr.home.news');
+        return view('frontend.home.news');
+    }
+
+    /**
+     * show page by $page_slug.
+     */
+    public function showPage($slug)
+    {
+        // $result = $pages->findBySlug($slug);
+        if (!is_null(Page::query()->wherePage_slug($slug)->firstOrFail())) {
+            $result = Page::query()->wherePage_slug($slug)->firstOrFail();
+            return view('frontend.pages.index')
+            ->withpage($result);
+        } else {
+            throw new GeneralException(trans('exceptions.backend.access.pages.not_found'));
+        }
     }
 }

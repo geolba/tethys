@@ -6,7 +6,7 @@
   <div id="titlemain-wrapper">
     <div class="frontdoor_pagination">
     {{-- <a id="pagination-link-hitlist" href="{{ route('settings.document') }}">BACK</a> --}}
-		<a href="{{ route('documents') }}" class="pure-button">
+		<a href="{{ route('frontend.datasets') }}" class="pure-button">
 			<span class="glyphicon glyphicon-chevron-left" ></span> BACK
 		</a>		
 

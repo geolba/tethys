@@ -170,6 +170,7 @@ return [
         // 'Illuminate\Html\HtmlServiceProvider',
         // 'Collective\Html\HtmlServiceProvider',
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -179,7 +180,6 @@ return [
         'App\Providers\ConfigServiceProvider',
         'App\Providers\EventServiceProvider',
         'App\Providers\RouteServiceProvider',
-
          // List off others providers...
          App\Providers\SolariumServiceProvider::class,
         
@@ -240,6 +240,7 @@ return [
         // 'Form' => 'Collective\Html\FormFacade',
         // 'Html' => 'Collective\Html\HtmlFacade',
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        //'Datatables' => Yajra\DataTables\Facades\DataTables::class
 
     ],
 

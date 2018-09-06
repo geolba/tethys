@@ -83,7 +83,21 @@ Route::group(
     }
 );
 
-//=================================================setting dashboard====================================================
+/*
+ * CMS Pages Management=============================================================================
+ */
+Route::group(['namespace' => 'Settings', 'prefix' => 'settings', 'as' => 'settings.',], function () {
+    Route::resource('page', 'PageController', ['except' => ['show', 'update']]);
+
+    Route::patch('page/{page}', [
+        'as' => 'page.update', 'uses' => 'PageController@update',
+    ]);
+    // //For DataTables
+    Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
+});
+
+
+//=================================================setting home - dashboard=======================================
 Route::get('settings/', [
     'as' => 'settings.dashboard', 'uses' => 'Settings\DashboardController@index',
 ]);
@@ -176,33 +190,52 @@ Route::group(['middleware' => ['permission:settings']], function () {
     ]);
 });
 
-//=================================================home====================================================
-Route::get('/', [
-    'as' => 'home.index', 'uses' => 'HomeController@index',
-]);
-Route::get('/contact', [
-    'as' => 'home.contact', 'uses' => 'HomeController@contact',
-]);
-Route::get('/imprint', [
-    'as' => 'home.imprint', 'uses' => 'HomeController@imprint',
-]);
-Route::get('/about', [
-    'as' => 'home.about', 'uses' => 'HomeController@about',
-]);
-Route::get('/news', [
-    'as' => 'home.news', 'uses' => 'HomeController@news',
-]);
-Route::get('/dataset', [
-    'as' => 'documents', 'uses' => 'PagesController@documents',
-]);
-Route::get('/dataset/{id}', [
-    'as' => 'document.show', 'uses' => 'PagesController@show',
-]);
-//=================================================Crawlers====================================================
-Route::get('sitelinks', [
-    'as' => 'sitelinks.index', 'uses' => 'SitelinkController@index',
-]);
-Route::get('sitelinks/list/{year}', 'SitelinkController@list')->name('sitelinks.list');
+//=================================================home fronmtend controller=======================================
+/*
+ * Frontend Routes
+ * Namespaces indicate folder structure
+ */
+Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
+    // includeRouteFiles(__DIR__.'/Frontend/');
+    Route::get('/', [
+        'as' => 'home.index', 'uses' => 'HomeController@index',
+    ]);
+    Route::get('/contact', [
+        'as' => 'home.contact', 'uses' => 'HomeController@contact',
+    ]);
+    Route::get('/imprint', [
+        'as' => 'home.imprint', 'uses' => 'HomeController@imprint',
+    ]);
+    Route::get('/about', [
+        'as' => 'home.about', 'uses' => 'HomeController@about',
+    ]);
+    Route::get('/news', [
+        'as' => 'home.news', 'uses' => 'HomeController@news',
+    ]);
+
+    //=================================================Crawlers====================================================
+    Route::get('sitelinks', [
+       'as' => 'sitelinks.index', 'uses' => 'SitelinkController@index',
+    ]);
+    Route::get('sitelinks/list/{year}', 'SitelinkController@list')->name('sitelinks.list');
+
+    Route::get('/dataset', [
+        'as' => 'datasets', 'uses' => 'PagesController@datasets',
+    ]);
+    Route::get('/dataset/{id}', [
+        'as' => 'dataset.show', 'uses' => 'PagesController@show',
+    ]);
+
+    /*
+    * Show pages
+    */
+    Route::get('pages/{slug}', 'HomeController@showPage')->name('pages.show');
+});
+
+
+
+
+
 //=================================================solr search====================================================
 Route::get('/index', [
     'as' => 'search.index', 'uses' => 'SearchController@index',
@@ -288,7 +321,7 @@ Route::get('settings/book/delete/{id}', [
     'as' => 'settings.book.delete', 'uses' => 'BookController@delete',
 ]);
 
-//===============================================================================================================
+//====================================authentication===========================================================================
 // Route::controllers([
 // 'auth' => 'Auth\AuthController',
 // 'password' => 'Auth\PasswordController',

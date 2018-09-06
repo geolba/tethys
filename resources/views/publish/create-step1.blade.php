@@ -33,7 +33,12 @@
                         <span class="required" title="Dieses Feld muss ausgefüllt werden.">*</span>
                     </small>
                     {{-- <input name="rights" value="0" type="hidden"> --}}
-                    <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights" true-value="1" false-value="0">
+                    <label>
+                        <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights" true-value="1" false-value="0"> 
+                        <p>                  
+                        I accept {!! link_to_route('frontend.pages.show', trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*', ['page_slug'=>'terms-and-conditions']) !!} 
+                        </p>
+                    </label>
                 </div>
             </fieldset>
 
@@ -244,10 +249,10 @@
 @section('after-scripts')
     {{-- <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script> --}}
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <!-- production version, optimized for size and speed -->
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script type="text/javascript" src="{{  asset('js/app.js') }}"></script>
-    {{-- <script type="text/javascript" src="{{ resource_path('assets\js\app.js') }}"></script> --}}
+    {{-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>--}}
+   
+    {{-- <script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
+    <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>
 @stop
 

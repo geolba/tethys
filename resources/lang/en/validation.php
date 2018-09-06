@@ -102,6 +102,35 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'backend' => [
+            'create-dataset' => [
+                // 'email'                     => 'E-mail Address',
+                // 'firstName'                 => 'First Name',
+                // 'lastName'                  => 'Last Name',
+                // 'password'                  => 'Password',
+                // 'address'                   => 'Address',
+                // 'country'                   => 'Country',
+                // 'state'                     => 'Select State',
+                // 'city'                      => 'Select City',
+                // 'zipcode'                   => 'Zip Code',
+                // 'ssn'                       => 'SSN',
+                // 'password_confirmation'     => 'Password Confirmation',
+                // 'old_password'              => 'Old Password',
+                // 'new_password'              => 'New Password',
+                // 'new_password_confirmation' => 'New Password Confirmation',
+                'terms_and_conditions'      => 'terms and conditions',
+            ],
+            'pages' => [
+                'title'           => 'Title',
+                'description'     => 'Description',
+                'cannonical_link' => 'Cannonical Link',
+                'seo_title'       => 'SEO Title',
+                'seo_keyword'     => 'SEO Keyword',
+                'seo_description' => 'SEO Description',
+                'is_active'       => 'Active',
+            ],
+        ],
+    ],
 
 ];

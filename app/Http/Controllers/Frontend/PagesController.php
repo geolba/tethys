@@ -1,13 +1,8 @@
 <?php
+namespace App\Http\Controllers\Frontend;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Dataset;
-use App\Book;
-use App\Category;
-use App\Shelf;
-use App\Periode;
-use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -19,11 +14,11 @@ class PagesController extends Controller
         // $this->middleware('auth');
     }
 
-    public function documents() : View
+    public function datasets() : View
     {
         // $books = Book::with('category', 'shelf')->orderByTitle()->get();
         $documents = Dataset::orderByType()->get();
-        return view('rdr.document.documents', compact('documents'));
+        return view('frontend.dataset.dataset', compact('documents'));
     }
 
     /**
@@ -37,6 +32,6 @@ class PagesController extends Controller
         $document = Dataset::findOrFail($id);
         $document->load('titles');
         $document->load('abstracts');
-        return view('rdr.document.show', compact('document'));
+        return view('frontend.dataset.show', compact('document'));
     }
 }

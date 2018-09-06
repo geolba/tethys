@@ -51,3 +51,8 @@ Breadcrumbs::register('settings.document.show', function ($breadcrumbs, $id) {
     $breadcrumbs->parent('settings.document');
     $breadcrumbs->push('show ' . $id, route('settings.document.show', $id));
 });
+
+Breadcrumbs::register('settings.page.index', function ($breadcrumbs) {
+    $breadcrumbs->parent('settings.dashboard');
+    $breadcrumbs->push('Page Management', route('settings.page.index'));
+});

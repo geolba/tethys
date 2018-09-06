@@ -3,9 +3,24 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-// require('./bootstrap');
+// window.axios = require('axios');
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/**
+ * Next we will register the CSRF Token as a common header with Axios so that
+ * all outgoing HTTP requests automatically have it attached. This is just
+ * a simple convenience so we don't have to attach every token manually.
+ */
+// let token = document.head.querySelector('meta[name="csrf-token"]');
+
+// if (token) {
+//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// }
+// else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
 // window.Vue = require('vue');
-Vue.prototype.$http = axios;
+// Vue.prototype.$http = axios;
 
 // Vue.component('example', require('./components/Example.vue'));
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
@@ -158,8 +173,6 @@ const app = new Vue({
                         var error = errorObject.response.data.error;
                         this.errors.push(error.message);
                     }
-
-
                     this.currentStatus = STATUS_FAILED;
                 });
         },

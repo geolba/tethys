@@ -316,7 +316,7 @@ class RequestController extends Controller
      */
     private function _addLandingPageAttribute(\DOMNode $document, $dataid)
     {
-        $url = route('document.show', $dataid);
+        $url = route('frontend.dataset.show', $dataid);
 
         $owner = $document->ownerDocument;
         $attr = $owner->createAttribute('landingpage');

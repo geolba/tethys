@@ -56,8 +56,8 @@
                     <div class="block">
                         <h3 class="block-title">About RDR</h3>
                         <ul>
-                            <li><a href="{{ URL::route('home.about') }}">About Us</a></li>
-                            <li><a href="{{ URL::route('home.news') }}">News</a></li>
+                            <li><a href="{{ URL::route('frontend.home.about') }}">About Us</a></li>
+                            <li><a href="{{ URL::route('frontend.home.news') }}">News</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,9 +68,11 @@
                         <h3 class="block-title">TOOLS &amp; SUPPORT</h3>
                         <ul id="secondary-nav" class="nav">
                             {{-- <li>{{ Request::ip() }}</li> --}}
-                            <li class="first"><a href="{{ URL::route('home.contact') }}">Contact</a></li>
-                            <li><a href="{{ URL::route('home.imprint') }}">Impressum</a></li>
-                            <li class="last"><a href="{{ URL::route('sitelinks.index') }}">Sitelinks</a></li>
+                            <li class="first"><a href="{{ URL::route('frontend.home.contact') }}">Contact</a></li>
+                            <li><a href="{{ URL::route('frontend.home.imprint') }}">Impressum</a></li>
+                            <li class="last"><a href="{{ URL::route('frontend.sitelinks.index') }}">Sitelinks</a></li>
+                            <li class="last"><a href="{!! URL::route('frontend.pages.show', ['page_slug'=>'terms-and-conditions']) !!}">Terms and Conditions</a></li>
+
                             <li><a target="_blank" href="https://github.com/geolba"><i class="fa fa-github"></i> rdr bei GitHub</a></li>
                         </ul>
                     </div>

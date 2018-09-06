@@ -16,5 +16,8 @@
     "lodash": "^4.17.10",
     "vue": "^2.5.7"
   },
-  "dependencies": {}
+  "dependencies": {
+    "datatables.net": "^1.10.15",
+    "datatables.net-buttons": "^1.3.1"
+  }
 }

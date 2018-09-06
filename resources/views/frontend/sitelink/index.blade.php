@@ -8,7 +8,7 @@
 
             <span>
                 <?php foreach ($years as $year) : ?>
-                <a title="documents published in year <?= $year ?>" href="{{ URL::route('sitelinks.list',['year' => $year]) }}"><?= $year ?>
+                <a title="datasets published in year <?= $year ?>" href="{{ URL::route('frontend.sitelinks.list',['year' => $year]) }}"><?= $year ?>
                 </a>
                 <?php endforeach; ?>
             </span>
@@ -20,7 +20,7 @@
                         <section class="post">
                             <header class="post-header">
                                 <h2 class="post-title">
-                                    <a href="{{ URL::route('document.show',['id' =>$document->id]) }}"><?= $document->type;  $document->id; ?>
+                                    <a href="{{ URL::route('frontend.dataset.show',['id' =>$document->id]) }}"><?= $document->type;  $document->id; ?>
                                     </a>
                                 </h2>
                             </header>
@@ -47,4 +47,4 @@
             </div>
         </div>        
 </div>
-        @endsection
+@endsection

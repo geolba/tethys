@@ -6,17 +6,27 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pages\IndexPageRequest;
+use App\Http\Requests\Pages\UpdatePageRequest;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Exceptions\GeneralException;
+use App\Events\Pages\PageUpdated;
 
 class PageController extends Controller
 {
+    /**
+     * Associated Repository Model.
+     */
+    const MODEL = Page::class;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(IndexPageRequest $request)
+    public function index(IndexPageRequest $request): View
     {
-        return new view('settings.pages.index');
+        return view('settings.page.index');
     }
 
     /**
@@ -59,19 +69,34 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        return view('settings.page.edit')
+        ->withPage($page);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  @param \App\Http\Requests\Pages\UpdatePageRequest $request
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Page $page)
+    public function update(UpdatePageRequest $request, Page $page) : RedirectResponse
     {
-        //
+        // $this->pages->update($page, $request->except(['_method', '_token']));
+        $input = $request->except(['_method', '_token']);
+         // Making extra fields
+        $input['page_slug'] = str_slug($input['title']);
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        $input['updated_by'] = \Auth::user()->id;
+
+        if ($page->update($input)) {
+            event(new PageUpdated($page));
+
+            return redirect()
+                ->route('settings.page.index')
+                ->with('flash_message', trans('alerts.backend.pages.updated'));
+        }
+        throw new GeneralException(trans('exceptions.backend.pages.update_error'));
     }
 
     /**
@@ -83,5 +108,10 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         //
+    }
+
+    public function query()
+    {
+        return call_user_func(static::MODEL.'::query');
     }
 }
