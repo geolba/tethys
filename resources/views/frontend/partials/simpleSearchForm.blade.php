@@ -1,5 +1,5 @@
 <div class="sidebar-simplesearch">
-    {!! Form::open(array('route' => 'queries','method' => 'POST', 'class'=>'pure-form')) !!}
+    {!! Form::open(array('route' => 'frontend.queries','method' => 'POST', 'class'=>'pure-form')) !!}
   
      
            
@@ -23,7 +23,7 @@
             }
             ?>
 
-            <a id="link-solrsearch-all-documents" class="link" href="{{ URL::route('queries1',['searchtype' => 'all']) }}"><?= $searchAllDocsText; ?>
+            <a id="link-solrsearch-all-documents" class="link" href="{{ URL::route('frontend.queries1',['searchtype' => 'all']) }}"><?= $searchAllDocsText; ?>
             </a>
             <!--<a class="link" href="">'resources.solrsearch_title_latest'</a>-->
 

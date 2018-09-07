@@ -1,12 +1,10 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-
 use App\Exceptions\GeneralException;
+use App\Http\Controllers\Controller;
 use App\Models\Page;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -45,9 +43,10 @@ class HomeController extends Controller
 
         // }
         return view('frontend.home.index');
+        // return view('welcome');
     }
 
-     /**
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
@@ -96,7 +95,7 @@ class HomeController extends Controller
         if (!is_null(Page::query()->wherePage_slug($slug)->firstOrFail())) {
             $result = Page::query()->wherePage_slug($slug)->firstOrFail();
             return view('frontend.pages.index')
-            ->withpage($result);
+                ->withpage($result);
         } else {
             throw new GeneralException(trans('exceptions.backend.access.pages.not_found'));
         }

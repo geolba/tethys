@@ -15,10 +15,11 @@ let mix = require('laravel-mix');
 // .sass('resources/assets/sass/app1.scss', 'public/css')
 
 mix.js('resources/assets/js/datasetPublish.js', 'public/backend/publish')
+    .js('resources/assets/js/app.js', 'public/js')
     .scripts([
-        'node_modules/datatables.net/js/jquery.dataTables.js',     
+        'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
-        'node_modules/datatables.net-buttons/js/buttons.flash.js',      
+        'node_modules/datatables.net-buttons/js/buttons.flash.js',
         'node_modules/datatables.net-buttons/js/buttons.html5.js',
         'node_modules/datatables.net-buttons/js/buttons.print.js',
     ], 'public/js/dataTable.js');

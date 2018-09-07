@@ -18,5 +18,4 @@
         </strong>
     </p>
     <?php endif; ?>
-
 </div>

@@ -12,7 +12,7 @@
     <div class="pure-u-1 pure-u-md-2-3">
         <div class="content">
             <h1>Suche</h1>
-            @include('rdr.solrsearch.simpleSearchForm')
+            @include('frontend.partials.simpleSearchForm')
 
             <div id="searchbar">
                 @if (isset($results))
@@ -25,7 +25,7 @@
                             @endif
 
                             @if (!is_null($result->getAsset('title_output')))
-                            <a href="{{ route('document.show', $result->getId()) }}">
+                            <a href="{{ route('frontend.dataset.show', $result->getId()) }}">
                                 {{ $result->getAsset('title_output') }}
                             </a>
                             @else
@@ -38,9 +38,9 @@
                         </dt>
 
 
-                        @if (!is_null($result->getAsset( 'author' )))
+                        @if (!is_null($result->getAsset('author')))
                         <dt class="results_author">
-                            @foreach($result->getAsset( 'author' ) as $authorIndex => $author)
+                            @foreach($result->getAsset('author') as $authorIndex => $author)
                             <a>{{ htmlspecialchars($author)}}</a>
                             @endforeach
                         </dt>
@@ -55,7 +55,7 @@
                 </div>
                 @endif
 
-                @include('rdr.solrsearch.pagination')
+                @include('frontend.solrsearch.pagination')
             </div>
 
         </div> 

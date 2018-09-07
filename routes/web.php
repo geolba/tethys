@@ -190,7 +190,7 @@ Route::group(['middleware' => ['permission:settings']], function () {
     ]);
 });
 
-//=================================================home fronmtend controller=======================================
+//=================================================home frontend controller=======================================
 /*
  * Frontend Routes
  * Namespaces indicate folder structure
@@ -230,23 +230,20 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     * Show pages
     */
     Route::get('pages/{slug}', 'HomeController@showPage')->name('pages.show');
+
+    //=================================================solr search====================================================
+    Route::get('/index', [
+        'as' => 'search.index', 'uses' => 'SearchController@index',
+    ]);
+    Route::post('/queries', [
+        'as' => 'queries', 'uses' => 'SearchController@search',
+    ]);
+    Route::get('/queries/', [
+        'as' => 'queries1', 'uses' => 'SearchController@search',
+    ]);
+    Route::get('/ping', 'SearchController@ping');
 });
 
-
-
-
-
-//=================================================solr search====================================================
-Route::get('/index', [
-    'as' => 'search.index', 'uses' => 'SearchController@index',
-]);
-Route::post('/queries', [
-    'as' => 'queries', 'uses' => 'SearchController@search',
-]);
-Route::get('/queries/', [
-    'as' => 'queries1', 'uses' => 'SearchController@search',
-]);
-Route::get('/ping', 'SearchController@ping');
 //=================================================borrow====================================================
 Route::get('borrow', [
     'as' => 'borrow.borrow', 'uses' => 'BorrowController@index',

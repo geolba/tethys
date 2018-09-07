@@ -24,7 +24,7 @@
                         <div id="topmenu-inner">
                             <nav class="pure-menu pure-menu-open pure-menu-horizontal">
                                 <ul class="pure-menu-list">
-                                    <li class="pure-menu-item {{ Route::currentRouteName() == 'home.index' ? 'active' : '' }}">
+                                    <li class="pure-menu-item {{ Route::currentRouteName() == 'frontend.home.index' ? 'active' : '' }}">
                                         <a class="pure-menu-link" href="{{ url('/') }}">HOME</a>
                                     </li>
                                    
@@ -51,8 +51,8 @@
 
                                     @else
 
-                                    <li class="pure-menu-item {{ Route::currentRouteName() == 'search.index' ? 'active' : '' }}">
-                                        <a class="pure-menu-link" href="{{ route('search.index') }}">
+                                    <li class="pure-menu-item {{ Route::currentRouteName() == 'frontend.search.index' ? 'active' : '' }}">
+                                        <a class="pure-menu-link" href="{{ route('frontend.search.index') }}">
                                             <i class="fa fa-search" aria-hidden="true"></i>
                                             SEARCH
                                         </a>

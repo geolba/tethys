@@ -99,11 +99,11 @@
                     </p>-->
                 </div>
                 <div class="pure-u-1 pure-u-md-1-4 footer-funded">
-                @role('administrator')
+                {{-- @role('administrator')
                     I'm an administrator!
                 @else
                     I'm not an administrator...
-                @endrole
+                @endrole --}}
                 </div>
                 <div class="pure-u-1 pure-u-md-1-4 footer-funded">
                 </div>
