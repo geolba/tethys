@@ -1,7 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Dataset;
 
 class Project extends Model
 {
@@ -18,7 +19,7 @@ class Project extends Model
     public function documents()
     {
         //model, foreign key on the Document model is project_id, local id of category
-        return $this->hasMany(\App\Dataset::class, 'project_id', 'id');
+        return $this->hasMany(Dataset::class, 'project_id', 'id');
     }
 
     // public function books()

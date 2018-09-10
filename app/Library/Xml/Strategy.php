@@ -1,7 +1,7 @@
 <?php
 namespace App\Library\Xml;
 
-use App\Dataset;
+use App\Models\Dataset;
 use DOMDocument;
 
 /**

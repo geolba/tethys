@@ -5,14 +5,12 @@ use App\Http\Controllers\Controller;
 use App\Book;
 use App\Person;
 use App\Transaction;
-use App\Project;
+use App\Models\Project;
 use App\Http\Requests\PeminjamanRequest;
 use Illuminate\Http\Request;
 
 class BorrowController extends Controller
 {
-
-
     public function __construct()
     {
         $this->middleware('auth');

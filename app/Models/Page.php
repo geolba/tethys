@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
+use App\Models\User;
 use App\Models\ModelTrait;
 
 class Page extends Model
@@ -62,7 +62,8 @@ class Page extends Model
      */
     public function getViewButtonAttribute()
     {
-        return '<a target="_blank" href="'. route('frontend.pages.show', $this->page_slug) .'" class="btn btn-flat btn-default">
+        return '<a target="_blank" href="
+                '. route('frontend.pages.show', $this->page_slug) .' " class="btn btn-flat btn-default">
                     <i data-toggle="tooltip" data-placement="top" title="View Page" class="fa fa-eye"></i>
                 </a>';
     }

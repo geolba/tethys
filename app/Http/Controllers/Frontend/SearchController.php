@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Book;
-use App\Dataset;
+use App\Models\Dataset;
 use App\Http\Controllers\Controller;
 use App\Library\Search\Navigation;
 use App\Library\Util\SolrSearchSearcher;

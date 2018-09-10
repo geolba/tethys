@@ -2,12 +2,12 @@
 //https://www.5balloons.info/multi-page-step-form-in-laravel-with-validation/
 namespace App\Http\Controllers\Publish;
 
-use App\Dataset;
+use App\Models\Dataset;
 use App\Http\Controllers\Controller;
-use App\License;
+use App\Models\License;
 use App\Models\File;
-use App\Person;
-use App\Project;
+use App\Models\Person;
+use App\Models\Project;
 use App\Models\Title;
 use App\Rules\RdrFiletypes;
 use App\Rules\RdrFilesize;

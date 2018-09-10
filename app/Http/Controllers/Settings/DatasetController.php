@@ -2,9 +2,9 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Dataset;
-use App\Project;
-use App\License;
+use App\Models\Dataset;
+use App\Models\Project;
+use App\Models\License;
 use App\Models\Title;
 use App\Http\Requests\DocumentRequest;
 use Illuminate\View\View;
@@ -33,9 +33,6 @@ class DatasetController extends Controller
         } else {
             $state =  "published";
         }
-        
-       
-
         $data =  $request->all();
 
         if ($searchType == "simple") {

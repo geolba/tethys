@@ -1,10 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Library\Xml\DatasetExtension;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Collection;
+use App\Models\License;
+use App\Models\Project;
 use App\Models\Title;
+use App\Models\Person;
+use App\Models\XmlCache;
+use Illuminate\Database\Eloquent\Model;
 
 class Dataset extends Model
 {
@@ -23,7 +28,7 @@ class Dataset extends Model
         'creating_corporation',
         'project_id',
         'embargo_date',
-        'belongs_to_bibliography'
+        'belongs_to_bibliography',
     ];
     /**
      * The attributes that should be mutated to dates.
@@ -44,17 +49,17 @@ class Dataset extends Model
     }
 
     /**
-     * Get the project that the product belongs to.
+     * Get the project that the dataset belongs to.
      */
     public function project()
     {
-        return $this->belongsTo(\App\Project::class, 'project_id', 'id');
+        return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 
     public function collections()
     {
         return $this
-            ->belongsToMany(\App\Collection::class, 'link_documents_collections', 'document_id', 'collection_id');
+            ->belongsToMany(Collection::class, 'link_documents_collections', 'document_id', 'collection_id');
     }
 
     #region [person table]
@@ -62,7 +67,7 @@ class Dataset extends Model
     //return all persons attached to this film
     public function persons()
     {
-        return $this->belongsToMany(\App\Person::class, 'link_documents_persons', 'document_id', 'person_id')
+        return $this->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
             ->withPivot('role');
     }
 
@@ -74,18 +79,18 @@ class Dataset extends Model
     public function authors()
     {
         return $this
-            ->belongsToMany(\App\Person::class, 'link_documents_persons', 'document_id', 'person_id')
+            ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
             ->wherePivot('role', 'author');
     }
 
     /**
      * Add author to dataset
      *
-     * @param \App\User $user user to add
+     * @param Person $user user to add
      *
      * @return void
      */
-    public function addAuthor(\App\User $user): void
+    public function addAuthor(Person $user): void
     {
         $this->persons()->save($user, ['role' => 'author']);
     }
@@ -98,7 +103,7 @@ class Dataset extends Model
     public function contributors()
     {
         return $this
-            ->belongsToMany(\App\Person::class, 'link_documents_persons', 'document_id', 'person_id')
+            ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
             ->wherePivot('role', 'contributor');
     }
 
@@ -143,7 +148,7 @@ class Dataset extends Model
 
     public function licenses()
     {
-        return $this->belongsToMany(\App\License::class, 'link_documents_licences', 'document_id', 'licence_id');
+        return $this->belongsToMany(License::class, 'link_documents_licences', 'document_id', 'licence_id');
     }
 
     public function files()
@@ -154,11 +159,11 @@ class Dataset extends Model
     /**
      * Get the xml-cache record associated with the dataset.
      *
-     * @return \App\XmlCache
+     * @return \App\Models\XmlCache
      */
     public function xmlCache()
     {
-        return $this->hasOne(\App\XmlCache::class, 'document_id', 'id');
+        return $this->hasOne(XmlCache::class, 'document_id', 'id');
     }
 
     public function scopeOrderByType($query)

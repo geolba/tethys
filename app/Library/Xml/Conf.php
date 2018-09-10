@@ -1,8 +1,7 @@
 <?php
 namespace App\Library\Xml;
 
-use App\Library\Util\Searchtypes;
-use App\Dataset;
+use App\Models\Dataset;
 
 /**
  * Conf short summary.

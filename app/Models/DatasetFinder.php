@@ -1,7 +1,7 @@
 <?php
-namespace App;
+namespace App\Models;
 
-use App\Dataset;
+use App\Models\Dataset;
 
 /**
  * DocumentFinder short summary.
@@ -16,7 +16,7 @@ class DatasetFinder
      /**
      * @var \Illuminate\Database\Eloquent\Builder
      */
-    private $_select = null;
+    private $select = null;
     /**
      * Create new instance of Opus_DocumentList class.  The created object
      * allows to get custom subsets (or lists) of all existing Opus_Documents.
@@ -26,9 +26,9 @@ class DatasetFinder
         // $table = Opus_Db_TableGateway::getInstance(self::$_tableGatewayClass);
 
         // $this->_db = $table->getAdapter();
-        // $this->_select = $this->_db->select()->from(array('d' => 'documents'));
+        // $this->select = $this->_db->select()->from(array('d' => 'documents'));
 
-        $this->_select = Dataset::query(); //>select('name', 'email as user_email')
+        $this->select = Dataset::query(); //>select('name', 'email as user_email')
     }
 
     /**
@@ -39,8 +39,8 @@ class DatasetFinder
      */
     public function setServerStateInList($serverStateArray)
     {
-        $this->_select->whereIn('server_state', $serverStateArray);
-        //$this->_select->where('server_state IN (?)', $serverStateArray);
+        $this->select->whereIn('server_state', $serverStateArray);
+        //$this->select->where('server_state IN (?)', $serverStateArray);
         return $this;
     }
 
@@ -52,7 +52,7 @@ class DatasetFinder
      */
     public function setType($type)
     {
-        $this->_select->where('type', $type);
+        $this->select->where('type', $type);
         return $this;
     }
 
@@ -64,8 +64,8 @@ class DatasetFinder
      */
     public function setServerState($serverState)
     {
-        //$this->_select->where('server_state', '=', $serverState);
-        $this->_select->where('server_state', 'LIKE', "%".$serverState."%");
+        //$this->select->where('server_state', '=', $serverState);
+        $this->select->where('server_state', 'LIKE', "%".$serverState."%");
         return $this;
     }
 
@@ -76,8 +76,8 @@ class DatasetFinder
      */
     public function groupedTypesPlusCount()
     {
-        //$this->_select->reset('columns');
-        $test = $this->_select
+        //$this->select->reset('columns');
+        $test = $this->select
         //->select("type") // "count(DISTINCT id)");
         ->selectRaw('type, count(DISTINCT id) as count')
         ->groupBy('type')
@@ -93,7 +93,7 @@ class DatasetFinder
      */
     public function count()
     {
-        $this->_select->count();
+        $this->select->count();
     }
 
      /**
@@ -107,6 +107,6 @@ class DatasetFinder
     public function ids()
     {
         //return array_unique($this->_db->fetchCol($this->getSelectIds()));
-        return $this->_select->pluck('id')->toArray();
+        return $this->select->pluck('id')->toArray();
     }
 }

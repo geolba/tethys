@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
 
+//=================================================publish dataasets================================================
 Route::group(
     [
         'namespace' => 'Publish',
@@ -197,6 +198,9 @@ Route::group(['middleware' => ['permission:settings']], function () {
  */
 Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     // includeRouteFiles(__DIR__.'/Frontend/');
+    Route::get('/test', [
+        'as' => 'home.index', 'uses' => 'HomeController@test',
+    ]);
     Route::get('/', [
         'as' => 'home.index', 'uses' => 'HomeController@index',
     ]);
@@ -217,7 +221,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('sitelinks', [
        'as' => 'sitelinks.index', 'uses' => 'SitelinkController@index',
     ]);
-    Route::get('sitelinks/list/{year}', 'SitelinkController@list')->name('sitelinks.list');
+    Route::get('sitelinks/list/{year}', 'SitelinkController@listDocs')->name('sitelinks.list');
 
     Route::get('/dataset', [
         'as' => 'datasets', 'uses' => 'PagesController@datasets',

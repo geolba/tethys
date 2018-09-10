@@ -17,6 +17,10 @@ class HomeController extends Controller
     {
         //$this->middleware('auth');
     }
+    public function test(): View
+    {
+        return view('welcome');
+    }
 
     /**
      * Show the application dashboard.
@@ -43,7 +47,6 @@ class HomeController extends Controller
 
         // }
         return view('frontend.home.index');
-        // return view('welcome');
     }
 
     /**

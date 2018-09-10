@@ -3,9 +3,8 @@ namespace App\Http\Controllers\Oai;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Dataset;
+use App\Models\Dataset;
 use Illuminate\Support\Facades\Log;
-use App\Book;
 
 class RequestController extends Controller
 {
@@ -15,7 +14,7 @@ class RequestController extends Controller
      *
      * @var array
      */
-    private $_deliveringDocumentStates = array('published', 'deleted');  // maybe deleted documents too
+    private $deliveringDocumentStates = array('published', 'deleted');  // maybe deleted documents too
     const SET_SPEC_PATTERN = '[A-Za-z0-9\-_\.!~\*\'\(\)]+';
 
 
@@ -31,7 +30,7 @@ class RequestController extends Controller
      *
      * @var \DomDocument  Defaults to null.
      */
-    protected $_xslt = null;
+    protected $xslt = null;
 
     /**
      * Holds the xslt processor.
@@ -47,9 +46,9 @@ class RequestController extends Controller
      */
     private function loadStyleSheet($stylesheet)
     {
-        $this->_xslt = new \DomDocument;
-        $this->_xslt->load($stylesheet);
-        $this->_proc->importStyleSheet($this->_xslt);
+        $this->xslt = new \DomDocument;
+        $this->xslt->load($stylesheet);
+        $this->_proc->importStyleSheet($this->xslt);
         if (isset($_SERVER['HTTP_HOST'])) {
             $this->_proc->setParameter('', 'host', $_SERVER['HTTP_HOST']);
         }
@@ -91,22 +90,22 @@ class RequestController extends Controller
         if (isset($oaiRequest['verb'])) {
             $this->_proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
             if ($oaiRequest['verb'] == 'Identify') {
-                $this->_handleIdentify();
+                $this->handleIdentify();
             } elseif ($oaiRequest['verb'] == 'ListMetadataFormats') {
-                $this->_handleListMetadataFormats();
+                $this->handleListMetadataFormats();
             } elseif ($oaiRequest['verb'] == 'ListRecords') {
-                $this->_handleListRecords($oaiRequest);
+                $this->handleListRecords($oaiRequest);
             } elseif ($oaiRequest['verb'] == 'ListIdentifiers') {
-                $this->_handleListIdentifiers($oaiRequest);
+                $this->handleListIdentifiers($oaiRequest);
             } elseif ($oaiRequest['verb'] == 'ListSets') {
-                $this->_handleListSets($oaiRequest);
+                $this->handleListSets($oaiRequest);
             } else {
-                $this->_handleIllegalVerb();
+                $this->handleIllegalVerb();
             }
         } else {
             $oaiRequest['verb'] = 'Identify';
             $this->_proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
-            $this->doc = $this->_handleIdentify();
+            $this->doc = $this->handleIdentify();
         }
         
         //$xml = $this->_xml->saveXML();
@@ -123,7 +122,7 @@ class RequestController extends Controller
      *
      * @return void
      */
-    private function _handleIdentify()
+    private function handleIdentify()
     {
         $email = "repository@geologie.ac.at";
         $repositoryName = "Data Research Repository";
@@ -149,7 +148,7 @@ class RequestController extends Controller
      * @param  array &$oaiRequest Contains full request information
      * @return void
      */
-    private function _handleListMetadataFormats()
+    private function handleListMetadataFormats()
     {
         $this->_xml->appendChild($this->_xml->createElement('Documents'));
     }
@@ -160,10 +159,10 @@ class RequestController extends Controller
      * @param  array &$oaiRequest Contains full request information
      * @return void
      */
-    private function _handleListRecords($oaiRequest)
+    private function handleListRecords($oaiRequest)
     {
         $maxRecords = 20;//$this->_configuration->getMaxListRecords();
-        $this->_handlingOfLists($oaiRequest, $maxRecords);
+        $this->handlingOfLists($oaiRequest, $maxRecords);
     }
 
     /**
@@ -172,10 +171,10 @@ class RequestController extends Controller
      * @param  array &$oaiRequest Contains full request information
      * @return void
      */
-    private function _handleListIdentifiers(array &$oaiRequest)
+    private function handleListIdentifiers(array &$oaiRequest)
     {
         $maxIdentifier = 20;//$this->_configuration->getMaxListIdentifiers();
-        $this->_handlingOfLists($oaiRequest, $maxIdentifier);
+        $this->handlingOfLists($oaiRequest, $maxIdentifier);
     }
 
     /**
@@ -184,7 +183,7 @@ class RequestController extends Controller
      * @param  array &$oaiRequest Contains full request information
      * @return void
      */
-    private function _handleListSets()
+    private function handleListSets()
     {
         $repIdentifier = "rdr.gba.ac.at";
         $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
@@ -216,7 +215,7 @@ class RequestController extends Controller
     }
 
 
-    private function _handleIllegalVerb()
+    private function handleIllegalVerb()
     {
         $this->_proc->setParameter('', 'oai_error_code', 'badVerb');
         $this->_proc->setParameter('', 'oai_error_message', 'The verb provided in the request is illegal.');
@@ -231,7 +230,7 @@ class RequestController extends Controller
      *
      * @return void
      */
-    private function _handlingOfLists(array &$oaiRequest, $maxRecords)
+    private function handlingOfLists(array &$oaiRequest, $maxRecords)
     {
         if (true === empty($maxRecords)) {
             $maxRecords = 100;
@@ -255,7 +254,7 @@ class RequestController extends Controller
         // no resumptionToken is given
         $finder = Dataset::query();
         // add server state restrictions
-        $finder->whereIn('server_state', $this->_deliveringDocumentStates);
+        $finder->whereIn('server_state', $this->deliveringDocumentStates);
         if (array_key_exists('set', $oaiRequest)) {
             $setarray = explode(':', $oaiRequest['set']);
             if ($setarray[0] == 'doc-type') {
@@ -283,7 +282,7 @@ class RequestController extends Controller
         //$node = $this->_xml->createElement('Rdr_Dataset');
         $domNode = $this->getDatasetXmlDomNode($dataset);
           // add frontdoor url
-        $this->_addLandingPageAttribute($domNode, $dataset->id);
+        $this->addLandingPageAttribute($domNode, $dataset->id);
 
         // add access rights to element
         //$this->_addAccessRights($domNode, $dataset);
@@ -301,8 +300,8 @@ class RequestController extends Controller
         //$node->appendChild($child);
 
         //$type = $dataset->type;
-        $this->_addSpecInformation($node, 'doc-type:' . $dataset->type);
-        //$this->_addSpecInformation($node, 'bibliography:' . 'false');
+        $this->addSpecInformation($node, 'doc-type:' . $dataset->type);
+        //$this->addSpecInformation($node, 'bibliography:' . 'false');
 
         $this->_xml->documentElement->appendChild($node);
     }
@@ -314,7 +313,7 @@ class RequestController extends Controller
      * @param string  $docid    Id of the dataset
      * @return void
      */
-    private function _addLandingPageAttribute(\DOMNode $document, $dataid)
+    private function addLandingPageAttribute(\DOMNode $document, $dataid)
     {
         $url = route('frontend.dataset.show', $dataid);
 
@@ -324,7 +323,7 @@ class RequestController extends Controller
         $document->appendChild($attr);
     }
 
-    private function _addSpecInformation(\DOMNode $document, $information)
+    private function addSpecInformation(\DOMNode $document, $information)
     {
         $setSpecAttribute = $this->_xml->createAttribute('Value');
         $setSpecAttributeValue = $this->_xml->createTextNode($information);
@@ -338,7 +337,7 @@ class RequestController extends Controller
 
     private function getDatasetXmlDomNode($dataset)
     {
-        if (!in_array($dataset->server_state, $this->_deliveringDocumentStates)) {
+        if (!in_array($dataset->server_state, $this->deliveringDocumentStates)) {
             $message = 'Trying to get a document in server state "' . $dataset->server_state . '"';
             //Zend_Registry::get('Zend_Log')->err($message);
             Log::error("server state: $message");
@@ -349,7 +348,7 @@ class RequestController extends Controller
         $xmlModel = new \App\Library\Xml\XmlModel();
         $xmlModel->setModel($dataset);
         $xmlModel->excludeEmptyFields();
-        $xmlModel->setXmlCache(new \App\XmlCache());
+        $xmlModel->setXmlCache(new \App\Models\XmlCache());
         return $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
     }
 
@@ -362,7 +361,7 @@ class RequestController extends Controller
         $setSpecPattern = self::SET_SPEC_PATTERN;
         $sets = array();
 
-        $finder = new \App\DatasetFinder();
+        $finder = new \App\Models\DatasetFinder();
         $finder->setServerState('published');
         foreach ($finder->groupedTypesPlusCount() as $doctype => $row) {
             if (0 == preg_match("/^$setSpecPattern$/", $doctype)) {
@@ -383,14 +382,22 @@ class RequestController extends Controller
     private function handleIdentifyOld()
     {
         //$earliestDateFromDb = Opus_Document::getEarliestPublicationDate();
-        //$earliestDateFromDb = Dataset::select('server_date_created')->orderBy('server_date_created', 'desc')->first()->toDateTimeString();
+        // $earliestDateFromDb = Dataset::select('server_date_created')
+        // ->orderBy('server_date_created', 'desc')
+        // ->first()->toDateTimeString();
         $earliestDateFromDb = Dataset::earliestPublicationDate();
 
-        $sxe = new \SimpleXMLElement('<?xml version="1.0"?><?xml-stylesheet type="text/xsl" href="xsl/oai2.xslt"?><OAI-PMH/>');
+        $sxe = new \SimpleXMLElement(
+            '<?xml version="1.0"?><?xml-stylesheet type="text/xsl" href="xsl/oai2.xslt"?><OAI-PMH/>'
+        );
+
         $sxe->addAttribute('xmlns', 'http://www.openarchives.org/OAI/2.0/');
         $sxe->addAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $sxe->addAttribute('xmlns:mml', 'http://www.w3.org/1998/Math/MathML');
-        $sxe->addAttribute('xsi:schemaLocation', 'http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd');
+        $sxe->addAttribute(
+            'xsi:schemaLocation',
+            'http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd'
+        );
         $sxe->addChild('responseDate', date("Y-m-d\TH:i:s\Z"));
 
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -411,7 +418,7 @@ class RequestController extends Controller
         //$oaiIdentifier->addAttribute('xmlns', 'http://www.openarchives.org/OAI/2.0/oai-identifier');
         //$oaiIdentifier->addAttribute('xsi:schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai-identifier');
         //$oaiIdentifier->addChild('scheme', 'oai');
-        
+
         return $sxe;
     }
 }

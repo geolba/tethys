@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Dataset;
+use App\Models\Dataset;
 use App\Models\HashValue;
 use Illuminate\Database\Eloquent\Model;
 

@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\License;
-use App\Language;
+use App\Models\License;
+use App\Models\Language;
 use App\Http\Requests\LicenseRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

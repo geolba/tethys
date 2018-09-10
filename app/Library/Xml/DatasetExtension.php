@@ -2,6 +2,9 @@
 namespace App\Library\Xml;
 
 use App\Models\Title;
+use App\Models\License;
+use App\Models\Person;
+use App\Models\File;
 
 /**
  * DatasetExtension short summary.
@@ -13,7 +16,7 @@ use App\Models\Title;
  */
 trait DatasetExtension
 {
-    protected $_externalFields = array(
+    protected $externalFields = array(
         'TitleMain' => array(
             'model' => Title::class,
             'options' => array('type' => 'main'),
@@ -25,13 +28,13 @@ trait DatasetExtension
             'fetch' => 'eager'
         ),
         'Licence' => array(
-            'model' => 'App\License',
+            'model' => License::class,
             'through' => 'link_documents_licences',
             'relation' => 'licenses',
             'fetch' => 'eager'
         ),
         'PersonAuthor' => array(
-            'model' => 'App\Person',
+            'model' => Person::class,
             'through' => 'link_documents_persons',
             'pivot' => array('role' => 'author'),
                             //'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
@@ -40,7 +43,7 @@ trait DatasetExtension
             'fetch' => 'eager'
         ),
         'PersonContributor' => array(
-            'model' => 'App\Person',
+            'model' => Person::class,
             'through' => 'link_documents_persons',
             'pivot' => array('role' => 'contributor'),
             //                'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
@@ -49,15 +52,15 @@ trait DatasetExtension
             'fetch' => 'eager'
         ),
         'File' => array(
-            'model' => 'App\Models\File',
+            'model' => File::class,
             'relation' => 'files',
             'fetch' => 'eager'
         ),
     );
 
-    protected $_internalFields = array();
+    protected $internalFields = array();
 
-    protected $_fields = array();
+    protected $fields = array();
 
     protected function _initFields()
     {
@@ -90,7 +93,7 @@ trait DatasetExtension
             $this->addField($field);
         }
 
-        foreach (array_keys($this->_externalFields) as $fieldname) {
+        foreach (array_keys($this->externalFields) as $fieldname) {
             $field = new Field($fieldname);
             $field->setMultiplicity('*');
             $this->addField($field);
@@ -112,21 +115,21 @@ trait DatasetExtension
 
     /**
      * Get a list of all fields attached to the model. Filters all fieldnames
-     * that are defined to be inetrnal in $_internalFields.
+     * that are defined to be inetrnal in $internalFields.
      *
-     * @see    Opus_Model_Abstract::_internalFields
+     * @see    Opus_Model_Abstract::internalFields
      * @return array    List of fields
      */
     public function describe()
     {
-        return array_diff(array_keys($this->_fields), $this->_internalFields);
+        return array_diff(array_keys($this->fields), $this->internalFields);
     }
 
     public function addField(Field $field)
     {
         $fieldname = $field->getName();
-        if (isset($fieldname, $this->_externalFields[$fieldname])) {
-            $options = $this->_externalFields[$fieldname];
+        if (isset($fieldname, $this->externalFields[$fieldname])) {
+            $options = $this->externalFields[$fieldname];
 
             // set ValueModelClass if a through option is given
             if (isset($options['model'])) {
@@ -139,7 +142,7 @@ trait DatasetExtension
             //}
         }
 
-        $this->_fields[$field->getName()] = $field;
+        $this->fields[$field->getName()] = $field;
         $field->setOwningModelClass(get_class($this));
         return $this;
     }
@@ -157,8 +160,8 @@ trait DatasetExtension
      */
     protected function _getField($name)
     {
-        if (isset($this->_fields[$name])) {
-            return $this->_fields[$name];
+        if (isset($this->fields[$name])) {
+            return $this->fields[$name];
         } else {
             return null;
         }
@@ -167,11 +170,11 @@ trait DatasetExtension
     public function fetchValues()
     {
         $this->_initFields();
-        foreach ($this->_fields as $fieldname => $field) {
-            if (isset($this->_externalFields[$fieldname]) === true) {
+        foreach ($this->fields as $fieldname => $field) {
+            if (isset($this->externalFields[$fieldname]) === true) {
                 $fetchmode = 'lazy';
-                if (isset($this->_externalFields[$fieldname]['fetch']) === true) {
-                    $fetchmode = $this->_externalFields[$fieldname]['fetch'];
+                if (isset($this->externalFields[$fieldname]['fetch']) === true) {
+                    $fetchmode = $this->externalFields[$fieldname]['fetch'];
                 }
 
                 if ($fetchmode === 'lazy') {
@@ -210,7 +213,7 @@ trait DatasetExtension
 
     protected function _loadExternal($fieldname)
     {
-        $field = $this->_fields[$fieldname];
+        $field = $this->fields[$fieldname];
 
         $modelclass = $field->getLinkModelClass();
         if (!isset($modelclass)) {
@@ -223,8 +226,8 @@ trait DatasetExtension
         $select = $tableclass->query();//->where("document_id", $this->id);;
 
         // If any declared constraints, add them to query
-        if (isset($this->_externalFields[$fieldname]['options'])) {
-            $options = $this->_externalFields[$fieldname]['options'];
+        if (isset($this->externalFields[$fieldname]['options'])) {
+            $options = $this->externalFields[$fieldname]['options'];
             foreach ($options as $column => $value) {
                 $select = $select->where($column, $value);
             }
@@ -236,17 +239,17 @@ trait DatasetExtension
         $datasetId = $this->id;
 
         $rows = array();
-        if (isset($this->_externalFields[$fieldname]['through'])) {
-            $relation = $this->_externalFields[$fieldname]['relation'];
+        if (isset($this->externalFields[$fieldname]['through'])) {
+            $relation = $this->externalFields[$fieldname]['relation'];
             //$rows = $select->datasets
             ////->orderBy('name')
             //->get();
             //$licenses = $select->with('datasets')->get();
             //$rows =  $supplier->datasets;
             $rows = $this->{$relation};
-            //if (isset($this->_externalFields[$fieldname]['pivot']))
+            //if (isset($this->externalFields[$fieldname]['pivot']))
             //{
-            //  $pivArray = $this->_externalFields[$fieldname]['pivot'];
+            //  $pivArray = $this->externalFields[$fieldname]['pivot'];
             //  $rows = $rows->wherePivot('role', $pivArray['role']);
             //}
         } else {

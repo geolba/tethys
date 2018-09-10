@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Person;
+use App\Models\Person;
 use App\Http\Requests\PersonRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

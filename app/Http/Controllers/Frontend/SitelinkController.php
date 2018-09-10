@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Dataset;
 use App\Http\Controllers\Controller;
-use App\Dataset;
 use Illuminate\Support\Facades\DB;
 
 class SitelinkController extends Controller
@@ -24,7 +24,7 @@ class SitelinkController extends Controller
         return view('frontend.sitelink.index')->with(['years' => $this->years, 'documents' => $this->ids]);
     }
 
-    public function list($year)
+    public function listDocs($year)
     {
         $this->index();
         if (preg_match('/^\d{4}$/', $year) > 0) {
@@ -34,7 +34,7 @@ class SitelinkController extends Controller
             $select = Dataset::with('titles', 'authors')
                 ->where('server_state', 'LIKE', "%" . $serverState . "%");
 
-            $from = (int)$year;
+            $from = (int) $year;
             $until = $year + 1;
             $select
                 ->whereYear('server_date_published', '>=', $from)

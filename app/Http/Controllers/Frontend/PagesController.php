@@ -2,8 +2,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Dataset;
-use Illuminate\Http\Request;
+use App\Models\Dataset;
 use Illuminate\View\View;
 
 class PagesController extends Controller

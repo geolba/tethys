@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Dataset;
 
 class XmlCache extends Model
 {
@@ -36,7 +37,7 @@ class XmlCache extends Model
      */
     public function dataset()
     {
-        return $this->belongsTo(\App\Dataset::class, 'document_id', 'id');
+        return $this->belongsTo(Dataset::class, 'document_id', 'id');
     }
 
     /**

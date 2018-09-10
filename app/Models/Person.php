@@ -1,6 +1,7 @@
 <?php
-namespace App;
+namespace App\Models;
 
+use App\Models\Dataset;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
@@ -12,28 +13,29 @@ class Person extends Model
         'first_name',
         'email',
         'identifier_orcid',
-        'status'
+        'status',
     ];
     protected $table = 'persons';
-    public $timestamps  = false;
+    public $timestamps = false;
+    protected $appends = ['full_name'];
 
     public function documents()
     {
-        return $this->belongsToMany(\App\Dataset::class, 'link_documents_persons', 'person_id', 'document_id')
-        ->withPivot('role');
+        return $this->belongsToMany(Dataset::class, 'link_documents_persons', 'person_id', 'document_id')
+            ->withPivot('role');
     }
-
 
     // public function scopeNotLimit($query)
     // {
     // return $query->where('borrow', '<', 3);
     // }
+
     /**
      * Get the user's full name.
-     *
+     * see https://laravel.com/docs/5.6/eloquent-serialization
      * @return string
      */
-    public function getFullName()
+    public function getFullNameAttribute()
     {
         return $this->first_name . " " . $this->last_name;
     }

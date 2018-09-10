@@ -3,7 +3,7 @@
 @section('content')
 <div class="header">
         <h3 class="header-title">
-                Edit {{ $person->getFullName() }}
+                Edit {{ $person->full_name }}
         </h3>
     </div>
 

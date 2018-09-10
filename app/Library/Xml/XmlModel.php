@@ -15,7 +15,7 @@
  */
 namespace App\Library\Xml;
 
-use App\XmlCache;
+use App\Models\XmlCache;
 use Illuminate\Support\Facades\Log;
 
 class XmlModel
@@ -24,19 +24,19 @@ class XmlModel
      * Holds current configuration.
      * @var Conf
      */
-    private $_config = null;
+    private $config = null;
 
     /**
      * Holds current xml strategy object.
      * @var Strategy
      */
-    private $_strategy = null;
+    private $strategy = null;
 
     /**
      * TODO
      * @var XmlCache
      */
-    private $_cache = null;
+    private $cache = null;
 
 
     /**
@@ -45,9 +45,9 @@ class XmlModel
      */
     public function __construct()
     {
-        $this->_strategy = new Strategy();// Opus_Model_Xml_Version1;
-        $this->_config = new Conf();
-        $this->_strategy->setup($this->_config);
+        $this->strategy = new Strategy();// Opus_Model_Xml_Version1;
+        $this->config = new Conf();
+        $this->strategy->setup($this->config);
     }
 
     /**
@@ -59,8 +59,8 @@ class XmlModel
      */
     public function setStrategy(Strategy $strategy)
     {
-        $this->_strategy = $strategy;
-        $this->_strategy->setup($this->_config);
+        $this->strategy = $strategy;
+        $this->strategy->setup($this->config);
         return $this;
     }
 
@@ -73,7 +73,7 @@ class XmlModel
      */
     public function setXmlCache(XmlCache $cache)
     {
-        $this->_cache = $cache;
+        $this->cache = $cache;
         return $this;
     }
 
@@ -84,19 +84,19 @@ class XmlModel
      */
     public function getXmlCache()
     {
-        return $this->_cache;
+        return $this->cache;
     }
 
     /**
      * Set the Model for XML generation.
      *
-     * @param \App\Dataset $model Model to serialize.
+     * @param \App\Models\Dataset $model Model to serialize.
      *
      * @return XmlModel Fluent interface.
      */
     public function setModel($model)
     {
-        $this->_config->model = $model;
+        $this->config->model = $model;
         return $this;
     }
 
@@ -107,7 +107,7 @@ class XmlModel
      */
     public function excludeEmptyFields()
     {
-        $this->_config->excludeEmpty = true;
+        $this->config->excludeEmpty = true;
         return $this;
     }
 
@@ -119,7 +119,7 @@ class XmlModel
      */
     public function getDomDocument()
     {
-        $dataset = $this->_config->model;
+        $dataset = $this->config->model;
 
         $domDocument = $this->getDomDocumentFromXmlCache();
         if (!is_null($domDocument)) {
@@ -127,19 +127,19 @@ class XmlModel
         }
 
         //create xml:
-        $domDocument = $this->_strategy->getDomDocument();
+        $domDocument = $this->strategy->getDomDocument();
         //if caching is not desired, return domDocument
-        if (is_null($this->_cache)) {
+        if (is_null($this->cache)) {
             return $domDocument;
         } else {
             //create cache relation
-            $this->_cache->fill(array(
+            $this->cache->fill(array(
                 'document_id' => $dataset->id,
-                'xml_version' => (int)$this->_strategy->getVersion(),
+                'xml_version' => (int)$this->strategy->getVersion(),
                 'server_date_modified' => $dataset->server_date_modified,
                 'xml_data' => $domDocument->saveXML()
             ));
-            $this->_cache->save();
+            $this->cache->save();
 
             Log::debug(__METHOD__ . ' cache refreshed for ' . get_class($dataset) . '#' . $dataset->id);
             return $domDocument;
@@ -155,15 +155,15 @@ class XmlModel
      */
     private function getDomDocumentFromXmlCache()
     {
-        $dataset = $this->_config->model;
-        if (null === $this->_cache) {
+        $dataset = $this->config->model;
+        if (null === $this->cache) {
             //$logger->debug(__METHOD__ . ' skipping cache for ' . get_class($model));
             Log::debug(__METHOD__ . ' skipping cache for ' . get_class($dataset));
             return null;
         }
-        //$cached = $this->_cache->hasValidEntry(
+        //$cached = $this->cache->hasValidEntry(
         //    $dataset->id,
-        //    (int) $this->_strategy->getVersion(),
+        //    (int) $this->strategy->getVersion(),
         //    $dataset->server_date_modified
         //);
 

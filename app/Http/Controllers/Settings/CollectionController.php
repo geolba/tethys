@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Settings;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Collection;
+use App\Models\Collection;
 
 class CollectionController extends Controller
 {
