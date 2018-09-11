@@ -5,15 +5,23 @@
   <vuetable ref="vuetable"
     api-url="/api/persons"
     v-bind:fields="fields" pagination-path=""
+    v-bind:css="css.table"
   ></vuetable>
 </template>
 
 <script>
 import Vuetable from "vuetable-2/src/components/Vuetable";
+import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
+import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
+import CustomActions from './CustomActions'
+
+Vue.component('custom-actions', CustomActions)
 
 export default {
   components: {
-    Vuetable
+    Vuetable,
+     VuetablePagination,
+    VuetablePaginationInfo, 
   },
   data() {
     return {
@@ -36,29 +44,16 @@ export default {
         {
           name: "__component:custom-actions",
           title: "Actions",
-          titleClass: "text-center",
-          dataClass: "text-center"
+          // titleClass: "text-center",
+          // dataClass: "text-center"
         }
       ],
       css: {
         table: {
-          tableClass: "table table-bordered table-striped table-hover",
+          tableClass: "table pure-table pure-table-horizontal",
           ascendingIcon: "glyphicon glyphicon-chevron-up",
           descendingIcon: "glyphicon glyphicon-chevron-down"
-        },
-        pagination: {
-          wrapperClass: "pagination",
-          activeClass: "active",
-          disabledClass: "disabled",
-          pageClass: "page",
-          linkClass: "link",
-          icons: {
-            first: "",
-            prev: "",
-            next: "",
-            last: ""
-          }
-        },
+        },       
         icons: {
           first: "glyphicon glyphicon-step-backward",
           prev: "glyphicon glyphicon-chevron-left",
@@ -69,6 +64,44 @@ export default {
       sortOrder: [{ field: "email", sortField: "email", direction: "asc" }],
       moreParams: {}
     };
-  }
+  }//data end
 };
 </script>
+
+<style>
+.pagination {
+  margin: 0;
+  float: right;
+}
+.pagination a.page {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 2px;
+}
+.pagination a.page.active {
+  color: white;
+  background-color: #337ab7;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 2px;
+}
+.pagination a.btn-nav {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin-right: 2px;
+}
+.pagination a.btn-nav.disabled {
+  color: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin-right: 2px;
+  cursor: not-allowed;
+}
+.pagination-info {
+  float: left;
+}
+</style>
