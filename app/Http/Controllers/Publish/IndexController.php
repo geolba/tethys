@@ -249,7 +249,7 @@ class IndexController extends Controller
                         $file = $uploadedFile['file'];
                         $label = urldecode($uploadedFile['label']);
                         $sorting = $uploadedFile['sorting'];
-                        $fileName = "productImage-" . time() . '.' . $file->getClientOriginalExtension();
+                        $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
                         $mimeType = $file->getMimeType();
                         $datasetFolder = 'files/' . $dataset->id;
                         $path = $file->storeAs($datasetFolder, $fileName);
@@ -292,8 +292,8 @@ class IndexController extends Controller
                     $dataset->addMainAbstract($abstract);
                 }
                                  
-                $error = 'Always throw this error';
-                throw new \Exception($error);
+                // $error = 'Always throw this error';
+                // throw new \Exception($error);
 
                 // all good//commit everything
                 DB::commit();

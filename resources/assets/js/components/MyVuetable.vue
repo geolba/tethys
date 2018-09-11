@@ -20,15 +20,15 @@ export default {
       fields: [        
         {
           name: "full_name",
-          // sortField: "name"
+          // sortField: "full_name"
         },
         {
           name: "email",
-          // sortField: "email"
+          sortField: "email"
         },
         {
           name: "date_of_birth",
-          // sortField: "birthdate",
+          sortField: "date_of_birth",
           // titleClass: "text-center",
           // dataClass: "text-center",
           // callback: "formatDate|DD-MM-YYYY"
