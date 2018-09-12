@@ -10,17 +10,17 @@ class License extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'active',
-        'desc_text',
-        'desc_text',
-        'desc_text',
+        'name_long',
         'language',
         'link_licence',
         'link_logo',
+        'desc_text',
+        'desc_markup',
+        'comment_internal',
         'mime_type',
-        'name_long',
-        'pod_allowed',
         'sort_order',
+        'active',
+        'pod_allowed'
     ];
 
     public function datasets()

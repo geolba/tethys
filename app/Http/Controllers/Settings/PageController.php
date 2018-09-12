@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Exceptions\GeneralException;
 use App\Events\Pages\PageUpdated;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -69,8 +70,12 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('settings.page.edit')
-        ->withPage($page);
+        $languages = DB::table('languages')
+        ->where('active', true)
+        ->pluck('part2_t', 'part2_t');
+
+        return view('settings.page.edit', compact('page', 'languages'));
+        // ->withPage($page);
     }
 
     /**
@@ -85,7 +90,7 @@ class PageController extends Controller
         // $this->pages->update($page, $request->except(['_method', '_token']));
         $input = $request->except(['_method', '_token']);
          // Making extra fields
-        $input['page_slug'] = str_slug($input['title']);
+        //$input['page_slug'] = str_slug($input['title']);
         $input['status'] = isset($input['status']) ? 1 : 0;
         $input['updated_by'] = \Auth::user()->id;
 

@@ -28,7 +28,7 @@
                 <div class="pure-control-group">
                     {{ Form::label('title', trans('validation.attributes.backend.pages.title'), ['class' => 'col-lg-2 control-label required']) }}
                     <div class="col-lg-10">
-                        {{ Form::text('title', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.pages.title'), 'required' => 'required']) }}
+                        {{ Form::text('title', null, ['class' => 'form-control box-size', 'placeholder' => trans('validation.attributes.backend.pages.title'), 'required' => 'required',  'readonly' => 'true']) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
 
@@ -38,6 +38,13 @@
                         {{ Form::textarea('description', null,['class' => 'form-control', 'placeholder' => trans('validation.attributes.backend.pages.description')]) }}
                     </div><!--col-lg-3-->
                 </div><!--form control-->
+
+                <div class="pure-control-group">
+                    {{ Form::label('language', 'Language..', ['class' => 'col-lg-2 control-label required']) }}
+                    <div class="col-lg-10">
+                        {{ Form::select('language', $languages, $page->language, ['placeholder' => '--no language--']) }}
+                    </div>
+                </div>
 
                 <div class="pure-control-group">
                     {{ Form::label('cannonical_link', trans('validation.attributes.backend.pages.cannonical_link'), ['class' => 'col-lg-2 control-label']) }}
@@ -95,11 +102,19 @@
     <script type="text/javascript">
         // Backend.Pages.init();
     </script>
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.css" rel="stylesheet">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.js"></script>
      <script>
         $(document).ready(function() {
-            $('#description').summernote();
+            // $('#description').summernote();
+            $('#description').summernote({
+                height: "300px",
+                callbacks: {
+                    // onImageUpload: function(files, editor, welEditable) {
+                    //     app.sendFile(files[0], editor, welEditable);
+                    // }
+                }
+            });
         });
       </script>
 @endsection

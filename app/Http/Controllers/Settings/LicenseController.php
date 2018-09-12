@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\GeneralException;
 
 class LicenseController extends Controller
 {
@@ -51,8 +52,15 @@ class LicenseController extends Controller
 
         $license = License::findOrFail($id);
         $input = $request->all();
-        $license->update($input);
-        session()->flash('flash_message', 'You have updated the license!');
-        return redirect()->route('settings.license');
+        if ($license->update($input)) {
+            // event(new PageUpdated($page));
+            return redirect()
+                ->route('settings.license')
+                ->with('flash_message', 'You have updated the license!');
+        }
+        throw new GeneralException(trans('exceptions.backend.licenses.update_error'));
+        // $license->update($input);
+        // session()->flash('flash_message', 'You have updated the license!');
+        // return redirect()->route('settings.license');
     }
 }

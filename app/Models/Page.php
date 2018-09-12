@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use App\Models\ModelTrait;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
     use ModelTrait;
-     /**
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -32,12 +32,14 @@ class Page extends Model
         'created_by' => 1,
     ];
 
+    //You can specify default eager loaded relationships using the $with property on the model.
+    //https://stackoverflow.com/questions/25674143/laravel-whenever-i-return-a-model-always-return-a-relationship-with-it
     protected $with = ['owner'];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = 'pages';//config('module.pages.table');
+        $this->table = 'pages'; //config('module.pages.table');
     }
 
     public function owner()
@@ -45,41 +47,41 @@ class Page extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-     /**
+    /**
      * @return string
      */
     public function getActionButtonsAttribute()
     {
         return '<div class="btn-group action-btn">
-                    '.$this->getEditButtonAttribute('page', 'settings.page.edit').'
-                    '.$this->getViewButtonAttribute().'                    
-                    '.$this->getDeleteButtonAttribute('page', 'settings.page.destroy').'
+                    ' . $this->getEditButtonAttribute('page', 'settings.page.edit') . '
+                    ' . $this->getViewButtonAttribute() . '
                 </div>';
+        // '.$this->getDeleteButtonAttribute('page', 'settings.page.destroy').'
     }
 
-      /**
+    /**
      * @return string
      */
     public function getViewButtonAttribute()
     {
         return '<a target="_blank" href="
-                '. route('frontend.pages.show', $this->page_slug) .' " class="btn btn-flat btn-default">
+                ' . route('frontend.pages.show', $this->page_slug) . ' " class="btn btn-flat btn-default">
                     <i data-toggle="tooltip" data-placement="top" title="View Page" class="fa fa-eye"></i>
                 </a>';
     }
 
-     /**
+    /**
      * @return string
      */
     public function getStatusLabelAttribute()
     {
         if ($this->isActive()) {
-            return "<label class='label label-success'>".trans('labels.general.active').'</label>';
+            return "<label class='label label-success'>" . trans('labels.general.active') . '</label>';
         }
 
-        return "<label class='label label-danger'>".trans('labels.general.inactive').'</label>';
+        return "<label class='label label-danger'>" . trans('labels.general.inactive') . '</label>';
     }
-    
+
     /**
      * @return bool
      */
