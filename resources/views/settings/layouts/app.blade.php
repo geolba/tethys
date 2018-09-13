@@ -134,7 +134,9 @@
     <div id="main">
         <div class="header">
             <div class="pure-g">
-                <div class="pure-u-1-2"><h1>Dashboard</h1></div>
+                <div class="pure-u-1-2">
+                    <h1>Dashboard</h1>                  
+                </div>
                 <div class="pure-u-1-2 text-right">					
                     <section class="user-info">
                         @if(Auth::user())

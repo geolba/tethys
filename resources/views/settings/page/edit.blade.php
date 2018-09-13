@@ -39,12 +39,12 @@
                     </div><!--col-lg-3-->
                 </div><!--form control-->
 
-                <div class="pure-control-group">
+                {{-- <div class="pure-control-group">
                     {{ Form::label('language', 'Language..', ['class' => 'col-lg-2 control-label required']) }}
                     <div class="col-lg-10">
                         {{ Form::select('language', $languages, $page->language, ['placeholder' => '--no language--']) }}
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="pure-control-group">
                     {{ Form::label('cannonical_link', trans('validation.attributes.backend.pages.cannonical_link'), ['class' => 'col-lg-2 control-label']) }}

@@ -5,16 +5,20 @@ namespace App\Models;
 use App\Models\ModelTrait;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Dimsav\Translatable\Translatable;
 
 class Page extends Model
 {
     use ModelTrait;
+    use Translatable;
     /**
      * The database table used by the model.
      *
      * @var string
      */
     protected $table;
+
+    public $translatedAttributes = ['title', 'description'];
 
     /**
      * The guarded field which are not mass assignable.
@@ -40,6 +44,7 @@ class Page extends Model
     {
         parent::__construct($attributes);
         $this->table = 'pages'; //config('module.pages.table');
+        // $this->defaultLocale = 'de';
     }
 
     public function owner()
