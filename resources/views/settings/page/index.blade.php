@@ -1,22 +1,21 @@
-@extends ('settings.layouts.app')
-
-@section ('title', trans('labels.backend.pages.management'))
-
-{{-- @section('page-header')
-    <h2>{{ trans('labels.backend.pages.management') }}</h1>
-@endsection --}}
-
+@extends ('settings.layouts.app') 
+@section ('title', trans('labels.backend.pages.management')) {{-- 
+@section('page-header')
+<h2>{{ trans('labels.backend.pages.management') }}</h1>
+@endsection
+ --}} 
 @section('content')
     <div class="box box-info">
-       
+
         <div class="box-header with-border header">
             <h3 class="header-title">
                 <i class="fa fa fa-edit"></i> {{ trans('labels.backend.pages.management') }}
             </h3>
             <div class="box-tools pull-right">
-                {{-- @include('backend.pages.partials.pages-header-buttons') --}}
+                {{--
+    @include('backend.pages.partials.pages-header-buttons') --}}
             </div>
-        </div>	
+        </div>
 
         <div class="box-body pure-g box-content">
             <div class="table-responsive data-table-wrapper pure-u-1 pure-u-md-1">
@@ -33,11 +32,13 @@
                     <thead class="transparent-bg">
                         <tr>
                             <th>
-                                {!! Form::text('first_name', null, ["class" => "search-input-text form-control", "data-column" => 0, "placeholder" => trans('labels.backend.pages.table.title')]) !!}
-                                    <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                                {!! Form::text('first_name', null, ["class" => "search-input-text form-control", "data-column" => 0, "placeholder" => trans('labels.backend.pages.table.title')])
+                                !!}
+                                <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
                             </th>
                             <th>
-                                {!! Form::select('status', [0 => "InActive", 1 => "Active"], null, ["class" => "search-input-select form-control", "data-column" => 1, "placeholder" => trans('labels.backend.pages.table.all')]) !!}
+                                {!! Form::select('status', [0 => "InActive", 1 => "Active"], null, ["class" => "search-input-select form-control", "data-column"
+                                => 1, "placeholder" => trans('labels.backend.pages.table.all')]) !!}
                             </th>
                             <th></th>
                             <th></th>
@@ -45,14 +46,15 @@
                         </tr>
                     </thead>
                 </table>
-            </div><!--table-responsive-->
-        </div><!-- /.box-body -->
-    </div><!--box-->   
+            </div>
+            <!--table-responsive-->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!--box-->
 @endsection
-
-@section('after-scripts')
-    {{-- For DataTables --}}
-    {{ Html::script(mix('js/dataTable.js')) }}
+ 
+@section('after-scripts') {{-- For DataTables --}} {{ Html::script(mix('js/dataTable.js')) }}
 
     <script>
         $(function() {

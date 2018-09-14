@@ -39,7 +39,7 @@ Route::get('/api/persons', function () {
     if ($request->exists('filter')) {
         $query->where(function ($q) use ($request) {
             $value = "%{$request->filter}%";
-            $q->where('name', 'like', $value)
+            $q->where('first_name', 'like', $value)
                 // ->orWhere('nickname', 'like', $value)
                 ->orWhere('email', 'like', $value);
         });

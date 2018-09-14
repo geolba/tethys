@@ -19,12 +19,14 @@
 // else {
 //     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 // }
+window._ = require('lodash');
 // window.Vue = require('vue');
 // Vue.prototype.$http = axios;
 
 // Vue.component('example', require('./components/Example.vue'));
-const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
+Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
 
+const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
 
@@ -41,6 +43,7 @@ const app = new Vue({
             currentStatus: null,
             uploadFieldName: 'photos',
             fileCount: 0,
+            persons: [],
 
             step: 1,
             dataset: {
@@ -98,6 +101,7 @@ const app = new Vue({
             this.dataset.files = [];
         },
         save() {
+            var _this = this;
             this.errors = [];
             /*
            Initialize the form data
@@ -151,7 +155,7 @@ const app = new Vue({
                     // this.loading = false;            
                     // this.items = response.data;          
                     //Vue.set(app.skills, 1, "test55");
-                    this.currentStatus = STATUS_SUCCESS;
+                    _this.currentStatus = STATUS_SUCCESS;
 
                     if (response.data.redirect) {
                         window.location = response.data.redirect;
@@ -166,14 +170,14 @@ const app = new Vue({
                         var errorsArray = errorObject.response.data.errors;
                         for (var index in errorsArray) {
                             console.log(errorsArray[index]);
-                            this.errors.push(errorsArray[index]);
+                            _this.errors.push(errorsArray[index]);
                         }
                     }
                     if (errorObject.response.data.error) {
                         var error = errorObject.response.data.error;
-                        this.errors.push(error.message);
+                        _this.errors.push(error.message);
                     }
-                    this.currentStatus = STATUS_FAILED;
+                    _this.currentStatus = STATUS_FAILED;
                 });
         },
         // filesChange(fieldName, fileList) {
@@ -211,6 +215,9 @@ const app = new Vue({
             //     this.currentStatus = STATUS_SAVING;
             // }       
 
+        },
+        onAddPerson(person) {
+            this.persons.push(person);
         },
         /*
         Removes a select file the user has uploaded
