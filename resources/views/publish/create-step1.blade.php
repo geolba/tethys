@@ -183,10 +183,10 @@
         <div v-if="step === 3">
             <h1>Select authors, contributors</h1>
             <fieldset id="fieldset-general">
-                <legend>General</legend>
+                <legend>Authors</legend>
                 <div class="pure-g">
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        <my-autocomplete title="My journey with Vue" @person="onAddPerson"></my-autocomplete>
+                        <my-autocomplete title="searching active person table" @person="onAddAuthor"></my-autocomplete>
                         {{--
                         <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
                     </div>
@@ -194,16 +194,23 @@
                         <div class="pure-control-group checkboxlist">
                             <label v-for="(person, index) in persons" :for="person.id"  class="pure-checkbox">                           
                                 <input type="checkbox" name="persons[]"  :value="person.id"  class="form-check-input">
-                                @{{ person.full_name }}                           
+                                @{{ person.full_name }}
+                                  {{-- {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
+                                  'person.type']) !!} --}}
                             </label>
+                            
                         </div>
-
                         {{-- <span v-for="(person, index) in persons">                         
                         <strong>@{{ person.full_name }}</strong>                            
                         </span> --}}
+                        <small id="authorHelp" class="pure-form-message-inline">Authoren werden noch nicht abgespeichert - nur für Demo</small>
 
                     </div>
                 </div>
+            </fieldset>
+            <fieldset id="fieldset-general">
+                <legend>Contributors</legend>
+                <small id="contributorHelp" class="pure-form-message-inline">will come soon...</small>
             </fieldset>
             <br />
             <div class="pure-controls">

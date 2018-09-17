@@ -24,12 +24,13 @@ window._ = require('lodash');
 // Vue.prototype.$http = axios;
 
 // Vue.component('example', require('./components/Example.vue'));
-Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
+//Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
+import MyAutocomplete from './components/MyAutocomplete.vue';
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-
+    components: { MyAutocomplete },
     data() {
         return {
             rows: [
@@ -216,7 +217,7 @@ const app = new Vue({
             // }       
 
         },
-        onAddPerson(person) {
+        onAddAuthor(person) {
             this.persons.push(person);
         },
         /*

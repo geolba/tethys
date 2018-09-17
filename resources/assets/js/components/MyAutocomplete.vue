@@ -1,19 +1,19 @@
 <!-- https://pineco.de/instant-ajax-search-laravel-vue/ 
 https://alligator.io/vuejs/vue-autocomplete-component/ -->
 <template>
-    <div>
-        <input type="search" @input="onChange" v-model="search" v-bind:disabled="isLoading == true" v-bind:title=title placeholder="Search for authors and contributors...">
+    <div style="position:relative">
+        <input type="search" @input="searchChanged" v-model="search" v-bind:disabled="isLoading == true" v-bind:title="title" v-bind:placeholder="title" class="pure-u-23-24">
         <!-- <ul class="autocomplete-results" v-show="results.length > 0"> -->
-        <ul class="autocomplete-results" v-show="isOpen"> 
+        <ul class="autocomplete-results pure-u-23-24" v-show="isOpen"> 
              <li class="loading" v-if="isLoading" >Loading results...</li>
 
             <li 
                 v-else
-                v-for="result in results" 
-                :key="result.id" 
-                @click="setResult(result)"
+                v-for="suggestion in results" 
+                :key="suggestion.id" 
+                @click="setResult(suggestion)"
                 class="autocomplete-result">
-                 <strong>{{ result.full_name }}</strong>
+                 <strong>{{ suggestion.full_name }}</strong>
             </li>
         </ul>
     </div>
@@ -63,8 +63,8 @@ export default {
         this.isOpen = true;
         this.isLoading = false;
       } else {
-        if (val.length !== oldValue.length) {
-          this.results = val;
+        if (value.length !== oldValue.length) {
+          this.results = value;
           this.isLoading = false;
         }
       }
@@ -74,25 +74,33 @@ export default {
   methods: {
     setResult(person) {
       // this.search = person.full_name;
-      this.reset();
-      this.isOpen = false;
+      this.reset();     
       this.$emit("person", person);
     },
     reset() {
       this.search = "";
+      this.results = [];
+      this.isOpen = false;
     },
-    onChange() {
+    searchChanged() {
       // Let's warn the parent that a change was made
       this.$emit("input", this.search);
 
-      // Is the data given by an outside ajax request?
-      if (this.isAsync) {
-        this.isLoading = true;
-        this.filterResults();
-      } else {
-        // Data is sync, we can search our flat array
-        this.filterResults();
-        this.isOpen = true;
+      if (this.search.length >= 2) {
+        // Is the data given by an outside ajax request?
+        if (this.isAsync) {
+          this.isLoading = true;
+          this.filterResults();
+        } else {
+          // Data is sync, we can search our flat array
+          this.results = this.items.filter(item => {
+            return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+          });
+          this.isOpen = true;
+        }
+      }
+      else{
+        this.items = [];
       }
     },
     filterResults() {
@@ -109,6 +117,12 @@ export default {
       //   return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
       // });
     }
+  },
+  computed: {
+    // isOpen() {
+    //   return this.results.length > 0;
+    // }
+    
   }
 };
 </script>
