@@ -53,8 +53,11 @@
                         <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.document') }}"><i class="fa fa-database"></i> Datasets</a>
                         </li>
-                        <li class="pure-menu-item {{ Route::is('settings.collection*') ? 'active' : '' }}">
+                        {{-- <li class="pure-menu-item {{ Route::is('settings.collection*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.collection') }}"><i class="fa fa-archive"></i> Collections</a>
+                        </li> --}}
+                        <li class="pure-menu-item {{ Route::is('settings.collectionrole') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('settings.collectionrole.index') }}"><i class="fa fa-archive"></i> Collection Roles</a>
                         </li>
                         <li class="pure-menu-item {{ Route::is('settings.license*') ? 'active' : '' }}">
                             <a href="{{ route('settings.license') }}" class="pure-menu-link"><i class="fa fa-file"></i> Licenses</a>

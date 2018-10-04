@@ -56,3 +56,34 @@ Breadcrumbs::register('settings.page.index', function ($breadcrumbs) {
     $breadcrumbs->parent('settings.dashboard');
     $breadcrumbs->push('Page Management', route('settings.page.index'));
 });
+
+
+Breadcrumbs::register('settings.collectionrole.index', function ($breadcrumbs) {
+    $breadcrumbs->parent('settings.dashboard');
+    $breadcrumbs->push('Collection Roles', route('settings.collectionrole.index'));
+});
+Breadcrumbs::register('settings.collectionrole.show', function ($breadcrumbs, $collectionrole) {
+    $breadcrumbs->parent('settings.collectionrole.index');
+    $breadcrumbs->push(
+        'top level collections of role ' . $collectionrole->name,
+        route('settings.collectionrole.show', $collectionrole)
+    );
+});
+Breadcrumbs::register('settings.collection.show', function ($breadcrumbs, $collection) {
+    // $breadcrumbs->parent('settings.collectionrole.show', $collection->collectionrole);
+    if ($collection->parent()->exists()) {
+        $breadcrumbs->parent('settings.collection.show', $collection->parent);
+    } else {
+        $breadcrumbs->parent('settings.collectionrole.show', $collection->collectionrole);
+    }
+    $breadcrumbs->push('show collection: ' . $collection->name, route('settings.collection.show', $collection));
+});
+Breadcrumbs::register('settings.collection.edit', function ($breadcrumbs, $id) {
+    $collection = App\Models\Collection::findOrFail($id);
+    if ($collection->parent()->exists()) {
+        $breadcrumbs->parent('settings.collection.show', $collection->parent);
+    } else {
+        $breadcrumbs->parent('settings.collectionrole.show', $collection->collectionrole);
+    }
+    $breadcrumbs->push('edit collection: ' . $collection->name, route('settings.collection.edit', $id));
+});

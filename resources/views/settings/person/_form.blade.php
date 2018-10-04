@@ -14,7 +14,8 @@
     <div class="pure-control-group" ">
         {!! Form::label('first_name', 'First Name..') !!}
         {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
-        <aside id="firstNameHelp" class="pure-form-message-inline">first name is optional.</aside>
+        <em>*</em>
+        {{-- <aside id="firstNameHelp" class="pure-form-message-inline">first name is optional.</aside> --}}
     </div>
 
 

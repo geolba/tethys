@@ -92,13 +92,12 @@ class HomeController extends Controller
     /**
      * show page by $page_slug.
      */
-    public function showPage($slug)
+    public function showPage($slug): View
     {
         // $result = $pages->findBySlug($slug);
-        if (!is_null(Page::query()->wherePage_slug($slug)->firstOrFail())) {
-            $result = Page::query()->wherePage_slug($slug)->firstOrFail();
-            return view('frontend.pages.index')
-                ->withpage($result);
+        if (!is_null(Page::query()->where('page_slug', $slug)->firstOrFail())) {
+            $result = Page::query()->where('page_slug', $slug)->firstOrFail();
+            return view('frontend.pages.index')->withpage($result);
         } else {
             throw new GeneralException(trans('exceptions.backend.access.pages.not_found'));
         }

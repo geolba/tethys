@@ -62,6 +62,12 @@ class Dataset extends Model
             ->belongsToMany(Collection::class, 'link_documents_collections', 'document_id', 'collection_id');
     }
 
+    // public function collectionRoles()
+    // {
+    //     return $this
+    //         ->belongsToMany(CollectionRole::class, 'link_documents_collections', 'document_id', 'role_id');
+    // }
+
     #region [person table]
 
     //return all persons attached to this film

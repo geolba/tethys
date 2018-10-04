@@ -17,7 +17,6 @@ window.Vue = require('vue');
 
 Vue.component('my-vuetable', require('./components/MyVuetable.vue'));
 
-
 const app = new Vue({
     el: '#app'
 });

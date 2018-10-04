@@ -121,17 +121,49 @@ Route::group(['middleware' => ['permission:settings']], function () {
     ]);
     //=================================================setting collection=============================================
     Route::get('/settings/collection', [
-        'as' => 'settings.collection', 'uses' => 'Settings\CollectionController@index',
+        'as' => 'settings.collection.index', 'uses' => 'Settings\CollectionController@index',
     ]);
+
+    Route::get('/settings/collection/create', [
+        'as' => 'settings.collection.create', 'uses' => 'Settings\CollectionController@create',
+    ]);
+    Route::post('settings/collection/store', [
+        'as' => 'settings.collection.store', 'uses' => 'Settings\CollectionController@store',
+    ]);
+
     Route::get('settings/collection/edit/{id}', [
         'as' => 'settings.collection.edit', 'uses' => 'Settings\CollectionController@edit',
     ]);
     Route::patch('settings/collection/edit/{id}', [
         'as' => 'settings.collection.update', 'uses' => 'Settings\CollectionController@update',
     ]);
+    Route::get('settings/collection/show/{collection}', [
+        'as' => 'settings.collection.show', 'uses' => 'Settings\CollectionController@show',
+    ]);
     Route::get('settings/collection/delete/{id}', [
         'as' => 'settings.collection.delete', 'uses' => 'Settings\CollectionController@delete',
     ]);
+    //=================================================setting collection_role=========================================
+    Route::get('/settings/collectionrole', [
+        'as' => 'settings.collectionrole.index', 'uses' => 'Settings\CollectionRoleController@index',
+    ]);
+
+    Route::get('settings/collectionrole/edit/{id}', [
+        'as' => 'settings.collectionrole.edit', 'uses' => 'Settings\CollectionRoleController@edit',
+    ]);
+    Route::patch('settings/collectionrole/update/{id}', [
+        'as' => 'settings.collectionrole.update', 'uses' => 'Settings\CollectionRoleController@update',
+    ]);
+    Route::get('settings/collectionrole/show/{collectionrole}', [
+        'as' => 'settings.collectionrole.show', 'uses' => 'Settings\CollectionRoleController@show',
+    ]);
+    Route::get('settings/collectionrole/hide/{id}', [
+        'as' => 'settings.collectionrole.hide', 'uses' => 'Settings\CollectionRoleController@hide',
+    ]);
+    Route::get('settings/collectionrole/up/{id}', [
+        'as' => 'settings.collectionrole.up', 'uses' => 'Settings\CollectionRoleController@up',
+    ]);
+
     //==================================================================================================================
     //=================================================setting project==================================================
     Route::get('/settings/project', [

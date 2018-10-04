@@ -475,7 +475,7 @@ a:hover { text-decoration: none; }*/
 /*table { width: 100%; margin: 2em 0; }*/
 .pure-table a {
     color: #333;
-    text-decoration: none;
+    text-decoration:underline;
 }
 
 .pure-table a:hover {

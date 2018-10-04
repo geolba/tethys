@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Collection;
+use App\Models\CollectionRole;
+use App\Http\Requests\Collection\CollectionRequest;
 
 class CollectionController extends Controller
 {
@@ -52,12 +54,17 @@ class CollectionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Collection $collection
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Collection $collection)
     {
-        //
+        $collection = Collection::findOrFail($collection->id);
+        //get child collections
+        $collections = $collection
+        ->children()
+        ->paginate(10);
+        return view('settings.collection.collection', compact('collections'));
     }
 
     /**
@@ -68,7 +75,9 @@ class CollectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $collection = Collection::findOrFail($id);
+        $collectionroles = CollectionRole::pluck('name', 'id');
+        return view('settings.collection.edit', compact('collection', 'collectionroles'));
     }
 
     /**
@@ -78,9 +87,20 @@ class CollectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CollectionRequest $request, $id)
     {
-        //
+        $collection = Collection::findOrFail($id);
+        $input = $request->all();
+        //$input = $request->except('licenses', 'titles');
+        $collection->update($input);
+        session()->flash('flash_message', 'You have updated the collection "' . $collection->name . '"!');
+        if ($collection->parent()->exists()) {
+            return redirect()->route('settings.collection.show', $collection->parent);
+        } else {
+            $test = $collection->collectionrole;
+            return redirect()->route('settings.collectionrole.show', $collection->collectionrole);
+        }
+        //return redirect()->route('settings.collectionrole.index');
     }
 
     /**

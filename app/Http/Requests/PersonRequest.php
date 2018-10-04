@@ -25,7 +25,7 @@ class PersonRequest extends Request
         return [
             'academic_title' => 'nullable|min:2|max:255',
             'last_name' => 'required|min:3|max:255',
-            'first_name' => 'nullable|min:3|max:255',
+            'first_name' => 'required|min:3|max:255',
             'email' => 'nullable|email|max:100',
             'identifier_orcid' => 'nullable|min:19|max:50',
             'status' => 'required|boolean'

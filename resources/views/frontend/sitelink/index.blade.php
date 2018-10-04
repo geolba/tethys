@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.app') 
 @section('content')
 <div class="pure-g">
     <div class="pure-u-1 pure-u-md-2-3">
@@ -13,9 +12,9 @@
                 <?php endforeach; ?>
             </span>
 
-            
             <div class="posts">
-                <ol><?php foreach ($documents as $document) : ?>
+                <ol>
+                    <?php foreach ($documents as $document) : ?>
                     <li>
                         <section class="post">
                             <header class="post-header">
@@ -24,27 +23,28 @@
                                     </a>
                                 </h2>
                             </header>
-                            <div class="blog-meta"><?= $document->server_date_published->toDayDateTimeString()  ?>
+                            <div class="blog-meta">
+                                <?= $document->server_date_published->toDayDateTimeString()  ?>
                             </div>
                             <div class="post-description">
                                 @foreach ($document->authors as $author)
-                                <em>Author: {{ $author->getFullName() }}</em>
-                                <br />
-                                @endforeach
-
+                                <em>Author: {{ $author->full_name }}</em>
+                                <br /> 
+                                @endforeach 
                                 @foreach ($document->titles as $title)
                                 <em>Main Title: {{ $title->value }}</em>
-                                <br />
+                                <br /> 
                                 @endforeach
                             </div>
 
                         </section>
-                    </li><?php endforeach; ?>
+                    </li>
+                    <?php endforeach; ?>
                 </ol>
             </div>
-            
 
-            </div>
-        </div>        
+
+        </div>
+    </div>
 </div>
 @endsection

@@ -1,9 +1,13 @@
 <?php
-namespace App\Http\Requests;
+
+namespace App\Http\Requests\Collection;
 
 use App\Http\Requests\Request;
 
-class ProjectRequest extends Request
+/**
+ * Class UpdatePageRequest.
+ */
+class CollectionRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,7 +16,7 @@ class ProjectRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return true;//return access()->allow('edit-page');
     }
 
     /**
@@ -23,10 +27,8 @@ class ProjectRequest extends Request
     public function rules()
     {
         return [
-            
-            'name' => 'required|min:3|max:255',
-            'label' => 'required|min:3|max:10',
-            'description' => 'required'
+            'name'       => 'required|max:255',
+            'role_id' => 'required',
         ];
     }
 }

@@ -12,7 +12,7 @@ class Project extends Model
     // for using $input = $request->all();
     //$project = Project::create($input);
     protected $fillable = [
-        'name', 'label'
+        'name', 'label', 'description'
     ];
 
 

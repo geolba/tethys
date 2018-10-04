@@ -9,6 +9,11 @@
         {{ Form::text('label', null, ['class' => 'form-control']) }}
         <em>*</em>
     </div>
+    <div class="pure-control-group">
+        {{ Form::label('description', 'description') }}
+        {{ Form::textarea('description', null, ['class' => 'form-control', 'size' => '70x6']) }}
+        <em>*</em>
+    </div>
     {{ Form::submit($submitButtonText, ['class' => 'pure-button button-small']) }}
 </fieldset>
 
