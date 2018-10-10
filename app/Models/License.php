@@ -27,4 +27,9 @@ class License extends Model
     {
         return $this->belongsToMany(Dataset::class, 'link_documents_licences', 'licence_id', 'document_id');
     }
+
+    public function getCheckedAttribute()
+    {
+        return "false";
+    }
 }

@@ -36,7 +36,7 @@
                                         <ul class="pure-menu-children" role="menu">
                                             <!--<li class="pure-menu-item"><a href="{{ route('settings.book') }}" class="pure-menu-link">BOOK</a></li>-->
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('settings.document') }}" >DATASET</a></li>
-                                            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('settings.collection') }}">COLLECTION</a></li>
+                                            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('settings.collection.index') }}">COLLECTION</a></li>
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('settings.project') }}">PROJECT</a></li>
 
                                             <!-- <li><a href="{{ route('settings.shelf') }}" class="marvel">SHELF</a></li>-->

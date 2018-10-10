@@ -14,6 +14,7 @@
 
             <thead>				
                 <th>Licence</th>
+                <th>Sort Order</th>
                 <th></th>
             </thead>
 
@@ -21,7 +22,8 @@
                 
                 @foreach($licenses as $license)				
                     <tr>											
-                        <td>{{ $license->name_long }}</td>						
+                        <td>{{ $license->name_long }}</td>	
+                        <td>{{ $license->sort_order }}</td>						
                                 
                         <td>
                             <a class="edit" href="{{ route('settings.license.edit', $license->id) }}">

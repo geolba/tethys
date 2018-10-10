@@ -117,7 +117,7 @@ class PersonController extends Controller
     }
 
      /**
-     * activatew author, submitter etc....
+     * activate author, submitter etc....
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

@@ -1,5 +1,7 @@
 @extends('settings.layouts.app') 
-@section('title', 'Publish') 
+
+@section('title', 'Publish')
+
 @section('content')
 <div class="header">
     <h3 class="header-title">
@@ -8,12 +10,14 @@
 </div>
 
 <div id="app" class="box-content">
-    <form action={{ route( 'publish.dataset.store1') }} method="post" class="pure-form" enctype="multipart/form-data">
+    {{-- <form action={{ route( 'publish.dataset.store1') }} method="post" class="pure-form" enctype="multipart/form-data"> --}}
+    <main class="steps pure-form" enctype="multipart/form-data">
         {{ csrf_field() }}
 
-        <div v-if="step === 1">
+        <form v-if="step === 1" data-vv-scope="step-1">
             <h1>Step One</h1>
-            <fieldset class="left-labels">
+            
+            <div class="form-group">
                 <legend>Datensatztyp</legend>
                 <div class="description hint">
                     <p>Bitte wählen Sie einen Datensatztyp aus der Liste aus.</p>
@@ -22,44 +26,51 @@
                 <div class="form-item">
                     <label for="documentType">Datensatztyp<span class="required" title="Dieses Feld muss ausgefüllt werden."> *</span></label>
                     <div class="select" style="width:300px" title="Bitte wählen Sie einen Datensatztyp aus der Liste aus.">
-                        {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
-                        'dataset.type']) !!}
+                        {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 
+                        'v-model' => 'dataset.type', "v-validate" => "'required'"]) !!}
                     </div>
                 </div>
-            </fieldset>
+            </div>
 
-            <fieldset class="left-labels">
+            <div :class="{'form-group':true, 'has-error':errors.has('rights')}">
                 <legend>Einräumung eines einfachen Nutzungsrechts</legend>
-                <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div"> --}}
+                        <p> 
+                                I accept 
+                                <a target="_blank" href="{{ route("frontend.pages.show", ['page_slug'=>'terms-and-conditions']) }}">
+                                    {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
+                                </a> 
+                            </p>
                     <small for="rights" class="pure-form-message-inline">Ich habe diese rechtlichen Hinweise gelesen und bin damit einverstanden.
                         <span class="required" title="Dieses Feld muss ausgefüllt werden.">*</span>
                     </small> {{-- <input name="rights" value="0" type="hidden"> --}}
                     <label>
-                        <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights" true-value="1" false-value="0"> 
-                        <p> 
-                            I accept 
-                            <a target="_blank" href="{{ route("frontend.pages.show", ['page_slug'=>'terms-and-conditions']) }}">
-                                {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
-                            </a> 
-                        </p>
+                        <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'"> 
+                        <br />
+                        <i v-show="errors.has('step-1.rights')" class="fa fa-warning"></i>
+                        <span v-show="errors.has('step-1.rights')" class="text-danger">@{{ errors.first('step-1.rights') }}</span>
+                        
                     </label>
-                </div>
-            </fieldset>
+                    <span class="help-block">You must agree to continue</span>
+                {{-- </div> --}}
+            </div>
 
             <br />
-            <div class="pure-controls">
-                {{-- <button type="submit" class="pure-button button-small">
-                    <i class="fa fa-arrow-right"></i>
-                    <span>Weiter zum nächsten Schritt</span>
-                </button> --}}
-                <button @click.prevent="next()" class="pure-button button-small">
+            <div class="pure-controls">               
+                <button @click.prevent="next('step-1')" class="pure-button button-small" :disabled="errors.any()">
                     <i class="fa fa-arrow-right"></i>
                     <span>Continue</span>
                 </button>
             </div>
-        </div>
+            <div v-if="errors.items.length > 0">
+                <b>Please correct the following error(s):</b>
+                <ul class="alert validation-summary-errors">
+                    <li style="margin-left:5px;" v-for="error in errors.items">@{{ error.msg }}</li>
+                </ul>
+            </div>
+        </form>
 
-        <div v-if="step === 2">
+        <form v-if="step === 2" data-vv-scope="step-2">
             <h1>Step Two</h1>
             <fieldset id="fieldset-general">
                 <legend>General</legend>
@@ -76,22 +87,22 @@
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('Type', 'Type..') !!}
                         <div class="select  pure-u-23-24">
-                            {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
-                            'dataset.type']) !!}
+                            {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 
+                            'v-model' => 'dataset.type', "v-validate" => "'required'"]) !!}
                         </div>
                     </div>
 
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('State', 'State..') !!}
                         <div class="select  pure-u-23-24">
-                            {!! Form::select( 'State', array_except(Config::get('enums.server_states'),['published', 'deleted', 'temporary']), '', ['placeholder'
-                            => '-- select server state --', 'v-model' => 'dataset.state'] ) !!}
+                            {!! Form::select( 'State', array_except(Config::get('enums.server_states'),['published', 'deleted', 'temporary']), '', 
+                            ['placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'"] ) !!}
                         </div>
                     </div>
 
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('CreatingCorporation', 'Creating Corporation') !!} {!! Form::text('CreatingCorporation', null, ['class' =>
-                        'pure-u-23-24', 'v-model' => 'dataset.creating_corporation']) !!}
+                        'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'"]) !!}
                     </div>
 
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -125,28 +136,29 @@
                 <legend>Main Title & Abstract</legend>
                 <div class="pure-g">
 
-
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('TitleMain', 'Main Title ') !!} {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
-                        => 'dataset.title_main.value']) !!}
+                        {!! Form::label('TitleMain', 'Main Title ') !!} 
+                        {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
+                        => 'dataset.title_main.value', "v-validate" => "'required|min:3'", "data-vv-as" => "Main Title"]) !!}
                     </div>
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('TitleLanguage', 'Title Language..') !!}
                         <div class="select pure-u-23-24">
-                            {!! Form::select('TitleMain[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.title_main.language'])
-                            !!}
+                            {!! Form::select('TitleMain[Language]', $languages, null, 
+                            ['placeholder' => '--no language--', 'v-model' => 'dataset.title_main.language',  "v-validate" => "'required'", "data-vv-as" => "Title Language"]) !!}
                         </div>
                     </div>
 
-                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('TitleAbstract', 'Main Abstract ') !!} {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
-                        'size' => '70x6', 'v-model' => 'dataset.abstract_main.value']) }}
+                 <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
+                        {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
+                        'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:3'", "data-vv-as" => "Main Abstract"]) }}
                     </div>
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('AbstractLanguage', 'Abstract Language..') !!}
                         <div class="select pure-u-23-24">
-                            {!! Form::select('TitleAbstract[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.abstract_main.language'])
-                            !!}
+                            {!! Form::select('TitleAbstract[Language]', $languages, null, 
+                            ['placeholder' => '--no language--', 'v-model' => 'dataset.abstract_main.language', "v-validate" => "'required'", "data-vv-as" => "Abstract Language"]) !!}
                         </div>
                     </div>
                 </div>
@@ -155,13 +167,19 @@
                 <legend>Licenses</legend>
 
                 <div class="pure-control-group checkboxlist">
-                    @foreach ($licenses as $license)
+                    @foreach ($licenses as $indexKey => $license)
                     <label for={{ "license". $license->id }} class="pure-checkbox">
-                        <input name="licenses[]" value={{ $license->id }} v-model="dataset.checkedLicenses" type="checkbox" class="form-check-input">
+                        @if ($loop->first)
+                        <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" v-validate="'required'" data-vv-as="Licence" >
                         {{ $license->name_long }}
-                    </label> @endforeach
+                        @else
+                        <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" >
+                        {{ $license->name_long }}
+                        @endif
+                    </label> 
+                    @endforeach
                     <br>
-                    <span>Checked licenses: @{{ dataset.checkedLicenses }}</span>
+                    <span>Checked license: @{{ dataset.checkedLicenses }}</span>
                 </div>
             </fieldset>
 
@@ -172,15 +190,20 @@
                         <span>Back</span>
                 </button>
 
-                <button @click.prevent="next()" class="pure-button button-small">
+                <button @click.prevent="next('step-2')" class="pure-button button-small" v-bind:disabled="errors.any()">
                     <i class="fa fa-arrow-right"></i>
                     <span>Continue</span>
                 </button>
             </div>
+            <div v-if="errors.items.length > 0">
+                <b>Please correct the following error(s):</b>
+                <ul class="alert validation-summary-errors">
+                    <li style="margin-left:5px;" v-for="error in errors.items">@{{ error.msg }}</li>
+                </ul>
+            </div>
+        </form>
 
-        </div>
-
-        <div v-if="step === 3">
+        <form v-if="step === 3" data-vv-scope="step-3">
             <h1>Select authors, contributors</h1>
             <fieldset id="fieldset-general">
                 <legend>Authors</legend>
@@ -212,6 +235,10 @@
                 <legend>Contributors</legend>
                 <small id="contributorHelp" class="pure-form-message-inline">will come soon...</small>
             </fieldset>
+            <fieldset id="fieldset-general">
+                <legend>Submitters</legend>
+                <small id="submitterHelp" class="pure-form-message-inline">will come soon...</small>
+            </fieldset>
             <br />
             <div class="pure-controls">
                 <button @click.prevent="prev()" class="pure-button button-small">
@@ -219,14 +246,14 @@
                         <span>Back</span>
                 </button>
 
-                <button @click.prevent="next()" class="pure-button button-small">
+                <button @click.prevent="next('step-3')" class="pure-button button-small">
                     <i class="fa fa-arrow-right"></i>
                     <span>Review Dataset</span>
                 </button>
             </div>
-        </div>
+        </form>
 
-        <div v-if="step === 4">
+        <form v-if="step === 4" data-vv-scope="step-4">
             <h1>File Upload</h1>
 
             <div class="dropbox">
@@ -281,47 +308,46 @@
                 <span>Create Dataset</span>
             </button>
 
-        </div>
+        </form>
 
-        <div v-if="errors.length > 0">
-            <b>Please correct the following error(s):</b>
+        <div v-if="serrors.length > 0">
+            <b>Please correct the following server error(s):</b>
             <ul class="alert validation-summary-errors">
-                <li style="margin-left:5px;" v-for="error in errors">@{{ error }}</li>
+                <li style="margin-left:5px;" v-for="error in serrors">@{{ error }}</li>
             </ul>
         </div>
 
 
-    </form>
+    </main>
     {{-- <br/><br/>Debug:@{{ dataset }} --}}
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 @stop 
+
+@section('styles') 
+<style type="text/css">
+
+    /* main.steps article {
+        display:block;
+    } */
+
+    .help-block {
+        display: none;
+        font-size: 0.8em;
+    }
+
+    .has-error .help-block {
+        display:block;
+    }
+
+</style>
+@stop
+
+
 @section('after-scripts') {{--
 <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script> --}} {{--
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>--}} {{--
 <script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
 <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>
-
-
-
-
-
-
-
-
-
-
 
 @stop

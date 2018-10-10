@@ -23,9 +23,15 @@ window._ = require('lodash');
 // window.Vue = require('vue');
 // Vue.prototype.$http = axios;
 
+// import Vue from 'vue';
 // Vue.component('example', require('./components/Example.vue'));
 //Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
 import MyAutocomplete from './components/MyAutocomplete.vue';
+import VeeValidate from 'vee-validate';
+// import { Validator } from 'vee-validate';
+
+
+Vue.use(VeeValidate);
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
@@ -38,7 +44,7 @@ const app = new Vue({
                 // { qty: 5, value: "Something", language: 10, type: "additional", sort_order: 0 },
                 // { qty: 2, value: "Something else", language: 20, type: "additional", sort_order: 0 },
             ],
-            errors: [],
+            serrors: [],
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
@@ -66,14 +72,28 @@ const app = new Vue({
                     language: ''
                 },
                 checkedPersons: [],
-                checkedLicenses: [],
+                checkedLicenses: [],// [],
                 files: []
             }
         }
+    },   
+    created: function () {
+        VeeValidate.Validator.extend('Name', {
+            getMessage: field => '* Enter valid ' + field + '',
+            validate: value => /^[a-zA-Z]*$/.test(value)
+        });
+        // add the required rule
+        VeeValidate.Validator.extend('oneChecked', {
+            getMessage: field => 'At least one ' + field + ' needs to be checked.',
+            validate: (value, [testProp]) => {
+                const options = this.dataset.checkedLicenses;
+                return value || options.some((option) => option[testProp]);           
+            }
+        });
     },
     mounted() {
         this.step = 1;
-        this.reset();
+        this.reset();        
     },
     computed: {
         isInitial() {
@@ -103,7 +123,7 @@ const app = new Vue({
         },
         save() {
             var _this = this;
-            this.errors = [];
+            this.serrors = [];
             /*
            Initialize the form data
            */
@@ -126,7 +146,7 @@ const app = new Vue({
             */
             formData.append('type', this.dataset.type);
             formData.append('server_state', this.dataset.state);
-            formData.append('rights', this.dataset.rights);
+            formData.append('rights', Number(this.dataset.rights));
             formData.append('creating_corporation', this.dataset.creating_corporation);
             formData.append('project_id', this.dataset.project_id);
             formData.append('embargo_date', this.dataset.embargo_date);
@@ -171,12 +191,12 @@ const app = new Vue({
                         var errorsArray = errorObject.response.data.errors;
                         for (var index in errorsArray) {
                             console.log(errorsArray[index]);
-                            _this.errors.push(errorsArray[index]);
+                            _this.serrors.push(errorsArray[index]);
                         }
                     }
                     if (errorObject.response.data.error) {
                         var error = errorObject.response.data.error;
-                        _this.errors.push(error.message);
+                        _this.serrors.push(error.message);
                     }
                     _this.currentStatus = STATUS_FAILED;
                 });
@@ -230,8 +250,24 @@ const app = new Vue({
         prev() {
             this.step--;
         },
-        next() {
-            this.step++;
+        next(scope) {
+            // if(this.validate(scope)) {
+            //     this.step++;
+            // }
+            this.$validator.validateAll(scope).then((result) => {
+                if (result) {
+                    this.step++;
+                }
+            });
+
+        },
+        validate: function (scope) {
+            this.$validator.validateAll(scope);
+            if (this.errors.any()) {
+                console.log('The form is invalid');
+                return false;
+            }
+            return true;
         },
         submit() {
             // alert('Submit to blah and show blah and etc.');

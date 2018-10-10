@@ -21,7 +21,8 @@ class LicenseController extends Controller
 
     public function index() : View
     {
-        $licenses = License::get();
+        $direction = 'asc'; // or desc
+        $licenses = License::orderBy('sort_order', $direction)->get();
         return view('settings.license.license', compact('licenses'));
     }
 

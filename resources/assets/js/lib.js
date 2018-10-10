@@ -4,7 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 require('./bootstrap');
-window.Vue = require('vue');
+// window.Vue = require('vue');
+import Vue from 'vue';
 
 Vue.prototype.$http = axios;
 

@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('/backend/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/backend/pagination.css') }}">
+    @yield('styles')
 </head>
 <body>
 

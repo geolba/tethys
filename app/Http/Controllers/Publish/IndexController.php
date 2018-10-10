@@ -244,7 +244,7 @@ class IndexController extends Controller
                 $dataset->save();
                
                 //store related files
-                if (null != $data['files']) {
+                if (isset($data['files'])) {
                     foreach ($data['files'] as $uploadedFile) {
                         $file = $uploadedFile['file'];
                         $label = urldecode($uploadedFile['label']);
@@ -299,7 +299,9 @@ class IndexController extends Controller
                 DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
-                Storage::deleteDirectory($datasetFolder);
+                if (isset($datasetFolder)) {
+                    Storage::deleteDirectory($datasetFolder);
+                }
                 return response()->json([
                     'success' => false,
                     'error' => [
@@ -310,7 +312,9 @@ class IndexController extends Controller
                 //throw $e;
             } catch (\Throwable $e) {
                 DB::rollback();
-                Storage::deleteDirectory($datasetFolder);
+                if (isset($datasetFolder)) {
+                    Storage::deleteDirectory($datasetFolder);
+                }
                 return response()->json([
                     'success' => false,
                     'error' => [

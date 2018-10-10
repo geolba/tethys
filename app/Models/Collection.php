@@ -8,8 +8,10 @@ use App\Models\Dataset;
 class Collection extends Model
 {
     public $timestamps = false;
+    //mass assignable
     protected $fillable = [
         'name',
+        'number',
         'role_id',
     ];
 

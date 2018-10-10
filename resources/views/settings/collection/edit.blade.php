@@ -24,8 +24,14 @@
         'pure-form pure-form-aligned']) !!}
         <fieldset>
             <div class="pure-control-group">
-                {{ Form::label('name', 'collection name') }} {{ Form::text('name', null, ['class' => 'form-control']) }}
+                {{ Form::label('name', 'collection name') }} 
+                {{ Form::text('name', null, ['class' => 'form-control']) }}
                 <em>*</em>
+            </div>
+            <div class="pure-control-group">
+                {{ Form::label('number', 'number') }} 
+                {{ Form::text('number', null, ['class' => 'form-control']) }}
+                <small id="numberHelp" class="pure-form-message-inline">number is optional</small>
             </div>
 
             <div class="pure-control-group pure-div">
