@@ -66,4 +66,9 @@ class File extends Model
     {
         return  storage_path('app/public/' . $this->path_name);
     }
+
+    public function exists()
+    {
+        return \Illuminate\Support\Facades\File::exists(public_path('storage/' . $this->path_name));
+    }
 }

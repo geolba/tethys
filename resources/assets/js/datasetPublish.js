@@ -56,7 +56,7 @@ const app = new Vue({
             dataset: {
                 type: '',
                 state: '',
-                rights: 0,
+                rights: null,
                 project_id: '',
 
                 creating_corporation: "GBA",

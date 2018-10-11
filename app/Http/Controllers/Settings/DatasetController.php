@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\File;
 
 class DatasetController extends Controller
 {
@@ -109,7 +110,7 @@ class DatasetController extends Controller
     public function edit($id) : View
     {
         $document = Dataset::findOrFail($id);
-        $document->load('licenses', 'titles', 'abstracts');
+        $document->load('licenses', 'titles', 'abstracts', 'files');
 
         $projects = Project::pluck('label', 'id');
         
@@ -191,6 +192,7 @@ class DatasetController extends Controller
         return redirect()->route('settings.document');
     }
 
+   
     /**
      * Remove the specified resource from storage.
      *

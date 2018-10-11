@@ -111,6 +111,32 @@
 </fieldset>
 
 
+<fieldset id="fieldset-abstracts">
+    <legend>Files</legend>
+    <table id="items" class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th>Path Name</th>
+                <th>Label</th>
+            </tr>
+        </thead>    
+        <tbody>
+            @foreach($document->files as $key => $file)
+            <tr>
+                <td>
+                    @if($file->exists() === true)
+                    <a href="{{ route('settings.file.download', ['id' => $file->id]) }}"> {{ $file->path_name }} </a> 
+                    @else
+                    <span class="alert">missing file: {{ $file->path_name }}</span> 
+                    @endif
+                </td>
+                <td> {{ $file->label }} </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</fieldset>
+
 <br />
 <div class="pure-controls">
     <button type="submit" class="pure-button button-small">

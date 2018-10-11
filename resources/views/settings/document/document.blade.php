@@ -17,13 +17,13 @@
 					{!! Form::text('search', null, array('class'=>'pure-u-1 pure-u-md-1-2', 'placeholder'=>'filter for the title...')) !!}
 		
 					<div class="select pure-u-1 pure-u-md-1-2">
-					{!! Form::select('state', Config::get('enums.server_states'), 'published', ['class' => 'pure-u-1']) !!}
+					{!! Form::select('state', Config::get('enums.server_states'), 'published', ['class' => 'pure-u-1', 'onchange' => "this.form.submit()"]) !!}
 					</div>
 
 				<div class="pure-u-1 pure-u-md-1-2">
-				<button type="submit">
+				{{-- <button type="submit">
 					<i class="fa fa-search"></i>
-				</button> 
+				</button>  --}}
 				</div>
 			</p>          
 				<input type="hidden" name="searchtype" id="searchtype" value="simple" />         
@@ -81,14 +81,15 @@
 		</table>	
 	</div>
 
-
+	{!! Form::close() !!} 
+	
 	<div class="pure-u-1">
 		{{  $documents
 			->appends(Input::except('page'))
 			->links('vendor.pagination.default') }}
 	</div>
 
-		{!! Form::close() !!} 
+
 
 </div>
 

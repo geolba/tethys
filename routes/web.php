@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
 
-//=================================================publish dataasets================================================
+//=================================================publish datasets================================================
 Route::group(
     [
         'namespace' => 'Publish',
@@ -119,6 +119,15 @@ Route::group(['middleware' => ['permission:settings']], function () {
     Route::patch('settings/document/update/{id}', [
         'as' => 'settings.document.update', 'uses' => 'Settings\DatasetController@update',
     ]);
+    Route::get('settings/file/download/{id}', [
+        'as' => 'settings.file.download', 'uses' => 'Settings\DatasetController@download',
+    ]);
+    //=============================================================================================================
+    //=================================================setting file=============================================
+    Route::get('settings/file/download/{id}', [
+        'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
+    ]);
+
     //=================================================setting collection=============================================
     Route::get('/settings/collection', [
         'as' => 'settings.collection.index', 'uses' => 'Settings\CollectionController@index',
