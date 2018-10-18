@@ -24,6 +24,7 @@
 // Vue.prototype.$http = axios;
 
 import Vue from 'vue';
+import axios from 'axios';
 
 // Vue.component('example', require('./components/Example.vue'));
 //Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
