@@ -26,7 +26,11 @@ class IndexController extends Controller
      */
     public function index()
     {
-        //
+        $builder = Dataset::query();
+        $datasets = $builder
+        ->where('server_state', 'inprogress')
+        ->get();
+        return view('publish.index', compact('datasets'));
     }
 
     /**
@@ -43,11 +47,11 @@ class IndexController extends Controller
             ->pluck('part2_t', 'part2_t');
         // ->toArray();
 
-        $persons = Person::where('status', 1)
-            ->pluck('last_name', 'id');
+        // $persons = Person::where('status', 1)
+        //     ->pluck('last_name', 'id');
         $projects = Project::pluck('label', 'id');
 
-        return view('publish.create-step1', compact('licenses', 'languages', 'persons', 'projects'));
+        return view('publish.create-step1', compact('licenses', 'languages', 'projects'));
     }
 
     /**
@@ -274,6 +278,15 @@ class IndexController extends Controller
                  $licenses = $request->input('licenses');
                  $dataset->licenses()->sync($licenses);
 
+                 //store authors
+                 $data_to_sync = [];
+                foreach ($request->get('authors') as $key => $person_id) {
+                    $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
+                    // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
+                    $data_to_sync[$person_id] = $pivot_data;
+                }
+                $dataset->persons()->sync($data_to_sync);
+                
                 //save main title:
                 if (isset($data['title_main'])) {
                     $formTitle = $request->input('title_main');

@@ -25,13 +25,16 @@ Route::group(
         'as' => 'publish.'
     ],
     function () {
+        Route::get('dataset', [
+            'as' => 'dataset.index', 'uses' => 'IndexController@index',
+        ]);
         Route::get('dataset/create-step1', ['as' => 'dataset.create', 'uses' => 'IndexController@createStep1']);
-        Route::post('dataset/store-step1', ['as' => 'dataset.store1', 'uses' => 'IndexController@storeStep1']);
+        // Route::post('dataset/store-step1', ['as' => 'dataset.store1', 'uses' => 'IndexController@storeStep1']);
 
-        Route::get('dataset/create-step2', ['as' => 'dataset.create2', 'uses' => 'IndexController@createStep2']);
-        Route::post('dataset/store-step2', ['as' => 'dataset.store2', 'uses' => 'IndexController@storeStep2']);
+        // Route::get('dataset/create-step2', ['as' => 'dataset.create2', 'uses' => 'IndexController@createStep2']);
+        // Route::post('dataset/store-step2', ['as' => 'dataset.store2', 'uses' => 'IndexController@storeStep2']);
 
-        Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
+        // Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
         Route::post('dataset/store', ['as' => 'dataset.store', 'uses' => 'IndexController@store']);
     }
 );

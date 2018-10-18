@@ -23,7 +23,9 @@ Route::get('/oai', 'Oai\RequestController@identify');
 
 Route::get('/api/persons', function () {
     $request = request();
-    $query = Person::query();//->with('group');
+    //$query = Person::query();//->with('group');
+    $query = Person::where('status', true);
+    
     // handle sort option
     //if (request()->has('sort')) {
     if (null !== ($request->input('sort'))) {
@@ -36,17 +38,20 @@ Route::get('/api/persons', function () {
     } else {
         $query = $query->orderBy('id', 'asc');
     }
+
+    //handle filter
     if ($request->exists('filter')) {
         $query->where(function ($q) use ($request) {
             $value = "%{$request->filter}%";
             $q->where('first_name', 'like', $value)
-                // ->orWhere('nickname', 'like', $value)
+                ->orWhere('last_name', 'like', $value)
                 ->orWhere('email', 'like', $value);
         });
     }
     $perPage = request()->has('per_page') ? (int) request()->per_page : null;
     // $pagination = $query->with('address')->paginate($perPage);
     $pagination = $query->paginate($perPage);
+    // $pagination = $query->get();
     $pagination->appends([
         'sort' => request()->sort,
         'filter' => request()->filter,

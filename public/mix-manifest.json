@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
     "/backend/publish/datasetPublish.js": "/backend/publish/datasetPublish.js",
+    "/js/lib.js": "/js/lib.js",
     "/js/dataTable.js": "/js/dataTable.js"
 }

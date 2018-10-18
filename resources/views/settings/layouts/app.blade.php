@@ -69,30 +69,35 @@
                         <li class="pure-menu-item {{ Route::is('settings.project*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.project') }}"><i class="fa fa-tasks"></i> Projects</a>
                         </li>
+
+                        @permission('page')
+                        <li class="{{ active_class(Active::checkUriPattern('settings/page*')) }}">
+                            <a class="pure-menu-link" href="{{ route('settings.page.index') }}">
+                                <i class="fa fa-file-text"></i>
+                                <span>{{ trans('labels.backend.pages.title') }}</span>
+                            </a>
+                        </li>
+                        @endpermission
                         
                     </ul>
                 </li>
                 @endpermission
 
                 @permission('review')
-                <li class="{{ active_class(Active::checkUriPattern('publish/dataset/*')) }}">
+                <li class="treeview">
                     <h2 class="pure-menu-heading">Publish</h2>
                     <ul class="pure-menu-list">		
-                        <li class="pure-menu-item {{ Route::is('publish.dataset.*') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Publish</a>
-                        </li>		
+                        <li class="pure-menu-item {{ Route::is('publish.dataset.create') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Create</a>
+                        </li>
+                        <li class="pure-menu-item {{ Route::is('publish.dataset.index') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.index') }}"><i class="fa fa-upload"></i> Publish created datasets</a>
+                        </li>			
                     </ul>
                 </li>
                 @endpermission
 
-                @permission('page')
-                <li class="{{ active_class(Active::checkUriPattern('settings/page*')) }}">
-                    <a class="pure-menu-link" href="{{ route('settings.page.index') }}">
-                        <i class="fa fa-file-text"></i>
-                        <span>{{ trans('labels.backend.pages.title') }}</span>
-                    </a>
-                </li>
-                @endpermission
+               
 
               
                 <li class="treeview">

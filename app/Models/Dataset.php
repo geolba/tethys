@@ -73,8 +73,9 @@ class Dataset extends Model
     //return all persons attached to this film
     public function persons()
     {
-        return $this->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
-            ->withPivot('role');
+        return $this
+            ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
+            ->withPivot('role', 'sort_order', 'allow_email_contact');
     }
 
     /**

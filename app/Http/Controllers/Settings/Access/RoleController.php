@@ -58,8 +58,8 @@ class RoleController extends Controller
         }
 
         return redirect()
-        ->route('access.role.index')
-        ->with('success', 'Role has been created successfully');
+            ->route('access.role.index')
+            ->with('success', 'Role has been created successfully');
     }
 
     /**

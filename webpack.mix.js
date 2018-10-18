@@ -16,6 +16,7 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/datasetPublish.js', 'public/backend/publish')
     .js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/lib.js', 'public/js')
     .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-buttons/js/dataTables.buttons.js',

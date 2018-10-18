@@ -19,17 +19,17 @@
 // else {
 //     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 // }
-window._ = require('lodash');
+// window._ = require('lodash');
 // window.Vue = require('vue');
 // Vue.prototype.$http = axios;
 
-// import Vue from 'vue';
+import Vue from 'vue';
+
 // Vue.component('example', require('./components/Example.vue'));
 //Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
 import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
 // import { Validator } from 'vee-validate';
-
 
 Vue.use(VeeValidate);
 
@@ -55,7 +55,7 @@ const app = new Vue({
             step: 1,
             dataset: {
                 type: '',
-                state: '',
+                state: 'inprogress',
                 rights: null,
                 project_id: '',
 
@@ -71,7 +71,7 @@ const app = new Vue({
                     value: '',
                     language: ''
                 },
-                checkedPersons: [],
+                checkedAuthors: [],
                 checkedLicenses: [],// [],
                 files: []
             }
@@ -160,6 +160,10 @@ const app = new Vue({
                 formData.append('licenses[' + i + ']', this.dataset.checkedLicenses[i]);
             }
 
+            for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
+                formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
+            }
+
             /*
             Make the request to the POST /multiple-files URL
             */
@@ -238,7 +242,12 @@ const app = new Vue({
 
         },
         onAddAuthor(person) {
-            this.persons.push(person);
+            //if person is not in person array
+            //if (this.persons.includes(person) == false) {
+            if (this.persons.filter(e => e.id === person.id).length == 0) {    
+                this.persons.push(person);
+                this.dataset.checkedAuthors.push(person.id);
+            }
         },
         /*
         Removes a select file the user has uploaded

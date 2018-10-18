@@ -2,17 +2,20 @@
 https://alligator.io/vuejs/vue-autocomplete-component/ -->
 <template>
     <div style="position:relative">
-        <input type="search" @input="searchChanged" v-model="search" v-bind:disabled="isLoading == true" v-bind:title="title" v-bind:placeholder="title" class="pure-u-23-24">
+        <input type="search" @input="searchChanged" v-model="search" v-bind:disabled="isLoading == true" v-bind:title="title" v-bind:placeholder="title" 
+        class="pure-u-23-24" v-on:keydown.down="onArrowDown" v-on:keydown.up="onArrowUp" v-on:keydown.enter="onEnter">
         <!-- <ul class="autocomplete-results" v-show="results.length > 0"> -->
         <ul class="autocomplete-results pure-u-23-24" v-show="isOpen"> 
              <li class="loading" v-if="isLoading" >Loading results...</li>
 
             <li 
                 v-else
-                v-for="suggestion in results" 
-                :key="suggestion.id" 
+                v-for="(suggestion, i) in results" 
+                :key="i" 
                 @click="setResult(suggestion)"
-                class="autocomplete-result">
+                class="autocomplete-result"
+                :class="{ 'is-active': i === arrowCounter }"
+                >
                  <strong>{{ suggestion.full_name }}</strong>
             </li>
         </ul>
@@ -20,6 +23,9 @@ https://alligator.io/vuejs/vue-autocomplete-component/ -->
 </template>
 
 <script>
+import _ from 'lodash';
+import axios from 'axios';
+
 export default {
   //data from parent component
   props: {
@@ -42,7 +48,8 @@ export default {
       isOpen: false,
       isLoading: false,
       isAsync: true,
-      items: []
+      items: [],
+      arrowCounter: -1
     };
   },
 
@@ -74,7 +81,7 @@ export default {
   methods: {
     setResult(person) {
       // this.search = person.full_name;
-      this.reset();     
+      this.reset();
       this.$emit("person", person);
     },
     reset() {
@@ -98,15 +105,14 @@ export default {
           });
           this.isOpen = true;
         }
-      }
-      else{
+      } else {
         this.items = [];
       }
     },
-    filterResults() {
+    filterResults: _.debounce(function() {
       var self = this;
       axios
-        .get("/api/persons", { params: { filter: this.search } })
+        .get("/api/persons", { params: { filter: this.search.toLowerCase() } })
         .then(function(response) {
           return (self.items = response.data.data);
         })
@@ -116,13 +122,32 @@ export default {
       // this.results = this.items.filter(item => {
       //   return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
       // });
+    }, 300),
+    onArrowDown() {
+      if (this.arrowCounter < this.results.length - 1) {
+        this.arrowCounter = this.arrowCounter + 1;
+      }
+    },
+    onArrowUp() {
+      if (this.arrowCounter > 0) {
+        this.arrowCounter = this.arrowCounter - 1;
+      }
+    },
+    onEnter() {
+      if(Array.isArray(this.results) && this.results.length && this.arrowCounter !== -1 && this.arrowCounter < this.results.length){
+        //this.search = this.results[this.arrowCounter];
+        var person = this.results[this.arrowCounter];
+        this.$emit("person", person);
+        //this.isOpen = false;
+        this.reset();
+        this.arrowCounter = -1;
+      }     
     }
   },
   computed: {
     // isOpen() {
     //   return this.results.length > 0;
     // }
-    
   }
 };
 </script>
@@ -143,6 +168,7 @@ export default {
   cursor: pointer;
 }
 
+.autocomplete-result.is-active,
 .autocomplete-result:hover {
   background-color: #4aae9b;
   color: white;
