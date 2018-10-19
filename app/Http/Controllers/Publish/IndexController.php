@@ -28,7 +28,8 @@ class IndexController extends Controller
     {
         $builder = Dataset::query();
         $datasets = $builder
-        ->where('server_state', 'inprogress')
+        //->where('server_state', 'inprogress')
+        ->whereIn('server_state', ['inprogress', 'unpublished'])
         ->get();
         return view('publish.index', compact('datasets'));
     }
@@ -278,12 +279,20 @@ class IndexController extends Controller
                  $licenses = $request->input('licenses');
                  $dataset->licenses()->sync($licenses);
 
-                 //store authors
-                 $data_to_sync = [];
+                //store authors
+                $data_to_sync = [];
                 foreach ($request->get('authors') as $key => $person_id) {
                     $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
                     // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
                     $data_to_sync[$person_id] = $pivot_data;
+                }
+                $dataset->persons()->sync($data_to_sync);
+
+                //store contributors
+                $data_to_sync = [];
+                foreach ($request->get('contributors') as $key => $contributor_id) {
+                    $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
+                    $data_to_sync[$contributor_id] = $pivot_data;
                 }
                 $dataset->persons()->sync($data_to_sync);
                 

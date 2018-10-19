@@ -52,11 +52,12 @@ const app = new Vue({
             uploadFieldName: 'photos',
             fileCount: 0,
             persons: [],
+            contributors: [],
 
             step: 1,
             dataset: {
                 type: '',
-                state: 'inprogress',
+                state: '',
                 rights: null,
                 project_id: '',
 
@@ -74,7 +75,8 @@ const app = new Vue({
                 },
                 checkedAuthors: [],
                 checkedLicenses: [],// [],
-                files: []
+                files: [],
+                checkedContributors: [],
             }
         }
     },   
@@ -164,6 +166,9 @@ const app = new Vue({
             for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
                 formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
             }
+            for (var i = 0; i < this.dataset.checkedContributors.length; i++) {
+                formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
+            }
 
             /*
             Make the request to the POST /multiple-files URL
@@ -248,6 +253,14 @@ const app = new Vue({
             if (this.persons.filter(e => e.id === person.id).length == 0) {    
                 this.persons.push(person);
                 this.dataset.checkedAuthors.push(person.id);
+            }
+        },
+        onAddContributor(person) {
+            //if person is not in person array
+            //if (this.persons.includes(person) == false) {
+            if (this.contributors.filter(e => e.id === person.id).length == 0) {    
+                this.contributors.push(person);
+                this.dataset.checkedContributors.push(person.id);
             }
         },
         /*

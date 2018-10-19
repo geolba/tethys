@@ -9,6 +9,7 @@ class Person extends Model
 
     protected $fillable = [
         'academic_title',
+        'date_of_birth',
         'last_name',
         'first_name',
         'email',

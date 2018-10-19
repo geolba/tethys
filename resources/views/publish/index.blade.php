@@ -37,11 +37,12 @@
                             </td>	                     			
                                 
                         <td>
-                            {{-- <a class="edit" href="{{ route('settings.document.edit', $dataset->id) }}">
-                                <span>publish</span>
-                            </a> --}}
-                            <a href="" class="pure-button button-small">Publish</a>
-                            <a href="" class="pure-button button-small">Restrict</a>
+                            @if ($dataset->server_state == "unpublished")
+                                <a href="" class="pure-button button-small is-success">Publish</a>
+                                <a href="" class="pure-button button-small is-success">Restrict</a>
+                            @else
+                                <a href="" class="pure-button button-small is-warning">Finish</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach	

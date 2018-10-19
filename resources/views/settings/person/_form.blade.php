@@ -25,6 +25,12 @@
         <small id="emailHelp" class="pure-form-message-inline">email is optional.</small>
     </div>
 
+    <div class="pure-control-group">
+        {!! Form::label('date_of_birth', 'Date Of Birth..') !!}
+        {!! Form::date('date_of_birth', null, ['placeholder' => date('y-m-d'), 'class' => 'form-control']) !!}        
+        <small id="emailHelp" class="pure-form-message-inline">date of birth is optional.</small>
+    </div>
+    
      <div class="pure-control-group">
         {!! Form::label('identifier_orcid', 'ORCID..') !!}
         {!! Form::text('identifier_orcid', null, ['class' => 'form-control']) !!}

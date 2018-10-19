@@ -95,8 +95,12 @@
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('State', 'State..') !!}
-                            {{ Form::text('State', null, ['class' =>  'pure-u-23-24', 'placeholder' => trans('validation.attributes.backend.pages.title'),
-                            'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2', 'readonly' => 'true']) }}
+                            {{-- {{ Form::text('State', null, ['class' =>  'pure-u-23-24', 'placeholder' => trans('validation.attributes.backend.pages.title'),
+                            'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2', 'readonly' => 'true']) }}  --}}
+                            <div class="select  pure-u-23-24">
+                                {!! Form::select( 'State', ['unpublished', 'inprogress'], null, ['id' => 'state',
+                                'placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
+                            </div> 
                             {{-- <div class="select  pure-u-23-24">
                                 {!! Form::select( 'State', array_except(Config::get('enums.server_states'),['published', 'deleted', 'temporary']), '',
                                 ['placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
@@ -212,6 +216,7 @@
 
             <div v-if="step === 3" data-vv-scope="step-3">
                 <h1>Select authors, contributors</h1>
+                
                 <fieldset id="fieldset-general">
                     <legend>Authors</legend>
                     <div class="pure-g">
@@ -220,25 +225,40 @@
                             {{--
                             <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
                         </div>
-                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        <div class="pure-control-group checkboxlist">
-                            <label v-for="(person, index) in persons" :for="person.id" class="pure-checkbox">                           
-                                <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-3">
-                                @{{ person.full_name }}                               
-                            </label>
-                            <br />
-                            <span>Checked Authors: @{{ dataset.checkedAuthors }}</span>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <div class="pure-control-group checkboxlist">
+                                <label v-for="(person, index) in persons" :for="person.id" class="pure-checkbox">                           
+                                                        <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-3">
+                                                        @{{ person.full_name }}                               
+                                                    </label>
+                                <br />
+                                <span>Checked Authors: @{{ dataset.checkedAuthors }}</span>
+                            </div>
                         </div>
-                        {{-- <span v-for="(person, index) in persons">                         
-                                                                    <strong>@{{ person.full_name }}</strong>                            
-                                                                    </span> --}}
-                    </div>
                     </div>
                 </fieldset>
+
                 <fieldset id="fieldset-general">
                     <legend>Contributors</legend>
-                    <small id="contributorHelp" class="pure-form-message-inline">will come soon...</small>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>
+                            {{--
+                            <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <div class="pure-control-group checkboxlist">
+                                <label v-for="(contributor, index) in contributors" :for="contributor.id" class="pure-checkbox">                           
+                                                        <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-3">
+                                                        @{{ contributor.full_name }}                               
+                                                    </label>
+                                <br />
+                                <span>Checked Contributors: @{{ dataset.checkedContributors }}</span>
+                            </div>
+                        </div>
+                    </div>
                 </fieldset>
+
                 <fieldset id="fieldset-general">
                     <legend>Submitters</legend>
                     <small id="submitterHelp" class="pure-form-message-inline">will come soon...</small>
