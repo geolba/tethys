@@ -98,7 +98,7 @@
                             {{-- {{ Form::text('State', null, ['class' =>  'pure-u-23-24', 'placeholder' => trans('validation.attributes.backend.pages.title'),
                             'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2', 'readonly' => 'true']) }}  --}}
                             <div class="select  pure-u-23-24">
-                                {!! Form::select( 'State', ['unpublished', 'inprogress'], null, ['id' => 'state',
+                                {!! Form::select( 'State', ['unpublished' => 'unpublished', 'inprogress' => 'inprogress'], null, ['id' => 'state',
                                 'placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
                             </div> 
                             {{-- <div class="select  pure-u-23-24">
@@ -176,22 +176,58 @@
                 <fieldset id="fieldset-licenses">
                     <legend>Licenses</legend>
 
-                    <div class="pure-control-group checkboxlist">
+                   <div class="pure-control-group checkboxlist">
                         @foreach ($licenses as $indexKey => $license)
                         <label for={{ "license". $license->id }} class="pure-checkbox">
-                        @if ($loop->first)
-                        <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" v-validate="'required'" 
-                        data-vv-as="Licence" data-vv-scope="step-2">
-                        {{ $license->name_long }}
-                        @else
-                        <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" data-vv-scope="step-2">
-                        {{ $license->name_long }}
-                        @endif
-                    </label>
-                    @endforeach
+                            @if ($loop->first)
+                            <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" v-validate="'required'" 
+                            data-vv-as="Licence" data-vv-scope="step-2">
+                            {{ $license->name_long }}
+                            @else
+                            <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" data-vv-scope="step-2">
+                            {{ $license->name_long }}
+                            @endif
+                        </label> 
+                        @endforeach
                         <br>
                         <span>Checked license: @{{ dataset.checkedLicenses }}</span>
                     </div>
+                </fieldset>
+                <fieldset id="fieldset-references">
+                    <legend>Document references</legend>
+                    <button class="pure-button button-small" @click.prevent="addReference()">Add Reference</button>
+                    <table class="table table-hover"  v-if="dataset.references.length">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">Value of the identifier</th>
+                                <th>Type</th>
+                                <th>Relation</th>
+                                <th>Display text of the identifier</th>
+                                <th style="width: 130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in dataset.references">
+                                <td>
+                                    <input name="Reference Value" class="form-control" v-model="item.value" v-validate="'required'" data-vv-scope="step-2" />
+                                </td>
+                                <td>                                   
+                                    {!! Form::select('Reference[Type]', $types, null, 
+                                    ['placeholder' => '--no type--', 'v-model' => 'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                                </td>
+                                <td>                                   
+                                    {!! Form::select('Reference[Relation]', $relations, null, 
+                                    ['placeholder' => '--no relation--', 'v-model' => 'item.relation', 'data-vv-scope' => 'step-2']) !!}
+                                </td>
+                                <td>
+                                    <input name="Reference Label" class="form-control" v-model="item.label"  v-validate="'required'" data-vv-scope="step-2" />
+                                </td>
+                                <td>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeReference(index)">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </fieldset>
 
                 <br />
@@ -215,7 +251,7 @@
             </div>
 
             <div v-if="step === 3" data-vv-scope="step-3">
-                <h1>Select authors, contributors</h1>
+                <h1>Select authors, contributors, submitters</h1>
                 
                 <fieldset id="fieldset-general">
                     <legend>Authors</legend>
@@ -261,7 +297,21 @@
 
                 <fieldset id="fieldset-general">
                     <legend>Submitters</legend>
-                    <small id="submitterHelp" class="pure-form-message-inline">will come soon...</small>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <my-autocomplete title="searching active person table" @person="onAddSubmitter"></my-autocomplete>
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <div class="pure-control-group checkboxlist">
+                                <label v-for="(submitter, index) in submitters" :for="submitter.id" class="pure-checkbox">                           
+                                                        <input type="checkbox" name="submitters" v-bind:value="submitter.id"  v-model="dataset.checkedSubmitters"  class="form-check-input" data-vv-scope="step-3">
+                                                        @{{ submitter.full_name }}                               
+                                                    </label>
+                                <br />
+                                <span>Checked Submitters: @{{ dataset.checkedSubmitters }}</span>
+                            </div>
+                        </div>
+                    </div>
                 </fieldset>
                 <br />
                 <div class="pure-controls">
@@ -296,7 +346,7 @@
                         @{{ item.name }} <i class="fa fa-remove"></i><span class="remove-file" v-on:click="removeFile(index)"> Remove</span>
                     </li>
                 </ul> --}}
-                <table class="table table-hover">
+                <table class="table table-hover"  v-if="dataset.files.length">
                     <thead>
                         <tr>
                             <th style="width: 20px;">Sorting</th>

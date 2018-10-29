@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Models\DatasetReference;
 
 class IndexController extends Controller
 {
@@ -51,8 +52,11 @@ class IndexController extends Controller
         // $persons = Person::where('status', 1)
         //     ->pluck('last_name', 'id');
         $projects = Project::pluck('label', 'id');
+        $types = array('doi' => 'doi', 'handle' => 'handle', 'urn' => 'urn', 'std-doi' => 'std-doi',
+        'url' => 'url',  'isbn' => 'isbn', 'issn' => 'issn', 'rdr-id' => 'rdr-id');
+        $relations = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
 
-        return view('publish.create-step1', compact('licenses', 'languages', 'projects'));
+        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'types', 'relations'));
     }
 
     /**
@@ -240,7 +244,7 @@ class IndexController extends Controller
         if ($validator->passes()) {
             //store dataset todo
             //$data = $request->all();
-            $input = $request->except('files', 'licenses', 'abstract_main', 'title_main');
+            $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references');
             // array_push($input, "Himbeere");
             $dataset = new Dataset($input);
 
@@ -280,21 +284,36 @@ class IndexController extends Controller
                  $dataset->licenses()->sync($licenses);
 
                 //store authors
-                $data_to_sync = [];
-                foreach ($request->get('authors') as $key => $person_id) {
-                    $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
-                    // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
-                    $data_to_sync[$person_id] = $pivot_data;
+                if (isset($data['authors'])) {
+                    $data_to_sync = [];
+                    foreach ($request->get('authors') as $key => $person_id) {
+                        $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
+                        // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
+                        $data_to_sync[$person_id] = $pivot_data;
+                    }
+                    $dataset->persons()->sync($data_to_sync);
                 }
-                $dataset->persons()->sync($data_to_sync);
 
                 //store contributors
-                $data_to_sync = [];
-                foreach ($request->get('contributors') as $key => $contributor_id) {
-                    $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
-                    $data_to_sync[$contributor_id] = $pivot_data;
+                if (isset($data['contributors'])) {
+                    $data_to_sync = [];
+                    foreach ($request->get('contributors') as $key => $contributor_id) {
+                        $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
+                        $data_to_sync[$contributor_id] = $pivot_data;
+                    }
+                    $dataset->persons()->sync($data_to_sync);
                 }
-                $dataset->persons()->sync($data_to_sync);
+                
+                //store submitters
+                if (isset($data['submitters'])) {
+                    $data_to_sync = [];
+                    foreach ($request->get('submitters') as $key => $submitter_id) {
+                        $pivot_data = ['role' => 'submitter', 'sort_order' => $key + 1];
+                        $data_to_sync[$submitter_id] = $pivot_data;
+                    }
+                    $dataset->persons()->sync($data_to_sync);
+                }
+
                 
                 //save main title:
                 if (isset($data['title_main'])) {
@@ -312,6 +331,14 @@ class IndexController extends Controller
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
                     $dataset->addMainAbstract($abstract);
+                }
+
+                //save references
+                if (isset($data['references'])) {
+                    foreach ($request->get('references') as $key => $reference) {
+                        $dataReference = new DatasetReference($reference);
+                        $dataset->references()->save($dataReference);
+                    }
                 }
                                  
                 // $error = 'Always throw this error';

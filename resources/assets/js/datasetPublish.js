@@ -53,6 +53,7 @@ const app = new Vue({
             fileCount: 0,
             persons: [],
             contributors: [],
+            submitters: [],
 
             step: 1,
             dataset: {
@@ -76,7 +77,9 @@ const app = new Vue({
                 checkedAuthors: [],
                 checkedLicenses: [],// [],
                 files: [],
+                references: [],
                 checkedContributors: [],
+                checkedSubmitters: [],
             }
         }
     },   
@@ -169,6 +172,17 @@ const app = new Vue({
             for (var i = 0; i < this.dataset.checkedContributors.length; i++) {
                 formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
             }
+            for (var i = 0; i < this.dataset.checkedSubmitters.length; i++) {
+                formData.append('submitters[' + i + ']', this.dataset.checkedSubmitters[i]);
+            }
+
+            for (var i = 0; i < this.dataset.references.length; i++) {
+                let reference = this.dataset.references[i];
+                formData.append('references[' + i + '][value]', reference.value);
+                formData.append('references[' + i + '][label]', reference.label);
+                formData.append('references[' + i + '][type]', reference.type);
+                formData.append('references[' + i + '][relation]', reference.relation);
+            }
 
             /*
             Make the request to the POST /multiple-files URL
@@ -228,6 +242,17 @@ const app = new Vue({
         /*
         Handles a change on the file upload
         */
+       addReference() {
+        let newReference = { value: '', label: '', relation: 'updates', type: 'rdr-id' };
+        //this.dataset.files.push(uploadedFiles[i]);
+        this.dataset.references.push(newReference);
+       },
+        /*
+        Removes a selected reference
+        */
+        removeReference(key) {
+            this.dataset.references.splice(key, 1);
+        },
         filesChange(fieldName, fileList) {
             // this.dataset.files = this.$refs.files.files; 
             let uploadedFiles = fileList;
@@ -256,11 +281,19 @@ const app = new Vue({
             }
         },
         onAddContributor(person) {
-            //if person is not in person array
-            //if (this.persons.includes(person) == false) {
+            //if person is not in contributors array
+            //if (this.contributors.includes(person) == false) {
             if (this.contributors.filter(e => e.id === person.id).length == 0) {    
                 this.contributors.push(person);
                 this.dataset.checkedContributors.push(person.id);
+            }
+        },
+        onAddSubmitter(person) {
+            //if person is not in submitters array
+            //if (this.submitters.includes(person) == false) {
+            if (this.submitters.filter(e => e.id === person.id).length == 0) {    
+                this.submitters.push(person);
+                this.dataset.checkedSubmitters.push(person.id);
             }
         },
         /*
