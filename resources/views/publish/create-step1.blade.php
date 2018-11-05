@@ -16,7 +16,7 @@
         <main class="steps pure-form" enctype="multipart/form-data">
             {{ csrf_field() }}
 
-            <div v-if="step === 1" data-vv-scope="step-1">
+            <div v-if="step === 1 && isInitial" data-vv-scope="step-1">
                 <h1>Step One</h1>
 
                 <div class="form-group">
@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <div v-if="step === 2" data-vv-scope="step-2">
+            <div v-if="step === 2 && isInitial" data-vv-scope="step-2">
                 <h1>Step Two</h1>
                 <fieldset id="fieldset-general">
                     <legend>General</legend>
@@ -250,7 +250,7 @@
                 </div>
             </div>
 
-            <div v-if="step === 3" data-vv-scope="step-3">
+            <div v-if="step === 3 && isInitial" data-vv-scope="step-3">
                 <h1>Select authors, contributors, submitters</h1>
                 
                 <fieldset id="fieldset-general">
@@ -263,7 +263,7 @@
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <div class="pure-control-group checkboxlist">
-                                <label v-for="(person, index) in persons" :for="person.id" class="pure-checkbox">                           
+                                <label v-for="(person, index) in dataset.persons" :for="person.id" class="pure-checkbox">                           
                                                         <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-3">
                                                         @{{ person.full_name }}                               
                                                     </label>
@@ -284,7 +284,7 @@
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <div class="pure-control-group checkboxlist">
-                                <label v-for="(contributor, index) in contributors" :for="contributor.id" class="pure-checkbox">                           
+                                <label v-for="(contributor, index) in dataset.contributors" :for="contributor.id" class="pure-checkbox">                           
                                                         <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-3">
                                                         @{{ contributor.full_name }}                               
                                                     </label>
@@ -303,7 +303,7 @@
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <div class="pure-control-group checkboxlist">
-                                <label v-for="(submitter, index) in submitters" :for="submitter.id" class="pure-checkbox">                           
+                                <label v-for="(submitter, index) in dataset.submitters" :for="submitter.id" class="pure-checkbox">                           
                                                         <input type="checkbox" name="submitters" v-bind:value="submitter.id"  v-model="dataset.checkedSubmitters"  class="form-check-input" data-vv-scope="step-3">
                                                         @{{ submitter.full_name }}                               
                                                     </label>
@@ -327,7 +327,7 @@
                 </div>
             </div>
 
-            <div v-if="step === 4" data-vv-scope="step-4">
+            <div v-if="step === 4 && (isInitial || isSaving)" data-vv-scope="step-4">
                 <h1>File Upload</h1>
 
                 <div class="dropbox">
@@ -383,11 +383,34 @@
 
             </div>
 
-            <div v-if="serrors.length > 0">
-                <b>Please correct the following server error(s):</b>
-                <ul class="alert validation-summary-errors">
-                    <li style="margin-left:5px;" v-for="error in serrors">@{{ error }}</li>
+            <!--SUCCESS-->
+            <div v-if="isSuccess">
+                <h2>Uploaded @{{ dataset.files.length }} file(s) successfully.</h2>
+                <p>
+                <a href="javascript:void(0)" @click="reset()" class="pure-button button-small">Upload new Dataset</a>
+                </p>
+                <p>
+                <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">@{{ redirectLink }}</a>
+                </p>
+                <ul class="list-unstyled">
+                {{-- <li v-for="item in uploadedFiles">
+                    <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
+                </li> --}}
                 </ul>
+            </div>
+
+            <!--ERROR-->
+            <div v-if="isFailed">
+                <h2>Uploaded failed.</h2>
+                <p>
+                    <a href="javascript:void(0)" @click="reset()">Try again</a>
+                </p>
+                <div v-if="serrors.length > 0">
+                    <b>Please correct the following server error(s):</b>
+                    <ul class="alert validation-summary-errors">
+                        <li style="margin-left:5px;" v-for="error in serrors">@{{ error }}</li>
+                    </ul>
+                </div>
             </div>
 
 

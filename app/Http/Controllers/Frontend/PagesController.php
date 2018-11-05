@@ -28,9 +28,28 @@ class PagesController extends Controller
      */
     public function show($id): View
     {
-        $document = Dataset::findOrFail($id);
-        $document->load('titles');
-        $document->load('abstracts');
-        return view('frontend.dataset.show', compact('document'));
+        $dataset = Dataset::findOrFail($id);
+        $dataset->load('titles');
+        $dataset->load('abstracts');
+
+        $authors = $dataset->authors()
+        ->orderBy('link_documents_persons.sort_order', 'desc')
+        ->get();
+
+        $contributors = $dataset->contributors()
+        ->orderBy('link_documents_persons.sort_order', 'desc')
+        ->get();
+
+        $submitters = $dataset->persons()
+        ->wherePivot('role', 'submitter')
+        ->orderBy('link_documents_persons.sort_order', 'desc')
+        ->get();
+
+        // $authors = $dataset->persons()
+        // ->wherePivot('role', 'author')
+        // ->orderBy('link_documents_persons.sort_order', 'desc')
+        // ->get();
+
+        return view('frontend.dataset.show', compact('dataset', 'authors', 'contributors', 'submitters'));
     }
 }

@@ -30,6 +30,7 @@ import axios from 'axios';
 //Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
 import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
+import { dataset } from './components/Dataset';
 // import { Validator } from 'vee-validate';
 
 Vue.use(VeeValidate);
@@ -46,41 +47,42 @@ const app = new Vue({
                 // { qty: 2, value: "Something else", language: 20, type: "additional", sort_order: 0 },
             ],
             serrors: [],
+            
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
-            uploadFieldName: 'photos',
+            uploadFieldName: 'photos',            
             fileCount: 0,
-            persons: [],
-            contributors: [],
-            submitters: [],
+            redirectLink : null,
+            
 
             step: 1,
-            dataset: {
-                type: '',
-                state: '',
-                rights: null,
-                project_id: '',
+            dataset : dataset
+            // dataset: {
+            //     type: '',
+            //     state: '',
+            //     rights: null,
+            //     project_id: '',
 
-                creating_corporation: "GBA",
-                embargo_date: '',
-                belongs_to_bibliography: 0,
+            //     creating_corporation: "GBA",
+            //     embargo_date: '',
+            //     belongs_to_bibliography: 0,
 
-                title_main: {
-                    value: '',
-                    language: ''
-                },
-                abstract_main: {
-                    value: '',
-                    language: ''
-                },
-                checkedAuthors: [],
-                checkedLicenses: [],// [],
-                files: [],
-                references: [],
-                checkedContributors: [],
-                checkedSubmitters: [],
-            }
+            //     title_main: {
+            //         value: '',
+            //         language: ''
+            //     },
+            //     abstract_main: {
+            //         value: '',
+            //         language: ''
+            //     },
+            //     checkedAuthors: [],
+            //     checkedLicenses: [],// [],
+            //     files: [],
+            //     references: [],
+            //     checkedContributors: [],
+            //     checkedSubmitters: [],
+            // }
         }
     },   
     created: function () {
@@ -121,6 +123,11 @@ const app = new Vue({
             this.currentStatus = STATUS_INITIAL;
             this.uploadedFiles = [];
             this.uploadError = null;
+            this.dataset.reset();//reset methods will trigger property changed.
+            this.step = 1;
+        },
+        editNewDataset() {
+            window.location = this.redirectLink;
         },
         resetDropbox() {
             // reset form to initial state
@@ -128,7 +135,9 @@ const app = new Vue({
             this.dataset.files = [];
         },
         save() {
+            // upload data to the server
             var _this = this;
+            this.currentStatus = STATUS_SAVING;
             this.serrors = [];
             /*
            Initialize the form data
@@ -201,14 +210,15 @@ const app = new Vue({
                     // this.items = response.data;          
                     //Vue.set(app.skills, 1, "test55");
                     _this.currentStatus = STATUS_SUCCESS;
-
-                    if (response.data.redirect) {
-                        window.location = response.data.redirect;
-                    }
+                    _this.redirectLink = response.data.redirect;
+                    // if (response.data.redirect) {
+                    //     window.location = response.data.redirect;
+                    // }
                 })
                 .catch((error) => {
                     // this.loading = false;
-                    // console.log("test");
+                    this.uploadError = error.response;
+                    console.log('FAILURE!!');
                     let errorObject = JSON.parse(JSON.stringify(error));
                     // console.log(errorObject);
                     if (errorObject.response.data.errors) {
@@ -254,6 +264,7 @@ const app = new Vue({
             this.dataset.references.splice(key, 1);
         },
         filesChange(fieldName, fileList) {
+            this.fileCount = fileList.length
             // this.dataset.files = this.$refs.files.files; 
             let uploadedFiles = fileList;
 
@@ -275,24 +286,24 @@ const app = new Vue({
         onAddAuthor(person) {
             //if person is not in person array
             //if (this.persons.includes(person) == false) {
-            if (this.persons.filter(e => e.id === person.id).length == 0) {    
-                this.persons.push(person);
+            if (this.dataset.persons.filter(e => e.id === person.id).length == 0) {    
+                this.dataset.persons.push(person);
                 this.dataset.checkedAuthors.push(person.id);
             }
         },
         onAddContributor(person) {
             //if person is not in contributors array
             //if (this.contributors.includes(person) == false) {
-            if (this.contributors.filter(e => e.id === person.id).length == 0) {    
-                this.contributors.push(person);
+            if (this.dataset.contributors.filter(e => e.id === person.id).length == 0) {    
+                this.dataset.contributors.push(person);
                 this.dataset.checkedContributors.push(person.id);
             }
         },
         onAddSubmitter(person) {
             //if person is not in submitters array
             //if (this.submitters.includes(person) == false) {
-            if (this.submitters.filter(e => e.id === person.id).length == 0) {    
-                this.submitters.push(person);
+            if (this.dataset.submitters.filter(e => e.id === person.id).length == 0) {    
+                this.dataset.submitters.push(person);
                 this.dataset.checkedSubmitters.push(person.id);
             }
         },

@@ -376,7 +376,180 @@ class IndexController extends Controller
 
             return response()->json(array(
                 'success' => true,
-                'redirect' =>  route('settings.document', ['state' => $dataset->server_state]),
+                //'redirect' =>  route('settings.document.edit', ['id' => $dataset->server_state]),
+                'redirect' =>  route('settings.document.edit', ['id' => $dataset->id]),
+            ));
+        } else {
+            //TODO Handle validation error
+            //pass validator errors as errors object for ajax response
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all(),
+            ], 422);
+        }
+    }
+
+    public function storeTest1(Request $request)
+    {
+        $data = $request->all();
+        // $validatedData = $this->validate($request, [
+        //     'type' => 'required|min:4',
+        //     'rights' => 'required|boolean|in:1',
+        // ]);
+        $rules = [
+            'server_state' => 'required',
+            'type' => 'required|min:5',
+            'rights' => 'required|boolean|in:1',
+            'belongs_to_bibliography' => 'required|boolean',
+            'title_main.value' => 'required|min:5',
+            'title_main.language' => 'required',
+            'abstract_main.value' => 'required|min:5',
+            'abstract_main.language' => 'required',
+        ];
+        if (null != $request->file('files')) {
+            $files = count($request->file('files')) - 1;
+            foreach (range(0, $files) as $index) {
+                // $rules['files.' . $index] = 'image|max:2048';
+                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize()];
+            }
+        }
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->passes()) {
+            //store dataset todo
+            //$data = $request->all();
+            $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references');
+            // array_push($input, "Himbeere");
+            $dataset = new Dataset($input);
+
+            DB::beginTransaction(); //Start transaction!
+            try {
+                // $dataset->save();
+               
+                //store related files
+                if (isset($data['files'])) {
+                    foreach ($data['files'] as $uploadedFile) {
+                        $file = $uploadedFile['file'];
+                        $label = urldecode($uploadedFile['label']);
+                        $sorting = $uploadedFile['sorting'];
+                        $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
+                        $mimeType = $file->getMimeType();
+                        $datasetFolder = 'files/' . $dataset->id;
+                        // $path = $file->storeAs($datasetFolder, $fileName);
+                        // $size = Storage::size($path);
+                        //$path = Storage::putFile('files', $image, $fileName);
+                        // $file = new File([
+                        //     'path_name' => $path,
+                        //     'file_size' => $size,
+                        //     'mime_type' => $mimeType,
+                        //     'label' => $label,
+                        //     'sort_order' => $sorting,
+                        //     'visible_in_frontdoor' => 1,
+                        //     'visible_in_oai' => 1
+                        // ]);
+                        //$test = $file->path_name;
+                        // $dataset->files()->save($file);
+                        // $file->createHashValues();
+                    }
+                }
+
+                 //store licenses:
+                 $licenses = $request->input('licenses');
+                //  $dataset->licenses()->sync($licenses);
+
+                //store authors
+                if (isset($data['authors'])) {
+                    $data_to_sync = [];
+                    foreach ($request->get('authors') as $key => $person_id) {
+                        $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
+                        // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
+                        $data_to_sync[$person_id] = $pivot_data;
+                    }
+                    // $dataset->persons()->sync($data_to_sync);
+                }
+
+                //store contributors
+                if (isset($data['contributors'])) {
+                    $data_to_sync = [];
+                    foreach ($request->get('contributors') as $key => $contributor_id) {
+                        $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
+                        $data_to_sync[$contributor_id] = $pivot_data;
+                    }
+                    // $dataset->persons()->sync($data_to_sync);
+                }
+                
+                //store submitters
+                if (isset($data['submitters'])) {
+                    $data_to_sync = [];
+                    foreach ($request->get('submitters') as $key => $submitter_id) {
+                        $pivot_data = ['role' => 'submitter', 'sort_order' => $key + 1];
+                        $data_to_sync[$submitter_id] = $pivot_data;
+                    }
+                    // $dataset->persons()->sync($data_to_sync);
+                }
+
+                
+                //save main title:
+                if (isset($data['title_main'])) {
+                    $formTitle = $request->input('title_main');
+                    $title = new Title();
+                    $title->value = $formTitle['value'];
+                    $title->language = $formTitle['language'];
+                    // $dataset->addMainTitle($title);
+                }
+
+                //save main abstract:
+                if (isset($data['abstract_main'])) {
+                    $formAbstract = $request->input('abstract_main');
+                    $abstract = new Title();
+                    $abstract->value = $formAbstract['value'];
+                    $abstract->language = $formAbstract['language'];
+                    // $dataset->addMainAbstract($abstract);
+                }
+
+                //save references
+                if (isset($data['references'])) {
+                    foreach ($request->get('references') as $key => $reference) {
+                        $dataReference = new DatasetReference($reference);
+                        // $dataset->references()->save($dataReference);
+                    }
+                }
+                                 
+                // $error = 'Always throw this error';
+                // throw new \Exception($error);
+
+                // all good//commit everything
+                // DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                if (isset($datasetFolder)) {
+                    Storage::deleteDirectory($datasetFolder);
+                }
+                return response()->json([
+                    'success' => false,
+                    'error' => [
+                        'code' => $e->getCode(),
+                        'message' => $e->getMessage(),
+                    ],
+                ], 422);
+                //throw $e;
+            } catch (\Throwable $e) {
+                DB::rollback();
+                if (isset($datasetFolder)) {
+                    Storage::deleteDirectory($datasetFolder);
+                }
+                return response()->json([
+                    'success' => false,
+                    'error' => [
+                        'code' => $e->getCode(),
+                        'message' => $e->getMessage(),
+                    ],
+                ], 422);
+                //throw $e;
+            }
+
+            return response()->json(array(
+                'success' => true,
+                'redirect' =>  route('settings.document.edit', ['id' => $dataset->server_state]),
             ));
         } else {
             //TODO Handle validation error

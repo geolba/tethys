@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class="title">Documents</h1>
+    <h1 class="title">Datasets</h1>
 
     <br><br>
 
@@ -10,7 +10,7 @@
 
         <thead>
             <th>id</th>
-            <th>document type</th>
+            <th>dataset type</th>
             <!-- <th>Category</th>
             <th>Shelf</th> -->
 
@@ -18,11 +18,13 @@
 
         <tbody>
             
-            @foreach($documents as $document)
+            @foreach($documents as $dataset)
             
                 <tr>					
-                    <td>{{ $document->id }}</td>
-                    <td>{{ $document->type }}</td>
+                    <td>                        
+                        <a href="{{ route('frontend.dataset.show', ['id' => $dataset->id]) }}"> {{ $dataset->id }} </a> 
+                    </td>
+                    <td>{{ $dataset->type }}</td>
                     <!-- <td>
                         if($book->stock > 0)
                             Available

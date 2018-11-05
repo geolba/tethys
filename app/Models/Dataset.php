@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Title;
 use App\Models\Person;
 use App\Models\XmlCache;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 
 class Dataset extends Model
@@ -160,7 +161,7 @@ class Dataset extends Model
 
     public function files()
     {
-        return $this->hasMany(\App\Models\File::class, 'document_id', 'id');
+        return $this->hasMany(File::class, 'document_id', 'id');
     }
 
     public function references()
