@@ -22,13 +22,13 @@
     <div class="pure-control-group">
         {!! Form::label('email', 'Email..') !!}
         {!! Form::text('email', null, ['class' => 'form-control']) !!}        
-        <small id="emailHelp" class="pure-form-message-inline">email is optional.</small>
+        <em>*</em>
     </div>
 
     <div class="pure-control-group">
         {!! Form::label('date_of_birth', 'Date Of Birth..') !!}
         {!! Form::date('date_of_birth', null, ['placeholder' => date('y-m-d'), 'class' => 'form-control']) !!}        
-        <small id="emailHelp" class="pure-form-message-inline">date of birth is optional.</small>
+        <em>*</em>
     </div>
     
      <div class="pure-control-group">

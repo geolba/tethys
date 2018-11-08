@@ -43,7 +43,9 @@ class IndexController extends Controller
     public function createStep1(Request $request)
     {
         #$dataset = $request->session()->get('dataset');
-        $licenses = License::all('id', 'name_long');
+        $licenses = License::select('id', 'name_long')
+            ->orderBy('sort_order')
+            ->get();
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part2_t', 'part2_t');
@@ -52,8 +54,10 @@ class IndexController extends Controller
         // $persons = Person::where('status', 1)
         //     ->pluck('last_name', 'id');
         $projects = Project::pluck('label', 'id');
-        $types = array('doi' => 'doi', 'handle' => 'handle', 'urn' => 'urn', 'std-doi' => 'std-doi',
-        'url' => 'url',  'isbn' => 'isbn', 'issn' => 'issn', 'rdr-id' => 'rdr-id');
+        $types = array(
+            'doi' => 'doi', 'handle' => 'handle', 'urn' => 'urn', 'std-doi' => 'std-doi',
+            'url' => 'url', 'isbn' => 'isbn', 'issn' => 'issn', 'rdr-id' => 'rdr-id'
+        );
         $relations = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
 
         return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'types', 'relations'));

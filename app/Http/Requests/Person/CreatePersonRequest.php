@@ -1,9 +1,10 @@
 <?php
-namespace App\Http\Requests;
+namespace App\Http\Requests\Person;
 
 use App\Http\Requests\Request;
+use Illuminate\Validation\Rule;
 
-class PersonRequest extends Request
+class CreatePersonRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,16 @@ class PersonRequest extends Request
     {
         return [
             'academic_title' => 'nullable|min:2|max:255',
-            'last_name' => 'required|min:3|max:255',
+            'last_name' => 'required|min:3|max:255|unique_with:persons,first_name,date_of_birth',
             'first_name' => 'required|min:3|max:255',
-            'email' => 'nullable|email|max:100',
+            'email' => 'required|email|max:50|unique:persons,email',
+            // 'email' => [
+            //     'required', 'email', 'max:100',
+            //     Rule::unique('persons')->ignore($user->id),
+            // ],
             'identifier_orcid' => 'nullable|min:19|max:50',
-            'status' => 'required|boolean'
+            'status' => 'required|boolean',
+            'date_of_birth' => 'required|date'
         ];
     }
 }

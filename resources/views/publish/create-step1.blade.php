@@ -35,24 +35,23 @@
                 </div>
 
                 <div :class="{'form-group':true, 'has-error':errors.has('rights')}">
-                    <legend>Einräumung eines einfachen Nutzungsrechts</legend>
-                    {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div"> --}}
-                        <p>
+                    <legend>Einräumung eines einfachen Nutzungsrechts</legend>                 
+                        
+                        <label for="rights" class="pure-checkbox">                           
+                            <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
                             I accept
                             <a target="_blank" href="{{ route("frontend.pages.show", ['page_slug'=>'terms-and-conditions']) }}">
                                     {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
                                 </a>
-                        </p>
-                        <small for="rights" class="pure-form-message-inline">Ich habe diese rechtlichen Hinweise gelesen und bin damit einverstanden.
-                        <span class="required" title="Dieses Feld muss ausgefüllt werden.">*</span>
-                    </small> {{-- <input name="rights" value="0" type="hidden"> --}}
-                        <label>
-                        <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
+                        </label>
+
+                    
+
                         <br />
                         <i v-show="errors.has('step-1.rights')" class="fa fa-warning"></i>
                         <span v-show="errors.has('step-1.rights')" class="text-danger">@{{ errors.first('step-1.rights') }}</span>
                         
-                    </label>
+                   
                         <span class="help-block">You must agree to continue</span> {{-- </div> --}}
                 </div>
 
@@ -129,15 +128,14 @@
                             <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
                         </div>
 
-                        <div class="pure-u-1 pure-u-md-1 checkboxlist">
+                        {{-- <div class="pure-u-1 pure-u-md-1 checkboxlist">
                             <!-- checkboxes -->
-                            <label for="BelongsToBibliography" class="pure-checkbox">
-                            {{-- <input type="hidden" name="BelongsToBibliography" value="0"> --}}
+                            <label for="BelongsToBibliography" class="pure-checkbox">                            
                             <input name="BelongsToBibliography" v-model="dataset.belongs_to_bibliography" data-vv-scope="step-2" true-value="1"
                             false-value="0" type="checkbox" class="form-check-input"> 
                             Belongs To Bibliography?
                         </label>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </fieldset>

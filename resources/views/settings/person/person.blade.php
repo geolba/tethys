@@ -20,8 +20,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>ORCID</th>
-                    <!-- <th>Borrow</th> -->
+                    <th>Email</th>
+                    <th>ORCID</th>                   
                     <th>Status</th>
                     <th></th>
                     <th>Document Count</th>
@@ -34,9 +34,8 @@
                 <tr>
 
                     <td>{{ $person->last_name }}</td>
-                    <!--  <td>{{ date('d-M-y', $person->registered_at) }}</td>-->
-                    <td>{{ $person->identifier_orcid }}</td>
-                    <!-- <td>{{ $person->borrow }}</td> -->
+                    <td>{{ $person->email }}</td>                  
+                    <td>{{ $person->identifier_orcid }}</td>                  
                     <td>
                         @if($person->status == 1)
                         Active

@@ -17,13 +17,13 @@ class SolariumServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Client::class, function ($app) {           
+        $this->app->bind(Client::class, function ($app) {
             // $config = config('solarium');
             $config = array(
                     'endpoint' => array(
                         'localhost' => array(
-                            'host' => '127.0.0.1', 
-                            'port' => '8983', 
+                            'host' => '127.0.0.1',
+                            'port' => '8983',
                             'path' => '/solr/',
                             'core' => 'opus4'
                         )
@@ -39,5 +39,4 @@ class SolariumServiceProvider extends ServiceProvider
     {
         return [Client::class];
     }
-
 }

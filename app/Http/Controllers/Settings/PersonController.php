@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\Person;
-use App\Http\Requests\PersonRequest;
+use App\Http\Requests\Person\CreatePersonRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -45,7 +45,7 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PersonRequest $request)
+    public function store(CreatePersonRequest $request)
     {
         $input = $request->all();
         $input['registered_at'] = time();
@@ -73,8 +73,17 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PersonRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        $this->validate(request(), [
+            'academic_title' => 'nullable|min:2|max:255',
+            'last_name' => 'required|min:3|max:255|unique_with:persons,first_name,date_of_birth,' . $id,
+            'first_name' => 'required|min:3|max:255',
+            'email' => 'required|email|unique:persons,email,' . $id,
+            'identifier_orcid' => 'nullable|min:19|max:50',
+            'status' => 'required|boolean',
+            'date_of_birth' => 'required|date'
+        ]);
         $person = Person::findOrFail($id);
         $input = $request->all();
         $person->update($input);

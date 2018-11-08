@@ -10,6 +10,8 @@
 	"require": {
 		"php": ">=7.0.0",
 		"davejamesmiller/laravel-breadcrumbs": "4.x",
+		"dimsav/laravel-translatable": "8.*",
+		"felixkiss/uniquewith-validator": "^3.1",
 		"fideloper/proxy": "~3.3",
 		"hieu-le/active": "^3.5",
 		"laravel/framework": "5.5.*",
@@ -17,8 +19,7 @@
 		"laravelcollective/html": "^5.5.0",
 		"solarium/solarium": "^3.8",
 		"yajra/laravel-datatables-oracle": "^8.8",
-		"zizaco/entrust": "^1.9",
-		"dimsav/laravel-translatable": "8.*"
+		"zizaco/entrust": "^1.9"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "^1.8",
