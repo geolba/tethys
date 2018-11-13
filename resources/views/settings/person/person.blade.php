@@ -53,7 +53,9 @@
                     <td>{{ $person->documents->count() }}</td>
                     <td>                            
                         <a class="edit" href="{{ route('settings.person.edit', $person->id) }}"><span>&nbsp;</span></a>
-                        <a class="delete" href="{{ route('settings.person.delete', $person->id) }}"><span>&nbsp;</span></a>                           
+                        @if($person->documents->count() == 0)
+                        <a class="delete" href="{{ route('settings.person.delete', $person->id) }}"><span>&nbsp;</span></a> 
+                        @endif                          
                     </td>
                 </tr>
                 @endforeach

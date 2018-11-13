@@ -81,20 +81,34 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  @param \App\Http\Requests\Pages\UpdatePageRequest $request
-     * @param  \App\Models\Page  $page
+     * @param \App\Http\Requests\Pages\UpdatePageRequest $request
+      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePageRequest $request, Page $page) : RedirectResponse
+    public function update(UpdatePageRequest $request, $id)
     {
+        $page = Page::findOrFail($id);
         // $this->pages->update($page, $request->except(['_method', '_token']));
-        $input = $request->except(['_method', '_token']);
+        $input = $request
+        ->except(['_method', '_token', 'nav-tab', 'en_title', 'en_description', 'de_title', 'de_description']);
          // Making extra fields
         //$input['page_slug'] = str_slug($input['title']);
         $input['status'] = isset($input['status']) ? 1 : 0;
         $input['updated_by'] = \Auth::user()->id;
 
-        if ($page->update($input)) {
+        $article_data = [
+            'en' => [
+                'title'       => $request->input('en_title'),
+                'description' => $request->input('en_description')
+            ],
+            'de' => [
+                'title'       => $request->input('de_title'),
+                'description' => $request->input('de_description')
+            ],
+         ];
+         $ergebnis = array_merge($input, $article_data);
+
+        if ($page->update($ergebnis)) {
             event(new PageUpdated($page));
 
             return redirect()

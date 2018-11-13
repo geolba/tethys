@@ -16,7 +16,8 @@ class UpdatePageRequest extends Request
      */
     public function authorize()
     {
-        return true;//return access()->allow('edit-page');
+        return true;
+    //return access()->allow('edit-page');
     }
 
     /**
@@ -27,8 +28,8 @@ class UpdatePageRequest extends Request
     public function rules()
     {
         return [
-            'title'       => 'required|max:191',
-            'description' => 'required',
+            'en_title' => 'required|max:191'
+            // 'description_en' => 'required'
         ];
     }
 }

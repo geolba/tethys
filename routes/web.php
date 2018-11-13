@@ -90,15 +90,28 @@ Route::group(
 /*
  * CMS Pages Management=============================================================================
  */
-Route::group(['namespace' => 'Settings', 'prefix' => 'settings', 'as' => 'settings.',], function () {
-    Route::resource('page', 'PageController', ['except' => ['show', 'update']]);
-
-    Route::patch('page/{page}', [
-        'as' => 'page.update', 'uses' => 'PageController@update',
-    ]);
-    // //For DataTables
-    Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
-});
+Route::group(
+    [
+        'middleware' => ['permission:settings'],
+        'namespace' => 'Settings',
+        'prefix' => 'settings',
+        'as' => 'settings.'
+    ],
+    function () {
+        //Route::resource('page', 'PageController', ['except' => ['show', 'update']]);
+        Route::get('user', [
+            'as' => 'page.index', 'uses' => 'PageController@index',
+        ]);
+        Route::get('page/edit/{page}', [
+            'as' => 'page.edit', 'uses' => 'PageController@edit',
+        ]);
+        Route::patch('page/update/{id}', [
+            'as' => 'page.update', 'uses' => 'PageController@update',
+        ]);
+        // //For DataTables
+        Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
+    }
+);
 
 
 //=================================================setting home - dashboard=======================================

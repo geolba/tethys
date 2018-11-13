@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 
 //https://packagist.org/packages/felixkiss/uniquewith-validator
 
-class CreatePersonRequest extends Request
+class EditPersonRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

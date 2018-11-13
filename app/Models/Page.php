@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+// 1. To specify package’s class you are using
 use App\Models\ModelTrait;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -10,16 +11,18 @@ use Dimsav\Translatable\Translatable;
 class Page extends Model
 {
     use ModelTrait;
-    use Translatable;
-    /**
+    use Translatable; // 2. To add translation methods
+   
+    // 3. To define which attributes needs to be translated
+    public $translatedAttributes = ['title', 'description'];
+
+     /**
      * The database table used by the model.
      *
      * @var string
      */
     protected $table;
-
-    public $translatedAttributes = ['title', 'description'];
-
+    
     /**
      * The guarded field which are not mass assignable.
      *

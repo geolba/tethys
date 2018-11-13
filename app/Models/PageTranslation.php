@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PageTranslation extends Model
 {
     public $timestamps = false;
-    //protected $fillable = ['description'];
+    protected $fillable = ['title', 'description'];
     protected $guarded = ['id'];
 }
