@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
 
+//Route::get('/', 'LocalizationController@index');
+Route::get(
+    'setlocale/{lang}',
+    [
+        'as' => 'setlocale', //name()
+        'uses' => 'Frontend\LocalizationController@setLocale'
+    ]
+);
+
 //=================================================publish datasets================================================
 Route::group(
     [

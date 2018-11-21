@@ -1,5 +1,31 @@
 <div class="header" id="menu" itemprop="hasPart" itemscope itemtype="http://schema.org/WPHeader">
     <div class="container">
+            
+        <div class="top-header">
+
+            @include('components.langswitch', [
+            'currentLocale' => App::getLocale(),
+            'localesOrdered' => LaravelLocalization::getLocalesOrder(),
+            'localizedURLs' => getLocalizedURLArray(),
+            ])
+
+            {{-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars fa-2x"></i>
+            </button> --}}
+            {{-- <a class="navbar-brand no-border hidden-xs first-part" href="{!! URL::to('') !!}">
+                web
+            </a> --}}
+
+            {{-- @include('components.searchbar', [
+                'search' => isSet($search) ? $search : '',
+            ]) --}}
+            {{-- <a class="navbar-brand no-border hidden-xs second-part" href="{!! URL::to('') !!}">
+                umenia
+            </a> --}}
+           
+        </div>
+
+
         <div class="inner-container">
 
             <div class="pure-hidden-tablet pure-hidden-desktop">

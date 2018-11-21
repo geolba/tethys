@@ -33,7 +33,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            //\Opus4\Http\Middleware\Locale::class,
+            \App\Http\Middleware\Locale::class,
         ],
 
         'api' => [
