@@ -11,6 +11,7 @@ use App\Models\Person;
 use App\Models\XmlCache;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Dataset extends Model
 {
@@ -40,6 +41,7 @@ class Dataset extends Model
         'server_date_created',
         'server_date_modified',
         'server_date_published',
+        'embargo_date',
     ];
     //protected $dateFormat = 'Y-m-d';
 
@@ -208,5 +210,32 @@ class Dataset extends Model
     public function hasProject()
     {
         return $this->project()->exists();
+    }
+
+   
+    public function hasEmbargoPassed($now = null)
+    {
+        $embargoDate = $this->embargo_date;
+        if (is_null($embargoDate)) {
+            return true;
+        }
+
+        if (is_null($now)) {
+            $now = $dt = Carbon::now();
+        }
+        // Embargo has passed on the day after the specified date
+        // $embargoDate->setHour(23);
+        // $embargoDate->setMinute(59);
+        // $embargoDate->setSecond(59);
+        // $embargoDate->setTimezone('Z');
+
+        // $dt->year   = 2015;
+        // $dt->month  = 04;
+        // $dt->day    = 21;
+        $embargoDate->hour   = 23;
+        $embargoDate->minute = 59;
+        $embargoDate->second = 59;
+
+        return ($embargoDate->gt($now) == true);
     }
 }

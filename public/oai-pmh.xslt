@@ -214,6 +214,12 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="Documents" mode="GetRecord">
+        <GetRecord>
+            <xsl:apply-templates select="Rdr_Dataset" />
+        </GetRecord>
+    </xsl:template>
+
   <xsl:template match="Rdr_Dataset">
     <xsl:choose>
       <xsl:when test="$oai_verb='ListIdentifiers'">

@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use Illuminate\Support\Facades\Log;
+use App\Exceptions\OaiModelException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\OaiModelError;
 
 class RequestController extends Controller
 {
@@ -65,12 +68,33 @@ class RequestController extends Controller
 
     public function index(Request $request)
     {
+        // to handle POST and GET Request, take any given parameter
         $oaiRequest = $request->all();
         $safeRemoveParameters = array('module', 'controller', 'action', 'role');
         foreach ($safeRemoveParameters as $parameter) {
             unset($oaiRequest[$parameter]);
         }
-        return $this->__handleRequest($oaiRequest);
+        try {
+            $this->__handleRequest($oaiRequest);
+        } catch (OaiModelException $e) {
+            $errorCode = OaiModelError::mapCode($e->getCode());
+            //$this->getLogger()->err($errorCode);
+            $this->_proc->setParameter('', 'oai_error_code', $errorCode);
+            //$this->getLogger()->err($e->getMessage());
+            $this->_proc->setParameter('', 'oai_error_message', htmlentities($e->getMessage()));
+        } catch (Exception $e) {
+            //$this->getLogger()->err($e);
+            $this->_proc->setParameter('', 'oai_error_code', 'unknown');
+            $this->_proc->setParameter('', 'oai_error_message', 'An internal error occured.');
+            //$this->getResponse()->setHttpResponseCode(500);
+        }
+        // $xml = $this->_xml->saveXML();
+        $xml = $this->_proc->transformToXML($this->_xml);
+
+         //$xml = $this->doc->asXML();
+         return response($xml)//->view('rss', array('rss'=>$this->rss))
+             ->header('Content-Type', 'application/xml')
+             ->header('charset', 'utf-8');
     }
 
 
@@ -95,6 +119,8 @@ class RequestController extends Controller
                 $this->handleListMetadataFormats();
             } elseif ($oaiRequest['verb'] == 'ListRecords') {
                 $this->handleListRecords($oaiRequest);
+            } elseif ($oaiRequest['verb'] == 'GetRecord') {
+                $this->handleGetRecord($oaiRequest);
             } elseif ($oaiRequest['verb'] == 'ListIdentifiers') {
                 $this->handleListIdentifiers($oaiRequest);
             } elseif ($oaiRequest['verb'] == 'ListSets') {
@@ -107,14 +133,6 @@ class RequestController extends Controller
             $this->_proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
             $this->doc = $this->handleIdentify();
         }
-        
-        //$xml = $this->_xml->saveXML();
-        $xml = $this->_proc->transformToXML($this->_xml);
-
-        //$xml = $this->doc->asXML();
-        return response($xml)//->view('rss', array('rss'=>$this->rss))
-            ->header('Content-Type', 'application/xml')
-            ->header('charset', 'utf-8');
     }
 
     /**
@@ -137,6 +155,89 @@ class RequestController extends Controller
         //$this->_proc->setParameter('', 'sampleIdentifier', $sampleIdentifier);
         $this->_proc->setParameter('', 'earliestDatestamp', $earliestDateFromDb);
         $this->_xml->appendChild($this->_xml->createElement('Documents'));
+    }
+
+    /**
+     * Implements response for OAI-PMH verb 'GetRecord'.
+     *
+     * @param  array &$oaiRequest Contains full request information
+     * @return void
+     */
+    private function handleGetRecord(array &$oaiRequest)
+    {
+        // Identifier references metadata Urn, not plain Id!
+        // Currently implemented as 'oai:foo.bar.de:{docId}' or 'urn:nbn...-123'
+        $dataId = $this->getDocumentIdByIdentifier($oaiRequest['identifier']);
+
+        $dataset = null;
+        try {
+            //$dataset = new Opus_Document($docId);
+            $dataset = Dataset::findOrFail($dataId);
+        } catch (ModelNotFoundException  $ex) {
+            throw new OaiModelException(
+                'The value of the identifier argument is unknown or illegal in this repository.',
+                OaiModelError::IDDOESNOTEXIST
+            );
+        }
+
+        $metadataPrefix = $oaiRequest['metadataPrefix'];
+
+        // do not deliver datasets which are restricted by document state
+        if (is_null($dataset)
+            //or (false === in_array($dataset->getServerState(), $this->_deliveringDocumentStates))
+            or  (false === $dataset->whereIn('server_state', $this->deliveringDocumentStates))
+
+
+            or (false === $dataset->hasEmbargoPassed())) {
+            throw new OaiModelException('Document is not available for OAI export!', OaiModelError::NORECORDSMATCH);
+        }
+
+        $this->_xml->appendChild($this->_xml->createElement('Documents'));
+        $this->createXmlRecord($dataset);
+    }
+
+    /**
+     * Retrieve a document id by an oai identifier.
+     *
+     * @param string $oaiIdentifier
+     * @result int
+     */
+    private function getDocumentIdByIdentifier($oaiIdentifier)
+    {
+        $identifierParts = explode(":", $oaiIdentifier);
+
+        $dataId = null;
+        switch ($identifierParts[0]) {
+            // case 'urn':
+            //     //$finder = new Opus_DocumentFinder();
+            //     $finder = Dataset::query();
+            //     // $finder->setIdentifierTypeValue('urn', $oaiIdentifier);
+            //     // $finder->setServerStateInList($this->_deliveringDocumentStates);
+            //     $finder->whereIn('server_state', $this->deliveringDocumentStates);
+            //     $docIds = $finder->ids();
+            //     $docId = $docIds[0];
+            //     break;
+            case 'oai':
+                if (isset($identifierParts[2])) {
+                    $dataId = $identifierParts[2];
+                }
+                break;
+            default:
+                throw new OaiModelException(
+                    'The prefix of the identifier argument is unknown.',
+                    OaiModelError::BADARGUMENT
+                );
+                break;
+        }
+
+        if (empty($dataId) or !preg_match('/^\d+$/', $dataId)) {
+            throw new Oai_Model_Exception(
+                'The value of the identifier argument is unknown or illegal in this repository.',
+                Oai_Model_Error::IDDOESNOTEXIST
+            );
+        }
+
+        return $dataId;
     }
 
     
