@@ -31,9 +31,9 @@ class LocalizationController extends Controller
         //$lang = Input::get('language');
 
          
-        //Session::put('locale', $lang);
-        Session::put(['locale' =>  $lang]);
-        // Session::save();
+        // //Session::put('locale', $lang);
+        // Session::put(['locale' =>  $lang]);
+       
                  
         //return redirect(url(URL::previous()));
         return Redirect::back();

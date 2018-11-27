@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
@@ -73,5 +72,4 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
-
 }
