@@ -126,6 +126,14 @@ const app = new Vue({
             this.dataset.reset();//reset methods will trigger property changed.
             this.step = 1;
         },
+        retry() {
+            // reset form to initial state
+            this.currentStatus = STATUS_INITIAL;
+            // this.uploadedFiles = [];
+            // this.uploadError = null;
+            // this.dataset.reset();//reset methods will trigger property changed.
+            // this.step = 1;
+        },
         editNewDataset() {
             window.location = this.redirectLink;
         },

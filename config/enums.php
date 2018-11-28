@@ -20,5 +20,5 @@ return [
     'filetypes_allowed' => [
         "pdf", "txt", "html", "htm", "png", "jpeg",
     ],
-    'max_filesize' => '2048',
+    'max_filesize' => 5120,
 ];

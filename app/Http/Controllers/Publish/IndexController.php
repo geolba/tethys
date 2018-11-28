@@ -232,16 +232,16 @@ class IndexController extends Controller
             'type' => 'required|min:5',
             'rights' => 'required|boolean|in:1',
             'belongs_to_bibliography' => 'required|boolean',
-            'title_main.value' => 'required|min:5',
+            'title_main.value' => 'required|min:4',
             'title_main.language' => 'required',
-            'abstract_main.value' => 'required|min:5',
+            'abstract_main.value' => 'required|min:4',
             'abstract_main.language' => 'required',
         ];
         if (null != $request->file('files')) {
             $files = count($request->file('files')) - 1;
             foreach (range(0, $files) as $index) {
                 // $rules['files.' . $index] = 'image|max:2048';
-                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize()];
+                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize($index + 1)];
             }
         }
         $validator = Validator::make($request->all(), $rules);

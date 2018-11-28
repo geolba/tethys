@@ -401,8 +401,11 @@
             <div v-if="isFailed">
                 <h2>Uploaded failed.</h2>
                 <p>
-                    <a href="javascript:void(0)" @click="reset()">Try again</a>
+                    <a href="javascript:void(0)" @click="retry()">Retry: Edit inputs</a>
                 </p>
+                <p>
+                    <a href="javascript:void(0)" @click="reset()">Start again</a>
+                </p>              
                 <div v-if="serrors.length > 0">
                     <b>Please correct the following server error(s):</b>
                     <ul class="alert validation-summary-errors">

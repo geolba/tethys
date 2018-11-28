@@ -14,9 +14,10 @@ class RdrFilesize implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($fileIndex)
     {
         $this->maxFileSize = Config::get('enums.max_filesize');
+        $this->fileIndex = $fileIndex;
     }
 
     /**
@@ -29,7 +30,10 @@ class RdrFilesize implements Rule
     public function passes($attribute, $value)
     {
         //return Rule::in($this->filetypes);
-        return $this->getSize($attribute, $value) <=  $this->maxFileSize;
+        // $upload_max_size = ini_get('upload_max_filesize');
+        $fileSize = filesize($value);
+        return $fileSize <= $this->maxFileSize * 1024;
+        // return $this->getSize($attribute, $value) <= $this->maxFileSize;
     }
 
     /**
@@ -39,7 +43,7 @@ class RdrFilesize implements Rule
      */
     public function message()
     {
-        return 'file :attribute is too large for the destination storage system.';
+        return 'file number '. $this->fileIndex .' is too large for the destination storage system.';
     }
 
      /**
