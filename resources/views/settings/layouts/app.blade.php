@@ -186,6 +186,15 @@
 <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script>
 <script type="text/javascript">
     $('div.alert').not('alert-important');//.delay(3000).slideUp(300);
+
+    // A $( document ).ready() block.
+    $(document).ready(function() {
+        $(document).on("keydown", function (e) {
+            if (e.which === 8 && !$(e.target).is("input:not([type=radio]):not([type=checkbox]), textarea, [contentEditable], [contentEditable=true]")) {
+                e.preventDefault();
+            }
+	    });
+    });
 </script>
 <script type="text/javascript" src="{{ asset('backend/functions.js') }}"></script>
 @yield('after-scripts')

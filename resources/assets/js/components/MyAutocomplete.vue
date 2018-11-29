@@ -2,7 +2,7 @@
 https://alligator.io/vuejs/vue-autocomplete-component/ -->
 <template>
     <div style="position:relative">
-        <input type="search" @input="searchChanged" v-model="search" v-bind:disabled="isLoading == true" v-bind:title="title" v-bind:placeholder="title" 
+        <input type="search" @input="searchChanged" v-model="search" v-bind:readonly="isLoading == true" v-bind:title="title" v-bind:placeholder="title" 
         class="pure-u-23-24" v-on:keydown.down="onArrowDown" v-on:keydown.up="onArrowUp" v-on:keydown.enter="onEnter">
         <!-- <ul class="autocomplete-results" v-show="results.length > 0"> -->
         <ul class="autocomplete-results pure-u-23-24" v-show="isOpen"> 
@@ -68,7 +68,7 @@ export default {
       if (this.isAsync) {
         this.results = value;
         this.isOpen = true;
-        this.isLoading = false;
+        this.isLoading = false;        
       } else {
         if (value.length !== oldValue.length) {
           this.results = value;

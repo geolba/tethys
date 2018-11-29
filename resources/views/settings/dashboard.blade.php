@@ -89,7 +89,7 @@
     <h3 class="header-title">Reports</h3>
 </div>	
 <div class="pure-g box-content">   
-    <div class="pure-u-1 pure-u-md-2-3">         
+    <div class="pure-u-1 pure-u-md-1">         
         {{-- <canvas id="myChart" width="400" height="260"></canvas>  --}}
         <div class="php-info">
             @php
