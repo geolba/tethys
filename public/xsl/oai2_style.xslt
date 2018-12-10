@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
+http://ws.pangaea.de/oai/oai2.xsl
 
   XSL Transform to convert OAI 2.0 responses into XHTML
 
@@ -55,13 +56,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 <xsl:template name="style">
+html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+    font-family: 'Open Sans', sans-serif;
+}
 td.value {
 	vertical-align: top;
 	padding-left: 1em;
 	padding: 3px;
 }
 td.key {
-	background-color: #e0e0ff;
+	background-color: #3abac4;
 	padding: 3px;
 	text-align: right;
 	border: 1px solid #c0c0c0;
@@ -109,16 +113,17 @@ h3 {
 	background-color: #a0a0df;
 }
 .oaiRecord, .oaiRecordTitle {
-	background-color: #f0f0ff;
+	background-color: #eee;
 	border-style: solid;
 	border-color: #d0d0d0;
 }
 h2.oaiRecordTitle {
-	background-color: #e0e0ff;
+		background-color: #51565c;
+	color: #fff;
 	font-size: medium;
 	font-weight: bold;
 	padding: 10px;
-	border-width: 2px 2px 0px 2px;
+	border-width: 0px 0px 0px 0px;
 	margin: 0px;
 }
 .oaiRecord {
@@ -456,12 +461,21 @@ p.intro {
 <xsl:template match="oai:metadataFormat">
   <h2>Metadata Format</h2>
   <table class="values">
-    <tr><td class="key">metadataPrefix</td>
-    <td class="value"><xsl:value-of select="oai:metadataPrefix"/></td></tr>
-    <tr><td class="key">metadataNamespace</td>
-    <td class="value"><xsl:value-of select="oai:metadataNamespace"/></td></tr>
-    <tr><td class="key">schema</td>
-    <td class="value"><a href="{oai:schema}"><xsl:value-of select="oai:schema"/></a></td></tr>
+    <tr>
+      <td class="key">metadataPrefix</td>
+      <!-- <td class="value"><xsl:value-of select="oai:metadataPrefix"/></td> -->
+      <td class="value">
+        <a class="link" href="?verb=ListRecords&amp;metadataPrefix={oai:metadataPrefix}"><xsl:value-of select="oai:metadataPrefix"/></a>
+      </td>
+    </tr>
+    <tr>
+      <td class="key">metadataNamespace</td>
+      <td class="value"><xsl:value-of select="oai:metadataNamespace"/></td>
+    </tr>
+    <tr>
+      <td class="key">schema</td>
+      <td class="value"><a href="{oai:schema}"><xsl:value-of select="oai:schema"/></a></td>
+    </tr>
   </table>
 </xsl:template>
 

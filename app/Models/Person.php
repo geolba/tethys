@@ -15,6 +15,7 @@ class Person extends Model
         'email',
         'identifier_orcid',
         'status',
+        'name_type'
     ];
     protected $table = 'persons';
     public $timestamps = false;

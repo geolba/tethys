@@ -1,0 +1,152 @@
+<?php
+
+namespace App\Models\Oai;
+
+/**
+ * Contains content and structure of a resumption token
+ */
+class ResumptionToken
+{
+
+    /**
+     * Holds dataset ids
+     *
+     * @var array
+     */
+    private $datasetIds = array();
+
+    /**
+     * Holds metadata prefix information
+     *
+     * @var string
+     */
+    private $metadataPrefix = null;
+
+    /**
+     * Holds resumption id (only if token is stored)
+     *
+     * @var string
+     */
+    private $resumptionId = null;
+
+    /**
+     * Holds start postion
+     *
+     * @var integer
+     */
+    private $startPostition = 0;
+
+    /**
+     * Holds total amount of document ids
+     *
+     * @var integer
+     */
+    private $totalIds = 0;
+
+    /**
+     *  Returns current holded document ids.
+     *
+     * @return array
+     */
+    public function getDocumentIds()
+    {
+        return $this->_documentIds;
+    }
+
+    /**
+     * Returns metadata prefix information.
+     *
+     * @return string
+     */
+    public function getMetadataPrefix()
+    {
+        return $this->_metadataPrefix;
+    }
+
+     /**
+     * Return setted resumption id after successful storing of resumption token.
+     *
+     * @return string Returns resumption id
+     */
+    public function getResumptionId()
+    {
+        return $this->_resumptionId;
+    }
+
+    /**
+     * Returns start position.
+     *
+     * @return in
+     */
+    public function getStartPosition()
+    {
+        return $this->_startPosition;
+    }
+
+    /**
+     * Returns total number of document ids for this request
+     *
+     * @return int
+     */
+    public function getTotalIds()
+    {
+        return $this->_totalIds;
+    }
+
+    /**
+     * Set document ids for this token.
+     *
+     * @param $idsToStore Set of document ids to store.
+     * @return void
+     */
+    public function setDocumentIds($idsToStore)
+    {
+        if (false === is_array($idsToStore)) {
+            $idsToStore = array($idsToStore);
+        }
+
+        $this->_documentIds = $idsToStore;
+    }
+
+    /**
+     * Set metadata prefix information.
+     *
+     * @param string $prefix
+     * @return void
+     */
+    public function setMetadataPrefix($prefix)
+    {
+        $this->_metadataPrefix = $prefix;
+    }
+
+    /**
+     * Set resumption id
+     *
+     * @return void
+     */
+    public function setResumptionId($resumptionId)
+    {
+        $this->_resumptionId = $resumptionId;
+    }
+
+    /**
+     * Set postion where to start on next request.
+     *
+     * @param $startPostion Positon where to start on next request
+     * @return void
+     */
+    public function setStartPosition($startPosition)
+    {
+        $this->_startPosition = (int) $startPosition;
+    }
+
+    /**
+     * Set count of document ids for this request.
+     *
+     * @return void
+     */
+    public function setTotalIds($totalIds)
+    {
+        $this->_totalIds = (int) $totalIds;
+    }
+}

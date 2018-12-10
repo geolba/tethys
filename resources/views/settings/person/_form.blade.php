@@ -37,6 +37,14 @@
         <small id="orcidHelp" class="pure-form-message-inline">orcid is optional.</small>
     </div>
 
+    <div class="pure-control-group">
+        {!! Form::label('name_type', 'Name Type') !!}
+        <div class="select  form-control">
+            {!! Form::select('name_type', ['personal' => 'personal', 'organizational' => 'organizational'], null, ['id' => 'name_type', 'placeholder' => '-- no name type --']) !!}
+        </div>
+        <small id="nameTypeHelp" class="pure-form-message-inline">name type is optional</small>
+    </div>
+
      <h5><b>Status of person</b></h5>
     <div class="pure-control-group checkboxlist">
         <label for="status" class="pure-checkbox">

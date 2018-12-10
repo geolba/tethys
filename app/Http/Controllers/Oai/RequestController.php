@@ -7,8 +7,9 @@ use App\Models\Dataset;
 use Illuminate\Support\Facades\Log;
 use App\Exceptions\OaiModelException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Models\OaiModelError;
-
+use App\Models\Oai\OaiModelError;
+use App\Models\Oai\ResumptionToken;
+ 
 class RequestController extends Controller
 {
     /**
@@ -18,6 +19,7 @@ class RequestController extends Controller
      * @var array
      */
     private $deliveringDocumentStates = array('published', 'deleted');  // maybe deleted documents too
+    private $xMetaDissRestriction = array('doctoralthesis', 'habilitation');
     const SET_SPEC_PATTERN = '[A-Za-z0-9\-_\.!~\*\'\(\)]+';
 
 
@@ -102,7 +104,7 @@ class RequestController extends Controller
     private function __handleRequest(array $oaiRequest)
     {
          // Setup stylesheet
-        $this->loadStyleSheet('oai-pmh.xslt');
+        $this->loadStyleSheet('datasetxml2oai-pmh.xslt');
 
         // Set response time
         $this->_proc->setParameter('', 'responseDate', date("Y-m-d\TH:i:s\Z"));
@@ -143,18 +145,18 @@ class RequestController extends Controller
     private function handleIdentify()
     {
         $email = "repository@geologie.ac.at";
-        $repositoryName = "Data Research Repository";
+        $repositoryName = "RDR - Data Research Repository";
         $repIdentifier = "rdr.gba.ac.at";
-        //$sampleIdentifier = $this->_configuration->getSampleIdentifier();
+        $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
         $earliestDateFromDb = Dataset::earliestPublicationDate();
 
         // set parameters for oai-pmh.xslt
         $this->_proc->setParameter('', 'email', $email);
         $this->_proc->setParameter('', 'repositoryName', $repositoryName);
         $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
-        //$this->_proc->setParameter('', 'sampleIdentifier', $sampleIdentifier);
+        $this->_proc->setParameter('', 'sampleIdentifier', $sampleIdentifier);
         $this->_proc->setParameter('', 'earliestDatestamp', $earliestDateFromDb);
-        $this->_xml->appendChild($this->_xml->createElement('Documents'));
+        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
     }
 
     /**
@@ -186,13 +188,11 @@ class RequestController extends Controller
         if (is_null($dataset)
             //or (false === in_array($dataset->getServerState(), $this->_deliveringDocumentStates))
             or  (false === $dataset->whereIn('server_state', $this->deliveringDocumentStates))
-
-
             or (false === $dataset->hasEmbargoPassed())) {
             throw new OaiModelException('Document is not available for OAI export!', OaiModelError::NORECORDSMATCH);
         }
 
-        $this->_xml->appendChild($this->_xml->createElement('Documents'));
+        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
         $this->createXmlRecord($dataset);
     }
 
@@ -208,15 +208,6 @@ class RequestController extends Controller
 
         $dataId = null;
         switch ($identifierParts[0]) {
-            // case 'urn':
-            //     //$finder = new Opus_DocumentFinder();
-            //     $finder = Dataset::query();
-            //     // $finder->setIdentifierTypeValue('urn', $oaiIdentifier);
-            //     // $finder->setServerStateInList($this->_deliveringDocumentStates);
-            //     $finder->whereIn('server_state', $this->deliveringDocumentStates);
-            //     $docIds = $finder->ids();
-            //     $docId = $docIds[0];
-            //     break;
             case 'oai':
                 if (isset($identifierParts[2])) {
                     $dataId = $identifierParts[2];
@@ -251,7 +242,7 @@ class RequestController extends Controller
      */
     private function handleListMetadataFormats()
     {
-        $this->_xml->appendChild($this->_xml->createElement('Documents'));
+        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
     }
 
     /**
@@ -274,7 +265,7 @@ class RequestController extends Controller
      */
     private function handleListIdentifiers(array &$oaiRequest)
     {
-        $maxIdentifier = 20;//$this->_configuration->getMaxListIdentifiers();
+        $maxIdentifier = 5;//$this->_configuration->getMaxListIdentifiers();
         $this->handlingOfLists($oaiRequest, $maxIdentifier);
     }
 
@@ -288,7 +279,7 @@ class RequestController extends Controller
     {
         $repIdentifier = "rdr.gba.ac.at";
         $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
-        $this->_xml->appendChild($this->_xml->createElement('Documents'));
+        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
 
         //$oaiSets = new Oai_Model_Sets();
         $sets = array(
@@ -336,9 +327,12 @@ class RequestController extends Controller
         if (true === empty($maxRecords)) {
             $maxRecords = 100;
         }
+
         $repIdentifier = "rdr.gba.ac.at";
+        $tokenTempPath = storage_path('app/resumption'); //$this->_configuration->getResumptionTokenPath();
+
         $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
-        $this->_xml->appendChild($this->_xml->createElement('Documents'));
+        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
         
         // do some initialisation
         $cursor = 0;
@@ -352,21 +346,27 @@ class RequestController extends Controller
         }
         $this->_proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 
-        // no resumptionToken is given
-        $finder = Dataset::query();
-        // add server state restrictions
-        $finder->whereIn('server_state', $this->deliveringDocumentStates);
-        if (array_key_exists('set', $oaiRequest)) {
-            $setarray = explode(':', $oaiRequest['set']);
-            if ($setarray[0] == 'doc-type') {
-                if (count($setarray) === 2 and !empty($setarray[1])) {
-                    $finder->where('type', $setarray[1]);
+        // parameter resumptionToken is given
+        if (false === empty($oaiRequest['resumptionToken'])) {
+            $tokenWorker = new ResumptionToken();
+            $resParam = $oaiRequest['resumptionToken'];
+        } else {
+            // no resumptionToken is given
+            $finder = Dataset::query();
+            // add server state restrictions
+            $finder->whereIn('server_state', $this->deliveringDocumentStates);
+            if (array_key_exists('set', $oaiRequest)) {
+                $setarray = explode(':', $oaiRequest['set']);
+                if ($setarray[0] == 'data-type') {
+                    if (count($setarray) === 2 and !empty($setarray[1])) {
+                        $finder->where('type', $setarray[1]);
+                    }
                 }
             }
+            $totalIds = $finder->count();
+            $reldocIds = $finder->pluck('id')->toArray();
         }
 
-        $totalIds = $finder->count();
-        $reldocIds = $finder->pluck('id')->toArray();
        
           // handling of document ids
         $restIds = $reldocIds;
@@ -401,7 +401,7 @@ class RequestController extends Controller
         //$node->appendChild($child);
 
         //$type = $dataset->type;
-        $this->addSpecInformation($node, 'doc-type:' . $dataset->type);
+        $this->addSpecInformation($node, 'data-type:' . $dataset->type);
         //$this->addSpecInformation($node, 'bibliography:' . 'false');
 
         $this->_xml->documentElement->appendChild($node);
@@ -472,7 +472,7 @@ class RequestController extends Controller
                 continue;
             }
 
-            $setSpec = 'doc-type:' . $doctype;
+            $setSpec = 'data-type:' . $doctype;
             // $count = $row['count'];
             $sets[$setSpec] = "Set for document type '$doctype'";
         }

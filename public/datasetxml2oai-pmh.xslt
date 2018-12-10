@@ -43,7 +43,7 @@
   <xsl:template match="/">
     <!-- stylesheet for browser -->
     <xsl:processing-instruction name="xml-stylesheet">
-      <xsl:text>type="text/xsl" href="xsl/oai2.xslt"</xsl:text>
+      <xsl:text>type="text/xsl" href="xsl/oai2_style.xslt"</xsl:text>
     </xsl:processing-instruction>
 
     <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/"
@@ -57,17 +57,13 @@
             <xsl:value-of select="$oai_verb" />
           </xsl:attribute>
         </xsl:if>
-
-
         <xsl:if test="$oai_metadataPrefix != ''">
           <xsl:attribute name="metadataPrefix">
             <xsl:value-of select="$oai_metadataPrefix" />
           </xsl:attribute>
         </xsl:if>
-
         <xsl:value-of select="$baseURL" />
       </request>
-
       <xsl:if test="$oai_error_code!=''">
         <error>
           <xsl:attribute name="code">
@@ -80,22 +76,22 @@
       <!--create the rest of oai response depending on oai_verb -->
       <xsl:choose>
         <xsl:when test="$oai_verb='GetRecord'">
-          <xsl:apply-templates select="Documents" mode="GetRecord" />
+          <xsl:apply-templates select="Datasets" mode="GetRecord" />
         </xsl:when>
         <xsl:when test="$oai_verb='Identify'">
-          <xsl:apply-templates select="Documents" mode="Identify" />
+          <xsl:apply-templates select="Datasets" mode="Identify" />
         </xsl:when>
         <xsl:when test="$oai_verb='ListIdentifiers'">
-          <xsl:apply-templates select="Documents" mode="ListIdentifiers" />
+          <xsl:apply-templates select="Datasets" mode="ListIdentifiers" />
         </xsl:when>
         <xsl:when test="$oai_verb='ListMetadataFormats'">
-          <xsl:apply-templates select="Documents" mode="ListMetadataFormats" />
+          <xsl:apply-templates select="Datasets" mode="ListMetadataFormats" />
         </xsl:when>
         <xsl:when test="$oai_verb='ListRecords'">
-          <xsl:apply-templates select="Documents" mode="ListRecords" />
+          <xsl:apply-templates select="Datasets" mode="ListRecords" />
         </xsl:when>
         <xsl:when test="$oai_verb='ListSets'">
-          <xsl:apply-templates select="Documents" mode="ListSets" />
+          <xsl:apply-templates select="Datasets" mode="ListSets" />
         </xsl:when>
       </xsl:choose>
     </OAI-PMH>
@@ -103,7 +99,7 @@
 
 
   <!-- template for Identiy  -->
-  <xsl:template match="Documents" mode="Identify">
+  <xsl:template match="Datasets" mode="Identify">
     <Identify>
       <repositoryName>
         <xsl:value-of select="$repositoryName"/>
@@ -148,7 +144,7 @@
 
 
   <!-- template for ListMetadataFormats  -->
-  <xsl:template match="Documents" mode="ListMetadataFormats">
+  <xsl:template match="Datasets" mode="ListMetadataFormats">
     <ListMetadataFormats>
       <metadataFormat>
         <metadataPrefix>
@@ -161,22 +157,36 @@
           <xsl:text>http://www.openarchives.org/OAI/2.0/oai_dc/</xsl:text>
         </metadataNamespace>
       </metadataFormat>
+
+      <metadataFormat>
+        <metadataPrefix>
+          <xsl:text>oai_datacite</xsl:text>
+        </metadataPrefix>
+        <schema>
+          http://schema.datacite.org/meta/kernel-4.1/metadata.xsd
+        </schema>
+        <metadataNamespace>
+          http://datacite.org/schema/kernel-4
+        </metadataNamespace>
+      </metadataFormat>
+
     </ListMetadataFormats>
   </xsl:template>
 
-  <xsl:template match="Documents" mode="ListSets">
+  <xsl:template match="Datasets" mode="ListSets">
     <ListSets>
       <xsl:apply-templates select="Rdr_Sets" />
     </ListSets>
   </xsl:template>
-   <xsl:template match="Rdr_Sets">
-        <set>
-           <setSpec><xsl:value-of select="@Type"/></setSpec>
-           <setName><xsl:value-of select="@TypeName"/></setName>
-        </set>
-    </xsl:template>
 
-  <xsl:template match="Documents" mode="ListIdentifiers">
+  <xsl:template match="Rdr_Sets">
+      <set>
+          <setSpec><xsl:value-of select="@Type"/></setSpec>
+          <setName><xsl:value-of select="@TypeName"/></setName>
+      </set>
+  </xsl:template>
+
+  <xsl:template match="Datasets" mode="ListIdentifiers">
     <xsl:if test="count(Rdr_Dataset) > 0">
       <ListIdentifiers>
         <xsl:apply-templates select="Rdr_Dataset" />
@@ -198,27 +208,27 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="Documents" mode="ListRecords">
+  <xsl:template match="Datasets" mode="ListRecords">
     <xsl:if test="count(Rdr_Dataset) > 0">
       <ListRecords>
         <xsl:apply-templates select="Rdr_Dataset" />
-        <!--<xsl:if test="$totalIds > 0">
-                <resumptionToken>
-                    <xsl:attribute name="expirationDate"><xsl:value-of select="$dateDelete"/></xsl:attribute>
-                    <xsl:attribute name="completeListSize"><xsl:value-of select="$totalIds"/></xsl:attribute>
-                    <xsl:attribute name="cursor"><xsl:value-of select="$cursor"/></xsl:attribute>
-                    <xsl:value-of select="$res"/>
-                </resumptionToken>
-            </xsl:if>-->
+        <xsl:if test="$totalIds > 0">
+          <resumptionToken>
+              <xsl:attribute name="expirationDate"><xsl:value-of select="$dateDelete"/></xsl:attribute>
+              <xsl:attribute name="completeListSize"><xsl:value-of select="$totalIds"/></xsl:attribute>
+              <xsl:attribute name="cursor"><xsl:value-of select="$cursor"/></xsl:attribute>
+              <xsl:value-of select="$res"/>
+          </resumptionToken>
+        </xsl:if>
       </ListRecords>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="Documents" mode="GetRecord">
-        <GetRecord>
-            <xsl:apply-templates select="Rdr_Dataset" />
-        </GetRecord>
-    </xsl:template>
+  <xsl:template match="Datasets" mode="GetRecord">
+      <GetRecord>
+          <xsl:apply-templates select="Rdr_Dataset" />
+      </GetRecord>
+  </xsl:template>
 
   <xsl:template match="Rdr_Dataset">
     <xsl:choose>
@@ -275,6 +285,9 @@
             <xsl:when test="$oai_metadataPrefix='oai_dc'">
               <xsl:apply-templates select="." mode="oai_dc" />
             </xsl:when>
+            <xsl:when test="$oai_metadataPrefix='oai_datacite'">
+              <xsl:apply-templates select="." mode="oai_datacite" />
+            </xsl:when>
           </xsl:choose>
         </metadata>
 
@@ -282,12 +295,63 @@
     </xsl:choose>
   </xsl:template>
 
-
-
   <xsl:template match="SetSpec">
     <setSpec>
       <xsl:value-of select="@Value"/>
     </setSpec>
+  </xsl:template>
+
+  
+  <xsl:template match="Rdr_Dataset" mode="oai_datacite">
+    <resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
+      <!-- <isReferenceQuality>true</isReferenceQuality>
+      <schemaVersion>4.1</schemaVersion>
+      <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
+      <identifier>
+        <xsl:text>oai:</xsl:text>
+        <xsl:value-of select="$repIdentifier" />
+        <xsl:text>:</xsl:text>
+        <xsl:value-of select="@Id" />
+      </identifier>
+      <!--<datacite:creator>-->
+       <creators>
+      <xsl:apply-templates select="PersonAuthor" mode="oai_datacite" />
+       </creators>
+       <publicationYear><xsl:value-of select="@PublishedYear" /></publicationYear> 
+    </resource>
+ </xsl:template>
+
+ <xsl:template match="PersonAuthor" mode="oai_datacite">
+    <creator>
+    <creatorName>
+    <xsl:if test="@NameType != ''" >
+      <xsl:attribute name="nameType">
+          <xsl:value-of select="@NameType" />
+        </xsl:attribute>
+      </xsl:if> 
+      <xsl:value-of select="@LastName" />
+      <xsl:if test="@FirstName != ''" >
+        <xsl:text>, </xsl:text>
+      </xsl:if>
+      <xsl:value-of select="@FirstName" />
+      <xsl:if test="@AcademicTitle != ''" >
+        <xsl:text> (</xsl:text>
+        <xsl:value-of select="@AcademicTitle" />
+        <xsl:text>)</xsl:text>
+      </xsl:if>
+      </creatorName>
+
+      <givenName><xsl:value-of select="@FirstName" /></givenName>
+      <familyName><xsl:value-of select="@LastName" /></familyName>
+      <xsl:if test="@IdentifierOrcid != ''" >
+        <nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID" ><xsl:value-of select="@IdentifierOrcid" /></nameIdentifier>
+      </xsl:if>
+        <!-- 
+        <nameType><xsl:value-of select="@NameType" /></nameType>
+      </xsl:if> -->
+        <affiliation>GBA</affiliation>
+    </creator>
   </xsl:template>
 
   <xsl:template match="Rdr_Dataset" mode="oai_dc">
@@ -389,12 +453,13 @@
     </dc:date>
   </xsl:template>
 
+<!-- für ListRecords -->
   <xsl:template match="@Type" mode="oai_dc">
     <dc:type>
       <xsl:value-of select="." />
     </dc:type>
     <dc:type>
-      <xsl:text>doc-type:</xsl:text>
+      <xsl:text>data-type:</xsl:text>
       <xsl:value-of select="." />
     </dc:type>
   </xsl:template>
