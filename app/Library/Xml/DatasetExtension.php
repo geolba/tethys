@@ -5,6 +5,7 @@ use App\Models\Title;
 use App\Models\License;
 use App\Models\Person;
 use App\Models\File;
+use App\Models\GeolocationBox;
 
 /**
  * DatasetExtension short summary.
@@ -19,7 +20,7 @@ trait DatasetExtension
     protected $externalFields = array(
         'TitleMain' => array(
             'model' => Title::class,
-            'options' => array('type' => 'main'),
+            'options' => array('type' => ['main', 'alternative', 'subtitle', 'other']),
             'fetch' => 'eager'
         ),
         'TitleAbstract' => array(
@@ -54,6 +55,11 @@ trait DatasetExtension
         'File' => array(
             'model' => File::class,
             'relation' => 'files',
+            'fetch' => 'eager'
+        ),
+        'GeolocationBox' => array(
+            'model' => GeolocationBox::class,
+            'relation' => 'geolocation',
             'fetch' => 'eager'
         ),
     );
@@ -229,7 +235,15 @@ trait DatasetExtension
         if (isset($this->externalFields[$fieldname]['options'])) {
             $options = $this->externalFields[$fieldname]['options'];
             foreach ($options as $column => $value) {
-                $select = $select->where($column, $value);
+                // $searchString = ',';
+                // if (strpos($value, $searchString) !== false) {
+                // $arr = explode(",", $value);
+                if (is_array($value)) {
+                    $arr = $value;
+                    $select->whereIn($column, $arr);
+                } else {
+                    $select = $select->where($column, $value);
+                }
             }
         }
 

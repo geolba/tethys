@@ -11,6 +11,9 @@
 
   <!--<xsl:param name="urnResolverUrl" />-->
 
+   <!-- add include here for each new metadata format  -->
+   <xsl:include href="prefixes/oai_datacite.xslt" />
+   
 
   <xsl:output method="xml" indent="yes" encoding="utf-8" />
 
@@ -157,7 +160,6 @@
           <xsl:text>http://www.openarchives.org/OAI/2.0/oai_dc/</xsl:text>
         </metadataNamespace>
       </metadataFormat>
-
       <metadataFormat>
         <metadataPrefix>
           <xsl:text>oai_datacite</xsl:text>
@@ -169,7 +171,6 @@
           http://datacite.org/schema/kernel-4
         </metadataNamespace>
       </metadataFormat>
-
     </ListMetadataFormats>
   </xsl:template>
 
@@ -276,7 +277,6 @@
       <!--loop-->
       <xsl:apply-templates select="SetSpec" />
     </header>
-
     <xsl:choose>
       <!-- nicht bei ListIdentifiers-->
       <xsl:when test="$oai_verb!='ListIdentifiers' and @ServerState!='deleted'">
@@ -290,7 +290,6 @@
             </xsl:when>
           </xsl:choose>
         </metadata>
-
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -301,59 +300,6 @@
     </setSpec>
   </xsl:template>
 
-  
-  <xsl:template match="Rdr_Dataset" mode="oai_datacite">
-    <resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
-      <!-- <isReferenceQuality>true</isReferenceQuality>
-      <schemaVersion>4.1</schemaVersion>
-      <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
-      <identifier>
-        <xsl:text>oai:</xsl:text>
-        <xsl:value-of select="$repIdentifier" />
-        <xsl:text>:</xsl:text>
-        <xsl:value-of select="@Id" />
-      </identifier>
-      <!--<datacite:creator>-->
-       <creators>
-      <xsl:apply-templates select="PersonAuthor" mode="oai_datacite" />
-       </creators>
-       <publicationYear><xsl:value-of select="@PublishedYear" /></publicationYear> 
-    </resource>
- </xsl:template>
-
- <xsl:template match="PersonAuthor" mode="oai_datacite">
-    <creator>
-    <creatorName>
-    <xsl:if test="@NameType != ''" >
-      <xsl:attribute name="nameType">
-          <xsl:value-of select="@NameType" />
-        </xsl:attribute>
-      </xsl:if> 
-      <xsl:value-of select="@LastName" />
-      <xsl:if test="@FirstName != ''" >
-        <xsl:text>, </xsl:text>
-      </xsl:if>
-      <xsl:value-of select="@FirstName" />
-      <xsl:if test="@AcademicTitle != ''" >
-        <xsl:text> (</xsl:text>
-        <xsl:value-of select="@AcademicTitle" />
-        <xsl:text>)</xsl:text>
-      </xsl:if>
-      </creatorName>
-
-      <givenName><xsl:value-of select="@FirstName" /></givenName>
-      <familyName><xsl:value-of select="@LastName" /></familyName>
-      <xsl:if test="@IdentifierOrcid != ''" >
-        <nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID" ><xsl:value-of select="@IdentifierOrcid" /></nameIdentifier>
-      </xsl:if>
-        <!-- 
-        <nameType><xsl:value-of select="@NameType" /></nameType>
-      </xsl:if> -->
-        <affiliation>GBA</affiliation>
-    </creator>
-  </xsl:template>
-
   <xsl:template match="Rdr_Dataset" mode="oai_dc">
     <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
       <!-- dc:title -->
@@ -361,7 +307,17 @@
       <!-- dc:description -->
       <xsl:apply-templates select="TitleAbstract" mode="oai_dc" />
       <!--<dc:creator>-->
-      <xsl:apply-templates select="PersonAuthor" mode="oai_dc" />
+      <!-- Creator: Autor (falls vorhanden), sonst Herausgeber (falls vorhanden), sonst Urhebende Koerperschaft  -->
+      <xsl:choose>
+        <xsl:when test="PersonAuthor">
+          <xsl:apply-templates select="PersonAuthor" mode="oai_dc" />
+        </xsl:when>
+        <xsl:when test="@CreatingCorporation">
+            <dc:creator>
+                <xsl:value-of select="@CreatingCorporation" />
+            </dc:creator>
+        </xsl:when>
+      </xsl:choose>
       <!-- dc:contributor -->
       <xsl:apply-templates select="PersonContributor" mode="oai_dc" />
       <!-- dc:date (call-template, weil die 'Funktion' nur einmal aufgerufen werden soll, nicht einmal für jedes Date-->
@@ -381,7 +337,6 @@
       <xsl:apply-templates select="@Language" mode="oai_dc" />
       <!-- dc:rights -->
       <xsl:apply-templates select="Licence" mode="oai_dc" />
-
     </oai_dc:dc>
   </xsl:template>
 
@@ -400,7 +355,7 @@
     </dc:description>
   </xsl:template>
   
-  <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
+  <!-- <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
     <dc:creator>
       <xsl:value-of select="@LastName" />
       <xsl:if test="@FirstName != ''" >
@@ -413,7 +368,7 @@
         <xsl:text>)</xsl:text>
       </xsl:if>
     </dc:creator>
-  </xsl:template>
+  </xsl:template> -->
 
   <xsl:template match="PersonContributor" mode="oai_dc">
     <dc:contributor>
@@ -453,6 +408,7 @@
     </dc:date>
   </xsl:template>
 
+
 <!-- für ListRecords -->
   <xsl:template match="@Type" mode="oai_dc">
     <dc:type>
@@ -487,7 +443,5 @@
       <xsl:value-of select="@NameLong" />
     </dc:rights>
   </xsl:template>
-
-  
 
 </xsl:stylesheet>

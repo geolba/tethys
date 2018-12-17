@@ -12,6 +12,7 @@ use App\Models\XmlCache;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\GeolocationBox;
 
 class Dataset extends Model
 {
@@ -49,6 +50,14 @@ class Dataset extends Model
     {
         parent::__construct($attributes);
         // $this->_init();
+    }
+
+    /**
+     * Get the user that owns the phone.
+     */
+    public function geolocation()
+    {
+        return $this->belongsTo(GeolocationBox::class, 'dataset_id', 'id');
     }
 
     /**
