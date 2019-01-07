@@ -15,7 +15,7 @@ class GeolocationBox extends Model
         'xmin' => 'float',
         'xmax' => 'float',
         'ymin' => 'float',
-        'ymax' => 'float'
+        'ymax' => 'float',
     ];
 
     public function dataset()

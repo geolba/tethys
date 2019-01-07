@@ -39,7 +39,7 @@ class Person extends Model
      */
     public function getFullNameAttribute()
     {
-        return $this->first_name . " " . $this->last_name;
+        return $this->first_name . " " . $this->last_name . " " . $this->date_of_birth;
     }
 
     public function scopeActive($query)

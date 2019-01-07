@@ -139,6 +139,32 @@
 
                     </div>
                 </fieldset>
+
+                <fieldset id="fieldset-titles">
+                    <legend>Bounding Box</legend>
+                    <div class="pure-g">
+
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('Xmin', 'xmin: ') !!} 
+                            {!! Form::text('GeoLocation[xmin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmin']) !!}
+
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('Ymin', 'ymin: ') !!} 
+                            {!! Form::text('GeoLocation[ymin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymin']) !!}
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('Xmax', 'xmax: ') !!} 
+                            {!! Form::text('GeoLocation[xmax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmax']) !!}
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('Ymax', 'ymax: ') !!} 
+                            {!! Form::text('GeoLocation[ymax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymax']) !!}
+                        </div>
+                    </div>
+                </fieldset>
+
                 <fieldset id="fieldset-titles">
                     <legend>Main Title & Abstract</legend>
                     <div class="pure-g">

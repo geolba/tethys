@@ -30,7 +30,7 @@ import axios from 'axios';
 //Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
 import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
-import { dataset } from './components/Dataset';
+import dataset from './components/Dataset';
 // import { Validator } from 'vee-validate';
 
 Vue.use(VeeValidate);
@@ -178,6 +178,11 @@ const app = new Vue({
             formData.append('title_main[language]', this.dataset.title_main.language);
             formData.append('abstract_main[value]', this.dataset.abstract_main.value);
             formData.append('abstract_main[language]', this.dataset.abstract_main.language);
+
+            formData.append('geolocation[xmin]', this.dataset.geolocation.xmin);
+            formData.append('geolocation[ymin]', this.dataset.geolocation.ymin);
+            formData.append('geolocation[xmax]', this.dataset.geolocation.xmax);
+            formData.append('geolocation[ymax]', this.dataset.geolocation.ymax);
 
             for (var i = 0; i < this.dataset.checkedLicenses.length; i++) {
                 formData.append('licenses[' + i + ']', this.dataset.checkedLicenses[i]);

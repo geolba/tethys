@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
+use App\Models\GeolocationBox;
 
 class IndexController extends Controller
 {
@@ -236,6 +237,22 @@ class IndexController extends Controller
             'title_main.language' => 'required',
             'abstract_main.value' => 'required|min:4',
             'abstract_main.language' => 'required',
+            'geolocation.xmin' => [
+                'nullable',
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+            ],
+            'geolocation.ymin' => [
+                'nullable',
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+            ],
+            'geolocation.xmax' => [
+                'nullable',
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+            ],
+            'geolocation.ymax' => [
+                'nullable',
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+            ],
         ];
         if (null != $request->file('files')) {
             $files = count($request->file('files')) - 1;
@@ -342,6 +359,15 @@ class IndexController extends Controller
                     foreach ($request->get('references') as $key => $reference) {
                         $dataReference = new DatasetReference($reference);
                         $dataset->references()->save($dataReference);
+                    }
+                }
+
+                if (isset($data['geolocation'])) {
+                    $formGeolocation = $request->input('geolocation');
+                    if ($formGeolocation['xmin'] !== '' && $formGeolocation['ymin'] !== '' &&
+                        $formGeolocation['xmax'] !== '' && $formGeolocation['ymax'] !== '') {
+                        $geolocation = new GeolocationBox($formGeolocation);
+                        $dataset->geolocation()->save($geolocation);
                     }
                 }
                                  

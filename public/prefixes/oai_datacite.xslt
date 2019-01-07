@@ -16,9 +16,8 @@
  *
  * @category    Application
  * @package     Module_Oai
- * @author      Michael Lang <lang@zib.de>
- * @author      Jens Schwidder <schwidder@zib.de>
- * @copyright   Copyright (c) 2008-2016, OPUS 4 development team
+ * @author      Arno Kaimbacher <arno.kaimbacher@geologie.ac.at>
+ * @copyright   Copyright (c) 2018-2019, GBA RDR development team
  * @license     http://www.gnu.org/licenses/gpl.html General Public License
  */
 -->
@@ -100,14 +99,22 @@
     </xsl:template>
 
     <xsl:template match="GeolocationBox" mode="oai_datacite">
-    <geoLocation>
-        <geoLocationBox>
-            <westBoundLongitude><xsl:value-of select="@Xmin" /></westBoundLongitude>
-            <eastBoundLongitude><xsl:value-of select="@Xmax" /></eastBoundLongitude>
-            <southBoundLatitude><xsl:value-of select="@Ymin" /></southBoundLatitude>
-            <northBoundLatitude><xsl:value-of select="@Ymax" /></northBoundLatitude>
-        </geoLocationBox>
-    </geoLocation>
+        <geoLocation>
+            <geoLocationBox>
+                <westBoundLongitude>
+                    <xsl:value-of select="@Xmin" />
+                </westBoundLongitude>
+                <eastBoundLongitude>
+                    <xsl:value-of select="@Xmax" />
+                </eastBoundLongitude>
+                <southBoundLatitude>
+                    <xsl:value-of select="@Ymin" />
+                </southBoundLatitude>
+                <northBoundLatitude>
+                    <xsl:value-of select="@Ymax" />
+                </northBoundLatitude>
+            </geoLocationBox>
+        </geoLocation>
     </xsl:template>
 
     <xsl:template match="TitleAbstract" mode="oai_datacite">

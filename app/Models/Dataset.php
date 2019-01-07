@@ -53,11 +53,11 @@ class Dataset extends Model
     }
 
     /**
-     * Get the user that owns the phone.
+     * Get the geolocation that owns the dataset.
      */
     public function geolocation()
     {
-        return $this->belongsTo(GeolocationBox::class, 'dataset_id', 'id');
+        return $this->hasOne(GeolocationBox::class, 'dataset_id', 'id');
     }
 
     /**
