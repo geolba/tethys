@@ -57,7 +57,7 @@ const app = new Vue({
             redirectLink : null,
             
 
-            step: 2,
+            step: 1,
             dataset : dataset
             // dataset: {
             //     type: '',
@@ -125,7 +125,7 @@ const app = new Vue({
             this.uploadedFiles = [];
             this.uploadError = null;
             this.dataset.reset();//reset methods will trigger property changed.
-            this.step = 2;
+            this.step = 1;
         },
         retry() {
             // reset form to initial state
