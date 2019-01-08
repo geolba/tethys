@@ -65,8 +65,11 @@
             <language>
                 <xsl:value-of select="@Language" />
             </language>
+            <contributors>
+                <xsl:apply-templates select="PersonContributor" mode="oai_datacite" />
+            </contributors>
             <resourceType resourceTypeGeneral="Dataset">
-            <xsl:text>Dataset</xsl:text>
+                <xsl:text>Dataset</xsl:text>
                 <!-- <xsl:value-of select="@Type" /> -->
             </resourceType>
             <rightsList>
@@ -74,7 +77,7 @@
             </rightsList>
             <sizes>
                 <size>
-                    <xsl:value-of select="count(File)"/> 
+                    <xsl:value-of select="count(File)"/>
                     <xsl:text> datasets</xsl:text>
                 </size>
             </sizes>
@@ -146,6 +149,15 @@
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>
+
+    <xsl:template match="PersonContributor" mode="oai_datacite">
+        <contributor>
+            <contributorName>
+                <xsl:value-of select="@LastName" />
+            </contributorName>
+        </contributor>
+    </xsl:template>
+
 
     <xsl:template match="PersonAuthor" mode="oai_datacite">
         <creator>

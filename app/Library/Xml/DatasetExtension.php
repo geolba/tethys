@@ -190,7 +190,7 @@ trait DatasetExtension
                     continue;
                 } else {
                     // Immediately load external field if fetching mode is set to 'eager'
-                    $this->_loadExternal($fieldname);
+                    $this->loadExternal($fieldname);
                 }
             } else {
                 // Field is not external an gets handled by simply reading
@@ -217,7 +217,7 @@ trait DatasetExtension
         return strtolower(preg_replace('/(?!^)[[:upper:]]/', '_\0', $fieldname));
     }
 
-    protected function _loadExternal($fieldname)
+    protected function loadExternal($fieldname)
     {
         $field = $this->fields[$fieldname];
 

@@ -143,24 +143,25 @@
                 <fieldset id="fieldset-titles">
                     <legend>Bounding Box</legend>
                     <div class="pure-g">
-
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Xmin', 'xmin: ') !!} 
-                            {!! Form::text('GeoLocation[xmin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmin']) !!}
-
+                        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1 pure-div">
+                            <locations-map v-bind:geolocation="dataset.geolocation"></locations-map>
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Ymin', 'ymin: ') !!} 
-                            {!! Form::text('GeoLocation[ymin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymin']) !!}
+                            {!! Form::label('xmin', 'xmin: ') !!} 
+                            {!! Form::text('xmin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmin', 'readonly']) !!}
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('ymin', 'ymin: ') !!} 
+                            {!! Form::text('ymin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymin', 'readonly']) !!}
                         </div>
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Xmax', 'xmax: ') !!} 
-                            {!! Form::text('GeoLocation[xmax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmax']) !!}
+                            {!! Form::label('xmax', 'xmax: ') !!} 
+                            {!! Form::text('xmax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmax', 'readonly']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Ymax', 'ymax: ') !!} 
-                            {!! Form::text('GeoLocation[ymax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymax']) !!}
+                            {!! Form::label('ymax', 'ymax: ') !!} 
+                            {!! Form::text('ymax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymax', 'readonly']) !!}
                         </div>
                     </div>
                 </fieldset>

@@ -31,6 +31,7 @@ import axios from 'axios';
 import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
 import dataset from './components/Dataset';
+import LocationsMap from './components/LocationsMap.vue';
 // import { Validator } from 'vee-validate';
 
 Vue.use(VeeValidate);
@@ -38,7 +39,7 @@ Vue.use(VeeValidate);
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete },
+    components: { MyAutocomplete, LocationsMap },
     data() {
         return {
             rows: [
@@ -56,7 +57,7 @@ const app = new Vue({
             redirectLink : null,
             
 
-            step: 1,
+            step: 2,
             dataset : dataset
             // dataset: {
             //     type: '',
@@ -100,7 +101,7 @@ const app = new Vue({
         });
     },
     mounted() {
-        this.step = 1;
+        //this.step = 2;
         this.reset();        
     },
     computed: {
@@ -124,7 +125,7 @@ const app = new Vue({
             this.uploadedFiles = [];
             this.uploadError = null;
             this.dataset.reset();//reset methods will trigger property changed.
-            this.step = 1;
+            this.step = 2;
         },
         retry() {
             // reset form to initial state
