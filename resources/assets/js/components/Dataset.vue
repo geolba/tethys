@@ -9,7 +9,7 @@ function initialState() {
     rights: null,
     project_id: "",
 
-    creating_corporation: "GBA",
+    creating_corporation: "GBA Repository",
     embargo_date: "",
     belongs_to_bibliography: 0,
 
