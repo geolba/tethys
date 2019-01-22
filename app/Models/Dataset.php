@@ -6,7 +6,8 @@ use App\Library\Xml\DatasetExtension;
 use App\Models\Collection;
 use App\Models\License;
 use App\Models\Project;
-use App\Models\Title;
+use App\Models\Description;
+use App\Models\Titel;
 use App\Models\Person;
 use App\Models\XmlCache;
 use App\Models\File;
@@ -129,33 +130,28 @@ class Dataset extends Model
     #endregion
 
     #region title table:
-    public function titlesAbstracts()
-    {
-        return $this->hasMany(Title::class, 'document_id', 'id');
-    }
-
     public function titles()
     {
-        return $this->hasMany(Title::class, 'document_id', 'id')
-            ->where('type', 'main');
+        return $this->hasMany(Titel::class, 'document_id', 'id');
     }
+    
     public function addMainTitle(Title $title)
     {
         $title->type = 'main';
-        $this->titlesAbstracts()->save($title);
+        $this->titles()->save($title);
         // $this->titles()->save($title, ['type' => 'main']);
     }
 
     /**
      * Relation abstracts
      *
-     * @return \App\Title
+     * @return \App\Description
      */
     public function abstracts()
     {
-        return $this->hasMany(Title::class, 'document_id', 'id')
-            ->where('type', 'abstract');
+        return $this->hasMany(Description::class, 'document_id', 'id');
     }
+
     public function addMainAbstract(Title $title)
     {
         $title->type = 'abstract';

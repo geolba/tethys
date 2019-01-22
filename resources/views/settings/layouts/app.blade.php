@@ -71,6 +71,10 @@
                             <a class="pure-menu-link" href="{{ route('settings.project') }}"><i class="fa fa-tasks"></i> Projects</a>
                         </li>
 
+                        <li class="pure-menu-item {{ Route::is('settings.filetype') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('settings.filetype.index') }}"><i class="fa fa-archive"></i> Filetypes</a>
+                        </li>
+
                         @permission('page')
                         <li class="{{ active_class(Active::checkUriPattern('settings/page*')) }}">
                             <a class="pure-menu-link" href="{{ route('settings.page.index') }}">

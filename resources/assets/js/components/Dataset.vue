@@ -31,6 +31,7 @@ function initialState() {
     checkedLicenses: [], // [],
     files: [],
     references: [],
+    titles: [],
     checkedContributors: [],
     checkedSubmitters: [],
 

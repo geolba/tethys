@@ -2,6 +2,7 @@
 namespace App\Library\Xml;
 
 use App\Models\Title;
+use App\Models\Description;
 use App\Models\License;
 use App\Models\Person;
 use App\Models\File;
@@ -24,8 +25,8 @@ trait DatasetExtension
             'fetch' => 'eager'
         ),
         'TitleAbstract' => array(
-            'model' => Title::class,
-            'options' => array('type' => 'abstract'),
+            'model' => Description::class,
+            'options' => array('type' => ['abstract', 'methods']),
             'fetch' => 'eager'
         ),
         'Licence' => array(
@@ -153,10 +154,10 @@ trait DatasetExtension
         return $this;
     }
 
-    public function getField($name)
-    {
-        return $this->_getField($name);
-    }
+    // public function getField($name)
+    // {
+    //     return $this->_getField($name);
+    // }
 
     /**
      * Return a reference to an actual field.
@@ -164,7 +165,7 @@ trait DatasetExtension
      * @param string $name Name of the requested field.
      * @return Field The requested field instance. If no such instance can be found, null is returned.
      */
-    protected function _getField($name)
+    protected function getField($name)
     {
         if (isset($this->fields[$name])) {
             return $this->fields[$name];

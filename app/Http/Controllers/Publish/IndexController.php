@@ -49,19 +49,21 @@ class IndexController extends Controller
             ->get();
         $languages = DB::table('languages')
             ->where('active', true)
-            ->pluck('part2_t', 'part2_t');
+            ->pluck('part1', 'part1');
         // ->toArray();
 
         // $persons = Person::where('status', 1)
         //     ->pluck('last_name', 'id');
         $projects = Project::pluck('label', 'id');
-        $types = array(
-            'doi' => 'doi', 'handle' => 'handle', 'urn' => 'urn', 'std-doi' => 'std-doi',
-            'url' => 'url', 'isbn' => 'isbn', 'issn' => 'issn', 'rdr-id' => 'rdr-id'
-        );
-        $relations = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
+        $relatedIdentifierTypes = ["ARK", "arXiv", "bibcode", "DOI", "EAN13", "EISSN", "Handle", "IGSN", "ISBN", "ISSN", "ISTC", "LISSN", "LSID", "PMID", "PURL", "UPC", "URL", "URN"];
+        $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
+       
+        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes = array_combine($relationTypes, $relationTypes);
 
-        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'types', 'relations'));
+        $titleTypes = ['sub' => 'sub', 'alternative' => 'alternative', 'translated' => 'translated', 'other' => 'other'];
+        //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
+        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes'));
     }
 
     /**

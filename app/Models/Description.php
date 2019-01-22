@@ -4,9 +4,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Dataset;
 
-class Title extends Model
+class Description extends Model
 {
-    protected $table = 'dataset_titles';
+    protected $table = 'dataset_abstracts';
     public $timestamps = false;
     
 

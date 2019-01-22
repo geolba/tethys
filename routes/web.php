@@ -153,6 +153,31 @@ Route::group(['middleware' => ['permission:settings']], function () {
         'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
     ]);
 
+     //=================================================setting filetype=============================================
+    Route::get('/settings/filetype', [
+        'as' => 'settings.filetype.index', 'uses' => 'Settings\FiletypeController@index',
+    ]);
+
+    // Route::get('/settings/collection/create', [
+    //     'as' => 'settings.collection.create', 'uses' => 'Settings\CollectionController@create',
+    // ]);
+    // Route::post('settings/collection/store', [
+    //     'as' => 'settings.collection.store', 'uses' => 'Settings\CollectionController@store',
+    // ]);
+
+    // Route::get('settings/collection/edit/{id}', [
+    //     'as' => 'settings.collection.edit', 'uses' => 'Settings\CollectionController@edit',
+    // ]);
+    // Route::patch('settings/collection/edit/{id}', [
+    //     'as' => 'settings.collection.update', 'uses' => 'Settings\CollectionController@update',
+    // ]);
+    // Route::get('settings/collection/show/{collection}', [
+    //     'as' => 'settings.collection.show', 'uses' => 'Settings\CollectionController@show',
+    // ]);
+    // Route::get('settings/collection/delete/{id}', [
+    //     'as' => 'settings.collection.delete', 'uses' => 'Settings\CollectionController@delete',
+    // ]);
+
     //=================================================setting collection=============================================
     Route::get('/settings/collection', [
         'as' => 'settings.collection.index', 'uses' => 'Settings\CollectionController@index',

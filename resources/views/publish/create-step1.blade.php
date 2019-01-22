@@ -17,22 +17,106 @@
             {{ csrf_field() }}
 
             <div v-if="step === 1 && isInitial" data-vv-scope="step-1">
-                <h1>Step One</h1>
+                <h1>Step One: Mandatory Elements</h1>
 
                 <div class="form-group">
-                    <legend>Datensatztyp</legend>
+                    <legend>General</legend>
                     <div class="description hint">
                         <p>Bitte wählen Sie einen Datensatztyp aus der Liste aus.</p>
                     </div>
                     <p></p>
-                    <div class="form-item">
+                    {{-- <div class="form-item">
                         <label for="documentType">Datensatztyp<span class="required" title="Dieses Feld muss ausgefüllt werden."> *</span></label>
                         <div class="select" style="width:300px" title="Bitte wählen Sie einen Datensatztyp aus der Liste aus.">
                             {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
                             'dataset.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                         </div>
-                    </div>
+                    </div> --}}
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        <label for="documentType">Datensatztyp<span class="required" title="Dieses Feld muss ausgefüllt werden."> *</span></label>
+                        <div class="select  pure-u-23-24" title="Bitte wählen Sie einen Datensatztyp aus der Liste aus.">
+                            {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
+                            'dataset.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                        </div>
+                    </div>                   
                 </div>
+
+                <fieldset id="fieldset-titles">
+                    <legend>Title(s)</legend>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('TitleMain', 'Main Title ') !!} 
+                            {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
+                            => 'dataset.title_main.value', "v-validate" => "'required|min:3'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-1']) !!}
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('TitleLanguage', 'Title Language..') !!}
+                            <div class="select pure-u-23-24">
+                                {!! Form::select('TitleMain[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.title_main.language',
+                                "v-validate" => "'required'", "data-vv-as" => "Title Language", 'data-vv-scope' => 'step-1']) !!}
+                            </div>
+                        </div>                        
+                    </div>
+                    <button class="pure-button button-small" @click.prevent="addTitle()">+</button>
+                    <table class="pure-table pure-table-horizontal"  v-if="dataset.titles.length">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">Title</th>
+                                <th>Type</th>
+                                <th>Language</th>                               
+                                <th style="width: 130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in dataset.titles">
+                                <td>
+                                    <input name="Title" class="form-control" placeholder="[TITLE]" v-model="item.value" v-validate="'required'" data-vv-scope="step-1" />
+                                </td>
+                                <td>                                   
+                                    {!! Form::select('Title[Type]', $titleTypes, null, 
+                                    ['placeholder' => '[titleType]', 'v-model' => 'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                                </td>
+                                <td>                                   
+                                    {!! Form::select('Title[Relation]', $languages, null, 
+                                    ['placeholder' => '[language]', 'v-model' => 'item.language', 'data-vv-scope' => 'step-1']) !!}
+                                </td>                              
+                                <td>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeTitle(index)">-</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <fieldset id="fieldset-general">
+                    <legend>Creator(s)</legend>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <my-autocomplete title="searching active person table" @person="onAddAuthor"></my-autocomplete>
+                            {{--
+                            <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <div class="pure-control-group checkboxlist">
+                                <label v-for="(person, index) in dataset.persons" :for="person.id" class="pure-checkbox">                           
+                                                        <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-1">
+                                                        @{{ person.full_name }}                               
+                                                    </label>
+                                <br />
+                                {{-- <span>Checked Authors: @{{ dataset.checkedAuthors }}</span> --}}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="fieldset-publisher">
+                    <legend>Publisher</legend>
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('CreatingCorporation', 'Creating Corporation') !!} 
+                        {!! Form::text('CreatingCorporation', null, ['class' =>
+                        'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                    </div>
+                </fieldset>
 
                 <div :class="{'form-group':true, 'has-error':errors.has('rights')}">
                     <legend>Einräumung eines einfachen Nutzungsrechts</legend>                 
@@ -52,7 +136,7 @@
                         <span v-show="errors.has('step-1.rights')" class="text-danger">@{{ errors.first('step-1.rights') }}</span>
                         
                    
-                        <span class="help-block">You must agree to continue</span> {{-- </div> --}}
+                        <span class="help-block">You must agree to continue</span> 
                 </div>
 
                 <br />
@@ -71,18 +155,10 @@
             </div>
 
             <div v-if="step === 2 && isInitial" data-vv-scope="step-2">
-                <h1>Step Two</h1>
+                <h1>Step Two: Recommended Elements</h1>
                 <fieldset id="fieldset-general">
                     <legend>General</legend>
-                    <div class="pure-g">
-
-                        {{--
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Person', 'Person..') !!}
-                            <div class="select  pure-u-23-24">
-                                {!! Form::select('Person', $persons, null, ['id' => 'type', 'placeholder' => '-- select person --']) !!}
-                            </div>
-                        </div> --}}
+                    <div class="pure-g">                       
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('Type', 'Type..') !!}
@@ -104,13 +180,7 @@
                                 {!! Form::select( 'State', array_except(Config::get('enums.server_states'),['published', 'deleted', 'temporary']), '',
                                 ['placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
                             </div> --}}
-                        </div>
-
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('CreatingCorporation', 'Creating Corporation') !!} 
-                            {!! Form::text('CreatingCorporation', null, ['class' =>
-                            'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
-                        </div>
+                        </div>                       
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('project_id', 'Project..') !!}
@@ -219,7 +289,7 @@
                     </div>
                 </fieldset>
                 <fieldset id="fieldset-references">
-                    <legend>Document references</legend>
+                    <legend>Dataset references</legend>
                     <button class="pure-button button-small" @click.prevent="addReference()">Add Reference</button>
                     <table class="table table-hover"  v-if="dataset.references.length">
                         <thead>
@@ -234,15 +304,15 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.references">
                                 <td>
-                                    <input name="Reference Value" class="form-control" v-model="item.value" v-validate="'required'" data-vv-scope="step-2" />
+                                    <input name="Reference Value" class="form-control" placeholder="[RELATED IDENTIFIER]" v-model="item.value" v-validate="'required'" data-vv-scope="step-2" />
                                 </td>
                                 <td>                                   
-                                    {!! Form::select('Reference[Type]', $types, null, 
-                                    ['placeholder' => '--no type--', 'v-model' => 'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                                    {!! Form::select('Reference[Type]', $relatedIdentifierTypes, null, 
+                                    ['placeholder' => '[relatedIdentifierType]', 'v-model' => 'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
                                 </td>
                                 <td>                                   
-                                    {!! Form::select('Reference[Relation]', $relations, null, 
-                                    ['placeholder' => '--no relation--', 'v-model' => 'item.relation', 'data-vv-scope' => 'step-2']) !!}
+                                    {!! Form::select('Reference[Relation]', $relationTypes, null, 
+                                    ['placeholder' => '[relationType]', 'v-model' => 'item.relation', 'data-vv-scope' => 'step-2']) !!}
                                 </td>
                                 <td>
                                     <input name="Reference Label" class="form-control" v-model="item.label"  v-validate="'required'" data-vv-scope="step-2" />
@@ -276,28 +346,7 @@
             </div>
 
             <div v-if="step === 3 && isInitial" data-vv-scope="step-3">
-                <h1>Select authors, contributors, submitters</h1>
-                
-                <fieldset id="fieldset-general">
-                    <legend>Authors</legend>
-                    <div class="pure-g">
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <my-autocomplete title="searching active person table" @person="onAddAuthor"></my-autocomplete>
-                            {{--
-                            <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <div class="pure-control-group checkboxlist">
-                                <label v-for="(person, index) in dataset.persons" :for="person.id" class="pure-checkbox">                           
-                                                        <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-3">
-                                                        @{{ person.full_name }}                               
-                                                    </label>
-                                <br />
-                                <span>Checked Authors: @{{ dataset.checkedAuthors }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
+                <h1>Select contributors, submitters</h1>   
 
                 <fieldset id="fieldset-general">
                     <legend>Contributors</legend>

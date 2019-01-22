@@ -48,17 +48,17 @@ const app = new Vue({
                 // { qty: 2, value: "Something else", language: 20, type: "additional", sort_order: 0 },
             ],
             serrors: [],
-            
+
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
-            uploadFieldName: 'photos',            
+            uploadFieldName: 'photos',
             fileCount: 0,
-            redirectLink : null,
-            
+            redirectLink: null,
+
 
             step: 1,
-            dataset : dataset
+            dataset: dataset
             // dataset: {
             //     type: '',
             //     state: '',
@@ -85,7 +85,7 @@ const app = new Vue({
             //     checkedSubmitters: [],
             // }
         }
-    },   
+    },
     created: function () {
         VeeValidate.Validator.extend('Name', {
             getMessage: field => '* Enter valid ' + field + '',
@@ -96,13 +96,13 @@ const app = new Vue({
             getMessage: field => 'At least one ' + field + ' needs to be checked.',
             validate: (value, [testProp]) => {
                 const options = this.dataset.checkedLicenses;
-                return value || options.some((option) => option[testProp]);           
+                return value || options.some((option) => option[testProp]);
             }
         });
     },
     mounted() {
         //this.step = 2;
-        this.reset();        
+        this.reset();
     },
     computed: {
         isInitial() {
@@ -266,16 +266,27 @@ const app = new Vue({
         /*
         Handles a change on the file upload
         */
-       addReference() {
-        let newReference = { value: '', label: '', relation: 'updates', type: 'rdr-id' };
-        //this.dataset.files.push(uploadedFiles[i]);
-        this.dataset.references.push(newReference);
-       },
+        addReference() {
+            let newReference = { value: '', label: '', relation: '', type: '' };
+            //this.dataset.files.push(uploadedFiles[i]);
+            this.dataset.references.push(newReference);
+        },
         /*
         Removes a selected reference
         */
         removeReference(key) {
             this.dataset.references.splice(key, 1);
+        },
+        addTitle() {
+            let newTitle = { value: '', language: '', type: '' };
+            //this.dataset.files.push(uploadedFiles[i]);
+            this.dataset.titles.push(newTitle);
+        },
+        /*
+        Removes a selected reference
+        */
+        removeTitle(key) {
+            this.dataset.titles.splice(key, 1);
         },
         filesChange(fieldName, fileList) {
             this.fileCount = fileList.length
@@ -300,7 +311,7 @@ const app = new Vue({
         onAddAuthor(person) {
             //if person is not in person array
             //if (this.persons.includes(person) == false) {
-            if (this.dataset.persons.filter(e => e.id === person.id).length == 0) {    
+            if (this.dataset.persons.filter(e => e.id === person.id).length == 0) {
                 this.dataset.persons.push(person);
                 this.dataset.checkedAuthors.push(person.id);
             }
@@ -308,7 +319,7 @@ const app = new Vue({
         onAddContributor(person) {
             //if person is not in contributors array
             //if (this.contributors.includes(person) == false) {
-            if (this.dataset.contributors.filter(e => e.id === person.id).length == 0) {    
+            if (this.dataset.contributors.filter(e => e.id === person.id).length == 0) {
                 this.dataset.contributors.push(person);
                 this.dataset.checkedContributors.push(person.id);
             }
@@ -316,7 +327,7 @@ const app = new Vue({
         onAddSubmitter(person) {
             //if person is not in submitters array
             //if (this.submitters.includes(person) == false) {
-            if (this.dataset.submitters.filter(e => e.id === person.id).length == 0) {    
+            if (this.dataset.submitters.filter(e => e.id === person.id).length == 0) {
                 this.dataset.submitters.push(person);
                 this.dataset.checkedSubmitters.push(person.id);
             }
