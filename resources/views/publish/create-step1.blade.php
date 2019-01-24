@@ -57,7 +57,10 @@
                             </div>
                         </div>                        
                     </div>
-                    <button class="pure-button button-small" @click.prevent="addTitle()">+</button>
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('TitleMain', 'Add additional title(s) ') !!} 
+                        <button class="pure-button button-small" @click.prevent="addTitle()">+</button>
+                    </div>
                     <table class="pure-table pure-table-horizontal"  v-if="dataset.titles.length">
                         <thead>
                             <tr>
@@ -77,8 +80,8 @@
                                     ['placeholder' => '[titleType]', 'v-model' => 'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                                 </td>
                                 <td>                                   
-                                    {!! Form::select('Title[Relation]', $languages, null, 
-                                    ['placeholder' => '[language]', 'v-model' => 'item.language', 'data-vv-scope' => 'step-1']) !!}
+                                    {!! Form::select('Title[Language]', $languages, null, 
+                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                                 </td>                              
                                 <td>
                                     <button class="pure-button button-small is-warning" @click.prevent="removeTitle(index)">-</button>
@@ -88,7 +91,26 @@
                     </table>
                 </fieldset>
 
-                <fieldset id="fieldset-general">
+                <fieldset id="fieldset-description">
+                    <legend>Description</legend>
+                    <div class="pure-g">                        
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
+                            {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
+                            'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:3'",
+                            "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-2']) }}
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('AbstractLanguage', 'Abstract Language..') !!}
+                            <div class="select pure-u-23-24">
+                                {!! Form::select('TitleAbstract[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.abstract_main.language',
+                                "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-2']) !!}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="fieldset-creator">
                     <legend>Creator(s)</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -98,6 +120,7 @@
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <div class="pure-control-group checkboxlist">
+                                <input name="persons" v-model="dataset.checkedAuthors" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">
                                 <label v-for="(person, index) in dataset.persons" :for="person.id" class="pure-checkbox">                           
                                                         <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-1">
                                                         @{{ person.full_name }}                               
@@ -156,31 +179,17 @@
 
             <div v-if="step === 2 && isInitial" data-vv-scope="step-2">
                 <h1>Step Two: Recommended Elements</h1>
-                <fieldset id="fieldset-general">
-                    <legend>General</legend>
-                    <div class="pure-g">                       
 
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Type', 'Type..') !!}
-                            <div class="select  pure-u-23-24">
-                                {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
-                                'dataset.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
-                            </div>
-                        </div>
+                <fieldset id="fieldset-subject">
+                    <legend>Subject</legend>
+                    <div class="pure-g">
 
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('State', 'State..') !!}
-                            {{-- {{ Form::text('State', null, ['class' =>  'pure-u-23-24', 'placeholder' => trans('validation.attributes.backend.pages.title'),
-                            'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2', 'readonly' => 'true']) }}  --}}
+                        {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div">                            
                             <div class="select  pure-u-23-24">
                                 {!! Form::select( 'State', ['unpublished' => 'unpublished', 'inprogress' => 'inprogress'], null, ['id' => 'state',
                                 'placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
-                            </div> 
-                            {{-- <div class="select  pure-u-23-24">
-                                {!! Form::select( 'State', array_except(Config::get('enums.server_states'),['published', 'deleted', 'temporary']), '',
-                                ['placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
-                            </div> --}}
-                        </div>                       
+                            </div>                            
+                        </div>                        --}}
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('project_id', 'Project..') !!}
@@ -189,29 +198,42 @@
                                 !!}
                             </div>
                             <small id="projectHelp" class="pure-form-message-inline">project is optional</small>
-                        </div>
-
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('EmbargoDate', 'Embargo Date') !!} 
-                            {!! Form::date('EmbargoDate', null, ['placeholder' => date('y-m-d'), 'class'
-                            => 'pure-u-23-24', 'v-model' => 'dataset.embargo_date', 'data-vv-scope' => 'step-2']) !!}
-                            <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
-                        </div>
-
-                        {{-- <div class="pure-u-1 pure-u-md-1 checkboxlist">
-                            <!-- checkboxes -->
-                            <label for="BelongsToBibliography" class="pure-checkbox">                            
-                            <input name="BelongsToBibliography" v-model="dataset.belongs_to_bibliography" data-vv-scope="step-2" true-value="1"
-                            false-value="0" type="checkbox" class="form-check-input"> 
-                            Belongs To Bibliography?
-                        </label>
-                        </div> --}}
+                        </div>  
 
                     </div>
                 </fieldset>
 
-                <fieldset id="fieldset-titles">
-                    <legend>Bounding Box</legend>
+                <fieldset-dates>
+                    <legend>Date(s)</legend>
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('EmbargoDate', 'Embargo Date') !!} 
+                        {!! Form::date('EmbargoDate', null, ['placeholder' => date('y-m-d'), 'class'
+                        => 'pure-u-23-24', 'v-model' => 'dataset.embargo_date', 'data-vv-scope' => 'step-2']) !!}
+                        <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
+                    </div>
+                </fieldset-dates>
+
+                <fieldset id="fieldset-general">
+                    <legend>Contributors</legend>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>                            
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <div class="pure-control-group checkboxlist">
+                                <label v-for="(contributor, index) in dataset.contributors" :for="contributor.id" class="pure-checkbox">                           
+                                                        <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-2">
+                                                        @{{ contributor.full_name }}                               
+                                                    </label>
+                                <br />
+                                {{-- <span>Checked Contributors: @{{ dataset.checkedContributors }}</span> --}}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>                  
+                
+                <fieldset id="fieldset-geolocation">
+                    <legend>Geo Location</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1 pure-u-lg-1 pure-div">
                             <locations-map v-bind:geolocation="dataset.geolocation"></locations-map>
@@ -234,60 +256,8 @@
                             {!! Form::text('ymax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymax', 'readonly']) !!}
                         </div>
                     </div>
-                </fieldset>
-
-                <fieldset id="fieldset-titles">
-                    <legend>Main Title & Abstract</legend>
-                    <div class="pure-g">
-
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('TitleMain', 'Main Title ') !!} 
-                            {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
-                            => 'dataset.title_main.value', "v-validate" => "'required|min:3'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-2']) !!}
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('TitleLanguage', 'Title Language..') !!}
-                            <div class="select pure-u-23-24">
-                                {!! Form::select('TitleMain[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.title_main.language',
-                                "v-validate" => "'required'", "data-vv-as" => "Title Language", 'data-vv-scope' => 'step-2']) !!}
-                            </div>
-                        </div>
-
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
-                            {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
-                            'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:3'",
-                            "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-2']) }}
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('AbstractLanguage', 'Abstract Language..') !!}
-                            <div class="select pure-u-23-24">
-                                {!! Form::select('TitleAbstract[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.abstract_main.language',
-                                "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-2']) !!}
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset id="fieldset-licenses">
-                    <legend>Licenses</legend>
-
-                   <div class="pure-control-group checkboxlist">
-                        @foreach ($licenses as $indexKey => $license)
-                        <label for={{ "license". $license->id }} class="pure-checkbox">
-                            @if ($loop->first)
-                            <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" v-validate="'required'" 
-                            data-vv-as="Licence" data-vv-scope="step-2">
-                            {{ $license->name_long }}
-                            @else
-                            <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" data-vv-scope="step-2">
-                            {{ $license->name_long }}
-                            @endif
-                        </label> 
-                        @endforeach
-                        <br>
-                        <span>Checked license: @{{ dataset.checkedLicenses }}</span>
-                    </div>
-                </fieldset>
+                </fieldset>               
+                
                 <fieldset id="fieldset-references">
                     <legend>Dataset references</legend>
                     <button class="pure-button button-small" @click.prevent="addReference()">Add Reference</button>
@@ -297,7 +267,7 @@
                                 <th style="width: 20px;">Value of the identifier</th>
                                 <th>Type</th>
                                 <th>Relation</th>
-                                <th>Display text of the identifier</th>
+                                <th>Label</th>
                                 <th style="width: 130px;"></th>
                             </tr>
                         </thead>
@@ -346,30 +316,44 @@
             </div>
 
             <div v-if="step === 3 && isInitial" data-vv-scope="step-3">
-                <h1>Select contributors, submitters</h1>   
-
+                <h1>Step 3: Other Elements</h1> 
+                
                 <fieldset id="fieldset-general">
-                    <legend>Contributors</legend>
-                    <div class="pure-g">
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>
-                            {{--
-                            <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <div class="pure-control-group checkboxlist">
-                                <label v-for="(contributor, index) in dataset.contributors" :for="contributor.id" class="pure-checkbox">                           
-                                                        <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-3">
-                                                        @{{ contributor.full_name }}                               
-                                                    </label>
-                                <br />
-                                <span>Checked Contributors: @{{ dataset.checkedContributors }}</span>
+                        <legend>Language</legend>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                                {!! Form::label('Language', 'Language..') !!}
+                                <div class="select  pure-u-23-24">  
+                                    {!! Form::select('Language', $languages, null, 
+                                    ['placeholder' => '[language]', 'v-model' => 'dataset.language', "v-validate" => "'required'", 'data-vv-scope' => 'step-3']) !!}
+                                </div>      
+                                <small id="languageHelp" class="pure-form-message-inline">language is optional</small>
                             </div>
                         </div>
-                    </div>
                 </fieldset>
 
-                <fieldset id="fieldset-general">
+                <fieldset id="fieldset-licenses">
+                    <legend>Rights List</legend>
+
+                    <div class="pure-control-group checkboxlist">
+                        @foreach ($licenses as $indexKey => $license)
+                        <label for={{ "license". $license->id }} class="pure-checkbox">
+                            @if ($loop->first)
+                            <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" v-validate="'required'" 
+                            data-vv-as="Licence" data-vv-scope="step-3">
+                            {{ $license->name_long }}
+                            @else
+                            <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" data-vv-scope="step-3">
+                            {{ $license->name_long }}
+                            @endif
+                        </label> 
+                        @endforeach
+                        <br>
+                        {{-- <span>Checked license: @{{ dataset.checkedLicenses }}</span> --}}
+                    </div>
+                </fieldset>               
+
+                <fieldset id="fieldset-submitters">
                     <legend>Submitters</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -390,14 +374,20 @@
                 <br />
                 <div class="pure-controls">
                     <button @click.prevent="prev()" class="pure-button button-small">
-                        <i class="fa fa-arrow-left"></i>
-                        <span>Back</span>
-                </button>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>Back</span>
+                    </button>
 
-                <button @click.prevent="next('step-3')" class="pure-button button-small">               
-                    <i class="fa fa-arrow-right"></i>
-                    <span>Review Dataset</span>
-                </button>
+                    <button @click.prevent="next('step-3')" class="pure-button button-small">               
+                        <i class="fa fa-arrow-right"></i>
+                        <span>Review Dataset</span>
+                    </button>
+                </div>
+                <div v-if="errors.items.length > 0">
+                    <b>Please correct the following error(s):</b>
+                    <ul class="alert validation-summary-errors">
+                        <li style="margin-left:5px;" v-for="error in errors.items">@{{ error.msg }}</li>
+                    </ul>
                 </div>
             </div>
 

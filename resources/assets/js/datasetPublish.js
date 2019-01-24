@@ -169,7 +169,7 @@ const app = new Vue({
             Additional POST Data
             */
             formData.append('type', this.dataset.type);
-            formData.append('server_state', this.dataset.state);
+            // formData.append('server_state', this.dataset.state);
             formData.append('rights', Number(this.dataset.rights));
             formData.append('creating_corporation', this.dataset.creating_corporation);
             formData.append('project_id', this.dataset.project_id);
@@ -205,6 +205,13 @@ const app = new Vue({
                 formData.append('references[' + i + '][label]', reference.label);
                 formData.append('references[' + i + '][type]', reference.type);
                 formData.append('references[' + i + '][relation]', reference.relation);
+            }
+
+            for (var i = 0; i < this.dataset.titles.length; i++) {
+                let title = this.dataset.titles[i];
+                formData.append('titles[' + i + '][value]', title.value);
+                formData.append('titles[' + i + '][language]', title.language);
+                formData.append('titles[' + i + '][type]', title.type);               
             }
 
             /*

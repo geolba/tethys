@@ -10,6 +10,7 @@ function initialState() {
     project_id: "",
 
     creating_corporation: "GBA Repository",
+    language: "en",
     embargo_date: "",
     belongs_to_bibliography: 0,
 

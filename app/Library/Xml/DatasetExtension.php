@@ -69,7 +69,7 @@ trait DatasetExtension
 
     protected $fields = array();
 
-    protected function _initFields()
+    protected function initFields()
     {
         $fields = array(
             "Id",
@@ -176,7 +176,7 @@ trait DatasetExtension
 
     public function fetchValues()
     {
-        $this->_initFields();
+        $this->initFields();
         foreach ($this->fields as $fieldname => $field) {
             if (isset($this->externalFields[$fieldname]) === true) {
                 $fetchmode = 'lazy';

@@ -7,7 +7,7 @@ use App\Models\Collection;
 use App\Models\License;
 use App\Models\Project;
 use App\Models\Description;
-use App\Models\Titel;
+use App\Models\Title;
 use App\Models\Person;
 use App\Models\XmlCache;
 use App\Models\File;
@@ -28,6 +28,7 @@ class Dataset extends Model
 
     protected $fillable = [
         'type',
+        'language',
         'server_state',
         'creating_corporation',
         'project_id',
@@ -132,7 +133,7 @@ class Dataset extends Model
     #region title table:
     public function titles()
     {
-        return $this->hasMany(Titel::class, 'document_id', 'id');
+        return $this->hasMany(Title::class, 'document_id', 'id');
     }
     
     public function addMainTitle(Title $title)
@@ -152,10 +153,10 @@ class Dataset extends Model
         return $this->hasMany(Description::class, 'document_id', 'id');
     }
 
-    public function addMainAbstract(Title $title)
+    public function addMainAbstract(Description $title)
     {
         $title->type = 'abstract';
-        $this->titlesAbstracts()->save($title);
+        $this->abstracts()->save($title);
         // $this->abstracts()->save($title, ['type' => 'abstract']);
     }
 

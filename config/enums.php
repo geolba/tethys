@@ -16,6 +16,7 @@ return [
         'unpublished' => 'unpublished',
         'deleted' => 'deleted',
         'temporary' => 'temporary',
+        'created' => 'created',
     ],
     'filetypes_allowed' => [
         "pdf", "txt", "html", "htm", "png", "jpeg",

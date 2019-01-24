@@ -13,7 +13,7 @@
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
         {!! Form::label('server_state', 'Status..') !!}
         <div class="select pure-u-23-24">
-        {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state']) !!}
+        {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!}
         </div>
     </div>
 

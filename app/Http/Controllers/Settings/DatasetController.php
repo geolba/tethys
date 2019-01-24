@@ -119,10 +119,10 @@ class DatasetController extends Controller
         for ($jahr = 1990; $jahr <= $nowYear; $jahr++) {
             $years[$jahr] = $jahr;
         }
-
+        
         $languages = DB::table('languages')
-        ->where('active', true)
-        ->pluck('part2_t', 'part2_t');
+            ->where('active', true)
+            ->pluck('part1', 'part1');
 
         //$options = License::all();
         $options = License::all('id', 'name_long');

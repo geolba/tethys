@@ -9,6 +9,7 @@ use App\Models\File;
 use App\Models\Person;
 use App\Models\Project;
 use App\Models\Title;
+use App\Models\Description;
 use App\Rules\RdrFiletypes;
 use App\Rules\RdrFilesize;
 use Illuminate\Http\Request;
@@ -231,7 +232,7 @@ class IndexController extends Controller
         //     'rights' => 'required|boolean|in:1',
         // ]);
         $rules = [
-            'server_state' => 'required',
+            // 'server_state' => 'required',
             'type' => 'required|min:5',
             'rights' => 'required|boolean|in:1',
             'belongs_to_bibliography' => 'required|boolean',
@@ -267,8 +268,10 @@ class IndexController extends Controller
         if ($validator->passes()) {
             //store dataset todo
             //$data = $request->all();
-            $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references');
+            $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references', 'titles');
             // array_push($input, "Himbeere");
+            // $input += ['server_state' => 'created' ];
+            $input['server_state'] = 'created';
             $dataset = new Dataset($input);
 
             DB::beginTransaction(); //Start transaction!
@@ -347,10 +350,18 @@ class IndexController extends Controller
                     $dataset->addMainTitle($title);
                 }
 
+                 //save additional titles
+                if (isset($data['titles'])) {
+                    foreach ($request->get('titles') as $key => $title) {
+                        $titleReference = new Title($title);
+                        $dataset->titles()->save($titleReference);
+                    }
+                }
+
                 //save main abstract:
                 if (isset($data['abstract_main'])) {
                     $formAbstract = $request->input('abstract_main');
-                    $abstract = new Title();
+                    $abstract = new Description();
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
                     $dataset->addMainAbstract($abstract);
