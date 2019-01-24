@@ -214,6 +214,13 @@ const app = new Vue({
                 formData.append('titles[' + i + '][type]', title.type);               
             }
 
+            for (var i = 0; i < this.dataset.descriptions.length; i++) {
+                let description = this.dataset.descriptions[i];
+                formData.append('descriptions[' + i + '][value]', description.value);
+                formData.append('descriptions[' + i + '][language]', description.language);
+                formData.append('descriptions[' + i + '][type]', description.type);               
+            }
+
             /*
             Make the request to the POST /multiple-files URL
             */
@@ -290,10 +297,21 @@ const app = new Vue({
             this.dataset.titles.push(newTitle);
         },
         /*
-        Removes a selected reference
+        Removes a selected title
         */
         removeTitle(key) {
             this.dataset.titles.splice(key, 1);
+        },
+        addDescription() {
+            let newTitle = { value: '', language: '', type: '' };
+            //this.dataset.files.push(uploadedFiles[i]);
+            this.dataset.descriptions.push(newTitle);
+        },
+        /*
+        Removes a selected description
+        */
+        removeDescription(key) {
+            this.dataset.descriptions.splice(key, 1);
         },
         filesChange(fieldName, fileList) {
             this.fileCount = fileList.length

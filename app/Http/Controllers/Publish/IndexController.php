@@ -63,8 +63,11 @@ class IndexController extends Controller
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         $titleTypes = ['sub' => 'sub', 'alternative' => 'alternative', 'translated' => 'translated', 'other' => 'other'];
+
+        $descriptionTypes = [ 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'other' => 'other'];
+
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
-        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes'));
+        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'descriptionTypes'));
     }
 
     /**
@@ -365,6 +368,14 @@ class IndexController extends Controller
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
                     $dataset->addMainAbstract($abstract);
+                }
+
+                //save additional descriptions
+                if (isset($data['descriptions'])) {
+                    foreach ($request->get('descriptions') as $key => $description) {
+                        $descriptionReference = new Description($description);
+                        $dataset->abstracts()->save($descriptionReference);
+                    }
                 }
 
                 //save references

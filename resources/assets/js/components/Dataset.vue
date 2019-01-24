@@ -33,6 +33,7 @@ function initialState() {
     files: [],
     references: [],
     titles: [],
+    descriptions: [],
     checkedContributors: [],
     checkedSubmitters: [],
 

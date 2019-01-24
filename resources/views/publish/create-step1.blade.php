@@ -107,7 +107,40 @@
                                 "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-2']) !!}
                             </div>
                         </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('AddtionalDescription', 'Add additional descriptions(s) ') !!} 
+                            <button class="pure-button button-small" @click.prevent="addDescription()">+</button>
+                        </div>
                     </div>
+                    <table class="pure-table pure-table-horizontal"  v-if="dataset.descriptions.length">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">Description</th>
+                                <th>Type</th>
+                                <th>Language</th>                               
+                                <th style="width: 130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in dataset.descriptions">
+                                <td>
+                                    <input name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" v-validate="'required'" data-vv-scope="step-1" />
+                                </td>
+                                <td>                                   
+                                    {!! Form::select('Description[Type]', $descriptionTypes, null, 
+                                    ['placeholder' => '[descriptionType]', 'v-model' => 'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                                </td>
+                                <td>                                   
+                                    {!! Form::select('Description[Language]', $languages, null, 
+                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                                </td>                              
+                                <td>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeDescription(index)">-</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                   
                 </fieldset>
 
                 <fieldset id="fieldset-creator">

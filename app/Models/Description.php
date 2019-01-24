@@ -11,6 +11,9 @@ class Description extends Model
     
 
     protected $fillable = [
+        'value',
+        'type',
+        'language'
     ];
     
     public function dataset()
