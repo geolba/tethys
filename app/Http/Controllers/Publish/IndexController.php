@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
 use App\Models\GeolocationBox;
+use App\Models\Page;
 
 class IndexController extends Controller
 {
@@ -66,8 +67,10 @@ class IndexController extends Controller
 
         $descriptionTypes = [ 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'other' => 'other'];
 
+        $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
+
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
-        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'descriptionTypes'));
+        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'descriptionTypes', 'page'));
     }
 
     /**

@@ -32,6 +32,7 @@ import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
 import dataset from './components/Dataset';
 import LocationsMap from './components/LocationsMap.vue';
+import modal from './components/ShowModal.vue'
 // import { Validator } from 'vee-validate';
 
 Vue.use(VeeValidate);
@@ -39,7 +40,7 @@ Vue.use(VeeValidate);
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete, LocationsMap },
+    components: { MyAutocomplete, LocationsMap, modal },
     data() {
         return {
             rows: [
@@ -56,6 +57,7 @@ const app = new Vue({
             fileCount: 0,
             redirectLink: null,
 
+            isModalVisible: false,
 
             step: 1,
             dataset: dataset
@@ -119,6 +121,13 @@ const app = new Vue({
         }
     },
     methods: {
+
+        showModal() {
+            this.isModalVisible = true;
+          },
+          closeModal() {
+            this.isModalVisible = false;
+          },
         reset() {
             // reset form to initial state
             this.currentStatus = STATUS_INITIAL;

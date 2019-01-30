@@ -180,10 +180,24 @@
                         <label for="rights" class="pure-checkbox">                           
                             <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
                             I accept
-                            <a target="_blank" href="{{ route("frontend.pages.show", ['page_slug'=>'terms-and-conditions']) }}">
-                                    {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
-                                </a>
                         </label>
+                            <button @click="showModal" class="pure-button button-small is-success">
+                                {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
+                            </button>
+                                                        
+                            <!-- use the modal component, pass in the prop -->
+                            {{-- <button type="button" class="btn" @click="showModal">
+                                Open Modal!
+                            </button>                       --}}
+                          <modal v-if="isModalVisible" @close="closeModal" >
+                            <template slot="header">
+                                    {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}                                    
+                            </template>  
+                            <template slot="body">
+                                Die im GBA-RDR veröffentlichten Informationen und Metadaten unterliegen grundsätzlich den Open-Access-Bedingungen, wenn nicht anders angegeben. Die publizierten Datensets unterliegen einem definierten Zugriffs- sowie Nutzungsrecht welche in den Metadaten eindeutig beschrieben sind.                                   
+                            </template>                           
+                          </modal>
+                       
 
                     
 
