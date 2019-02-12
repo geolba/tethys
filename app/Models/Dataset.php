@@ -213,6 +213,12 @@ class Dataset extends Model
             ->server_date_published;
     }
 
+    public function setServerState($targetType)
+    {
+        $this->attributes['server_state'] = $targetType;
+        //$this->server_state = $targetType;
+    }
+
     public function hasProject()
     {
         return $this->project()->exists();

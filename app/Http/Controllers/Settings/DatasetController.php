@@ -6,6 +6,7 @@ use App\Models\Dataset;
 use App\Models\Project;
 use App\Models\License;
 use App\Models\Title;
+use App\Models\Description;
 use App\Http\Requests\DocumentRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +27,7 @@ class DatasetController extends Controller
         $builder = Dataset::query();
         //$registers = array();
 
-        $filter = $request->input('search');
+        $filter = $request->input('filter');
         
         if (null !== ($request->input('state'))) {
             $state = $request->input('state');
@@ -52,7 +53,7 @@ class DatasetController extends Controller
         //$perPage = $request->get('perPage', 20);
         $documents = $builder
         ->paginate(8);
-        return view('settings.document.document', compact('documents'));
+        return view('settings.document.document', compact('documents', 'state', 'filter'));
     }
 
     /**
@@ -180,7 +181,7 @@ class DatasetController extends Controller
         $abstracts = $request->input('abstracts');
         if (is_array($abstracts) && count($abstracts) > 0) {
             foreach ($abstracts as $key => $formAbstract) {
-                $abstract = Title::findOrFail($key);
+                $abstract = Description::findOrFail($key);
                 $abstract->value = $formAbstract['value'];
                 $abstract->language = $formAbstract['language'];
                 $abstract->save();

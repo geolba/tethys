@@ -119,6 +119,13 @@ Route::group(
         ]);
         // //For DataTables
         Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
+
+        Route::get('review', [
+            'as' => 'review.index', 'uses' => 'WorkflowController@index',
+        ]);
+        Route::get('review/changestate/{id}/changestate/{targetState}', [
+            'as' => 'review.changestate', 'uses' => 'WorkflowController@changestate',
+        ]);
     }
 );
 

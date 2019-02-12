@@ -13,11 +13,11 @@
 
 	<div class="sidebar-simplesearch pure-u-1">
 		{!! Form::open(array('route' => 'settings.document','method' => 'GET', 'class'=>'pure-form')) !!}
-				<p>                       
-					{!! Form::text('search', null, array('class'=>'pure-u-1 pure-u-md-1-2', 'placeholder'=>'filter for the title...')) !!}
+				<p>              
+					{!! Form::text('filter', (isset($filter))  ? $filter : '', array('class'=>'pure-u-1 pure-u-md-1-2', 'placeholder'=>'filter for the title...')) !!}
 		
 					<div class="select pure-u-1 pure-u-md-1-2">
-					{!! Form::select('state', Config::get('enums.server_states'), 'published', ['class' => 'pure-u-1', 'onchange' => "this.form.submit()"]) !!}
+					{!! Form::select('state', Config::get('enums.server_states'), (isset($state))  ? $state : 'published', ['class' => 'pure-u-1', 'onchange' => "this.form.submit()"]) !!}
 					</div>
 
 				<div class="pure-u-1 pure-u-md-1-2">

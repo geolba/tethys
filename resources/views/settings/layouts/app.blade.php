@@ -95,8 +95,8 @@
                         <li class="pure-menu-item {{ Route::is('publish.dataset.create') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Create</a>
                         </li>
-                        <li class="pure-menu-item {{ Route::is('publish.dataset.index') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.index') }}"><i class="fa fa-upload"></i> Publish created datasets</a>
+                        <li class="pure-menu-item {{ Route::is('settings.review') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('settings.review.index') }}"><i class="fa fa-upload"></i> Release unpublished datasets</a>
                         </li>			
                     </ul>
                 </li>

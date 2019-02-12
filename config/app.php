@@ -122,6 +122,7 @@ return [
     */
 
     'log' => 'single',
+    //debug, info, notice, warning, error, critical, alert, emergency.
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
@@ -176,6 +177,7 @@ return [
          * Application Service Providers...
          */
         'App\Providers\AppServiceProvider',
+        App\Providers\AuthServiceProvider::class,
        // App\Providers\BroadcastServiceProvider::class,
         'App\Providers\ConfigServiceProvider',
         'App\Providers\EventServiceProvider',
@@ -203,6 +205,7 @@ return [
         'Artisan'   => 'Illuminate\Support\Facades\Artisan',
         'Auth'      => 'Illuminate\Support\Facades\Auth',
         'Blade'     => 'Illuminate\Support\Facades\Blade',
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus'       => 'Illuminate\Support\Facades\Bus',
         'Cache'     => 'Illuminate\Support\Facades\Cache',
         'Config'    => 'Illuminate\Support\Facades\Config',
@@ -212,12 +215,14 @@ return [
         'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
         'Event'     => 'Illuminate\Support\Facades\Event',
         'File'      => 'Illuminate\Support\Facades\File',
+        'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash'      => 'Illuminate\Support\Facades\Hash',
         'Input'     => 'Illuminate\Support\Facades\Input',
-        'Inspiring' => 'Illuminate\Foundation\Inspiring',
+        // 'Inspiring' => 'Illuminate\Foundation\Inspiring',
         'Lang'      => 'Illuminate\Support\Facades\Lang',
         'Log'       => 'Illuminate\Support\Facades\Log',
         'Mail'      => 'Illuminate\Support\Facades\Mail',
+        'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password'  => 'Illuminate\Support\Facades\Password',
         'Queue'     => 'Illuminate\Support\Facades\Queue',
         'Redirect'  => 'Illuminate\Support\Facades\Redirect',

@@ -1,6 +1,8 @@
 <?php
 namespace App\Providers;
 
+use App\Models\Dataset;
+use App\Observers\DatasetObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Dataset::observe(DatasetObserver::class);
     }
 
     /**
@@ -26,9 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'Illuminate\Contracts\Auth\Registrar'
-            // 'App\Services\Registrar'
-        );
+        // $this->app->bind(
+        //     'Illuminate\Contracts\Auth\Registrar'
+        //     // 'App\Services\Registrar'
+        // );
     }
 }

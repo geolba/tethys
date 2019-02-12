@@ -165,7 +165,7 @@ trait DatasetExtension
      * @param string $name Name of the requested field.
      * @return Field The requested field instance. If no such instance can be found, null is returned.
      */
-    protected function getField($name)
+    public function getField($name)
     {
         if (isset($this->fields[$name])) {
             return $this->fields[$name];

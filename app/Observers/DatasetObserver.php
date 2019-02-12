@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Observers;
+
+//php artisan make:observer DatasetObserver --model=Models\Dataset
+use App\Models\Dataset;
+use Illuminate\Support\Facades\Log;
+
+class DatasetObserver
+{
+    /**
+     * Handle the dataset "created" event.
+     *
+     * @param  \App\Models\Dataset  $dataset
+     * @return void
+     */
+    public function created(Dataset $dataset)
+    {
+        //
+    }
+
+    /**
+     * Handle the dataset "updated" event.
+     *
+     * @param  \App\Models\Dataset  $dataset
+     * @return void
+     */
+    public function updated(Dataset $dataset)
+    {
+        
+
+        // only index Opus_Document instances
+        if (false === ($dataset instanceof Dataset)) {
+            return;
+        }
+        // if ($dataset->getServerState() !== 'published') {
+        //     if ($model->getServerState() !== 'temporary') {
+        //         $this->removeDocumentFromIndexById($model->getId());
+        //     }
+        //     return;
+        // }
+
+        $this->addDatasetToIndex($dataset);
+    }
+
+    /**
+     * Handle the dataset "deleted" event.
+     *
+     * @param  \App\Models\Dataset  $dataset
+     * @return void
+     */
+    public function deleted(Dataset $dataset)
+    {
+        //
+    }
+
+    /**
+     * Handle the dataset "restored" event.
+     *
+     * @param  \App\Models\Dataset  $dataset
+     * @return void
+     */
+    public function restored(Dataset $dataset)
+    {
+        //
+    }
+
+    /**
+     * Handle the dataset "force deleted" event.
+     *
+     * @param  \App\Models\Dataset  $dataset
+     * @return void
+     */
+    public function forceDeleted(Dataset $dataset)
+    {
+        //
+    }
+
+ /**
+     * Helper method to add dataset to index.
+     *
+     * @param Opus_Document $document
+     * @return void
+     */
+    private function addDatasetToIndex(Dataset $dataset)
+    {
+        $datasetId = $dataset->id;
+        Log::debug(__METHOD__ . ': ' . 'Adding index job for document ' . $datasetId . '.');
+    }
+}
