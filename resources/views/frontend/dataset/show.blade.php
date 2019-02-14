@@ -28,11 +28,11 @@
           <br /> 
           @endforeach
           @foreach ($contributors as $contributor)
-          <em>Contributor: {{ $contributors->full_name }}</em>
+          <em>Contributor: {{ $contributor->full_name }}</em>
           <br /> 
           @endforeach
           @foreach ($submitters as $submitter)
-          <em>Contributor: {{ $submitter->full_name }}</em>
+          <em>Submitter: {{ $submitter->full_name }}</em>
           <br /> 
           @endforeach
 

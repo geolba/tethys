@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Dataset;
+use Illuminate\Support\Facades\DB;
 
 class XmlCache extends Model
 {
@@ -13,7 +14,7 @@ class XmlCache extends Model
      * @var string
      */
     protected $table = 'document_xml_cache';
-    public $timestamps = false;
+    public $timestamps = false;   
 
 
     /**
@@ -22,7 +23,8 @@ class XmlCache extends Model
      * @var integer
      * @access protected
      */
-    protected $primaryKey = null;
+    //protected $primaryKey = null;
+    public $primaryKey = 'document_id';
     public $incrementing = false;
 
     /**
@@ -61,22 +63,18 @@ class XmlCache extends Model
      * @param mixed $serverDateModified
      * @return bool Returns true on cached hit else false.
      */
-    //public function scopeHasValidEntry($query, $datasetId, $xmlVersion, $serverDateModified)
-    //{
-    //    //$select = $this->_table->select()->from($this->_table);
-    //    $query->where('document_id = ?', $datasetId)
-    //        ->where('xml_version = ?', $xmlVersion)
-    //        ->where('server_date_modified = ?', $serverDateModified);
+    public function hasValidEntry($datasetId, $serverDateModified)
+    {
+        $select = DB::table('document_xml_cache');
+        $select->where('document_id', '=', $datasetId)
+        ->where('server_date_modified', '=', $serverDateModified);
+        
+        $row = $select->first();
 
-    //    $row = $query->get();
-
-    //    if (null === $row)
-    //    {
-    //       return false;
-    //    }
-    //    else
-    //    {
-    //        return true;
-    //    }
-    //}
+        if (null === $row) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

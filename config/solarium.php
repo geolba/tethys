@@ -8,5 +8,6 @@ return [
             'path' => env('SOLR_PATH', '/solr/'),
             'core' => env('SOLR_CORE', 'opus4')
         ]
-    ]
+        ],
+        'xsltfile' => "solr.xslt"
 ];

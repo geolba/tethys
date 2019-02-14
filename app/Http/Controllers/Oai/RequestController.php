@@ -449,7 +449,8 @@ class RequestController extends Controller
         $xmlModel = new \App\Library\Xml\XmlModel();
         $xmlModel->setModel($dataset);
         $xmlModel->excludeEmptyFields();
-        $xmlModel->setXmlCache(new \App\Models\XmlCache());
+        $cache = ($dataset->xmlCache) ?  $dataset->xmlCache : new \App\Models\XmlCache();
+        $xmlModel->setXmlCache($cache);
         return $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
     }
 

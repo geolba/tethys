@@ -133,12 +133,21 @@ class XmlModel
             return $domDocument;
         } else {
             //create cache relation
-            $this->cache->fill(array(
-                'document_id' => $dataset->id,
-                'xml_version' => (int)$this->strategy->getVersion(),
-                'server_date_modified' => $dataset->server_date_modified,
-                'xml_data' => $domDocument->saveXML()
-            ));
+            // $this->cache->updateOrCreate(array(
+            //     'document_id' => $dataset->id,
+            //     'xml_version' => (int)$this->strategy->getVersion(),
+            //     'server_date_modified' => $dataset->server_date_modified,
+            //     'xml_data' => $domDocument->saveXML()
+            // ));
+           
+            if (!$this->cache->document_id) {
+                $this->cache->document_id =  $dataset->id;
+            }
+            
+            $this->cache->xml_version =  (int)$this->strategy->getVersion();
+            $this->cache->server_date_modified =   $dataset->server_date_modified;
+            $this->cache->xml_data =  $domDocument->saveXML();
+
             $this->cache->save();
 
             Log::debug(__METHOD__ . ' cache refreshed for ' . get_class($dataset) . '#' . $dataset->id);
@@ -161,20 +170,35 @@ class XmlModel
             Log::debug(__METHOD__ . ' skipping cache for ' . get_class($dataset));
             return null;
         }
-        //$cached = $this->cache->hasValidEntry(
-        //    $dataset->id,
-        //    (int) $this->strategy->getVersion(),
-        //    $dataset->server_date_modified
-        //);
-
-        //$cached = false;
-        $cache = XmlCache::where('document_id', $dataset->id)
-            ->first();// model or null
-        if (!$cache) {
+        $actuallyCached = $this->cache->hasValidEntry(
+            $dataset->id,
+            $dataset->server_date_modified
+        );
+        //no actual cache
+        if (true !== $actuallyCached) {
             Log::debug(__METHOD__ . ' cache miss for ' . get_class($dataset) . '#' . $dataset->id);
             return null;
-        } else {
-            return $cache->getDomDocument();
         }
+        //cache is actual return it for oai:
+        Log::debug(__METHOD__ . ' cache hit for ' . get_class($dataset) . '#' . $dataset->id);
+        try {
+            //return $this->_cache->get($model->getId(), (int) $this->_strategy->getVersion());
+            $cache = XmlCache::where('document_id', $dataset->id)->first();
+            return $cache->getDomDocument();
+        } catch (Exception $e) {
+            Log::warning(__METHOD__ . " Access to XML cache failed on " . get_class($dataset) . '#' . $dataset->id . ".  Trying to recover.");
+        }
+
+        return null;
+
+       
+        // // $cache = XmlCache::where('document_id', $dataset->id)
+        // // ->first();// model or null
+        // if (!$cache) {
+        //     Log::debug(__METHOD__ . ' cache miss for ' . get_class($dataset) . '#' . $dataset->id);
+        //     return null;
+        // } else {
+        //     return $cache->getDomDocument();
+        // }
     }
 }

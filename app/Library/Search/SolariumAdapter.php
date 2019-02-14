@@ -3,9 +3,12 @@
 namespace App\Library\Search;
 
 //use App\Library\Util\SolrSearchQuery;
-use App\Library\Util\SearchParameter;
 use App\Library\Search\SearchResult;
+use App\Library\Util\SearchParameter;
 use Illuminate\Support\Facades\Log;
+use App\Library\Search\SolariumDocument;
+use App\Models\Dataset;
+use \Solarium\QueryType\Select\Query\Query;
 
 class SolariumAdapter
 {
@@ -50,7 +53,55 @@ class SolariumAdapter
         return 'solr';
     }
 
-    public function createQuery() : SearchParameter
+    public function addDatasetsToIndex($datasets)
+    {
+        $datasets = $this->normalizeDocuments($datasets);
+        $builder = new SolariumDocument($this->options);
+
+        $slices = array_chunk($datasets, 16);
+        // update documents of every chunk in a separate request
+        foreach ($slices as $slice) {
+            $update = $this->client->createUpdate();
+
+            $updateDocs = array_map(function ($rdrDoc) use ($builder, $update) {
+                return $builder->toSolrUpdateDocument($rdrDoc, $update->createDocument());
+            }, $slice);
+
+            // adding the document to the update query
+            $update->addDocuments($updateDocs);
+             // Then commit the update:
+             $update->addCommit();
+             $result = $this->client->update($update);
+
+            //$this->execute($update, 'failed updating slice of documents');
+        }
+
+        // finally commit all updates
+        // $update = $this->client->createUpdate();
+       
+        // $update->addCommit();
+
+        // $this->execute($update, 'failed committing update of documents');
+
+        return $this;
+    }
+
+    protected function normalizeDocuments($documents)
+    {
+        if (!is_array($documents)) {
+            $documents = array($documents);
+        }
+
+        foreach ($documents as $document) {
+            if (!($document instanceof Dataset)) {
+                throw new InvalidArgumentException("invalid dataset in provided set");
+            }
+        }
+
+        return $documents;
+    }
+
+    public function createQuery(): SearchParameter
     {
         return new SearchParameter();
     }
@@ -63,13 +114,14 @@ class SolariumAdapter
         return $searchResult;
     }
 
-    protected function applyParametersToSolariumQuery(\Solarium\QueryType\Select\Query\Query $query, SearchParameter $parameters = null, $preferOriginalQuery = false)
+    protected function applyParametersToSolariumQuery(Query $query, SearchParameter $parameters, $preferOriginalQuery)
     {
         if ($parameters) {
             //$subfilters = $parameters->getSubFilters();
             //if ( $subfilters !== null ) {
             //    foreach ( $subfilters as $name => $subfilter ) {
-            // if ( $subfilter instanceof Opus_Search_Solr_Filter_Raw || $subfilter instanceof Opus_Search_Solr_Solarium_Filter_Complex ) {
+            // if ( $subfilter instanceof Opus_Search_Solr_Filter_Raw
+            //|| $subfilter instanceof Opus_Search_Solr_Solarium_Filter_Complex ) {
             //            $query->createFilterQuery( $name )
             //                  ->setQuery( $subfilter->compile( $query ) );
             //        }
@@ -87,13 +139,12 @@ class SolariumAdapter
             // }
             // }
 
-            $filter = $parameters->getFilter();//"aa"  all: '*:*'
+            $filter = $parameters->getFilter(); //"aa"  all: '*:*'
             if ($filter !== null) {
                 //$query->setStart( intval( $start ) );
                 //$query->setQuery('%P1%', array($filter));
                 $query->setQuery($filter);
             }
-
 
             $start = $parameters->getStart();
             if ($start !== null) {
@@ -154,7 +205,7 @@ class SolariumAdapter
         // }
     }
 
-    protected function processQuery(\Solarium\QueryType\Select\Query\Query $query) : SearchResult
+    protected function processQuery(\Solarium\QueryType\Select\Query\Query $query): SearchResult
     {
         // send search query to service
         $request = $this->execute($query, 'failed querying search engine');

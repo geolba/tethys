@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Exceptions\GeneralException;
 
 class DatasetController extends Controller
 {
@@ -22,7 +23,6 @@ class DatasetController extends Controller
 
     public function index(Request $request) : View
     {
-                
         $searchType = $request->input('searchtype');
         $builder = Dataset::query();
         //$registers = array();
@@ -155,8 +155,11 @@ class DatasetController extends Controller
     {
         $dataset = Dataset::findOrFail($id);
         //$input = $request->all();
-        $input = $request->except('licenses', 'titles');
-        $dataset->update($input);
+        $input = $request->except('abstracts', 'licenses', 'titles', '_method', '_token');
+        // foreach ($input as $key => $value) {
+        //     $dataset[$key] = $value;
+        // }
+        //$dataset->update($input);
         // $dataset->type = $input['type'];
         // $dataset->thesis_year_accepted = $input['thesis_year_accepted'];
         // $dataset->project_id = $input['project_id'];
@@ -188,8 +191,17 @@ class DatasetController extends Controller
             }
         }
 
-        session()->flash('flash_message', 'You have updated 1 dataset!');
-        return redirect()->route('settings.document');
+        if (! $dataset->isDirty(dataset::UPDATED_AT)) {
+            $time = new \Illuminate\Support\Carbon();
+            $dataset->setUpdatedAt($time);
+        }
+        // $dataset->save();
+        if ($dataset->update($input)) {
+            //event(new DatasetUpdated($dataset));
+            session()->flash('flash_message', 'You have updated 1 dataset!');
+            return redirect()->route('settings.document');
+        }
+        throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
     }
 
    

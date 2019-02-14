@@ -32,11 +32,13 @@ class PagesController extends Controller
         $dataset->load('titles');
         $dataset->load('abstracts');
 
-        $authors = $dataset->authors()
+        $authors = $dataset->persons()
+        ->wherePivot('role', 'author')
         ->orderBy('link_documents_persons.sort_order', 'desc')
         ->get();
 
-        $contributors = $dataset->contributors()
+        $contributors = $dataset->persons()
+        ->wherePivot('role', 'contributor')
         ->orderBy('link_documents_persons.sort_order', 'desc')
         ->get();
 

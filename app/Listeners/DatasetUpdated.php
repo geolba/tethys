@@ -1,35 +1,35 @@
 <?php
 
-namespace App\Observers;
+namespace App\Listeners;
 
-//php artisan make:observer DatasetObserver --model=Models\Dataset
+// use Illuminate\Queue\InteractsWithQueue;
+// use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\Dataset\DatasetUpdated as DatasetUpdatedEvent;
 use App\Models\Dataset;
 use Illuminate\Support\Facades\Log;
 use App\Library\Search\SolariumAdapter;
 
-class DatasetObserver
+class DatasetUpdated
 {
     /**
-     * Handle the dataset "created" event.
+     * Create the event listener.
      *
-     * @param  \App\Models\Dataset  $dataset
      * @return void
      */
-    public function created(Dataset $dataset)
+    public function __construct()
     {
         //
     }
 
     /**
-     * Handle the dataset "updated" event.
+     * Handle the event.
      *
-     * @param  \App\Models\Dataset  $dataset
+     * @param  DatasetUpdatedEvent  $event
      * @return void
      */
-    public function updated(Dataset $dataset)
+    public function handle(DatasetUpdatedEvent $event)
     {
-        
-
+        $dataset = $event->dataset;
         // only index Opus_Document instances
         if (false === ($dataset instanceof Dataset)) {
             return;
@@ -45,39 +45,6 @@ class DatasetObserver
     }
 
     /**
-     * Handle the dataset "deleted" event.
-     *
-     * @param  \App\Models\Dataset  $dataset
-     * @return void
-     */
-    public function deleted(Dataset $dataset)
-    {
-        //
-    }
-
-    /**
-     * Handle the dataset "restored" event.
-     *
-     * @param  \App\Models\Dataset  $dataset
-     * @return void
-     */
-    public function restored(Dataset $dataset)
-    {
-        //
-    }
-
-    /**
-     * Handle the dataset "force deleted" event.
-     *
-     * @param  \App\Models\Dataset  $dataset
-     * @return void
-     */
-    public function forceDeleted(Dataset $dataset)
-    {
-        //
-    }
-
- /**
      * Helper method to add dataset to index.
      *
      * @param Opus_Document $document

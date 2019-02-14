@@ -14,6 +14,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        \App\Events\Dataset\DatasetUpdated::class => [
+            \App\Listeners\DatasetUpdated::class,
+        ],
     ];
 
     /**
