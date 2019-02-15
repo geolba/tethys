@@ -277,7 +277,7 @@ class IndexController extends Controller
             $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references', 'titles');
             // array_push($input, "Himbeere");
             // $input += ['server_state' => 'created' ];
-            $input['server_state'] = 'created';
+            $input['server_state'] = 'unpublished';
             $dataset = new Dataset($input);
 
             DB::beginTransaction(); //Start transaction!
