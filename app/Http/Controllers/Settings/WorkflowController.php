@@ -47,9 +47,11 @@ class WorkflowController extends Controller
             //$this->_workflowHelper->changeState($document, $targetState);
             $dataset->setServerState($targetState);
 
-            // if ($targetState == 'published') {
-            //     $this->_sendNotification($document, $form);
-            // }
+            if ($targetState == 'published') {
+                //$this->_sendNotification($document, $form);
+                $time = new \Illuminate\Support\Carbon();
+                $dataset->server_date_published =  $time;
+            }
             $dataset->save();
             session()->flash('flash_message', 'You have puplished 1 dataset!');
             return redirect()->route('settings.review.index');
