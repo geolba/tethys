@@ -54,21 +54,20 @@ class SearchController extends Controller
         }
     }
 
-    public function search1(Request $request): View
-    {
-        $this->_request = $request;
-        $data = $request->all();
-        //$this->searchtype = $request->input('searchtype');
-        $this->searchtype = $request->input('searchtype');
-        return view('frontend.solrsearch.index');
-    }
+    // public function search1(Request $request): View
+    // {
+    //     $this->_request = $request;
+    //     $data = $request->all();
+    //     $this->searchtype = $request->input('searchtype');
+    //     return view('frontend.solrsearch.index');
+    // }
 
     public function search(Request $request): View
     {
         Log::info('Received new search request. Redirecting to search action of IndexController.');
         $this->_request = $request;
 
-        //$filter =$request->input('query');
+        $filter =$request->input('query');
         // $query = $this->client->createSelect();
         // $query->setQuery('%P1%', array($filter));
         // // $query->setQuery('*:*');
@@ -91,9 +90,9 @@ class SearchController extends Controller
             $results = $this->resultList->getResults();
             $numOfHits = $this->numOfHits;
 
-            return view('frontend.solrsearch.index', compact('results', 'numOfHits'));
+            return view('frontend.solrsearch.index', compact('results', 'numOfHits', 'filter'));
         }
-        return view('frontend.solrsearch.index');
+        return view('frontend.solrsearch.index', compact('filter'));
     }
 
     /**

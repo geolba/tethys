@@ -98,13 +98,13 @@
                             {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
                             {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
                             'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:3'",
-                            "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-2']) }}
+                            "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-1']) }}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('AbstractLanguage', 'Abstract Language..') !!}
                             <div class="select pure-u-23-24">
                                 {!! Form::select('TitleAbstract[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.abstract_main.language',
-                                "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-2']) !!}
+                                "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-1']) !!}
                             </div>
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">

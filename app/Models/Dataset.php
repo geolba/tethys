@@ -26,16 +26,16 @@ class Dataset extends Model
     const UPDATED_AT = 'server_date_modified';
     const PUBLISHED_AT = 'server_date_published';
 
-    // protected $fillable = [
-    //     'type',
-    //     'language',
-    //     'server_state',
-    //     'creating_corporation',
-    //     'project_id',
-    //     'embargo_date',
-    //     'belongs_to_bibliography',
-    // ];
-    protected $guarded = [];
+    protected $fillable = [
+        'type',
+        'language',
+        'server_state',
+        'creating_corporation',
+        'project_id',
+        'embargo_date',
+        'belongs_to_bibliography',
+    ];
+    //protected $guarded = [];
         /**
      * The attributes that should be mutated to dates.
      *

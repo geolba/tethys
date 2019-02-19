@@ -391,8 +391,8 @@ class IndexController extends Controller
 
                 if (isset($data['geolocation'])) {
                     $formGeolocation = $request->input('geolocation');
-                    if ($formGeolocation['xmin'] !== '' && $formGeolocation['ymin'] !== '' &&
-                        $formGeolocation['xmax'] !== '' && $formGeolocation['ymax'] !== '') {
+                    if ($formGeolocation['xmin'] !== null && $formGeolocation['ymin'] !== null &&
+                        $formGeolocation['xmax'] !== null && $formGeolocation['ymax'] !== null) {
                         $geolocation = new GeolocationBox($formGeolocation);
                         $dataset->geolocation()->save($geolocation);
                     }
