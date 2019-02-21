@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i> Datasets to be processed
+        <i class="fa fa-file"></i> Release saved datasets
     </h3>
 </div>
 
@@ -14,6 +14,7 @@
                 <th>Dataset Title</th>
                 <th>ID</th>
                 <th>Server State</th>
+                <th></th>
             </thead>
 
             <tbody>
@@ -34,8 +35,8 @@
                     </td>
 
                     <td>
-                        @if ($dataset->server_state == "unpublished")
-                        <a href="{{ URL::route('settings.review.changestate',['id' => $dataset->id, 'targetState' => 'published']) }}" class="pure-button button-small is-success">Publish</a>
+                        @if ($dataset->server_state == "inprogress")
+                        <a href="{{ URL::route('settings.review.changestate',['id' => $dataset->id, 'targetState' => 'unpublished']) }}" class="pure-button button-small is-success">Release</a>
                         {{-- <a href="" class="pure-button button-small is-success">Restrict</a>  --}}                      
                         @endif
                     </td>

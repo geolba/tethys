@@ -337,7 +337,20 @@
       <xsl:apply-templates select="@Language" mode="oai_dc" />
       <!-- dc:rights -->
       <xsl:apply-templates select="Licence" mode="oai_dc" />
+      <!-- dc:coverage -->
+      <xsl:apply-templates select="GeolocationBox" mode="oai_dc" />
     </oai_dc:dc>
+  </xsl:template>
+
+  <xsl:template match="GeolocationBox" mode="oai_dc">
+    <dc:coverage>
+     <xsl:value-of select="concat(
+     'SOUTH-BOUND LATITUDE: ', @Xmin,
+     ' * WEST-BOUND LONGITUDE: ', @Ymin,
+     ' * NORTH-BOUND LATITUDE: ', @Xmax,
+     ' * EAST-BOUND LONGITUDE: ', @Ymax
+     )" />   
+    </dc:coverage>
   </xsl:template>
 
   <xsl:template match="TitleMain" mode="oai_dc">

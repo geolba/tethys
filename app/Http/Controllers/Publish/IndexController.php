@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
 use App\Models\GeolocationBox;
 use App\Models\Page;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -277,7 +278,11 @@ class IndexController extends Controller
             $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references', 'titles');
             // array_push($input, "Himbeere");
             // $input += ['server_state' => 'created' ];
-            $input['server_state'] = 'unpublished';
+            if (isset($data['server_state'])) {
+                $input['server_state'] = $data['server_state'];
+            } else {
+                $input['server_state'] = 'inprogress';
+            }
             $dataset = new Dataset($input);
 
             DB::beginTransaction(); //Start transaction!
@@ -397,6 +402,10 @@ class IndexController extends Controller
                         $dataset->geolocation()->save($geolocation);
                     }
                 }
+
+                // Create relation between Dataset and actual User.
+                $user = Auth::user();
+                $dataset->user()->associate($user)->save();
                                  
                 // $error = 'Always throw this error';
                 // throw new \Exception($error);

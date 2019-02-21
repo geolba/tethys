@@ -15,7 +15,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type', 100);
-            $table->string('publication_state', 100)->default('draft');;
+            $table->string('publication_state', 100)->default('draft');
             $table->boolean('belongs_to_bibliography')->default('0');
             $table->timestamps();
         });

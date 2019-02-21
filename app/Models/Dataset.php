@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Library\Xml\DatasetExtension;
 use App\Models\Collection;
 use App\Models\License;
+use App\Models\User;
 use App\Models\Project;
 use App\Models\Description;
 use App\Models\Title;
@@ -76,6 +77,14 @@ class Dataset extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+
+        /**
+     * Get the account that the dataset belongs to
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'account_id', 'id');
     }
 
     public function collections()

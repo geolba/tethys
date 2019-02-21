@@ -487,10 +487,14 @@
                         <i class="fa fa-arrow-left"></i>
                         <span>Zurück</span>
                 </button>
-                <button @click.prevent="submit()" class="pure-button button-small">               
+                <button @click.prevent="submit('inprogress')" class="pure-button button-small">               
                     <i class="fa fa-save"></i>
-                    <span>Create Dataset</span>
+                    <span>Save Dataset</span>
                 </button>
+                <button @click.prevent="submit('unpublished')" class="pure-button button-small">               
+                    <i class="fa fa-upload"></i>
+                    <span>Release Dataset</span>
+                </button>              
 
             </div>
 

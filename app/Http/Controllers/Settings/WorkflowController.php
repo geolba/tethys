@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 // use Illuminate\Http\Request;
 use App\Models\Dataset;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class WorkflowController extends Controller
 {
@@ -21,14 +22,27 @@ class WorkflowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function review()
     {
         $builder = Dataset::query();
         $datasets = $builder
         //->where('server_state', 'inprogress')
         ->whereIn('server_state', ['unpublished'])
             ->get();
-        return view('workflow.index', compact('datasets'));
+        return view('workflow.review', compact('datasets'));
+    }
+
+    public function release()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $builder = Dataset::query();
+        $datasets = $builder
+        ->where('server_state', 'inprogress')
+        ->where('account_id', $user_id)
+        ->get();
+        return view('workflow.release', compact('datasets'));
     }
 
     public function changestate($id, $targetState)
@@ -51,10 +65,11 @@ class WorkflowController extends Controller
                 //$this->_sendNotification($document, $form);
                 $time = new \Illuminate\Support\Carbon();
                 $dataset->server_date_published =  $time;
+                session()->flash('flash_message', 'You have puplished 1 dataset!');
             }
             $dataset->save();
-            session()->flash('flash_message', 'You have puplished 1 dataset!');
-            return redirect()->route('settings.review.index');
+            return redirect()->back(); 
+            //return redirect()->route('settings.review.index');
         } catch (Exception $e) {
             //return $this->_redirectTo('index', array('failure' => $e->getMessage()), 'documents', 'admin');
         }

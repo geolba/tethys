@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Collection;
+use App\Models\Dataset;
 
 class User extends Authenticatable
 {
@@ -39,12 +40,19 @@ class User extends Authenticatable
      */
     protected $hidden = ['password', 'remember_token'];
 
+    public function datasets()
+    {
+        //model, foreign key on the User model is account_id, local id of user
+        return $this->hasMany(Dataset::class, 'account_id', 'id');
+    }
+
     public function setPasswordAttribute($password)
     {
         if ($password) {
             $this->attributes['password'] = app('hash')->needsRehash($password) ? Hash::make($password) : $password;
         }
     }
+
     
     public function getAvatarUrl()
     {

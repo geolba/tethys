@@ -152,7 +152,7 @@ const app = new Vue({
             this.currentStatus = STATUS_INITIAL;
             this.dataset.files = [];
         },
-        save() {
+        save(status) {
             // upload data to the server
             var _this = this;
             this.currentStatus = STATUS_SAVING;
@@ -177,6 +177,7 @@ const app = new Vue({
             /*
             Additional POST Data
             */
+           formData.append('server_state', status);
             formData.append('type', this.dataset.type);
             // formData.append('server_state', this.dataset.state);
             formData.append('rights', Number(this.dataset.rights));
@@ -395,10 +396,10 @@ const app = new Vue({
             }
             return true;
         },
-        submit() {
+        submit(status) {
             // alert('Submit to blah and show blah and etc.');
             // save it
-            this.save();
+            this.save(status);
         }
     }
 });
