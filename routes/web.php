@@ -163,9 +163,9 @@ Route::group(['middleware' => ['permission:settings']], function () {
         'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
     ]);
 
-     //=================================================setting filetype=============================================
-    Route::get('/settings/filetype', [
-        'as' => 'settings.filetype.index', 'uses' => 'Settings\FiletypeController@index',
+     //=================================================setting mimetype=============================================
+    Route::get('/settings/mimetype', [
+        'as' => 'settings.mimetype.index', 'uses' => 'Settings\MimetypeController@index',
     ]);
 
     // Route::get('/settings/collection/create', [
@@ -178,9 +178,9 @@ Route::group(['middleware' => ['permission:settings']], function () {
     // Route::get('settings/collection/edit/{id}', [
     //     'as' => 'settings.collection.edit', 'uses' => 'Settings\CollectionController@edit',
     // ]);
-    // Route::patch('settings/collection/edit/{id}', [
-    //     'as' => 'settings.collection.update', 'uses' => 'Settings\CollectionController@update',
-    // ]);
+    Route::patch('settings/mimetype/update', [
+        'as' => 'settings.mimetype.update', 'uses' => 'Settings\MimetypeController@update',
+    ]);
     // Route::get('settings/collection/show/{collection}', [
     //     'as' => 'settings.collection.show', 'uses' => 'Settings\CollectionController@show',
     // ]);

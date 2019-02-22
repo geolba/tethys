@@ -68,7 +68,7 @@ class WorkflowController extends Controller
                 session()->flash('flash_message', 'You have puplished 1 dataset!');
             }
             $dataset->save();
-            return redirect()->back(); 
+            return redirect()->back();
             //return redirect()->route('settings.review.index');
         } catch (Exception $e) {
             //return $this->_redirectTo('index', array('failure' => $e->getMessage()), 'documents', 'admin');

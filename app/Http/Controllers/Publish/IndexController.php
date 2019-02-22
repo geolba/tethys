@@ -473,10 +473,10 @@ class IndexController extends Controller
             'abstract_main.language' => 'required',
         ];
         if (null != $request->file('files')) {
-            $files = count($request->file('files')) - 1;
+            $files = count($request->file('files')) -1;
             foreach (range(0, $files) as $index) {
                 // $rules['files.' . $index] = 'image|max:2048';
-                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize()];
+                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize($index)];
             }
         }
         $validator = Validator::make($request->all(), $rules);

@@ -4,18 +4,17 @@
 <div class="header">
     <h3 class="header-title">
         <i class="fa fa-file"></i>
-        <span> File Extensions</span>
+        <span> Mime-Types</span>
     </h3>
 </div>
 
 <div class="pure-g box-content">
 
     <div class="pure-u-1 pure-u-md-2-3">  
-            <a class="pure-button button-small is-primary" href="{{ route('access.user.create') }}">
+            {{-- <a class="pure-button button-small is-primary" href="{{ route('access.user.create') }}">
             <i class="fa fa-plus-circle"></i>
             <span>Create New File Extension</span>
-        </a>
-        <br><br>
+        </a> --}}       
 
         @if ($message = Session::get('success'))
         <div class="alert  summary-success">
@@ -23,27 +22,32 @@
         </div>
         @endif
 
-        <table class="pure-table users">
-            <thead>
-                <tr>                   
-                    <th>File Extensions</th>                   
-                    <th width="280px">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($fileextensions as $key => $fileextension)
-                <tr>               
-                <td>{{ $fileextension }}</td>                
-                <td>                      
-                        {{-- <a class="edit" href="{{ route('access.user.edit', $user->id) }}">&nbsp;Edit</a>
-                        <span>&nbsp;</span>
-                        <a class="delete" href="{{ route('access.user.destroy', $user->id) }}"><span>&nbsp;Delete</span></a>  --}}
-                </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-            
+        {!! Form::open(array('route' => 'settings.mimetype.update','method' => 'PATCH', 'class'=>'pure-form')) !!}
+        
+        <div class="pure-control-group checkboxlist">
+            @foreach ($options as $key => $value)    
+            <label for={{"mimetype". $key }} class="pure-checkbox">
+                {{-- <input name="mimetypes[]" value={{ $value }} {{ (in_array($value, $checkeds)) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input"> --}}
+               
+                {!! Form::checkbox( 'mimetypes['. $key .']', 
+                  $value,
+                  in_array($value, $checkeds),
+                  ['class' => 'md-check', 'id' => $key] 
+                  ) !!}
+                   {{ $value }}
+            </label>         
+            @endforeach
+        </div>
+
+        {{-- <div class="pure-controls">
+            <button type="submit" class="pure-button button-small">
+                <i class="fa fa-save"></i>
+                <span>Update allowed mimetypes</span>
+            </button>
+        </div> --}}
+
+        {!! Form::close() !!}  
+       
     </div>
 
 </div>

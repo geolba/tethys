@@ -1,18 +1,18 @@
 <?php
 namespace App\Http\Controllers\Settings;
 
-use App\Http\Controllers\Controller;
-use App\Models\Dataset;
-use App\Models\Project;
-use App\Models\License;
-use App\Models\Title;
-use App\Models\Description;
-use App\Http\Requests\DocumentRequest;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 use App\Exceptions\GeneralException;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DocumentRequest;
+use App\Models\Dataset;
+use App\Models\Description;
+use App\Models\License;
+use App\Models\Project;
+use App\Models\Title;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class DatasetController extends Controller
 {
@@ -21,38 +21,37 @@ class DatasetController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request) : View
+    public function index(Request $request): View
     {
         $searchType = $request->input('searchtype');
         $builder = Dataset::query();
         //$registers = array();
 
         $filter = $request->input('filter');
-        
+
         if (null !== ($request->input('state'))) {
             $state = $request->input('state');
         } else {
-            $state =  "published";
+            $state = "published";
         }
-        $data =  $request->all();
+        $data = $request->all();
 
         if ($searchType == "simple") {
             if (strlen($filter) > 0) {
-                //$builder->where('field1', '=', $criteria1);
-                $builder->whereHas('titles', function ($query) use ($filter) {
+                $closure = function ($query) use ($filter) {
                     $query->where('value', 'LIKE', '%' . $filter . '%');
-                });
+                };
+                $builder->whereHas('titles', $closure);
                 // ::with(['titles' => function ($query) use($filter) {
                 // $query->where('value', 'LIKE', '%' . $filter . '%');
                 // }])
             }
         }
         $builder->where('server_state', $state);
-      
-        
+
         //$perPage = $request->get('perPage', 20);
         $documents = $builder
-        ->paginate(8);
+            ->paginate(8);
         return view('settings.document.document', compact('documents', 'state', 'filter'));
     }
 
@@ -107,20 +106,20 @@ class DatasetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) : View
+    public function edit($id): View
     {
         $document = Dataset::findOrFail($id);
         $document->load('licenses', 'titles', 'abstracts', 'files');
 
         $projects = Project::pluck('label', 'id');
-        
+
         $datum = date('Y-m-d');
         $nowYear = substr($datum, 0, 4);
         $years = array();
         for ($jahr = 1990; $jahr <= $nowYear; $jahr++) {
             $years[$jahr] = $jahr;
         }
-        
+
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
@@ -151,7 +150,7 @@ class DatasetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DocumentRequest $request, $id) : RedirectResponse
+    public function update(DocumentRequest $request, $id): RedirectResponse
     {
         $dataset = Dataset::findOrFail($id);
         //$input = $request->all();
@@ -191,7 +190,7 @@ class DatasetController extends Controller
             }
         }
 
-        if (! $dataset->isDirty(dataset::UPDATED_AT)) {
+        if (!$dataset->isDirty(dataset::UPDATED_AT)) {
             $time = new \Illuminate\Support\Carbon();
             $dataset->setUpdatedAt($time);
         }
@@ -204,14 +203,13 @@ class DatasetController extends Controller
         throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
     }
 
-   
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) : RedirectResponse
+    public function destroy($id): RedirectResponse
     {
         // $document = Document::findOrFail($id);
         // $document->delete();

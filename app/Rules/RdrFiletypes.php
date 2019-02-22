@@ -16,7 +16,7 @@ class RdrFiletypes implements Rule
      */
     public function __construct()
     {
-        $this->filetypes = Config::get('enums.filetypes_allowed', ['pdf']);
+        $this->mimetypes = Config::get('enums.mimetypes_allowed', ['application/pdf']);
         // $this->maxFileSize = Config::get('enums.max_filesize');
     }
 
@@ -30,8 +30,13 @@ class RdrFiletypes implements Rule
     public function passes($attribute, $value)
     {
         //return Rule::in($this->filetypes);
+        $test = $value->getMimeType();//"application/pdf"
         return $value->getPath() != '' &&
-        in_array($value->guessExtension(), $this->filetypes); // &&
+        in_array($value->getMimeType(), $this->mimetypes);
+        // in_array($value->guessExtension(), $this->filetypes); //file extension
+        
+        
+        // &&
         // $this->getSize($attribute, $value) <=  $this->maxFileSize;
     }
 
