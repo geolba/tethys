@@ -306,7 +306,7 @@
                 </fieldset>               
                 
                 <fieldset id="fieldset-references">
-                    <legend>Dataset references</legend>
+                    <legend>Dataset References</legend>
                     <button class="pure-button button-small" @click.prevent="addReference()">Add Reference</button>
                     <table class="table table-hover"  v-if="dataset.references.length">
                         <thead>
@@ -336,6 +336,35 @@
                                 </td>
                                 <td>
                                     <button class="pure-button button-small is-warning" @click.prevent="removeReference(index)">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+               <fieldset id="fieldset-keywords">
+                    <legend>Dataset Keywords</legend>
+                    <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
+                    <table class="table table-hover" v-if="dataset.keywords.length">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">Keyword</th>
+                                <th>Type</th>
+                                <th style="width: 130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in dataset.keywords">
+                                <td>
+                                    <input name="Keyword Value" class="form-control" placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="'required'"
+                                        data-vv-scope="step-2" />
+                                </td>
+                                <td>
+                                    {!! Form::select('Keyword[Type]', $keywordTypes, null, ['placeholder' => '[keyword type]', 'v-model' =>
+                                    'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                                </td>
+                                <td>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeKeyword(index)">Remove</button>
                                 </td>
                             </tr>
                         </tbody>

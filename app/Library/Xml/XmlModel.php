@@ -186,7 +186,8 @@ class XmlModel
             $cache = XmlCache::where('document_id', $dataset->id)->first();
             return $cache->getDomDocument();
         } catch (Exception $e) {
-            Log::warning(__METHOD__ . " Access to XML cache failed on " . get_class($dataset) . '#' . $dataset->id . ".  Trying to recover.");
+            Log::warning(__METHOD__ . " Access to XML cache failed on " . get_class($dataset) .
+            '#' . $dataset->id . ".  Trying to recover.");
         }
 
         return null;

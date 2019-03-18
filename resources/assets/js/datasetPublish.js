@@ -217,6 +217,12 @@ const app = new Vue({
                 formData.append('references[' + i + '][relation]', reference.relation);
             }
 
+            for (var i = 0; i < this.dataset.keywords.length; i++) {
+                let keyword = this.dataset.keywords[i];
+                formData.append('keywords[' + i + '][value]', keyword.value);               
+                formData.append('keywords[' + i + '][type]', keyword.type);
+            }
+
             for (var i = 0; i < this.dataset.titles.length; i++) {
                 let title = this.dataset.titles[i];
                 formData.append('titles[' + i + '][value]', title.value);
@@ -301,6 +307,20 @@ const app = new Vue({
         removeReference(key) {
             this.dataset.references.splice(key, 1);
         },
+         /*
+        adds a new Keyword
+        */
+       addKeyword() {
+        let newKeyword = { value: '', type: '' };
+        //this.dataset.files.push(uploadedFiles[i]);
+        this.dataset.keywords.push(newKeyword);
+    },
+        /*
+        Removes a selected keyword
+        */
+       removeKeyword(key) {
+        this.dataset.keywords.splice(key, 1);
+    },
         addTitle() {
             let newTitle = { value: '', language: '', type: '' };
             //this.dataset.files.push(uploadedFiles[i]);

@@ -7,6 +7,7 @@ use App\Models\License;
 use App\Models\Person;
 use App\Models\File;
 use App\Models\GeolocationBox;
+use App\Models\Subject;
 
 /**
  * DatasetExtension short summary.
@@ -51,6 +52,11 @@ trait DatasetExtension
             //                'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
             'relation' => 'contributors',
+            'fetch' => 'eager'
+        ),
+        'Subject' => array(
+            'model' => Subject::class,
+            'relation' => 'subjects',
             'fetch' => 'eager'
         ),
         'File' => array(

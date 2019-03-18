@@ -194,6 +194,11 @@ class Dataset extends Model
         return $this->hasMany(\App\Models\DatasetReference::class, 'document_id', 'id');
     }
 
+    public function subjects()
+    {
+        return $this->hasMany(\App\Models\Subject::class, 'document_id', 'id');
+    }
+
 
     /**
      * Get the xml-cache record associated with the dataset.

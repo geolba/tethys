@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
+use App\Models\Subject;
 use App\Models\GeolocationBox;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
@@ -66,12 +67,17 @@ class IndexController extends Controller
 
         $titleTypes = ['sub' => 'sub', 'alternative' => 'alternative', 'translated' => 'translated', 'other' => 'other'];
 
+        $keywordTypes = ['uncontrolled' => 'uncontrolled'];
+
         $descriptionTypes = [ 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'other' => 'other'];
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
-        return view('publish.create-step1', compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'descriptionTypes', 'page'));
+        return view(
+            'publish.create-step1',
+            compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
+        );
     }
 
     /**
@@ -391,6 +397,14 @@ class IndexController extends Controller
                     foreach ($request->get('references') as $key => $reference) {
                         $dataReference = new DatasetReference($reference);
                         $dataset->references()->save($dataReference);
+                    }
+                }
+
+                //save keywords
+                if (isset($data['keywords'])) {
+                    foreach ($request->get('keywords') as $key => $keyword) {
+                        $dataKeyword = new Subject($keyword);
+                        $dataset->subjects()->save($dataKeyword);
                     }
                 }
 

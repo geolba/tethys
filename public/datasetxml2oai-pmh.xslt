@@ -306,6 +306,8 @@
       <xsl:apply-templates select="TitleMain" mode="oai_dc" />
       <!-- dc:description -->
       <xsl:apply-templates select="TitleAbstract" mode="oai_dc" />
+      <!-- dc:subject -->
+      <xsl:apply-templates select="Subject" mode="oai_dc" />
       <!--<dc:creator>-->
       <!-- Creator: Autor (falls vorhanden), sonst Herausgeber (falls vorhanden), sonst Urhebende Koerperschaft  -->
       <xsl:choose>
@@ -367,6 +369,17 @@
       <xsl:value-of select="@Value" />
     </dc:description>
   </xsl:template>
+
+  <xsl:template match="Subject" mode="oai_dc">
+        <dc:subject>
+            <xsl:if test="@language != ''">
+                <xsl:attribute name="xml:lang">
+                    <xsl:value-of select="php:functionString('Oai_Model_Language::getLanguageCode', @Language, 'part1')" />
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="@Value" />
+        </dc:subject>
+    </xsl:template>
   
   <!-- <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
     <dc:creator>

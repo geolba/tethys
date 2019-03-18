@@ -14,7 +14,7 @@ class XmlCache extends Model
      * @var string
      */
     protected $table = 'document_xml_cache';
-    public $timestamps = false;   
+    public $timestamps = false;
 
 
     /**
@@ -56,14 +56,13 @@ class XmlCache extends Model
     }
 
     /**
-     * Check if a document in a specific xml version is already cached or not.
+     * Check if a dataset in a specific xml version is already cached or not.
      *
      * @param mixed $datasetId
-     * @param mixed $xmlVersion
      * @param mixed $serverDateModified
      * @return bool Returns true on cached hit else false.
      */
-    public function hasValidEntry($datasetId, $serverDateModified)
+    public function hasValidEntry($datasetId, $serverDateModified) : bool
     {
         $select = DB::table('document_xml_cache');
         $select->where('document_id', '=', $datasetId)
