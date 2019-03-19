@@ -206,7 +206,7 @@ class QueryBuilder
         $query = new SolrSearchQuery(SolrSearchQuery::ALL_DOCS);
         $query->setStart("0");//$input['start']);
         //$query->setRows($input['rows']);
-        $query->setRows("10");
+        $query->setRows("100");
         $query->setSortField($input['sortField']);
         $query->setSortOrder($input['sortOrder']);
 

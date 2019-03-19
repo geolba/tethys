@@ -58,8 +58,8 @@
                 <!-- year -->
                 <xsl:variable name="year">
                     <xsl:choose>
-                        <xsl:when test="/Opus/Rdr_Dataset/PublishedDate/@Year != ''">
-                            <xsl:value-of select="/Opus/Rdr_Dataset/PublishedDate/@Year" />
+                        <xsl:when test="/Opus/Rdr_Dataset/ServerDatePublished/@Year != ''">
+                            <xsl:value-of select="/Opus/Rdr_Dataset/ServerDatePublished/@Year" />
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="/Opus/Rdr_Dataset/@PublishedYear" />

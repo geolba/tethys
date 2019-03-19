@@ -16,6 +16,38 @@
         <main class="steps pure-form" enctype="multipart/form-data">
             {{ csrf_field() }}
 
+            <div v-if="step === 0 && isInitial" data-vv-scope="step-0">
+
+                <fieldset id="fieldset-language">
+                    <legend>Dataset Language</legend>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            {!! Form::label('Language', 'Language..') !!}
+                            <div class="select  pure-u-23-24">
+                                {!! Form::select('Language', $languages, null, ['placeholder' => '[language]', 'v-model' => 'dataset.language', "v-validate"
+                                => "'required'", 'data-vv-scope' => 'step-0']) !!}
+                            </div>
+                            <small id="languageHelp" class="pure-form-message-inline">select dataset main language</small>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <br />
+                <div class="pure-controls">
+                <button @click.prevent="next('step-0')" class="pure-button button-small" :disabled="errors.any()">               
+                    <i class="fa fa-arrow-right"></i>
+                    <span>Continue</span>
+                </button>
+                </div>
+                <div v-if="errors.items.length > 0">
+                    <b>Please correct the following error(s):</b>
+                    <ul class="alert validation-summary-errors">
+                        <li style="margin-left:5px;" v-for="error in errors.items">@{{ error.msg }}</li>
+                    </ul>
+                </div>
+
+            </div>
+
             <div v-if="step === 1 && isInitial" data-vv-scope="step-1">
                 <h1>Step One: Mandatory Elements</h1>
 
@@ -51,10 +83,11 @@
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleLanguage', 'Title Language..') !!}
-                            <div class="select pure-u-23-24">
+                            {{-- <div class="select pure-u-23-24">
                                 {!! Form::select('TitleMain[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.title_main.language',
                                 "v-validate" => "'required'", "data-vv-as" => "Title Language", 'data-vv-scope' => 'step-1']) !!}
-                            </div>
+                            </div> --}}
+                            {!! Form::text('TitleMain[Language]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.title_main.language', 'readonly']) !!}
                         </div>                        
                     </div>
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -81,7 +114,9 @@
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Title[Language]', $languages, null, 
-                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                                    ['placeholder' => '[language]', 'v-model' => 'item.language',
+                                    "v-validate" => "{required: true, translatedLanguage: [dataset.language, item.type]}",
+                                    'data-vv-scope' => 'step-1']) !!}
                                 </td>                              
                                 <td>
                                     <button class="pure-button button-small is-warning" @click.prevent="removeTitle(index)">-</button>
@@ -102,10 +137,11 @@
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('AbstractLanguage', 'Abstract Language..') !!}
-                            <div class="select pure-u-23-24">
+                            {{-- <div class="select pure-u-23-24">
                                 {!! Form::select('TitleAbstract[Language]', $languages, null, ['placeholder' => '--no language--', 'v-model' => 'dataset.abstract_main.language',
-                                "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-1']) !!}
-                            </div>
+                                "v-validate" => "'required'", "data-vv-as" => "Abstract Language", 'data-vv-scope' => 'step-1']) !!}                              
+                            </div> --}}
+                            {!! Form::text('TitleAbstract[Language]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.abstract_main.language', 'readonly']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('AddtionalDescription', 'Add additional descriptions(s) ') !!} 
@@ -211,10 +247,14 @@
 
                 <br />
                 <div class="pure-controls">
-                <button @click.prevent="next('step-1')" class="pure-button button-small" :disabled="errors.any()">               
-                    <i class="fa fa-arrow-right"></i>
-                    <span>Continue</span>
-                </button>
+                    <button @click.prevent="prev()" class="pure-button button-small">
+                            <i class="fa fa-arrow-left"></i>
+                            <span>Back</span>
+                    </button>
+                    <button @click.prevent="next('step-1')" class="pure-button button-small" :disabled="errors.any()">               
+                        <i class="fa fa-arrow-right"></i>
+                        <span>Continue</span>
+                    </button>
                 </div>
                 <div v-if="errors.items.length > 0">
                     <b>Please correct the following error(s):</b>
@@ -372,16 +412,16 @@
                 </fieldset>
 
                 <br />
-                <div class="pure-controls">
+               <div class="pure-controls">
                     <button @click.prevent="prev()" class="pure-button button-small">
-                        <i class="fa fa-arrow-left"></i>
-                        <span>Back</span>
-                </button>
-
-                <button @click.prevent="next('step-2')" class="pure-button button-small" v-bind:disabled="errors.any()">               
-                    <i class="fa fa-arrow-right"></i>
-                    <span>Continue</span>
-                </button>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>Back</span>
+                    </button>
+                
+                    <button @click.prevent="next('step-2')" class="pure-button button-small" v-bind:disabled="errors.any()">               
+                        <i class="fa fa-arrow-right"></i>
+                        <span>Continue</span>
+                    </button>
                 </div>
                 <div v-if="errors.items.length > 0">
                     <b>Please correct the following error(s):</b>
@@ -394,19 +434,7 @@
             <div v-if="step === 3 && isInitial" data-vv-scope="step-3">
                 <h1>Step 3: Other Elements</h1> 
                 
-                <fieldset id="fieldset-general">
-                        <legend>Language</legend>
-                        <div class="pure-g">
-                            <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                                {!! Form::label('Language', 'Language..') !!}
-                                <div class="select  pure-u-23-24">  
-                                    {!! Form::select('Language', $languages, null, 
-                                    ['placeholder' => '[language]', 'v-model' => 'dataset.language', "v-validate" => "'required'", 'data-vv-scope' => 'step-3']) !!}
-                                </div>      
-                                <small id="languageHelp" class="pure-form-message-inline">language is optional</small>
-                            </div>
-                        </div>
-                </fieldset>
+                
 
                 <fieldset id="fieldset-licenses">
                     <legend>Rights List</legend>

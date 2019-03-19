@@ -59,7 +59,7 @@ const app = new Vue({
 
             isModalVisible: false,
 
-            step: 1,
+            step: 0,
             dataset: dataset
             // dataset: {
             //     type: '',
@@ -101,6 +101,17 @@ const app = new Vue({
                 return value || options.some((option) => option[testProp]);
             }
         });
+        // add the required rule
+        VeeValidate.Validator.extend('translatedLanguage', {
+            getMessage: field => 'The translated title must be in a language other than than the dataset language.',
+            validate: (value, [mainLanguage, type]) => {     
+                if (type == "translated") {
+                    return value !== mainLanguage;
+                }      
+                return true;    
+                
+            }
+        });
     },
     mounted() {
         //this.step = 2;
@@ -118,7 +129,7 @@ const app = new Vue({
         },
         isFailed() {
             return this.currentStatus === STATUS_FAILED;
-        }
+        }    
     },
     methods: {
 
@@ -134,7 +145,7 @@ const app = new Vue({
             this.uploadedFiles = [];
             this.uploadError = null;
             this.dataset.reset();//reset methods will trigger property changed.
-            this.step = 1;
+            this.step = 0;
         },
         retry() {
             // reset form to initial state

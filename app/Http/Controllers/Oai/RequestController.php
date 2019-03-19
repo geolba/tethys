@@ -253,7 +253,7 @@ class RequestController extends Controller
      */
     private function handleListRecords($oaiRequest)
     {
-        $maxRecords = 20;//$this->_configuration->getMaxListRecords();
+        $maxRecords = 30;//$this->_configuration->getMaxListRecords();
         $this->handlingOfLists($oaiRequest, $maxRecords);
     }
 

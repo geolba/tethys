@@ -326,36 +326,38 @@ class IndexController extends Controller
                  $licenses = $request->input('licenses');
                  $dataset->licenses()->sync($licenses);
 
+                 $data_to_sync = [];
                 //store authors
                 if (isset($data['authors'])) {
-                    $data_to_sync = [];
+                    //$data_to_sync = [];
                     foreach ($request->get('authors') as $key => $person_id) {
                         $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
                         // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
                         $data_to_sync[$person_id] = $pivot_data;
                     }
-                    $dataset->persons()->sync($data_to_sync);
+                    //$dataset->persons()->sync($data_to_sync);
                 }
 
                 //store contributors
                 if (isset($data['contributors'])) {
-                    $data_to_sync = [];
+                    //$data_to_sync = [];
                     foreach ($request->get('contributors') as $key => $contributor_id) {
                         $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
                         $data_to_sync[$contributor_id] = $pivot_data;
                     }
-                    $dataset->persons()->sync($data_to_sync);
+                    //$dataset->persons()->sync($data_to_sync);
                 }
                 
                 //store submitters
                 if (isset($data['submitters'])) {
-                    $data_to_sync = [];
+                    //$data_to_sync = [];
                     foreach ($request->get('submitters') as $key => $submitter_id) {
                         $pivot_data = ['role' => 'submitter', 'sort_order' => $key + 1];
                         $data_to_sync[$submitter_id] = $pivot_data;
                     }
-                    $dataset->persons()->sync($data_to_sync);
+                    //$dataset->persons()->sync($data_to_sync);
                 }
+                $dataset->persons()->sync($data_to_sync);
 
                 
                 //save main title:

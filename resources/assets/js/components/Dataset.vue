@@ -10,7 +10,7 @@ function initialState() {
     project_id: "",
 
     creating_corporation: "GBA Repository",
-    language: "en",
+    language: "",
     embargo_date: "",
     belongs_to_bibliography: 0,
 
@@ -54,6 +54,12 @@ const dataset = new Vue({
     //   Object.assign(this.$data, JSON.parse(json));
     // };
     // this.reset(json);
+  },
+  watch: {
+    language(val) {
+      this.title_main.language = val;
+      this.abstract_main.language = val;
+    }
   },
   methods: {
     reset() {
