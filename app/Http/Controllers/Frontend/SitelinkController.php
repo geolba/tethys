@@ -16,7 +16,7 @@ class SitelinkController extends Controller
             ->where('server_state', 'LIKE', "%" . $serverState . "%");
 
         $select
-            ->select(DB::raw('YEAR(published_date) as published_date'))
+            ->select(DB::raw('YEAR(server_date_published) as published_date'))
             ->distinct(true);
 
         $this->years = $select->pluck('published_date');

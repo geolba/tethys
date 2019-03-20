@@ -28,6 +28,14 @@ function initialState() {
       xmax: "",
       ymax: ""
     },
+    coverage: {
+      elevation_min: "",
+      elevation_max: "",
+      elevation_absolut: "",
+      depth_min: "",
+      depth_max: "",
+      depth_absolut: ""
+    },
     checkedAuthors: [],
     checkedLicenses: [], // [],
     files: [],

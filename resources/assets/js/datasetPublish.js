@@ -60,7 +60,9 @@ const app = new Vue({
             isModalVisible: false,
 
             step: 0,
-            dataset: dataset
+            dataset: dataset,
+            elevation: "no_elevation",
+            depth: "no_depth",
             // dataset: {
             //     type: '',
             //     state: '',
@@ -129,7 +131,19 @@ const app = new Vue({
         },
         isFailed() {
             return this.currentStatus === STATUS_FAILED;
-        }    
+        },
+        isElevationAbsolut() {
+            return this.elevation === "absolut";
+        },
+        isElevationRange() {
+            return this.elevation === "range";
+        },
+        isDepthAbsolut() {
+            return this.depth === "absolut";
+        },
+        isDepthRange() {
+            return this.depth === "range";
+        }
     },
     methods: {
 
@@ -206,6 +220,23 @@ const app = new Vue({
             formData.append('geolocation[xmax]', this.dataset.geolocation.xmax);
             formData.append('geolocation[ymax]', this.dataset.geolocation.ymax);
 
+            if (this.isElevationAbsolut) {
+                formData.append('coverage[elevation_absolut]', this.dataset.coverage.elevation_absolut);
+            }
+            else if (this.isElevationRange) {
+                formData.append('coverage[elevation_min]', this.dataset.coverage.elevation_min);
+                formData.append('coverage[elevation_max]', this.dataset.coverage.elevation_max);                
+            } 
+            if (this.isDepthAbsolut) {
+                formData.append('coverage[depth_absolut]', this.dataset.coverage.depth_absolut);
+            }
+            else if (this.isDepthRange) {
+                formData.append('coverage[depth_min]', this.dataset.coverage.depth_min);
+                formData.append('coverage[depth_max]', this.dataset.coverage.depth_max);                
+            } 
+            
+            
+            
             for (var i = 0; i < this.dataset.checkedLicenses.length; i++) {
                 formData.append('licenses[' + i + ']', this.dataset.checkedLicenses[i]);
             }

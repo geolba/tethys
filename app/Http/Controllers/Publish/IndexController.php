@@ -14,7 +14,6 @@ use App\Rules\RdrFiletypes;
 use App\Rules\RdrFilesize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
@@ -22,6 +21,7 @@ use App\Models\Subject;
 use App\Models\GeolocationBox;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Coverage;
 
 class IndexController extends Controller
 {
@@ -416,13 +416,21 @@ class IndexController extends Controller
                         $formGeolocation['xmax'] !== null && $formGeolocation['ymax'] !== null) {
                         $geolocation = new GeolocationBox($formGeolocation);
                         $dataset->geolocation()->save($geolocation);
+                        //$geolocation->dataset()->associate($dataset)->save();
                     }
+                }
+
+                if (isset($data['coverage'])) {
+                    $formCoverage = $request->input('coverage');
+                    $coverage = new Coverage($formCoverage);
+                    $dataset->coverage()->save($coverage);
+                    //$coverage->dataset()->associate($dataset)->save();
                 }
 
                 // Create relation between Dataset and actual User.
                 $user = Auth::user();
                 $dataset->user()->associate($user)->save();
-                                 
+                
                 // $error = 'Always throw this error';
                 // throw new \Exception($error);
 

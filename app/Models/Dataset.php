@@ -15,6 +15,7 @@ use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\GeolocationBox;
+use App\Models\Coverage;
 
 class Dataset extends Model
 {
@@ -69,7 +70,13 @@ class Dataset extends Model
         return $this->hasOne(GeolocationBox::class, 'dataset_id', 'id');
     }
 
-  
+    /**
+     * Get the coverage that owns the dataset.
+     */
+    public function coverage()
+    {
+        return $this->hasOne(Coverage::class, 'dataset_id', 'id');
+    }
 
     /**
      * Get the project that the dataset belongs to.
