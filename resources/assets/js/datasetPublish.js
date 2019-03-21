@@ -202,8 +202,9 @@ const app = new Vue({
             /*
             Additional POST Data
             */
-           formData.append('server_state', status);
+            formData.append('server_state', status);
             formData.append('type', this.dataset.type);
+            formData.append('language', this.dataset.language);
             // formData.append('server_state', this.dataset.state);
             formData.append('rights', Number(this.dataset.rights));
             formData.append('creating_corporation', this.dataset.creating_corporation);

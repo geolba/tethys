@@ -351,16 +351,16 @@
                        
                         <div class="pure-u-1 pure-u-md-1-2">
                             <div class="pure-u-1 pure-u-md-1">
-                                <label for="option-one" class="pure-radio">
-                                    <input id="option-one" type="radio" v-model="elevation" value="absolut">
+                                <label for="elevation-option-one" class="pure-radio">
+                                    <input id="elevation-option-one" type="radio" v-model="elevation" value="absolut">
                                     absolut elevation
                                 </label>
-                                <label for="option-two" class="pure-radio">
-                                    <input id="option-two" type="radio" v-model="elevation" value="range">
+                                <label for="elevation-option-two" class="pure-radio">
+                                    <input id="elevation-option-two" type="radio" v-model="elevation" value="range">
                                     elevation range
                                 </label>
-                                <label for="option-three" class="pure-radio">
-                                    <input id="option-three" type="radio" v-model="elevation" value="no_elevation">
+                                <label for="elevation-option-three" class="pure-radio">
+                                    <input id="elevation-option-three" type="radio" v-model="elevation" value="no_elevation">
                                     no elevation
                                 </label>
                             </div>
