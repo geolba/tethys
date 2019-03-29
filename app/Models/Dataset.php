@@ -65,10 +65,10 @@ class Dataset extends Model
     /**
      * Get the geolocation that owns the dataset.
      */
-    public function geolocation()
-    {
-        return $this->hasOne(GeolocationBox::class, 'dataset_id', 'id');
-    }
+    // public function geolocation()
+    // {
+    //     return $this->hasOne(GeolocationBox::class, 'dataset_id', 'id');
+    // }
 
     /**
      * Get the coverage that owns the dataset.

@@ -22,19 +22,26 @@ function initialState() {
       value: "",
       language: ""
     },
-    geolocation: {
+    // geolocation: {
+    //   xmin: "",
+    //   ymin: "",
+    //   xmax: "",
+    //   ymax: ""
+    // },
+    coverage: {
       xmin: "",
       ymin: "",
       xmax: "",
-      ymax: ""
-    },
-    coverage: {
+      ymax: "",
       elevation_min: "",
       elevation_max: "",
       elevation_absolut: "",
       depth_min: "",
       depth_max: "",
-      depth_absolut: ""
+      depth_absolut: "",
+      time_min: "",
+      time_max: "",
+      time_absolut: ""
     },
     checkedAuthors: [],
     checkedLicenses: [], // [],

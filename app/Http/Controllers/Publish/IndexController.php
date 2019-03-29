@@ -410,15 +410,15 @@ class IndexController extends Controller
                     }
                 }
 
-                if (isset($data['geolocation'])) {
-                    $formGeolocation = $request->input('geolocation');
-                    if ($formGeolocation['xmin'] !== null && $formGeolocation['ymin'] !== null &&
-                        $formGeolocation['xmax'] !== null && $formGeolocation['ymax'] !== null) {
-                        $geolocation = new GeolocationBox($formGeolocation);
-                        $dataset->geolocation()->save($geolocation);
-                        //$geolocation->dataset()->associate($dataset)->save();
-                    }
-                }
+                // if (isset($data['geolocation'])) {
+                //     $formGeolocation = $request->input('geolocation');
+                //     if ($formGeolocation['xmin'] !== null && $formGeolocation['ymin'] !== null &&
+                //         $formGeolocation['xmax'] !== null && $formGeolocation['ymax'] !== null) {
+                //         $geolocation = new GeolocationBox($formGeolocation);
+                //         $dataset->geolocation()->save($geolocation);
+                //         //$geolocation->dataset()->associate($dataset)->save();
+                //     }
+                // }
 
                 if (isset($data['coverage'])) {
                     $formCoverage = $request->input('coverage');

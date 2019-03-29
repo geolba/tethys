@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<xsl:stylesheet version="1.0"
-    xmlns="http://www.openarchives.org/OAI/2.0/"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
-   xmlns:php="http://php.net/xsl">
+<xsl:stylesheet version="1.0" 
+  xmlns="http://www.openarchives.org/OAI/2.0/" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" 
+  xmlns:php="http://php.net/xsl">
 
   <!--<xsl:param name="urnResolverUrl" />-->
 
-   <!-- add include here for each new metadata format  -->
-   <xsl:include href="prefixes/oai_datacite.xslt" />
-   
+  <!-- add include here for each new metadata format  -->
+  <xsl:include href="prefixes/oai_datacite.xslt" />
+
 
   <xsl:output method="xml" indent="yes" encoding="utf-8" />
 
@@ -49,8 +48,8 @@
       <xsl:text>type="text/xsl" href="xsl/oai2_style.xslt"</xsl:text>
     </xsl:processing-instruction>
 
-    <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/"
-      xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+    <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
       <responseDate>
         <xsl:value-of select="$responseDate" />
       </responseDate>
@@ -126,8 +125,7 @@
         <xsl:text>YYYY-MM-DD</xsl:text>
       </granularity>
       <description>
-        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
-           xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
           <scheme>
             <xsl:text>oai</xsl:text>
           </scheme>
@@ -181,10 +179,14 @@
   </xsl:template>
 
   <xsl:template match="Rdr_Sets">
-      <set>
-          <setSpec><xsl:value-of select="@Type"/></setSpec>
-          <setName><xsl:value-of select="@TypeName"/></setName>
-      </set>
+    <set>
+      <setSpec>
+        <xsl:value-of select="@Type"/>
+      </setSpec>
+      <setName>
+        <xsl:value-of select="@TypeName"/>
+      </setName>
+    </set>
   </xsl:template>
 
   <xsl:template match="Datasets" mode="ListIdentifiers">
@@ -215,10 +217,16 @@
         <xsl:apply-templates select="Rdr_Dataset" />
         <xsl:if test="$totalIds > 0">
           <resumptionToken>
-              <xsl:attribute name="expirationDate"><xsl:value-of select="$dateDelete"/></xsl:attribute>
-              <xsl:attribute name="completeListSize"><xsl:value-of select="$totalIds"/></xsl:attribute>
-              <xsl:attribute name="cursor"><xsl:value-of select="$cursor"/></xsl:attribute>
-              <xsl:value-of select="$res"/>
+            <xsl:attribute name="expirationDate">
+              <xsl:value-of select="$dateDelete"/>
+            </xsl:attribute>
+            <xsl:attribute name="completeListSize">
+              <xsl:value-of select="$totalIds"/>
+            </xsl:attribute>
+            <xsl:attribute name="cursor">
+              <xsl:value-of select="$cursor"/>
+            </xsl:attribute>
+            <xsl:value-of select="$res"/>
           </resumptionToken>
         </xsl:if>
       </ListRecords>
@@ -226,9 +234,9 @@
   </xsl:template>
 
   <xsl:template match="Datasets" mode="GetRecord">
-      <GetRecord>
-          <xsl:apply-templates select="Rdr_Dataset" />
-      </GetRecord>
+    <GetRecord>
+      <xsl:apply-templates select="Rdr_Dataset" />
+    </GetRecord>
   </xsl:template>
 
   <xsl:template match="Rdr_Dataset">
@@ -260,13 +268,17 @@
       <datestamp>
         <xsl:choose>
           <xsl:when test="ServerDateModified">
-            <xsl:value-of select="ServerDateModified/@Year"/>-
-            <xsl:value-of select="format-number(ServerDateModified/@Month,'00')"/>-
+            <xsl:value-of select="ServerDateModified/@Year"/>
+-
+            <xsl:value-of select="format-number(ServerDateModified/@Month,'00')"/>
+-
             <xsl:value-of select="format-number(ServerDateModified/@Day,'00')"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="ServerDatePublished/@Year"/>-
-            <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>-
+            <xsl:value-of select="ServerDatePublished/@Year"/>
+-
+            <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>
+-
             <xsl:value-of select="format-number(ServerDatePublished/@Day,'00')"/>
           </xsl:otherwise>
         </xsl:choose>
@@ -315,9 +327,9 @@
           <xsl:apply-templates select="PersonAuthor" mode="oai_dc" />
         </xsl:when>
         <xsl:when test="@CreatingCorporation">
-            <dc:creator>
-                <xsl:value-of select="@CreatingCorporation" />
-            </dc:creator>
+          <dc:creator>
+            <xsl:value-of select="@CreatingCorporation" />
+          </dc:creator>
         </xsl:when>
       </xsl:choose>
       <!-- dc:contributor -->
@@ -340,18 +352,44 @@
       <!-- dc:rights -->
       <xsl:apply-templates select="Licence" mode="oai_dc" />
       <!-- dc:coverage -->
-      <xsl:apply-templates select="GeolocationBox" mode="oai_dc" />
+      <xsl:apply-templates select="Coverage" mode="oai_dc" />
     </oai_dc:dc>
   </xsl:template>
 
-  <xsl:template match="GeolocationBox" mode="oai_dc">
-    <dc:coverage>
-     <xsl:value-of select="concat(
-     'SOUTH-BOUND LATITUDE: ', @Xmin,
-     ' * WEST-BOUND LONGITUDE: ', @Ymin,
-     ' * NORTH-BOUND LATITUDE: ', @Xmax,
-     ' * EAST-BOUND LONGITUDE: ', @Ymax
-     )" />   
+  <xsl:template match="Coverage" mode="oai_dc">
+    <dc:coverage>     
+      <xsl:variable name="geolocation" select="concat(
+      'SOUTH-BOUND LATITUDE: ', @Xmin,
+      ' * WEST-BOUND LONGITUDE: ', @Ymin,
+      ' * NORTH-BOUND LATITUDE: ', @Xmax,
+      ' * EAST-BOUND LONGITUDE: ', @Ymax
+      )" />   
+      <xsl:value-of select="$geolocation" />
+     
+      <xsl:text>&#xA;</xsl:text>
+      <xsl:if test="@ElevationMin != '' and @ElevationMax != ''">
+          <xsl:value-of select="concat(' *ELEVATION MIN: ', @ElevationMin, ' *ELEVATION MAX: ', @ElevationMax)" />        
+      </xsl:if>
+       <xsl:if test="@ElevationAbsolut != ''">
+          <xsl:value-of select="concat(' *ELEVATION ABSOLUT: ', @ElevationAbsolut)" />        
+      </xsl:if>
+
+      <xsl:text>&#xA;</xsl:text>
+      <xsl:if test="@DepthMin != '' and @DepthMax != ''">
+          <xsl:value-of select="concat(' *DEPTH MIN: ', @DepthMin, ' *DEPTH MAX: ', @DepthMax)" />        
+      </xsl:if>
+       <xsl:if test="@DepthAbsolut != ''">
+          <xsl:value-of select="concat(' *DEPTH ABSOLUT: ', @DepthAbsolut)" />        
+      </xsl:if>
+
+       <xsl:text>&#xA;</xsl:text>
+      <xsl:if test="@TimeMin != '' and @TimeMax != ''">
+          <xsl:value-of select="concat(' *TIME MIN: ', @TimeMin, ' *TIME MAX: ', @TimeMax)" />        
+      </xsl:if>
+       <xsl:if test="@TimeAbsolut != ''">
+          <xsl:value-of select="concat(' *TIME ABSOLUT: ', @TimeAbsolut)" />        
+      </xsl:if>      
+      
     </dc:coverage>
   </xsl:template>
 
@@ -371,24 +409,24 @@
   </xsl:template>
 
   <xsl:template match="Subject" mode="oai_dc">
-        <dc:subject>
-            <xsl:if test="@language != ''">
-                <xsl:attribute name="xml:lang">
-                    <xsl:value-of select="php:functionString('Oai_Model_Language::getLanguageCode', @Language, 'part1')" />
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:value-of select="@Value" />
-        </dc:subject>
-    </xsl:template>
-  
+    <dc:subject>
+      <xsl:if test="@language != ''">
+        <xsl:attribute name="xml:lang">
+          <xsl:value-of select="php:functionString('Oai_Model_Language::getLanguageCode', @Language, 'part1')" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:value-of select="@Value" />
+    </dc:subject>
+  </xsl:template>
+
   <!-- <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
     <dc:creator>
       <xsl:value-of select="@LastName" />
-      <xsl:if test="@FirstName != ''" >
+      <xsl:if test="@FirstName != ''">
         <xsl:text>, </xsl:text>
       </xsl:if>
       <xsl:value-of select="@FirstName" />
-      <xsl:if test="@AcademicTitle != ''" >
+      <xsl:if test="@AcademicTitle != ''">
         <xsl:text> (</xsl:text>
         <xsl:value-of select="@AcademicTitle" />
         <xsl:text>)</xsl:text>
@@ -399,29 +437,35 @@
   <xsl:template match="PersonContributor" mode="oai_dc">
     <dc:contributor>
       <xsl:value-of select="@LastName" />
-      <xsl:if test="@FirstName != ''" >
+      <xsl:if test="@FirstName != ''">
         <xsl:text>, </xsl:text>
       </xsl:if>
       <xsl:value-of select="@FirstName" />
-      <xsl:if test="@AcademicTitle != ''" >
+      <xsl:if test="@AcademicTitle != ''">
         <xsl:text> (</xsl:text>
         <xsl:value-of select="@AcademicTitle" />
         <xsl:text>)</xsl:text>
       </xsl:if>
     </dc:contributor>
   </xsl:template>
-  
+
   <xsl:template name="RdrDate">
     <dc:date>
       <xsl:choose>
         <xsl:when test="PublishedDate">
-          <xsl:value-of select="PublishedDate/@Year"/>-<xsl:value-of select="format-number(PublishedDate/@Month,'00')"/>-<xsl:value-of select="format-number(PublishedDate/@Day,'00')"/>
+          <xsl:value-of select="PublishedDate/@Year"/>
+-          <xsl:value-of select="format-number(PublishedDate/@Month,'00')"/>
+-          <xsl:value-of select="format-number(PublishedDate/@Day,'00')"/>
         </xsl:when>
         <xsl:when test="CompletedDate">
-          <xsl:value-of select="CompletedDate/@Year"/>-<xsl:value-of select="format-number(CompletedDate/@Month,'00')"/>-<xsl:value-of select="format-number(CompletedDate/@Day,'00')"/>
+          <xsl:value-of select="CompletedDate/@Year"/>
+-          <xsl:value-of select="format-number(CompletedDate/@Month,'00')"/>
+-          <xsl:value-of select="format-number(CompletedDate/@Day,'00')"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="ServerDatePublished/@Year"/>-<xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>-<xsl:value-of select="format-number(ServerDatePublished/@Day,'00')"/>
+          <xsl:value-of select="ServerDatePublished/@Year"/>
+-          <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>
+-          <xsl:value-of select="format-number(ServerDatePublished/@Day,'00')"/>
         </xsl:otherwise>
       </xsl:choose>
     </dc:date>
@@ -430,12 +474,14 @@
   <xsl:template match="EmbargoDate" mode="oai_dc">
     <dc:date>
       <xsl:text>info:eu-repo/date/embargoEnd/</xsl:text>
-      <xsl:value-of select="./@Year"/>-<xsl:value-of select="format-number(./@Month,'00')"/>-<xsl:value-of select="format-number(./@Day,'00')"/>
+      <xsl:value-of select="./@Year"/>
+-      <xsl:value-of select="format-number(./@Month,'00')"/>
+-      <xsl:value-of select="format-number(./@Day,'00')"/>
     </dc:date>
   </xsl:template>
 
 
-<!-- für ListRecords -->
+  <!-- für ListRecords -->
   <xsl:template match="@Type" mode="oai_dc">
     <dc:type>
       <xsl:value-of select="." />
@@ -457,7 +503,7 @@
       <xsl:value-of select="@PathName" />
     </dc:identifier>
   </xsl:template>
-  
+
   <xsl:template match="@Language" mode="oai_dc">
     <dc:language>
       <xsl:value-of select="." />

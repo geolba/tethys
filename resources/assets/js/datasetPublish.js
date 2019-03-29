@@ -63,6 +63,7 @@ const app = new Vue({
             dataset: dataset,
             elevation: "no_elevation",
             depth: "no_depth",
+            time: "no_time",
             // dataset: {
             //     type: '',
             //     state: '',
@@ -143,6 +144,12 @@ const app = new Vue({
         },
         isDepthRange() {
             return this.depth === "range";
+        },
+        isTimeAbsolut() {
+            return this.time === "absolut";
+        },
+        isTimeRange() {
+            return this.time === "range";
         }
     },
     methods: {
@@ -216,10 +223,13 @@ const app = new Vue({
             formData.append('abstract_main[value]', this.dataset.abstract_main.value);
             formData.append('abstract_main[language]', this.dataset.abstract_main.language);
 
-            formData.append('geolocation[xmin]', this.dataset.geolocation.xmin);
-            formData.append('geolocation[ymin]', this.dataset.geolocation.ymin);
-            formData.append('geolocation[xmax]', this.dataset.geolocation.xmax);
-            formData.append('geolocation[ymax]', this.dataset.geolocation.ymax);
+            if (this.dataset.coverage.xmin !== "" && this.dataset.coverage.ymin != '' &&
+                this.dataset.coverage.xmax !== '' &&  this.dataset.coverage.ymax !== '') {
+                    formData.append('coverage[xmin]', this.dataset.coverage.xmin);
+                    formData.append('coverage[ymin]', this.dataset.coverage.ymin);
+                    formData.append('coverage[xmax]', this.dataset.coverage.xmax);
+                    formData.append('coverage[ymax]', this.dataset.coverage.ymax);
+            }
 
             if (this.isElevationAbsolut) {
                 formData.append('coverage[elevation_absolut]', this.dataset.coverage.elevation_absolut);
@@ -235,7 +245,13 @@ const app = new Vue({
                 formData.append('coverage[depth_min]', this.dataset.coverage.depth_min);
                 formData.append('coverage[depth_max]', this.dataset.coverage.depth_max);                
             } 
-            
+            if (this.isTimeAbsolut) {
+                formData.append('coverage[time_absolut]', this.dataset.coverage.time_absolut);
+            }
+            else if (this.isTimeRange) {
+                formData.append('coverage[time_min]', this.dataset.coverage.time_min);
+                formData.append('coverage[time_max]', this.dataset.coverage.time_max);                
+            }             
             
             
             for (var i = 0; i < this.dataset.checkedLicenses.length; i++) {

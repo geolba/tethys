@@ -15,7 +15,11 @@ class Coverage extends Model
         'elevation_absolut',
         'depth_min',
         'depth_max',
-        'depth_absolut'
+        'depth_absolut',
+        'time_min',
+        'time_max',
+        'time_absolut',
+        'xmin', 'xmax', 'ymin', 'ymax'
     ];
 
     public function dataset()

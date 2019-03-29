@@ -323,24 +323,24 @@
                     <legend>Geo Location</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1 pure-u-lg-1 pure-div">
-                            <locations-map v-bind:geolocation="dataset.geolocation"></locations-map>
+                            <locations-map v-bind:geolocation="dataset.coverage"></locations-map>
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('xmin', 'xmin: ') !!} 
-                            {!! Form::text('xmin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmin', 'readonly']) !!}
+                            {!! Form::text('xmin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmin', 'readonly']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('ymin', 'ymin: ') !!} 
-                            {!! Form::text('ymin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymin', 'readonly']) !!}
+                            {!! Form::text('ymin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymin', 'readonly']) !!}
                         </div>
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('xmax', 'xmax: ') !!} 
-                            {!! Form::text('xmax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.xmax', 'readonly']) !!}
+                            {!! Form::text('xmax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmax', 'readonly']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('ymax', 'ymax: ') !!} 
-                            {!! Form::text('ymax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.geolocation.ymax', 'readonly']) !!}
+                            {!! Form::text('ymax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymax', 'readonly']) !!}
                         </div>
                     </div>
                 </fieldset>   
@@ -363,57 +363,92 @@
                                     <input id="elevation-option-three" type="radio" v-model="elevation" value="no_elevation">
                                     no elevation
                                 </label>
-                            </div>
-                    
+                            </div>                    
                             <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('elevation_absolut', 'elevation absolut: ') !!} 
                                 {!! Form::text('elevation_absolut', null,
                                 ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
-                            </div>
-                            <div  v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-                                {!! Form::label('elevation_max', 'elevation max: ') !!} 
-                                {!! Form::text('elevation_max', null,
-                                ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
                             </div>
                             <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('elevation_min', 'elevation min: ') !!} 
                                 {!! Form::text('elevation_min', null, 
                                 ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
                             </div>
+                            <div  v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('elevation_max', 'elevation max: ') !!} 
+                                {!! Form::text('elevation_max', null,
+                                ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+                            </div>                            
                         </div>  
                         
                         <div class="pure-u-1 pure-u-md-1-2">
-                                <div class="pure-u-1 pure-u-md-1">
-                                    <label for="depth-option-one" class="pure-radio">
-                                        <input id="depth-option-one" type="radio" v-model="depth" value="absolut">
-                                        absolut depth
-                                    </label>
-                                    <label for="depth-option-two" class="pure-radio">
-                                        <input id="depth-option-two" type="radio" v-model="depth" value="range">
-                                        depth range
-                                    </label>
-                                    <label for="depth-option-three" class="pure-radio">
-                                        <input id="depth-option-three" type="radio" v-model="depth" value="no_depth">
-                                        no depth
-                                    </label>
-                                </div>
+                            <div class="pure-u-1 pure-u-md-1">
+                                <label for="depth-option-one" class="pure-radio">
+                                                                <input id="depth-option-one" type="radio" v-model="depth" value="absolut">
+                                                                absolut depth
+                                                            </label>
+                                <label for="depth-option-two" class="pure-radio">
+                                                                <input id="depth-option-two" type="radio" v-model="depth" value="range">
+                                                                depth range
+                                                            </label>
+                                <label for="depth-option-three" class="pure-radio">
+                                                                <input id="depth-option-three" type="radio" v-model="depth" value="no_depth">
+                                                                no depth
+                                                            </label>
+                            </div>
                         
-                                <div v-show="depth === 'absolut'" class="pure-u-1 pure-u-md-1">
-                                    {!! Form::label('depth_absolut', 'depth absolut: ') !!} 
-                                    {!! Form::text('depth_absolut', null,
-                                    ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.depth_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthAbsolut ? 'required|integer' : '' " ]) !!}
-                                </div>
-                                <div  v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
-                                    {!! Form::label('depth_max', 'depth max: ') !!} 
-                                    {!! Form::text('depth_max', null,
-                                    ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.depth_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ? 'required|integer' : '' "]) !!}
-                                </div>
-                                <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
-                                    {!! Form::label('depth_min', 'depth min: ') !!} 
-                                    {!! Form::text('depth_min', null, 
-                                    ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.depth_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ? 'required|integer' : '' "]) !!}
-                                </div>
-                            </div> 
+                            <div v-show="depth === 'absolut'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('depth_absolut', 'depth absolut: ') !!} {!! Form::text('depth_absolut', null, ['class' => 'pure-u-23-24',
+                                'v-model' => 'dataset.coverage.depth_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthAbsolut
+                                ? 'required|integer' : '' " ]) !!}
+                            </div>
+                            <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('depth_min', 'depth min: ') !!} {!! Form::text('depth_min', null, ['class' => 'pure-u-23-24', 'v-model' =>
+                                'dataset.coverage.depth_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ? 'required|integer'
+                                : '' "]) !!}
+                            </div>
+                            <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('depth_max', 'depth max: ') !!} {!! Form::text('depth_max', null, ['class' => 'pure-u-23-24', 'v-model' =>
+                                'dataset.coverage.depth_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ? 'required|integer'
+                                : '' "]) !!}
+                            </div>                            
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-2">
+                            <div class="pure-u-1 pure-u-md-1">
+                                <label for="time-option-one" class="pure-radio">
+                                                                <input id="time-option-one" type="radio" v-model="time" value="absolut">
+                                                                absolut time
+                                                            </label>
+                                <label for="time-option-two" class="pure-radio">
+                                                                <input id="time-option-two" type="radio" v-model="time" value="range">
+                                                                time range
+                                                            </label>
+                                <label for="time-option-three" class="pure-radio">
+                                                                <input id="time-option-three" type="radio" v-model="time" value="no_time">
+                                                                no time
+                                                            </label>
+                            </div>
+                        
+                            <div v-show="time === 'absolut'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('time_absolut', 'time absolut: ') !!} 
+                                {!! Form::date('time_absolut', null, ['class' => 'pure-u-23-24',
+                                'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2',
+                                "v-validate" => "this.isTimeAbsolut ? 'required' : '' " ]) !!}
+                            </div>
+                            <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('time_min', 'time min: ') !!} 
+                                {!! Form::date('time_min', null, ['class' => 'pure-u-23-24',
+                                'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2',
+                                "v-validate" => "this.isTimeRange ? 'required' : '' "]) !!}
+                            </div>
+                            <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
+                                {!! Form::label('timemax', 'time max: ') !!} 
+                                {!! Form::date('time_max', null, ['class' => 'pure-u-23-24', 
+                                'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2',
+                                "v-validate" => "this.isTimeRange ? 'required' : '' "]) !!}
+                            </div>                            
+                        </div>
 
                     </div>
                 </fieldset>

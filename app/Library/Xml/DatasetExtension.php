@@ -7,6 +7,7 @@ use App\Models\License;
 use App\Models\Person;
 use App\Models\File;
 use App\Models\GeolocationBox;
+use App\Models\Coverage;
 use App\Models\Subject;
 
 /**
@@ -64,9 +65,14 @@ trait DatasetExtension
             'relation' => 'files',
             'fetch' => 'eager'
         ),
-        'GeolocationBox' => array(
-            'model' => GeolocationBox::class,
-            'relation' => 'geolocation',
+        // 'GeolocationBox' => array(
+        //     'model' => GeolocationBox::class,
+        //     'relation' => 'geolocation',
+        //     'fetch' => 'eager'
+        // ),
+        'Coverage' => array(
+            'model' => Coverage::class,
+            'relation' => 'coverage',
             'fetch' => 'eager'
         ),
     );

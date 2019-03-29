@@ -4,6 +4,7 @@ namespace App\Library\Search;
 
 use App\Models\Dataset;
 use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document\DocumentInterface;
 
 class SolariumDocument extends SolrDocumentXslt
 {
@@ -12,7 +13,7 @@ class SolariumDocument extends SolrDocumentXslt
         parent::__construct($options);
     }
     
-    public function toSolrUpdateDocument(Dataset $rdrDataset, Document $solrDoc)
+    public function toSolrUpdateDocument(Dataset $rdrDataset, DocumentInterface $solrDoc)
     {
         if (!($solrDoc instanceof Document)) {
             throw new \Exception('provided Solr document must be instance of Solarium Update Document');

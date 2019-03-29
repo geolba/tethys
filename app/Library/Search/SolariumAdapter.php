@@ -64,7 +64,8 @@ class SolariumAdapter
             $update = $this->client->createUpdate();
 
             $updateDocs = array_map(function ($rdrDoc) use ($builder, $update) {
-                return $builder->toSolrUpdateDocument($rdrDoc, $update->createDocument());
+                $solarium_document =  $update->createDocument();
+                return $builder->toSolrUpdateDocument($rdrDoc, $solarium_document);
             }, $slice);
 
             // adding the document to the update query
@@ -129,7 +130,8 @@ class SolariumAdapter
             //}
 
             // $filter = $parameters->getFilter();//"aa"
-            // if ( $filter instanceof Opus_Search_Solr_Filter_Raw || $filter instanceof Opus_Search_Solr_Solarium_Filter_Complex ) {
+            // if ( $filter instanceof Opus_Search_Solr_Filter_Raw
+            // || $filter instanceof Opus_Search_Solr_Solarium_Filter_Complex ) {
             // if ( !$query->getQuery() || !$preferOriginalQuery ) {
             // $compiled = $filter->compile( $query );
             // if ( $compiled !== null ) {

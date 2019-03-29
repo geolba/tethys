@@ -88,7 +88,7 @@
                 <xsl:apply-templates select="TitleAbstract" mode="oai_datacite" />
             </descriptions>
             <geoLocations>
-                <xsl:apply-templates select="GeolocationBox" mode="oai_datacite" />
+                <xsl:apply-templates select="Coverage" mode="oai_datacite" />
                 <!-- <geoLocation>
                     <geoLocationBox>
                         <westBoundLongitude>6.58987</westBoundLongitude>
@@ -101,7 +101,7 @@
         </resource>
     </xsl:template>
 
-    <xsl:template match="GeolocationBox" mode="oai_datacite">
+    <xsl:template match="Coverage" mode="oai_datacite">
         <geoLocation>
             <geoLocationBox>
                 <westBoundLongitude>
