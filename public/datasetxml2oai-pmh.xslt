@@ -368,26 +368,26 @@
      
       <xsl:text>&#xA;</xsl:text>
       <xsl:if test="@ElevationMin != '' and @ElevationMax != ''">
-          <xsl:value-of select="concat(' *ELEVATION MIN: ', @ElevationMin, ' *ELEVATION MAX: ', @ElevationMax)" />        
+          <xsl:value-of select="concat(' * ELEVATION MIN: ', @ElevationMin, ' * ELEVATION MAX: ', @ElevationMax)" />        
       </xsl:if>
        <xsl:if test="@ElevationAbsolut != ''">
-          <xsl:value-of select="concat(' *ELEVATION ABSOLUT: ', @ElevationAbsolut)" />        
+          <xsl:value-of select="concat(' * ELEVATION ABSOLUT: ', @ElevationAbsolut)" />        
       </xsl:if>
 
       <xsl:text>&#xA;</xsl:text>
       <xsl:if test="@DepthMin != '' and @DepthMax != ''">
-          <xsl:value-of select="concat(' *DEPTH MIN: ', @DepthMin, ' *DEPTH MAX: ', @DepthMax)" />        
+          <xsl:value-of select="concat(' * DEPTH MIN: ', @DepthMin, ' * DEPTH MAX: ', @DepthMax)" />        
       </xsl:if>
        <xsl:if test="@DepthAbsolut != ''">
-          <xsl:value-of select="concat(' *DEPTH ABSOLUT: ', @DepthAbsolut)" />        
+          <xsl:value-of select="concat(' * DEPTH ABSOLUT: ', @DepthAbsolut)" />        
       </xsl:if>
 
        <xsl:text>&#xA;</xsl:text>
       <xsl:if test="@TimeMin != '' and @TimeMax != ''">
-          <xsl:value-of select="concat(' *TIME MIN: ', @TimeMin, ' *TIME MAX: ', @TimeMax)" />        
+          <xsl:value-of select="concat(' * TIME MIN: ', @TimeMin, ' * TIME MAX: ', @TimeMax)" />        
       </xsl:if>
        <xsl:if test="@TimeAbsolut != ''">
-          <xsl:value-of select="concat(' *TIME ABSOLUT: ', @TimeAbsolut)" />        
+          <xsl:value-of select="concat(' * TIME ABSOLUT: ', @TimeAbsolut)" />        
       </xsl:if>      
       
     </dc:coverage>

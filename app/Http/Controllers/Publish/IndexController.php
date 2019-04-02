@@ -431,8 +431,8 @@ class IndexController extends Controller
                 $user = Auth::user();
                 $dataset->user()->associate($user)->save();
                 
-                // $error = 'Always throw this error';
-                // throw new \Exception($error);
+                $error = 'Always throw this error';
+                throw new \Exception($error);
 
                 // all good//commit everything
                 DB::commit();

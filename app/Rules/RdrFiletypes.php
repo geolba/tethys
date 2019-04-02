@@ -3,7 +3,8 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Config;
+//use Illuminate\Support\Facades\Config;
+use App\Models\MimeType;
 
 class RdrFiletypes implements Rule
 {
@@ -16,7 +17,10 @@ class RdrFiletypes implements Rule
      */
     public function __construct()
     {
-        $this->mimetypes = Config::get('enums.mimetypes_allowed', ['application/pdf']);
+        //$this->mimetypes = Config::get('enums.mimetypes_allowed', ['application/pdf']);
+        $this->mimetypes  = MimeType::where('enabled', 1)
+        ->pluck('name')
+        ->toArray();
         // $this->maxFileSize = Config::get('enums.max_filesize');
     }
 
@@ -30,9 +34,9 @@ class RdrFiletypes implements Rule
     public function passes($attribute, $value)
     {
         //return Rule::in($this->filetypes);
-        $test = $value->getMimeType();//"application/pdf"
+        $mimeType = $value->getMimeType();//"application/pdf"
         return $value->getPath() != '' &&
-        in_array($value->getMimeType(), $this->mimetypes);
+        in_array($mimeType, $this->mimetypes);
         // in_array($value->guessExtension(), $this->filetypes); //file extension
         
         
@@ -48,24 +52,5 @@ class RdrFiletypes implements Rule
     public function message()
     {
         return 'attribute :attribute has not a valid mime type.';
-    }
-
-    /**
-     * Get the size of an attribute.
-     *
-     * @param  string  $attribute
-     * @param  mixed   $value
-     * @return mixed
-     */
-    private function getSize($attribute, $value)
-    {
-        if (is_numeric($value) && $hasNumeric) {
-            return array_get($this->data, $attribute);
-        } elseif (is_array($value)) {
-            return count($value);
-        } elseif ($value instanceof File) {
-            return $value->getSize() / 1024;
-        }
-        return mb_strlen($value);
     }
 }

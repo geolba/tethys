@@ -187,6 +187,12 @@ Route::group(['middleware' => ['permission:settings']], function () {
     // Route::get('settings/collection/delete/{id}', [
     //     'as' => 'settings.collection.delete', 'uses' => 'Settings\CollectionController@delete',
     // ]);
+    Route::get('settings/mimetype/down/{id}', [
+        'as' => 'settings.mimetype.down', 'uses' => 'Settings\MimetypeController@down',
+    ]);
+    Route::get('settings/mimetype/up/{id}', [
+        'as' => 'settings.mimetype.up', 'uses' => 'Settings\MimetypeController@up',
+    ]);
 
     //=================================================setting collection=============================================
     Route::get('/settings/collection', [
