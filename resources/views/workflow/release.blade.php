@@ -36,7 +36,7 @@
 
                     <td>
                         @if ($dataset->server_state == "inprogress")
-                        <a href="{{ URL::route('settings.review.changestate',['id' => $dataset->id, 'targetState' => 'unpublished']) }}" class="pure-button button-small is-success">Release</a>
+                        <a href="{{ URL::route('publish.review.changestate',['id' => $dataset->id, 'targetState' => 'unpublished']) }}" class="pure-button button-small is-success">Release</a>
                         {{-- <a href="" class="pure-button button-small is-success">Restrict</a>  --}}                      
                         @endif
                     </td>

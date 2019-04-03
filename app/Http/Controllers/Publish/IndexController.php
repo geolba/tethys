@@ -366,7 +366,9 @@ class IndexController extends Controller
                     $title = new Title();
                     $title->value = $formTitle['value'];
                     $title->language = $formTitle['language'];
-                    $dataset->addMainTitle($title);
+                    $title->type = 'main';
+                    //$dataset->addMainTitle($title);
+                    $dataset->titles()->save($title);
                 }
 
                  //save additional titles
@@ -383,7 +385,9 @@ class IndexController extends Controller
                     $abstract = new Description();
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
-                    $dataset->addMainAbstract($abstract);
+                    $abstract->type = 'abstract';
+                    //$dataset->addMainAbstract($abstract);
+                    $dataset->abstracts()->save($abstract);
                 }
 
                 //save additional descriptions
@@ -431,8 +435,8 @@ class IndexController extends Controller
                 $user = Auth::user();
                 $dataset->user()->associate($user)->save();
                 
-                $error = 'Always throw this error';
-                throw new \Exception($error);
+                // $error = 'Always throw this error';
+                // throw new \Exception($error);
 
                 // all good//commit everything
                 DB::commit();

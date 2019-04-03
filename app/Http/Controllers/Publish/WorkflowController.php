@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers\Publish;
 
 use App\Http\Controllers\Controller;
 // use App\Http\Requests\ProjectRequest;

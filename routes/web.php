@@ -45,6 +45,16 @@ Route::group(
 
         // Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
         Route::post('dataset/store', ['as' => 'dataset.store', 'uses' => 'IndexController@store']);
+
+        Route::get('workflow/review', [
+            'as' => 'workflow.review', 'uses' => 'WorkflowController@review',
+        ]);
+        Route::get('workflow/release', [
+            'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
+        ]);
+        Route::get('workflow/changestate/{id}/changestate/{targetState}', [
+            'as' => 'review.changestate', 'uses' => 'WorkflowController@changestate',
+        ]);
     }
 );
 
@@ -119,16 +129,7 @@ Route::group(
         ]);
         // //For DataTables
         Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
-
-        Route::get('workflow/review', [
-            'as' => 'workflow.review', 'uses' => 'WorkflowController@review',
-        ]);
-        Route::get('workflow/release', [
-            'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
-        ]);
-        Route::get('workflow/changestate/{id}/changestate/{targetState}', [
-            'as' => 'review.changestate', 'uses' => 'WorkflowController@changestate',
-        ]);
+        
     }
 );
 
@@ -373,27 +374,6 @@ Route::get('perpanjang/{id}', [
 ]);
 Route::get('history', [
     'as' => 'borrow.history', 'uses' => 'BorrowController@histori',
-]);
-
-//==================================================================================================================
-//=================================================setting shelf====================================================
-Route::get('/settings/shelf', [
-    'as' => 'settings.shelf', 'uses' => 'ShelfController@index',
-]);
-Route::get('/settings/shelf/add', [
-    'as' => 'settings.shelf.add', 'uses' => 'ShelfController@add',
-]);
-Route::post('settings/shelf/add', [
-    'as' => 'settings.shelf.post', 'uses' => 'ShelfController@store',
-]);
-Route::get('settings/shelf/edit/{id}', [
-    'as' => 'settings.shelf.edit', 'uses' => 'ShelfController@edit',
-]);
-Route::patch('settings/shelf/edit/{id}', [
-    'as' => 'settings.shelf.update', 'uses' => 'ShelfController@update',
-]);
-Route::get('settings/shelf/delete/{id}', [
-    'as' => 'settings.shelf.delete', 'uses' => 'ShelfController@delete',
 ]);
 
 //=========================================================================================================
