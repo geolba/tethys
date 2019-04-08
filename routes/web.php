@@ -46,12 +46,27 @@ Route::group(
         // Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
         Route::post('dataset/store', ['as' => 'dataset.store', 'uses' => 'IndexController@store']);
 
-        Route::get('workflow/review', [
-            'as' => 'workflow.review', 'uses' => 'WorkflowController@review',
+        Route::get('workflow/index', [
+            'as' => 'workflow.index', 'uses' => 'WorkflowController@index',
         ]);
-        Route::get('workflow/release', [
+        Route::get('workflow/release/{id}', [
             'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
         ]);
+        Route::post('workflow/release/{id}', [
+            'as' => 'workflow.releaseUpdate', 'uses' => 'WorkflowController@releaseUpdate',
+        ]);
+        Route::get('workflow/delete/{id}', [
+            'as' => 'workflow.delete', 'uses' => 'WorkflowController@delete',
+        ]);
+        Route::get('workflow/release/{id}', [
+            'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
+        ]);
+
+        
+        Route::get('workflow/indexreleased', [
+            'as' => 'workflow.indexReleased', 'uses' => 'WorkflowController@indexReleased',
+        ]);
+       
         Route::get('workflow/changestate/{id}/changestate/{targetState}', [
             'as' => 'review.changestate', 'uses' => 'WorkflowController@changestate',
         ]);
@@ -129,7 +144,6 @@ Route::group(
         ]);
         // //For DataTables
         Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
-        
     }
 );
 

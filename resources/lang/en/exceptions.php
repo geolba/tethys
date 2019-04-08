@@ -12,6 +12,11 @@ return [
     | found in a intuitive way.
     |
     */
+    'publish' => [
+        'release' => [
+            'update_error'   => 'There was a problem rleasing this dataset. Please try again.',
+        ],
+    ],
 
     'backend' => [
         

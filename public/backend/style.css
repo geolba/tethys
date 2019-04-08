@@ -935,4 +935,23 @@ textarea.large, input.large {
     cursor: pointer;
     /* float: right; */
   }
+
+.pure-table tr.inprogress {
+    padding: 0.8em;
+    background-color: paleturquoise;
+}
+.pure-table tr.released {   
+    background-color: greenyellow;
+}
+
+
+
+.help {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+.help.is-danger {
+    color: #ff3860;
+  }
  

@@ -95,12 +95,18 @@
                         <li class="pure-menu-item {{ Route::is('publish.dataset.create') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Create</a>
                         </li>
-                        <li class="pure-menu-item {{ Route::is('publish.workflow.release') ? 'active' : '' }}">
+                        <li class="pure-menu-item {{ Route::is('publish.workflow.index') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.index') }}"><i class="fa fa-upload"></i> All my datasets</a>
+                        </li>	
+                        <li class="pure-menu-item {{ Route::is('publish.workflow.indexreleased') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.indexReleased') }}"><i class="fa fa-upload"></i> All released datasets</a>
+                        </li>	
+                        {{-- <li class="pure-menu-item {{ Route::is('publish.workflow.release') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.release') }}"><i class="fa fa-upload"></i> Release pending datasets</a>
                         </li>	
                         <li class="pure-menu-item {{ Route::is('publish.workflow.review') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.review') }}"><i class="fa fa-upload"></i> Review/Publish unpublished datasets</a>
-                        </li>			
+                        </li>			 --}}
                     </ul>
                 </li>
                 @endpermission

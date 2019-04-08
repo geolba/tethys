@@ -36,6 +36,7 @@ class Dataset extends Model
         'project_id',
         'embargo_date',
         'belongs_to_bibliography',
+        'editor_id'
     ];
     //protected $guarded = [];
         /**
@@ -92,6 +93,14 @@ class Dataset extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'account_id', 'id');
+    }
+
+         /**
+     * Get the account that the dataset belongs to
+     */
+    public function editor()
+    {
+        return $this->belongsTo(User::class, 'editor_id', 'id');
     }
 
     public function collections()
