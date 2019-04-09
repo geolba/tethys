@@ -88,7 +88,7 @@
                 </li>
                 @endpermission
 
-                @permission('review')
+                @role(array('administrator', 'editor', 'reviewer'))
                 <li class="treeview">
                     <h2 class="pure-menu-heading">Publish</h2>
                     <ul class="pure-menu-list">		
@@ -98,8 +98,8 @@
                         <li class="pure-menu-item {{ Route::is('publish.workflow.index') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.index') }}"><i class="fa fa-upload"></i> All my datasets</a>
                         </li>	
-                        <li class="pure-menu-item {{ Route::is('publish.workflow.indexreleased') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.indexReleased') }}"><i class="fa fa-upload"></i> All released datasets</a>
+                        <li class="pure-menu-item {{ Route::is('publish.workflow.editorIndex') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editorIndex') }}"><i class="fa fa-upload"></i> EDITOR PAGE: Released datasets</a>
                         </li>	
                         {{-- <li class="pure-menu-item {{ Route::is('publish.workflow.release') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.release') }}"><i class="fa fa-upload"></i> Release pending datasets</a>
@@ -109,7 +109,7 @@
                         </li>			 --}}
                     </ul>
                 </li>
-                @endpermission
+                @endrole
 
                
 

@@ -21,7 +21,7 @@ Route::get(
     'setlocale/{lang}',
     [
         'as' => 'setlocale', //name()
-        'uses' => 'Frontend\LocalizationController@setLocale'
+        'uses' => 'Frontend\LocalizationController@setLocale',
     ]
 );
 
@@ -29,44 +29,65 @@ Route::get(
 Route::group(
     [
         'namespace' => 'Publish',
-        'middleware' => ['permission:review'],
+        // 'middleware' => ['permission:publish'],
+        // 'middleware' => ['role:administrator|reviewer|editor'],
         'prefix' => 'publish',
-        'as' => 'publish.'
+        'as' => 'publish.',
     ],
     function () {
         Route::get('dataset', [
             'as' => 'dataset.index', 'uses' => 'IndexController@index',
         ]);
-        Route::get('dataset/create-step1', ['as' => 'dataset.create', 'uses' => 'IndexController@createStep1']);
+        Route::get('dataset/create-step1', [
+            'middleware' => ['permission:dataset-create'],
+            'as' => 'dataset.create',
+            'uses' => 'IndexController@createStep1',
+        ]);
         // Route::post('dataset/store-step1', ['as' => 'dataset.store1', 'uses' => 'IndexController@storeStep1']);
 
         // Route::get('dataset/create-step2', ['as' => 'dataset.create2', 'uses' => 'IndexController@createStep2']);
         // Route::post('dataset/store-step2', ['as' => 'dataset.store2', 'uses' => 'IndexController@storeStep2']);
 
         // Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
-        Route::post('dataset/store', ['as' => 'dataset.store', 'uses' => 'IndexController@store']);
+        Route::post('dataset/store', [
+            'middleware' => ['permission:dataset-create'],
+            'as' => 'dataset.store',
+            'uses' => 'IndexController@store',
+        ]);
 
         Route::get('workflow/index', [
+            'middleware' => ['permission:dataset-list'],
             'as' => 'workflow.index', 'uses' => 'WorkflowController@index',
         ]);
         Route::get('workflow/release/{id}', [
+            'middleware' => ['permission:dataset-create', 'isUserDatasetAdmin:true'],
             'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
         ]);
         Route::post('workflow/release/{id}', [
+            'middleware' => ['permission:dataset-create', 'isUserDatasetAdmin:true'],
             'as' => 'workflow.releaseUpdate', 'uses' => 'WorkflowController@releaseUpdate',
         ]);
         Route::get('workflow/delete/{id}', [
+            'middleware' => ['isUserDatasetAdmin:true'],
             'as' => 'workflow.delete', 'uses' => 'WorkflowController@delete',
         ]);
-        Route::get('workflow/release/{id}', [
-            'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
+        // Route::get('workflow/release/{id}', [
+        //     'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
+        // ]);
+
+        Route::get('workflow/editor_index', [
+            'middleware' => ['permission:dataset-released-list'],
+            'as' => 'workflow.editorIndex', 'uses' => 'WorkflowController@editorIndex',
+        ]);
+        Route::get('workflow/accept/{id}', [
+            'middleware' => ['permission:dataset-accept'],
+            'as' => 'workflow.accept', 'uses' => 'WorkflowController@accept',
+        ]);
+        Route::post('workflow/accept/{id}', [
+            'middleware' => ['permission:dataset-accept'],
+            'as' => 'workflow.acceptUpdate', 'uses' => 'WorkflowController@acceptUpdate',
         ]);
 
-        
-        Route::get('workflow/indexreleased', [
-            'as' => 'workflow.indexReleased', 'uses' => 'WorkflowController@indexReleased',
-        ]);
-       
         Route::get('workflow/changestate/{id}/changestate/{targetState}', [
             'as' => 'review.changestate', 'uses' => 'WorkflowController@changestate',
         ]);
@@ -79,7 +100,7 @@ Route::group(
         'namespace' => 'Settings\Access',
         'middleware' => ['permission:settings'],
         'prefix' => 'settings/access',
-        'as' => 'access.'
+        'as' => 'access.',
     ],
     function () {
         //Route::resource('users','UserController');
@@ -102,7 +123,7 @@ Route::group(
             'as' => 'user.destroy', 'uses' => 'UserController@destroy',
         ]);
 
-         //Route::resource('users','RoleController');
+        //Route::resource('users','RoleController');
         Route::get('role', [
             'as' => 'role.index', 'uses' => 'RoleController@index',
         ]);
@@ -129,7 +150,7 @@ Route::group(
         'middleware' => ['permission:settings'],
         'namespace' => 'Settings',
         'prefix' => 'settings',
-        'as' => 'settings.'
+        'as' => 'settings.',
     ],
     function () {
         //Route::resource('page', 'PageController', ['except' => ['show', 'update']]);
@@ -146,7 +167,6 @@ Route::group(
         Route::get('pages/get', ['uses' => 'PagesTableController@get'])->name('page.get');
     }
 );
-
 
 //=================================================setting home - dashboard=======================================
 Route::get('settings/', [
@@ -178,7 +198,7 @@ Route::group(['middleware' => ['permission:settings']], function () {
         'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
     ]);
 
-     //=================================================setting mimetype=============================================
+    //=================================================setting mimetype=============================================
     Route::get('/settings/mimetype', [
         'as' => 'settings.mimetype.index', 'uses' => 'Settings\MimetypeController@index',
     ]);
@@ -341,7 +361,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     //=================================================Crawlers====================================================
     Route::get('sitelinks', [
-       'as' => 'sitelinks.index', 'uses' => 'SitelinkController@index',
+        'as' => 'sitelinks.index', 'uses' => 'SitelinkController@index',
     ]);
     Route::get('sitelinks/list/{year}', 'SitelinkController@listDocs')->name('sitelinks.list');
 
@@ -353,8 +373,8 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     ]);
 
     /*
-    * Show pages
-    */
+     * Show pages
+     */
     Route::get('pages/{slug}', 'HomeController@showPage')->name('pages.show');
 
     //=================================================solr search====================================================

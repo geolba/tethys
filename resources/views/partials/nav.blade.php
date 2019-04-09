@@ -65,7 +65,7 @@
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('settings.collection.index') }}">COLLECTION</a></li>
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('settings.project') }}">PROJECT</a></li>
 
-                                            <!-- <li><a href="{{ route('settings.shelf') }}" class="marvel">SHELF</a></li>-->
+                                           
 
 
                                             <li class="pure-menu-item"><a href="{{ route('settings.license') }}" class="pure-menu-link">LICENSES</a></li>

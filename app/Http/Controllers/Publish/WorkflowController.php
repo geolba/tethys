@@ -30,7 +30,7 @@ class WorkflowController extends Controller
         $builder = Dataset::query();
         $myDatasets = $builder
             ->whereIn('server_state', ['inprogress', 'released'])
-            ->where('account_id', $user_id)
+            // ->where('account_id', $user_id)
             ->with('user:id,login')
             ->get();
         return view('workflow.index', [
@@ -51,7 +51,7 @@ class WorkflowController extends Controller
         //     $q->where('login', 'admin');
         // })->pluck('login', 'id');
         $editors = User::with(['roles' => function ($query) {
-            $query->where('name', 'reviewer');
+            $query->where('name', 'editor');
         }])
             ->pluck('login', 'id');
         //$editors = Role::where('name', 'reviewer')->first()->users;
@@ -105,7 +105,7 @@ class WorkflowController extends Controller
                 }
             }
             $dataset->delete();
-            session()->flash('flash_message', 'You have been deleted 1 dataset!');
+            session()->flash('flash_message', 'You have deleted 1 dataset!');
             return redirect()->route('publish.workflow.index');
         }
     }
@@ -115,14 +115,43 @@ class WorkflowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexReleased()
+    public function editorIndex()
     {
         $builder = Dataset::query();
         $datasets = $builder
         //->where('server_state', 'inprogress')
         ->whereIn('server_state', ['released'])
             ->get();
-        return view('workflow.review', compact('datasets'));
+        return view('workflow.editor_index', compact('datasets'));
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function accept($id): View
+    {
+        $dataset = Dataset::with('user:id,login')->findOrFail($id);
+        // $editors = User::whereHas('roles', function ($q) {
+        //     $q->where('login', 'admin');
+        // })->pluck('login', 'id');
+        $editors = User::with(['roles' => function ($query) {
+            $query->where('name', 'editor');
+        }])
+            ->pluck('login', 'id');
+        //$editors = Role::where('name', 'reviewer')->first()->users;
+
+        return view('workflow.accept', [
+            'dataset' => $dataset,
+            'editors' => $editors,
+        ]);
+    }
+
+    public function acceptUpdate(Request $request, $id)
+    {
+        $dataset = Dataset::findOrFail($id);
     }
 
     // public function release()
