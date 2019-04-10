@@ -943,6 +943,11 @@ textarea.large, input.large {
 .pure-table tr.released {   
     background-color: greenyellow;
 }
+.pure-table tr.editor_accepted {
+    padding: 0.8em;
+    background-color: lightblue;
+}
+
 
 
 

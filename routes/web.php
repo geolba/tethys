@@ -76,7 +76,7 @@ Route::group(
         // ]);
 
         Route::get('workflow/editor_index', [
-            'middleware' => ['permission:dataset-released-list'],
+            'middleware' => ['permission:dataset-editor-list'],
             'as' => 'workflow.editorIndex', 'uses' => 'WorkflowController@editorIndex',
         ]);
         Route::get('workflow/accept/{id}', [

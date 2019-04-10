@@ -29,8 +29,8 @@ class WorkflowController extends Controller
 
         $builder = Dataset::query();
         $myDatasets = $builder
-            ->whereIn('server_state', ['inprogress', 'released'])
-            // ->where('account_id', $user_id)
+            ->whereIn('server_state', ['inprogress', 'released', 'editor_accepted'])
+            ->where('account_id', $user_id)
             ->with('user:id,login')
             ->get();
         return view('workflow.index', [
@@ -120,7 +120,7 @@ class WorkflowController extends Controller
         $builder = Dataset::query();
         $datasets = $builder
         //->where('server_state', 'inprogress')
-        ->whereIn('server_state', ['released'])
+        ->whereIn('server_state', ['released', 'editor_accepted'])
             ->get();
         return view('workflow.editor_index', compact('datasets'));
     }
@@ -152,6 +152,17 @@ class WorkflowController extends Controller
     public function acceptUpdate(Request $request, $id)
     {
         $dataset = Dataset::findOrFail($id);
+      
+        try {
+            $dataset->setServerState("editor_accepted");
+            $user = Auth::user();
+            $dataset->editor()->associate($user)->save();
+            $dataset->save();
+            return redirect()->back();
+            //return redirect()->route('settings.review.index');
+        } catch (Exception $e) {
+            throw new GeneralException(trans('exceptions.publish.accept.update_error'));
+        }
     }
 
     // public function release()
@@ -190,7 +201,7 @@ class WorkflowController extends Controller
                 session()->flash('flash_message', 'You have puplished 1 dataset!');
             }
             $dataset->save();
-            return redirect()->back();
+            //return redirect()->back();
             //return redirect()->route('settings.review.index');
         } catch (Exception $e) {
             //return $this->_redirectTo('index', array('failure' => $e->getMessage()), 'documents', 'admin');

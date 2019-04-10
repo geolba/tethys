@@ -26,7 +26,10 @@
                     $rowclass = 'inprogress';
                 } elseif ($dataset->server_state == 'released') {
                     $rowclass = 'released';   
-                }            
+                }  
+                elseif ($dataset->server_state == 'editor_accepted') {
+                    $rowclass = 'editor_accepted';   
+                }              
                 @endphp
                 <tr class="{{ $rowclass }}">
                     <td>

@@ -16,6 +16,9 @@ return [
         'release' => [
             'update_error'   => 'There was a problem rleasing this dataset. Please try again.',
         ],
+        'accept' => [
+            'update_error'   => 'There was a problem accepting this dataset. Please try again.',
+        ],
     ],
 
     'backend' => [

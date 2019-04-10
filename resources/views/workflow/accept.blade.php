@@ -33,7 +33,7 @@
                 }            
                 @endphp
                
-            {!! Form::model($dataset, [ 'method' => 'POST', 'id' => 'acceptForm',
+            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.acceptUpdate', $dataset->id], 'id' => 'acceptForm',
             'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'checkForm']) !!}
             <fieldset id="fieldset-General">
                 <legend>General</legend>
@@ -65,7 +65,7 @@
 
             <br />
             <div class="pure-controls">
-                <button :disabled="errors.any()" type="submit" class="pure-button">
+                <button type="submit" class="pure-button">
                     <i class="fa fa-share"></i>
                     <span>Accept</span>
                 </button>
@@ -79,11 +79,5 @@
 
 @stop 
 
-@section('after-scripts') {{--
-<script type="text/javascript" src="{{ asset('js/lib.js') }}"></script> --}} {{--
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>--}} {{--
-<script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
-<script type="text/javascript" src="{{  asset('backend/publish/releaseDataset.js') }}"></script>
-
+@section('after-scripts') 
 @stop

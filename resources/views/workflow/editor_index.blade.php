@@ -13,14 +13,23 @@
             <thead>
                 <th>Dataset Title</th>
                 <th>ID</th>
-                <th>Server State</th>
-                <th>Preferred Editor</th>
+                <th>Server State</th>               
+                <th>Editor</th>              
                 <th></th>
             </thead>
 
             <tbody>
-                @foreach($datasets as $dataset)
-                <tr>
+                @foreach($datasets as $dataset)               
+                @php 
+                //if userid changed from last iteration, store new userid and change color                
+                // $lastid = $detail->payment->userid;
+                if ($dataset->server_state == 'editor_accepted') {
+                    $rowclass = 'editor_accepted';
+                } elseif ($dataset->server_state == 'released') {
+                    $rowclass = 'released';   
+                }            
+                @endphp
+                <tr class="{{ $rowclass }}">
                     <td>
                         @if ($dataset->titles()->first()) 
                         {{ $dataset->titles()->first()->value }} 
@@ -34,7 +43,12 @@
                     <td>
                         {{ $dataset->server_state }}
                     </td>
-                    <td> {{ optional($dataset->editor)->login }} </td>
+                    @if ($dataset->server_state == "released") 
+                    <td>Preferred editor: {{ optional($dataset->editor)->login }} </td>
+                    @elseif ($dataset->server_state == "editor_accepted")
+                    <td>in approvement by {{ optional($dataset->editor)->login }} </td>
+                    @endif
+                   
                     <td>
                         @if ($dataset->server_state == "released")
                         <a href="{{ URL::route('publish.workflow.accept', $dataset->id) }}" class="pure-button">
