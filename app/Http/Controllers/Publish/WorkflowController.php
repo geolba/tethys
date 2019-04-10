@@ -117,11 +117,19 @@ class WorkflowController extends Controller
      */
     public function editorIndex()
     {
+        $user = Auth::user();
+        $user_id = $user->id;
+
         $builder = Dataset::query();
         $datasets = $builder
         //->where('server_state', 'inprogress')
-        ->whereIn('server_state', ['released', 'editor_accepted'])
-            ->get();
+        ->whereIn('server_state', ['released'])
+        //->where('server_state', 'editor_accepted')
+        ->orWhere(function ($query) use ($user_id) {
+            $query->where('server_state', 'editor_accepted')
+                  ->where('editor_id', $user_id);
+        })
+        ->get();
         return view('workflow.editor_index', compact('datasets'));
     }
 
