@@ -39,7 +39,7 @@ Route::group(
             'as' => 'dataset.index', 'uses' => 'IndexController@index',
         ]);
         Route::get('dataset/create-step1', [
-            'middleware' => ['permission:dataset-create'],
+            'middleware' => ['permission:dataset-submit'],
             'as' => 'dataset.create',
             'uses' => 'IndexController@createStep1',
         ]);
@@ -50,7 +50,7 @@ Route::group(
 
         // Route::get('dataset/create-step3', ['as' => 'dataset.create3', 'uses' => 'IndexController@createStep3']);
         Route::post('dataset/store', [
-            'middleware' => ['permission:dataset-create'],
+            'middleware' => ['permission:dataset-submit'],
             'as' => 'dataset.store',
             'uses' => 'IndexController@store',
         ]);

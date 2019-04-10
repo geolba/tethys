@@ -88,11 +88,11 @@
                 </li>
                 @endpermission
 
-                @role(array('administrator', 'editor', 'reviewer'))
+                @role(array('administrator', 'editor', 'reviewer', 'submitter'))
                 <li class="treeview">
                     <h2 class="pure-menu-heading">Publish</h2>
                     <ul class="pure-menu-list">		
-                        @permission('dataset-create')
+                        @permission('dataset-submit')
                         <li class="pure-menu-item {{ Route::is('publish.dataset.create') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Create</a>
                         </li>
