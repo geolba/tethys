@@ -14,10 +14,13 @@ return [
     */
     'publish' => [
         'release' => [
-            'update_error'   => 'There was a problem rleasing this dataset. Please try again.',
+            'update_error'   => 'There was a problem releasing this dataset. Please try again.',
         ],
         'accept' => [
             'update_error'   => 'There was a problem accepting this dataset. Please try again.',
+        ],
+        'approve' => [
+            'update_error'   => 'There was a problem approving this dataset. Please try again.',
         ],
     ],
 

@@ -939,16 +939,23 @@ textarea.large, input.large {
 .pure-table tr.inprogress {
     padding: 0.8em;
     background-color: paleturquoise;
+    color: gray;
 }
 .pure-table tr.released {   
     background-color: greenyellow;
+    color: gray;
 }
 .pure-table tr.editor_accepted {
     padding: 0.8em;
     background-color: lightblue;
+    color: gray;
 }
+.pure-table tr.approved {
+    padding: 0.8em;
+    background-color: rgb(86, 86, 241);
+    color: whitesmoke;
 
-
+}
 
 
 .help {

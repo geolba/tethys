@@ -1,4 +1,5 @@
 {
+    "/backend/publish/approveDataset.js": "/backend/publish/approveDataset.js",
     "/backend/publish/datasetPublish.js": "/backend/publish/datasetPublish.js",
     "/backend/publish/releaseDataset.js": "/backend/publish/releaseDataset.js",
     "/js/app.js": "/js/app.js",

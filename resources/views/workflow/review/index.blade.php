@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i>EDITOR PAGE: Approve released datasets
+        <i class="fa fa-file"></i> REVIEW PAGE: Review approved datasets assigned to you
     </h3>
 </div>
 
@@ -29,7 +29,7 @@
                     $rowclass = 'released';   
                 }            
                 @endphp
-                <tr class="{{ $rowclass }}">
+                <tr>
                     <td>
                         @if ($dataset->titles()->first()) 
                         {{ $dataset->titles()->first()->value }} 
@@ -43,23 +43,16 @@
                     <td>
                         {{ $dataset->server_state }}
                     </td>
-                    @if ($dataset->server_state == "released") 
-                    <td>Preferred editor: {{ optional($dataset->editor)->login }} </td>
-                    @elseif ($dataset->server_state == "editor_accepted")
-                    <td>in approvement by {{ optional($dataset->editor)->login }} </td>
+                    @if ($dataset->server_state == "approved")                    
+                    <td>editor: {{ optional($dataset->editor)->login }}</td>
                     @endif
                    
                     <td>
-                        @if ($dataset->server_state == "released")
-                        <a href="{{ URL::route('publish.workflow.accept', $dataset->id) }}" class="pure-button">
-                            <i class="fa fa-share"></i>
-                            <span>Accept editor task</span>
-                        </a>  
-                        {{-- <a href="{{ URL::route('publish.workflow.delete', $dataset->id) }}" class="pure-button">
-                            <i class="fa fa-trash"></i>
-                            <span>Reject</span>
-                        </a>   --}}
-                                                           
+                        @if ($dataset->server_state == "approved")
+                        <a class="pure-button">
+                            <i class="fa fa-check"></i>
+                            <span>Review</span>
+                        </a> 
                         @endif
                     </td>
                     {{-- <td>

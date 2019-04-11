@@ -10,7 +10,7 @@ const app = new Vue({
         return {
             dataset: {
                 firstName: '',
-                preferred_editor: ''
+                reviewer_id: ''
             },
             submitted: false
         }
@@ -23,7 +23,7 @@ const app = new Vue({
             this.$validator.validate().then(result => {
                 if (result) {
                     console.log('From Submitted!');
-                    document.getElementById("releaseForm").submit();
+                    document.getElementById("approveForm").submit();
                     return;
                 }
             });

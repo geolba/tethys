@@ -16,21 +16,20 @@
 
     <div class="pure-u-1 pure-u-md-1">
         <div>
-            <a href="{{ route('publish.workflow.editorIndex') }}" class="pure-button button-small">
+            <a href="{{ route('publish.workflow.editor.index') }}" class="pure-button button-small">
                 <i class="fa fa-chevron-left"></i>
                 <span>BACK</span>
             </a>
         </div>
         <div id="app1">
-                @php 
-                //if userid changed from last iteration, store new userid and change color                
-                // $lastid = $detail->payment->userid;
-                if ($dataset->editor->id == Auth::user()->id) {
-                    $userIsDesiredEditor = true;
-                } else {
-                    $userIsDesiredEditor = false;
-                    $message = 'you are not the desired editor, but you can still accept the dataset';  
-                }            
+                @php                
+                // if ($dataset->editor->id == Auth::user()->id) {
+                //     $userIsDesiredEditor = true;
+                // } else {
+                //     $userIsDesiredEditor = false;
+                //     $message = 'you are not the desired editor, but you can still accept the dataset';  
+                // }
+                $message = 'If you are not the desired editor, you can still accept the dataset!!';            
                 @endphp
                
             {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.acceptUpdate', $dataset->id], 'id' => 'acceptForm',
@@ -41,10 +40,10 @@
 
                     <div class="pure-u-1 pure-u-md-1-1 pure-div">
                         {!! Form::label('editor_id', 'preferred editor:') !!}
-                        {!! $dataset->editor->login !!}
-                        @if($userIsDesiredEditor == false)
-                            <span class="help is-danger"> {!! $message !!}</span>
-                        @endif
+                        {!! $dataset->preferred_editor !!}
+                       
+                        <span class="help is-danger"> {!! $message !!}</span>
+                      
                         {{-- <span class="help is-danger" v-if="errors.has('editor_id')" v-text="errors.first('editor_id')"></span> --}}
 
                     </div>

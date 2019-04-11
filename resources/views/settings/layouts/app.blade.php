@@ -103,8 +103,13 @@
                         </li>	
                         @endpermission
                         @permission('dataset-editor-list')
-                        <li class="pure-menu-item {{ Route::is('publish.workflow.editorIndex') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editorIndex') }}"><i class="fa fa-upload"></i> EDITOR PAGE: Released datasets</a>
+                        <li class="pure-menu-item {{ Route::is('publish.workflow.editor.index') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editor.index') }}"><i class="fa fa-upload"></i> EDITOR PAGE: Released datasets</a>
+                        </li>	
+                        @endpermission
+                        @permission('dataset-review-list')
+                        <li class="pure-menu-item {{ Route::is('publish.workflow.review.index') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.review.index') }}"><i class="fa fa-upload"></i> REVIEW PAGE: Approved datasets</a>
                         </li>	
                         @endpermission
                         {{-- <li class="pure-menu-item {{ Route::is('publish.workflow.release') ? 'active' : '' }}">

@@ -57,39 +57,59 @@ Route::group(
 
         Route::get('workflow/index', [
             'middleware' => ['permission:dataset-list'],
-            'as' => 'workflow.index', 'uses' => 'WorkflowController@index',
+            'as' => 'workflow.index', 'uses' => 'SubmitController@index',
         ]);
         Route::get('workflow/release/{id}', [
-            'middleware' => ['permission:dataset-create', 'isUserDatasetAdmin:true'],
-            'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
+            'middleware' => ['permission:dataset-submit', 'isUserDatasetAdmin:true'],
+            'as' => 'workflow.release', 'uses' => 'SubmitController@release',
         ]);
         Route::post('workflow/release/{id}', [
-            'middleware' => ['permission:dataset-create', 'isUserDatasetAdmin:true'],
-            'as' => 'workflow.releaseUpdate', 'uses' => 'WorkflowController@releaseUpdate',
+            'middleware' => ['permission:dataset-submit', 'isUserDatasetAdmin:true'],
+            'as' => 'workflow.releaseUpdate', 'uses' => 'SubmitController@releaseUpdate',
         ]);
         Route::get('workflow/delete/{id}', [
             'middleware' => ['isUserDatasetAdmin:true'],
-            'as' => 'workflow.delete', 'uses' => 'WorkflowController@delete',
+            'as' => 'workflow.delete', 'uses' => 'SubmitController@delete',
         ]);
-        // Route::get('workflow/release/{id}', [
-        //     'as' => 'workflow.release', 'uses' => 'WorkflowController@release',
-        // ]);
-
-        Route::get('workflow/editor_index', [
+       
+        //editor
+        Route::get('workflow/editor/index', [
             'middleware' => ['permission:dataset-editor-list'],
-            'as' => 'workflow.editorIndex', 'uses' => 'WorkflowController@editorIndex',
+            'as' => 'workflow.editor.index', 'uses' => 'EditorController@index',
         ]);
         Route::get('workflow/accept/{id}', [
             'middleware' => ['permission:dataset-accept'],
-            'as' => 'workflow.accept', 'uses' => 'WorkflowController@accept',
+            'as' => 'workflow.accept', 'uses' => 'EditorController@accept',
         ]);
         Route::post('workflow/accept/{id}', [
             'middleware' => ['permission:dataset-accept'],
-            'as' => 'workflow.acceptUpdate', 'uses' => 'WorkflowController@acceptUpdate',
+            'as' => 'workflow.acceptUpdate', 'uses' => 'EditorController@acceptUpdate',
+        ]);
+        Route::get('workflow/edit/{id}', [
+            'middleware' => ['permission:dataset-editor-update'],
+            'as' => 'workflow.editor.edit', 'uses' => 'EditorController@edit',
+        ]);
+        Route::post('workflow/edit/{id}', [
+            'middleware' => ['permission:dataset-editor-update'],
+            'as' => 'workflow.editor.update', 'uses' => 'EditorController@update',
+        ]);
+        Route::get('workflow/approve/{id}', [
+            'middleware' => ['permission:dataset-approve'],
+            'as' => 'workflow.editor.approve', 'uses' => 'EditorController@approve',
+        ]);
+        Route::post('workflow/approve/{id}', [
+            'middleware' => ['permission:dataset-approve'],
+            'as' => 'workflow.editor.approveUpdate', 'uses' => 'EditorController@approveUpdate',
+        ]);
+
+        //reviewer
+        Route::get('workflow/review/index', [
+            'middleware' => ['permission:dataset-review-list'],
+            'as' => 'workflow.review.index', 'uses' => 'ReviewController@index',
         ]);
 
         Route::get('workflow/changestate/{id}/changestate/{targetState}', [
-            'as' => 'review.changestate', 'uses' => 'WorkflowController@changestate',
+            'as' => 'review.changestate', 'uses' => 'SubmitController@changestate',
         ]);
     }
 );
