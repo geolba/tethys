@@ -9,7 +9,7 @@
     </h3>
 </div>
 
-<div id="app" class="box-content">
+<div id="app" class="box-content" v-cloak>
     {{--
     <form action={{ route( 'publish.dataset.store1') }} method="post" class="pure-form" enctype="multipart/form-data">
         --}}

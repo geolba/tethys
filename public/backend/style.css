@@ -936,6 +936,7 @@ textarea.large, input.large {
     /* float: right; */
   }
 
+
 .pure-table tr.inprogress {
     padding: 0.8em;
     background-color: paleturquoise;
@@ -957,6 +958,8 @@ textarea.large, input.large {
 
 }
 
+[v-cloak] > * { display:none; }
+[v-cloak]::before { content: "loading..."; }
 
 .help {
     display: block;

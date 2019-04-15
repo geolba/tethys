@@ -118,7 +118,7 @@ const app = new Vue({
     },
     mounted() {
         //this.step = 2;
-        this.reset();
+        this.reset();     
     },
     computed: {
         isInitial() {
