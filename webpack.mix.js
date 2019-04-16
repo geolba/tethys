@@ -19,6 +19,7 @@ mix.js('resources/assets/js/datasetPublish.js', 'public/backend/publish')
     .js('resources/assets/js/lib.js', 'public/js')
     .js('resources/assets/js/releaseDataset.js', 'public/backend/publish')
     .js('resources/assets/js/approveDataset.js', 'public/backend/publish')
+    .js('resources/assets/js/ckeditor.js', 'public/backend/')
     .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-buttons/js/dataTables.buttons.js',

@@ -29,8 +29,10 @@
         </div>
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('desc_markup', 'Beschreibung als Markup') !!} {!! Form::textarea('desc_markup', null, ['class' => 'pure-u-23-24',
+            {!! Form::label('desc_markup', 'Beschreibung als Markup') !!} 
+            {!! Form::textarea('desc_markup', null, ['class' => 'pure-u-23-24 ckeditor',
             'size' => '70x6']) !!}
+            {{-- <ckeditor :editor="editor" v-bind:desc_markup='{{ $license->desc_markup }}' :config="editorConfig"></ckeditor> --}}
         </div>
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">

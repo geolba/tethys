@@ -1,5 +1,5 @@
 // https://alligator.io/vuejs/vue-modal-component/
-<template lang="html">
+<template>
 <div class="modal-backdrop">
   <div class="popup">
     <div class="fm_overlay" >

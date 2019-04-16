@@ -725,8 +725,8 @@
 <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script> --}} {{--
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>--}} {{--
-<script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
-<script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>
+ <script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
+ <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>
 
 
 

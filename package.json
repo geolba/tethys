@@ -25,6 +25,7 @@
     "vuetable-2": "^1.7.5"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^12.1.0",
     "datatables.net": "^1.10.19",
     "datatables.net-buttons": "^1.5.4"
   }

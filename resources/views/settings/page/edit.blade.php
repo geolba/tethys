@@ -57,7 +57,7 @@
                     {!! Form::label('en_description', trans('validation.attributes.backend.pages.description'), ['class' => 'col-lg-2 control-label
                     required']) !!}
                     <div class="col-lg-10">
-                        {!! Form::textarea('en_description', $page->translate('en')->description, ['class' => 'form-control description', 'placeholder' => trans('validation.attributes.backend.pages.description')])
+                        {!! Form::textarea('en_description', $page->translate('en')->description, ['class' => 'form-control description ckeditor', 'placeholder' => trans('validation.attributes.backend.pages.description')])
                         !!}
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                     {!! Form::label('de_description', trans('validation.attributes.backend.pages.description'), ['class' => 'col-lg-2 control-label
                     required']) !!}
                     <div class="col-lg-10">
-                        {!! Form::textarea('de_description', $page->translate('de')->description, ['class' => 'form-control description', 'placeholder' => trans('validation.attributes.backend.pages.description')])
+                        {!! Form::textarea('de_description', $page->translate('de')->description, ['class' => 'form-control description ckeditor', 'placeholder' => trans('validation.attributes.backend.pages.description')])
                         !!}
                     </div>
                 </div>
@@ -136,24 +136,13 @@ input[type="radio"], .tab-pane { display: none; }
 @endsection 
 
 @section("after-scripts")
-<script type="text/javascript">
-    // Backend.Pages.init();
-
-</script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.js"></script>
+<script type="text/javascript" src="{{  asset('backend/ckeditor.js') }}"></script>
 <script>
-    $(document).ready(function() {
-            // $('#description').summernote();
-            $('.description').summernote({
-                height: "300px",
-                callbacks: {
-                    // onImageUpload: function(files, editor, welEditable) {
-                    //     app.sendFile(files[0], editor, welEditable);
-                    // }
-                }
-            });
-            document.getElementById("english-option").checked = true;
+    
+
+    $(document).ready(function() {    
+        document.getElementById("english-option").checked = true;
+    });
             
             // var $englishForm = $('#english-form');
             // var $germanForm = $('#german-form');
@@ -172,7 +161,7 @@ input[type="radio"], .tab-pane { display: none; }
             //     $germanForm.toggleClass('hidden');
             // });
 
-        });
+       
 
 </script>
 @endsection

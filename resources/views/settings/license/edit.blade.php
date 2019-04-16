@@ -30,18 +30,14 @@
     <script type="text/javascript">
         // Backend.Pages.init();
     </script>
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.css" rel="stylesheet">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.js"></script>
-     {{-- <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script> --}}
-     <script>
+     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.css" rel="stylesheet">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote-lite.js"></script> --}}
+    
+     {{-- <script>
         $(document).ready(function() {
-            $('#desc_markup').summernote();
-            // tinymce.init({ 
-            //     selector: "#desc_markup",
-            //     plugins: "code",
-            //     // toolbar: "code",
-            //     menubar: "tools"
-            // });
+            $('#desc_markup').summernote();           
         });
-      </script>
+      </script> --}}
+
+<script type="text/javascript" src="{{  asset('backend/ckeditor.js') }}"></script>
 @endsection
