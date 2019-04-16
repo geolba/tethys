@@ -2,6 +2,7 @@
     "/backend/ckeditor.js": "/backend/ckeditor.js",
     "/backend/publish/approveDataset.js": "/backend/publish/approveDataset.js",
     "/backend/publish/datasetPublish.js": "/backend/publish/datasetPublish.js",
+    "/css/app1.css": "/css/app1.css",
     "/backend/publish/releaseDataset.js": "/backend/publish/releaseDataset.js",
     "/js/app.js": "/js/app.js",
     "/js/lib.js": "/js/lib.js",

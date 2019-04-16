@@ -7,8 +7,9 @@
     <title>Admin PureRDR</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
-    <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
-    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />   
+    {{-- <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
+    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />  --}}
+    <link rel='stylesheet' href="{{ asset('css/app1.css') }}" />  
     <!--<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">-->
     <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" />
     

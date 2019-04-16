@@ -13,15 +13,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}"> --}}
 
-    <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
-    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />
-    <!--<link href="{{ asset('css/app1.css') }}" rel="stylesheet" />-->
+    {{-- <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" /> --}}
+    {{-- <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" /> --}}
+    <link rel='stylesheet' href="{{ asset('css/app1.css') }}" />
     <!--<link rel='stylesheet' href="{{ asset('css/page.css') }}" />--> 
     <link rel='stylesheet' href="{{ asset('css/styles.css') }}" />
     <link rel='stylesheet' href="{{ asset('css/langswitch.css') }}" />
     <!-- Fonts -->
     <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C700italic%2C400%2C300%2C700%2C800&amp;ver=3.8.1" type="text/css" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C700italic%2C400%2C300%2C700%2C800&amp;ver=3.8.1" type="text/css" rel="stylesheet"> --}}
 
     @yield('head')
 
