@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700,800");
 
 // Variables
-// @import "style";
+// @import "variables";
 
 // Bootstrap
 // $icon-font-path: "../fonts/bootstrap/";
@@ -24,4 +24,7 @@
 // @import 'purecss/menus';
 // @import 'purecss/tables';
 
-
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
