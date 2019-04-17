@@ -38,7 +38,7 @@
             <div class="pure-controls">
                 <button :disabled="errors.any()" type="submit" class="pure-button">
                     <i class="fa fa-share"></i>
-                    <span>Approve</span>
+                    <span>Set Approved</span>
                 </button>
             </div>
 

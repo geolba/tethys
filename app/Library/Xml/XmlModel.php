@@ -126,7 +126,7 @@ class XmlModel
             return $domDocument;
         }
 
-        //create xml:
+        //$domDocument == null -> create xml:
         $domDocument = $this->strategy->getDomDocument();
         //if caching is not desired, return domDocument
         if (is_null($this->cache)) {

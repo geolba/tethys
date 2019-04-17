@@ -43,7 +43,7 @@ trait DatasetExtension
             'pivot' => array('role' => 'author'),
                             //'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
-            'relation' => 'authors',
+            'relation' => 'persons',
             'fetch' => 'eager'
         ),
         'PersonContributor' => array(
@@ -52,7 +52,7 @@ trait DatasetExtension
             'pivot' => array('role' => 'contributor'),
             //                'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
-            'relation' => 'contributors',
+            'relation' => 'persons',
             'fetch' => 'eager'
         ),
         'Subject' => array(
@@ -85,14 +85,9 @@ trait DatasetExtension
     {
         $fields = array(
             "Id",
-            "CompletedDate", "CompletedYear",
             "ContributingCorporation",
             "CreatingCorporation",
-            "ThesisDateAccepted", "ThesisYearAccepted",
-            "Edition",
-            "Issue",
             "Language",
-            "PageFirst", "PageLast", "PageNumber",
             "PublishedDate", "PublishedYear",
             "PublisherName", "PublisherPlace",
             "PublicationState",
@@ -102,7 +97,6 @@ trait DatasetExtension
             "ServerDateDeleted",
             "ServerState",
             "Type",
-            "Volume",
             "BelongsToBibliography",
             "EmbargoDate"
         );
@@ -121,7 +115,7 @@ trait DatasetExtension
              // Initialize available date fields and set up date validator
             // if the particular field is present
         $dateFields = array(
-            'ServerDateCreated', 'CompletedDate', 'PublishedDate',
+            'ServerDateCreated', 'PublishedDate',
             'ServerDateModified', 'ServerDatePublished', 'ServerDateDeleted', 'EmbargoDate'
         );
         foreach ($dateFields as $fieldName) {

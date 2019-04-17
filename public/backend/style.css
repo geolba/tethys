@@ -957,6 +957,10 @@ textarea.large, input.large {
     color: whitesmoke;
 
 }
+.pure-table tr.reviewed {
+    padding: 0.8em;
+    background-color: #ffed4a;   
+}
 
 [v-cloak] > * { display:none; }
 [v-cloak]::before { content: "loading..."; }
@@ -964,10 +968,13 @@ textarea.large, input.large {
 
 .help {
     display: block;
-    font-size: 0.75rem;
+    font-size: 12px;
     margin-top: 0.25rem;
 }
 .help.is-danger {
     color: #ff3860;
+  }
+  .help.is-info {
+    color: #4dc0b5;
   }
  

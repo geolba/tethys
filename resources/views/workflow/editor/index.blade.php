@@ -52,14 +52,14 @@
                    
                     <td>
                         @if ($dataset->server_state == "released")
-                        <a href="{{ URL::route('publish.workflow.accept', $dataset->id) }}" class="pure-button">
+                        <a href="{{ URL::route('publish.workflow.receive', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-check"></i>
-                            <span>Accept editor task</span>
+                            <span>Receive editor task</span>
                         </a>                        
                         @elseif ($dataset->server_state == "editor_accepted")
                         <a href="{{ URL::route('publish.workflow.editor.edit', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-edit"></i>
-                            <span>Improve/Edit</span>
+                            <span>Edit</span>
                         </a> 
                         <a href="{{ URL::route('publish.workflow.editor.approve', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-share"></i>

@@ -31,7 +31,9 @@
                     $rowclass = 'editor_accepted';   
                 } elseif ($dataset->server_state == 'approved') {
                     $rowclass = 'approved';   
-                }                    
+                } elseif ($dataset->server_state == 'reviewed') {
+                    $rowclass = 'reviewed';   
+                }                                        
                 @endphp
                 <tr class="{{ $rowclass }}">
                     <td>

@@ -70,6 +70,37 @@ class Strategy
         return $this->_config->dom;
     }
 
+    public function getModelFieldValues(Dataset $model)
+    {
+        $fields = $model->describe();
+        $excludeFields = $this->getConfig()->excludeFields;
+        if (count($excludeFields) > 0) {
+            $fieldsDiff = array_diff($fields, $excludeFields);
+        } else {
+            $fieldsDiff = $fields;
+        }
+
+        foreach ($fieldsDiff as $fieldname) {
+            $field = $model->getField($fieldname);
+            $fieldValue = $this->getFieldValue($field);
+        }
+    }
+
+    protected function getFieldValue(Field $field): string
+    {
+        $modelClass = $field->getValueModelClass();
+        $fieldValues = $field->getValue();
+      
+        if (null === $modelClass) {
+            $fieldName = $field->getName();
+            $fieldValues = $this->getFieldValues($field);
+    
+            // Replace invalid XML-1.0-Characters by UTF-8 replacement character.
+            $fieldValues = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', "\xEF\xBF\xBD ", $fieldValues);
+        }
+        return fieldValues;
+    }
+
     protected function _mapModel(Dataset $model, \DOMDocument $dom, \DOMNode $rootNode)
     {
         $fields = $model->describe();

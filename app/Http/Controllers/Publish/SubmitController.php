@@ -25,7 +25,8 @@ class SubmitController extends Controller
 
         $builder = Dataset::query();
         $myDatasets = $builder
-            ->whereIn('server_state', ['inprogress', 'released', 'editor_accepted', 'approved'])
+        ->orderBy('server_state')
+            ->whereIn('server_state', ['inprogress', 'released', 'editor_accepted', 'approved', 'reviewed'])
             ->where('account_id', $user_id)
             ->with('user:id,login')
             ->get();

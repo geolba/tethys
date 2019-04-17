@@ -51,16 +51,16 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function accept($id): View
+    public function receive($id): View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
 
-        return view('workflow.editor.accept', [
+        return view('workflow.editor.receive', [
             'dataset' => $dataset,
         ]);
     }
 
-    public function acceptUpdate(Request $request, $id)
+    public function receiveUpdate(Request $request, $id)
     {
         $dataset = Dataset::findOrFail($id);
       
@@ -191,6 +191,7 @@ class EditorController extends Controller
             'reviewers' => $reviewers,
         ]);
     }
+
     public function approveUpdate(Request $request, $id)
     {
         // $dataset = Dataset::findOrFail($id);

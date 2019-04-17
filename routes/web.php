@@ -77,13 +77,13 @@ Route::group(
             'middleware' => ['permission:dataset-editor-list'],
             'as' => 'workflow.editor.index', 'uses' => 'EditorController@index',
         ]);
-        Route::get('workflow/accept/{id}', [
-            'middleware' => ['permission:dataset-accept'],
-            'as' => 'workflow.accept', 'uses' => 'EditorController@accept',
+        Route::get('workflow/receive/{id}', [
+            'middleware' => ['permission:dataset-receive'],
+            'as' => 'workflow.receive', 'uses' => 'EditorController@receive',
         ]);
-        Route::post('workflow/accept/{id}', [
-            'middleware' => ['permission:dataset-accept'],
-            'as' => 'workflow.acceptUpdate', 'uses' => 'EditorController@acceptUpdate',
+        Route::post('workflow/receive/{id}', [
+            'middleware' => ['permission:dataset-receive'],
+            'as' => 'workflow.receiveUpdate', 'uses' => 'EditorController@receiveUpdate',
         ]);
         Route::get('workflow/edit/{id}', [
             'middleware' => ['permission:dataset-editor-update'],
@@ -106,6 +106,14 @@ Route::group(
         Route::get('workflow/review/index', [
             'middleware' => ['permission:dataset-review-list'],
             'as' => 'workflow.review.index', 'uses' => 'ReviewController@index',
+        ]);
+        Route::get('workflow/review/{id}', [
+            'middleware' => ['permission:dataset-review'],
+            'as' => 'workflow.review.review', 'uses' => 'ReviewController@review',
+        ]);
+        Route::post('workflow/review/{id}', [
+            'middleware' => ['permission:dataset-review'],
+            'as' => 'workflow.review.reviewUpdate', 'uses' => 'ReviewController@reviewUpdate',
         ]);
 
         Route::get('workflow/changestate/{id}/changestate/{targetState}', [
