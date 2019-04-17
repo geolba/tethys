@@ -41,7 +41,9 @@ class EditorController extends Controller
         ->orWhere(function ($query) use ($user_id) {
             $query->where('server_state', 'editor_accepted')
                   ->where('editor_id', $user_id);
-        })->get();
+        })
+        ->orderBy('server_state')
+        ->get();
         return view('workflow.editor.index', compact('datasets'));
     }
 

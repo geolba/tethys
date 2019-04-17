@@ -95,8 +95,6 @@ class ReviewController extends Controller
                         $attributes = $fieldValue;
                         $value = "<ul>";
                         foreach ($attributes as $property_name => $subValue) {
-                            // $fieldName = $property_name;
-                            // $fieldval = $subValue;                           
                             $value = $value . "<li>" . $property_name . " : " .  $subValue . "</li>";
                         }
                         $value = $value . "</ul>";
@@ -118,9 +116,6 @@ class ReviewController extends Controller
     public function reviewUpdate(Request $request, $id)
     {
         $dataset = Dataset::findOrFail($id);
-
-     
-
         $input = $request->all();
         $input['server_state'] = 'reviewed';
 
@@ -134,7 +129,7 @@ class ReviewController extends Controller
     }
 
     //snakeToCamel
-    public static function convertColumnToFieldname($columnname)
+    private static function convertColumnToFieldname($columnname)
     {
         //return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $columnname))));
         return ucwords(str_replace(['-', '_'], ' ', $columnname));

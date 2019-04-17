@@ -116,6 +116,20 @@ Route::group(
             'as' => 'workflow.review.reviewUpdate', 'uses' => 'ReviewController@reviewUpdate',
         ]);
 
+        //publisher
+        Route::get('workflow/publish/index', [
+            'middleware' => ['permission:dataset-publish-list'],
+            'as' => 'workflow.publish.index', 'uses' => 'PublishController@index',
+        ]);
+        Route::get('workflow/publish/{id}', [
+            'middleware' => ['permission:dataset-publish'],
+            'as' => 'workflow.publish.publish', 'uses' => 'PublishController@publish',
+        ]);
+        Route::post('workflow/review/{id}', [
+            'middleware' => ['permission:dataset-publish'],
+            'as' => 'workflow.publish.publishUpdate', 'uses' => 'PublishController@publishUpdate',
+        ]);
+
         Route::get('workflow/changestate/{id}/changestate/{targetState}', [
             'as' => 'review.changestate', 'uses' => 'SubmitController@changestate',
         ]);
