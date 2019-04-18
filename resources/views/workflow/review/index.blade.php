@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i> REVIEW PAGE: Review approved datasets assigned to you
+        <i class="fas fa-list"></i> REVIEW PAGE: Review approved datasets assigned to you
     </h3>
 </div>
 

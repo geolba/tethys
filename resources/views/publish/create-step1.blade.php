@@ -5,7 +5,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-upload"></i> Publish New Dataset
+        <i class="fas fa-plus-square"></i> Publish New Dataset
     </h3>
 </div>
 
@@ -656,10 +656,10 @@
                     <i class="fa fa-save"></i>
                     <span>Save Dataset</span>
                 </button>
-                <button @click.prevent="submit('unpublished')" class="pure-button button-small">               
+                {{-- <button @click.prevent="submit('unpublished')" class="pure-button button-small">               
                     <i class="fa fa-upload"></i>
                     <span>Release Dataset</span>
-                </button>              
+                </button>               --}}
 
             </div>
 

@@ -8,15 +8,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     {{-- <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
-    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />  --}}
-    <link rel='stylesheet' href="{{ asset('css/app1.css') }}" />  
+    <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" />  --}}    
     <!--<link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">-->
-    <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" />
-    
+    {{-- <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" /> --}}
+    <link rel='stylesheet' href="{{ asset('css/app1.css') }}" /> 
 
     <link rel="stylesheet" type="text/css" href="{{ asset('/backend/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/backend/pagination.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/backend/tabs.css') }}">
+    
     @yield('styles')
 </head>
 <body>
@@ -44,14 +44,14 @@
                 
                 <li class="{{ active_class(Route::is('settings.dashboard')) }}">
                     <a href="{{ route('settings.dashboard') }}">
-                        <i class="fa fa-dashboard"></i>
+                        <i class="fa fa-tachometer-alt"></i>
                         <span>Reports</span>
                     </a>
                 </li>
 
                 @permission('settings')
                 <li class="treeview">
-                    <h2 class="pure-menu-heading">Settings  <span class="fa fa-angle-down"></h2>
+                    <h2 class="pure-menu-heading">Settings  <span class="fas fa-angle-down"></h2>
                     <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('settings.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('settings.*'), 'display: block;') }}">				
                         <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.document') }}"><i class="fa fa-database"></i> Datasets</a>
@@ -63,23 +63,23 @@
                             <a class="pure-menu-link" href="{{ route('settings.collectionrole.index') }}"><i class="fa fa-archive"></i> Collection Roles</a>
                         </li>
                         <li class="pure-menu-item {{ Route::is('settings.license*') ? 'active' : '' }}">
-                            <a href="{{ route('settings.license') }}" class="pure-menu-link"><i class="fa fa-file"></i> Licenses</a>
+                            <a href="{{ route('settings.license') }}" class="pure-menu-link"><i class="fab fa-creative-commons"></i> Licenses</a>
                         </li>
                         <li class="pure-menu-item {{ Route::is('settings.person*') ? 'active' : '' }}">
-                            <a href="{{ route('settings.person') }}" class="pure-menu-link"><i class="fa fa-edit"></i> Persons</a>
+                            <a href="{{ route('settings.person') }}" class="pure-menu-link"><i class="fas fa-users"></i> Persons</a>
                         </li>
                         <li class="pure-menu-item {{ Route::is('settings.project*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.project') }}"><i class="fa fa-tasks"></i> Projects</a>
                         </li>
 
                         <li class="pure-menu-item {{ Route::is('settings.mimetype') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ route('settings.mimetype.index') }}"><i class="fa fa-archive"></i> Mimetypes</a>
+                            <a class="pure-menu-link" href="{{ route('settings.mimetype.index') }}"><i class="fas fa-file-code"></i> Mimetypes</a>
                         </li>
 
                         @permission('page')
                         <li class="{{ active_class(Active::checkUriPattern('settings/page*')) }}">
                             <a class="pure-menu-link" href="{{ route('settings.page.index') }}">
-                                <i class="fa fa-file-text"></i>
+                                <i class="fas fa-file-signature"></i>                                
                                 <span>{{ trans('labels.backend.pages.title') }}</span>
                             </a>
                         </li>
@@ -95,27 +95,27 @@
                     <ul class="pure-menu-list">		
                         @permission('dataset-submit')
                         <li class="pure-menu-item {{ Route::is('publish.dataset.create') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fa fa-upload"></i> Create</a>
+                            <a class="pure-menu-link" href="{{ URL::route('publish.dataset.create') }}"><i class="fas fa-plus-square"></i> Create</a>
                         </li>
                         @endpermission
                         @permission('dataset-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.index') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.index') }}"><i class="fa fa-upload"></i> All my datasets</a>
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.index') }}"><i class="fas fa-list"></i> All my datasets</a>
                         </li>	
                         @endpermission
                         @permission('dataset-editor-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.editor.index') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editor.index') }}"><i class="fa fa-upload"></i> EDITOR PAGE: Released datasets</a>
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editor.index') }}"><i class="fas fa-list"></i> EDITOR PAGE: Released datasets</a>
                         </li>	
                         @endpermission
                         @permission('dataset-review-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.review.index') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.review.index') }}"><i class="fa fa-upload"></i> REVIEW PAGE: Approved datasets</a>
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.review.index') }}"><i class="fas fa-list"></i> REVIEW PAGE: Approved datasets</a>
                         </li>	
                         @endpermission
                         @permission('dataset-publish-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.publish.index') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.publish.index') }}"><i class="fa fa-upload"></i> Publish PAGE: Reviewed datasets</a>
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.publish.index') }}"><i class="fas fa-list"></i> Publish PAGE: Reviewed datasets</a>
                         </li>	
                         @endpermission
                         {{-- <li class="pure-menu-item {{ Route::is('publish.workflow.release') ? 'active' : '' }}">
@@ -159,7 +159,7 @@
                         </li>	  
                         @endpermission
                         <li class="pure-menu-item">
-                            <a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i>Logout</a>
+                            <a class="pure-menu-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i></i>Logout</a>
                         </li> 
                         @endif
                     </ul>

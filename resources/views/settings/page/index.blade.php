@@ -9,7 +9,7 @@
 
         <div class="box-header with-border header">
             <h3 class="header-title">
-                <i class="fa fa fa-edit"></i> {{ trans('labels.backend.pages.management') }}
+                <i class="fas fa-file-signature"></i> {{ trans('labels.backend.pages.management') }}
             </h3>
             <div class="box-tools pull-right">
                 {{--

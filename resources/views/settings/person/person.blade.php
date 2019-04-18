@@ -3,7 +3,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-            <i class="fa fa fa-edit"></i> Persons Management
+        <i class="fas fa-users"></i> Persons Management
     </h3>
 </div>	
 

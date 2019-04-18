@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i> EDITOR PAGE: Approve released datasets
+        <i class="fas fa-list"></i> EDITOR PAGE: Approve released datasets
     </h3>
 </div>
 

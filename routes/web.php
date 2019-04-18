@@ -125,7 +125,7 @@ Route::group(
             'middleware' => ['permission:dataset-publish'],
             'as' => 'workflow.publish.publish', 'uses' => 'PublishController@publish',
         ]);
-        Route::post('workflow/review/{id}', [
+        Route::post('workflow/publish/{id}', [
             'middleware' => ['permission:dataset-publish'],
             'as' => 'workflow.publish.publishUpdate', 'uses' => 'PublishController@publishUpdate',
         ]);

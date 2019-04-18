@@ -13,7 +13,7 @@ trait ModelTrait
     {
         if (Auth::user()->can($permission)) {
             return '<a href="'.route($route, $this).'" class="btn btn-flat btn-default">
-                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fa fa-pencil"></i>
+                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-pencil-ruler"></i>
                 </a>';
         }
     }
@@ -29,7 +29,7 @@ trait ModelTrait
                     data-trans-button-cancel="'.trans('buttons.general.cancel').'"
                     data-trans-button-confirm="'.trans('buttons.general.crud.delete').'"
                     data-trans-title="'.trans('strings.backend.general.are_you_sure').'">
-                        <i data-toggle="tooltip" data-placement="top" title="Delete" class="fa fa-trash"></i>
+                        <i data-toggle="tooltip" data-placement="top" title="Delete" class="fas fa-trash"></i>
                 </a>';
         }
     }

@@ -20,7 +20,7 @@
     <link rel='stylesheet' href="{{ asset('css/styles.css') }}" />
     <link rel='stylesheet' href="{{ asset('css/langswitch.css') }}" />
     <!-- Fonts -->
-    <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" />
+    {{-- <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" /> --}}
     {{-- <link href="https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C700italic%2C400%2C300%2C700%2C800&amp;ver=3.8.1" type="text/css" rel="stylesheet"> --}}
 
     @yield('head')
@@ -75,7 +75,7 @@
                             <li class="last"><a href="{{ URL::route('frontend.sitelinks.index') }}">Sitelinks</a></li>
                             <li class="last"><a href="{!! URL::route('frontend.pages.show', ['page_slug'=>'terms-and-conditions']) !!}">Terms and Conditions</a></li>
 
-                            <li><a target="_blank" href="https://github.com/geolba"><i class="fa fa-github"></i> rdr bei GitHub</a></li>
+                            <li><a target="_blank" href="https://github.com/geolba"><i class="fab fa-github"></i> rdr bei GitHub</a></li>
                         </ul>
                     </div>
                 </div>
@@ -83,9 +83,9 @@
                     <div class="block">
                         <h3 class="block-title">CONNECT WITH US</h3>
                         <ul>
-                            <li><a target="_blank" href="https://www.geologie.ac.at/"><i class="fa fa-home"></i> GBA</a></li>
-                            <li><span><i class="fa fa-mobile-phone"></i> +43-1-7125674</span></li>
-                            <li><a href="mailto:repository@geologie.ac.at?Subject= RDR &amp;body=How can I help you?"><i class="fa fa-envelope-o"></i> repository@geologie.ac.at</a> </li>
+                            <li><a target="_blank" href="https://www.geologie.ac.at/"><i class="fas fa-home"></i> GBA</a></li>
+                            <li><span><i class="fas fa-phone"></i> +43-1-7125674</span></li>
+                            <li><a href="mailto:repository@geologie.ac.at?Subject= RDR &amp;body=How can I help you?"><i class="far fa-envelope"></i> repository@geologie.ac.at</a> </li>
                             <li></li>
                         </ul>
                     </div>

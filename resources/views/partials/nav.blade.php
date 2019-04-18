@@ -50,8 +50,8 @@
                         <div id="topmenu-inner">
                             <nav class="pure-menu pure-menu-open pure-menu-horizontal">
                                 <ul class="pure-menu-list">
-                                    <li class="pure-menu-item {{ Route::currentRouteName() == 'frontend.home.index' ? 'active' : '' }}">
-                                        <a class="pure-menu-link" href="{{ url('/') }}">HOME</a>
+                                    <li class="pure-menu-item {{ Route::currentRouteName() == 'frontend.home.index' ? 'active' : '' }}">                               
+                                        <a class="pure-menu-link" href="{{ url('/') }}"><i class="fas fa-home"></i> HOME</a>
                                     </li>
                                    
                                     <!-- <li><a class="marvel" href="{{ url('books') }}">BOOKS</a></li> -->
@@ -78,16 +78,16 @@
                                     @else
 
                                     <li class="pure-menu-item {{ Route::currentRouteName() == 'frontend.search.index' ? 'active' : '' }}">
-                                        <a class="pure-menu-link" href="{{ route('frontend.search.index') }}">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        <a class="pure-menu-link" href="{{ route('frontend.search.index') }}">                                           
+                                            <i class="fas fa-search" aria-hidden="true"></i>
                                             SEARCH
                                         </a>
                                     </li>
                                     <li class="pure-menu-item pure-menu-allow-hover">
                                         <a href="#" class="pure-menu-link">
-                                            <i class="fa fa-bars"></i>
+                                            <i class="fas fa-bars"></i>
                                             MENU
-                                            <span class="fa fa-angle-down"></span>
+                                            <span class="fas fa-angle-down"></span>
                                         </a>
                                         <ul class="pure-menu-children" role="menu">
                                             <li class="pure-menu-item"><a class="pure-menu-link" href="{{ URL::route('oai') }}" target="_blank"> OAI-PMH 2.0</a></li>
@@ -110,7 +110,7 @@
                         <ul class="pure-menu-list">
                             @if (Auth::guest())
                             <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
-                                <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
+                                <a class="pure-menu-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
                             </li>
                             <!--<li class="pure-menu-item"><a class="pure-menu-link" href="{{ url('register') }}">REGISTER</a></li>-->
                             @else
@@ -122,7 +122,7 @@
                                     <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('access.user.index') }}"><i class="fa fa-users"></i> EDIT USERS</a></li>
                                     <li class="pure-menu-item"><a class="pure-menu-link" href="{{route('access.role.index') }}"><i class="fa fa-key"></i> EDIT ROLES</a></li>
                                     @endrole
-                                    <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> LOG OUT</a></li>
+                                    <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> LOG OUT</a></li>
                                 </ul>
                             </li>
                             @endif

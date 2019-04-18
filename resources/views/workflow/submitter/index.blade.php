@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i> Release saved datasets
+        <i class="fas fa-list"></i> Release saved datasets
     </h3>
 </div>
 

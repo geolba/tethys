@@ -49,8 +49,7 @@
                     @foreach($fields as $field => $fieldValue)
                     <div class="pure-u-1 pure-u-md-1-1 pure-div">
                         {{ Form::label($field, $field . ": ") }}
-                        <span class="help is-info"> {!! $fieldValue !!} </span>
-                       
+                        <span class="help is-info"> {!! $fieldValue !!} </span>                       
                     </div>   
                     @endforeach 
                    

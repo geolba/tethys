@@ -2,14 +2,14 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i> PUBLISH PAGE: Publish reviewed datasets
+        <i class="fas fa-list"></i> PUBLISH PAGE: Publish reviewed datasets
     </h3>
 </div>
 
 <div class="pure-g box-content">
     <div class="pure-u-1">
+        @if($datasets->count() > 0)
         <table class="pure-table pure-table-horizontal">
-
             <thead>
                 <th>Dataset Title</th>
                 <th>ID</th>
@@ -70,8 +70,10 @@
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
+        @else
+            <p>there are no reviewed datasets for publishing...</p>
+        @endif
     </div>
 </div>
 

@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-file"></i>
+        <i class="fas fa-file-code"></i>
         <span> Mime-Types</span>
     </h3>
 </div>

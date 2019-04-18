@@ -502,22 +502,28 @@ a:hover { text-decoration: none; }*/
     font-weight: 300;
 }
 
+a:before {
+    display: inline-block;   
+    padding-right: 3px;
+    /* vertical-align: middle; */
+  }
+
 table td .view:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     top: 0;
-    content: "\f05a";
+    content: "\f06e";
 }
 
 table td .edit:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     top: 0;
     content: "\f044";
 }
 
 table td .delete:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     top: 0;
-    content: "\f014";
+    content: "\f2ed";
 }
 
 table .action {

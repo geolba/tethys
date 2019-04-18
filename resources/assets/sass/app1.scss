@@ -8,6 +8,12 @@
 // $icon-font-path: "../fonts/bootstrap/";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+// npm i --save @fortawesome/fontawesome-free
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
 @import '~purecss-sass/vendor/assets/stylesheets/purecss/base';
 @import '~purecss-sass/vendor/assets/stylesheets/purecss/buttons';
 @import '~purecss-sass/vendor/assets/stylesheets/purecss/forms';
@@ -16,13 +22,7 @@
 @import '~purecss-sass/vendor/assets/stylesheets/purecss/grids';
 @import '~purecss-sass/vendor/assets/stylesheets/purecss/grids-responsive';
 
-// @import 'purecss/base';
-// @import 'purecss/buttons';
-// @import 'purecss/forms';
-// @import 'purecss/grids';
-// @import 'purecss/grids-responsive';
-// @import 'purecss/menus';
-// @import 'purecss/tables';
+
 
 .navbar-laravel {
     background-color: #fff;

@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^12.1.0",
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "datatables.net": "^1.10.19",
     "datatables.net-buttons": "^1.5.4"
   }
