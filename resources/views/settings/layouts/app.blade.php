@@ -31,7 +31,7 @@
     <div id="menu">
         <nav class="pure-menu sidebar-menu">
             <h1 class="site-logo">Admin<strong>Rdr</strong></h1>
-            <div class="menu-item-divided"></div>
+            {{-- <div class="menu-item-divided"></div> --}}
             
             {{-- <h2 class="pure-menu-heading">Home</h2> --}}
             <ul class=" pure-menu-list sidebar-menu">
@@ -42,7 +42,7 @@
                 </li>	 --}}
                
                 
-                <li class="pure-menu-item {{ active_class(Route::is('settings.dashboard')) }}">
+                <li class="pure-menu-item {{ Route::is('settings.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('settings.dashboard') }}">
                         <i class="fa fa-tachometer-alt"></i>
                         <span>Reports</span>
@@ -52,7 +52,7 @@
                 @permission('settings')
                 <li class="treeview">
                     <h2 class="pure-menu-heading">Settings  <span class="fas fa-angle-down"></h2>
-                    <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('settings.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('settings.*'), 'display: block;') }}">				
+                    <ul class="pure-menu-list treeview-menu {{ Route::is('settings.*') ? 'menu-open' : '' }} style="display: none; {{ Route::is('settings.*') ? 'display: block;' : '' }}">				
                         <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.document') }}"><i class="fa fa-database"></i> Datasets</a>
                         </li>
@@ -141,7 +141,7 @@
                         <span>{{ trans('menus.backend.access.title') }}</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>              --}}
-                    <ul class="pure-menu-list treeview-menu {{ active_class(Route::is('access.*'), 'menu-open') }}" style="display: none; {{ active_class(Route::is('access.*'), 'display: block;') }}">
+                    <ul class="pure-menu-list treeview-menu {{ Route::is('access.*') ? 'menu-open' : '' }}" style="display: none; {{ Route::is('access.*') ? 'display: block;' : '' }}">
                         @if (Auth::guest())
                         <li class="pure-menu-item {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>

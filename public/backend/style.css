@@ -129,8 +129,12 @@ The content `<div>` is where all your content goes.
      margin: 0;
      color: #333;
      text-align: left;
-     padding: 0.4em 2em 0;
+     padding: 0.4em 2em;
      border-bottom: 1px solid #eee;
+ }
+ #main > .header {
+    background: #202b33;   
+    color: #fff;
  }
     .header h1 {
         margin: 0.2em 0;
@@ -216,9 +220,11 @@ The content `<div>` is where all your content goes.
 }
 
 .site-logo{
+   
     color: #fff;
-    font-size: 1.4em;
-    padding: 0.6em 0.4em;
+    font-size: 1.0em;
+    padding: 0.4em 0.4em;
+    margin: 0;
 }
 
 .site-logo strong{
@@ -229,9 +235,9 @@ The content `<div>` is where all your content goes.
     text-align: right;
 }
 
-.user-info{
-    padding: 1.6em 0.4em;
-}
+/* .user-info{    
+    padding: 0.6em 0.4em;
+} */
 
 .user-info a{
     text-decoration: none;
