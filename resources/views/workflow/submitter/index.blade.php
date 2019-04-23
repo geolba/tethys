@@ -55,7 +55,7 @@
 
                     <td>
                         @if ($dataset->server_state == "inprogress")
-                        <a href="{{ URL::route('publish.workflow.release', $dataset->id) }}" class="pure-button">
+                        <a href="{{ URL::route('publish.workflow.submit.release', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-share"></i>
                             <span>Release</span>
                         </a>  

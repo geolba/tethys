@@ -52,7 +52,7 @@
                    
                     <td>
                         @if ($dataset->server_state == "released")
-                        <a href="{{ URL::route('publish.workflow.receive', $dataset->id) }}" class="pure-button">
+                        <a href="{{ URL::route('publish.workflow.editor.receive', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-check"></i>
                             <span>Receive editor task</span>
                         </a>                        

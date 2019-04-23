@@ -16,13 +16,13 @@
 
     <div class="pure-u-1 pure-u-md-1">
         <div>
-            <a href="{{ route('publish.workflow.index') }}" class="pure-button button-small">
+            <a href="{{ route('publish.workflow.submit.index') }}" class="pure-button button-small">
                 <i class="fa fa-chevron-left"></i>
                 <span>BACK</span>
             </a>
         </div>
         <div id="app1">
-            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.releaseUpdate', $dataset->id], 'id' => 'releaseForm',
+            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.submit.releaseUpdate', $dataset->id], 'id' => 'releaseForm',
             'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'checkForm']) !!}
             <fieldset id="fieldset-General">
                 <legend>General</legend>

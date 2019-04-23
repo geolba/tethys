@@ -26,7 +26,7 @@
                 $message = 'If you are not the desired editor, you can still accept the dataset!!';            
                 @endphp
                
-            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.receiveUpdate', $dataset->id], 'id' => 'acceptForm',
+            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.editor.receiveUpdate', $dataset->id], 'id' => 'acceptForm',
             'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'checkForm']) !!}
             <fieldset id="fieldset-General">
                 <legend>General</legend>

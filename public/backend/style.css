@@ -323,6 +323,19 @@ appears on the left side of the page.
         color: #2097e6;
         background: #1d272e;
     }
+    #menu .pure-menu li.active a::after  {
+        right: 0;
+        border: solid 8px transparent;
+        border-right-color: transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-right-color: #f1f1f1;
+        top: 50%;
+        margin-top: -8px;
+    }
 
     /*
     This styles the selected menu item `<li>`.
@@ -908,6 +921,8 @@ textarea.large, input.large {
 }
 
 
+
+
 .dropbox {
     outline: 2px dashed grey; /* the dash box */
     outline-offset: -10px;
@@ -941,6 +956,7 @@ textarea.large, input.large {
     cursor: pointer;
     /* float: right; */
   }
+
 
 
 .pure-table tr.inprogress {
