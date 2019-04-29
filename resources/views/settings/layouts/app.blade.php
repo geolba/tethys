@@ -179,7 +179,7 @@
                     <h1>Dashboard</h1> --}}
                    <section  class="user-info">
                         <i class="fas fa-home"></i>
-                        <a class=" pure-menu-linkab-item" aria-haspopup="true" href="https://s1.demo.opensourcecms.com/wordpress/">
+                        <a class=" pure-menu-linkab-item" aria-haspopup="true" href="{{ route('frontend.home.index') }}">
                         repository
                         </a>
                     </section>
