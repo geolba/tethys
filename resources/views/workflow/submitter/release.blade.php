@@ -28,17 +28,28 @@
                 <legend>General</legend>
                 <div class="pure-g">
 
-                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('preferred_editor', 'preferred editor:') !!}
+                    <div class="pure-u-1 pure-u-md-1-1 pure-div">
+                        {!! Form::label('preferred_reviewer', 'name of preferred reviewer:') !!}
                        
                             {{-- {!! Form::select('editor_id', $editors, null, ['id' => 'editor_id', 'placeholder' => '-- select editor --', 'v-model' =>
                             'dataset.editor_id', "v-validate" => "'required'"]) !!} --}}
-                        {!! Form::text('preferred_editor', null, ['id' => 'preferred_editor', 'class'=>'pure-u-23-24',
-                        'placeholder' => '-- enter name of preferred editor --',
-                        'v-model' => 'dataset.preferred_editor', "v-validate" => "'required|min:3|max:20'"]) !!}
+                        {!! Form::text('preferred_reviewer', null, ['id' => 'preferred_reviewer', 'class'=>'pure-u-23-24',
+                        'placeholder' => '-- enter name of preferred reviewer --',
+                        'v-model' => 'dataset.preferred_reviewer', "v-validate" => "'required|min:3|max:20'"]) !!}
+                         <em>*</em>
                        
-                        <span class="help is-danger" v-if="errors.has('preferred_editor')" v-text="errors.first('preferred_editor')"></span>
+                        <span class="help is-danger" v-if="errors.has('preferred_reviewer')" v-text="errors.first('preferred_reviewer')"></span>
 
+                    </div>
+                    <div class="pure-u-1 pure-u-md-1-1 pure-div">
+                        {!! Form::label('preferred_reviewer_email', 'email of preferred reviewer:') !!}
+                        {!! Form::text('preferred_reviewer_email', null, array(
+                            'placeholder' => 'Email', 'id' => 'preferred_reviewer_email', 'class' => 'pure-u-23-24',
+                            'v-model' => 'dataset.preferred_reviewer_email', "v-validate" => "'required|email'"
+                            )) !!}
+                        <em>*</em>
+
+                        <span class="help is-danger" v-if="errors.has('preferred_reviewer_email')" v-text="errors.first('preferred_reviewer_email')"></span>
                     </div>
                 </div>
             </fieldset>

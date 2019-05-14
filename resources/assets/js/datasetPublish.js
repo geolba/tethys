@@ -264,9 +264,9 @@ const app = new Vue({
             for (var i = 0; i < this.dataset.checkedContributors.length; i++) {
                 formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
             }
-            for (var i = 0; i < this.dataset.checkedSubmitters.length; i++) {
-                formData.append('submitters[' + i + ']', this.dataset.checkedSubmitters[i]);
-            }
+            // for (var i = 0; i < this.dataset.checkedSubmitters.length; i++) {
+            //     formData.append('submitters[' + i + ']', this.dataset.checkedSubmitters[i]);
+            // }
 
             for (var i = 0; i < this.dataset.references.length; i++) {
                 let reference = this.dataset.references[i];
@@ -438,14 +438,14 @@ const app = new Vue({
                 this.dataset.checkedContributors.push(person.id);
             }
         },
-        onAddSubmitter(person) {
-            //if person is not in submitters array
-            //if (this.submitters.includes(person) == false) {
-            if (this.dataset.submitters.filter(e => e.id === person.id).length == 0) {
-                this.dataset.submitters.push(person);
-                this.dataset.checkedSubmitters.push(person.id);
-            }
-        },
+        // onAddSubmitter(person) {
+        //     //if person is not in submitters array
+        //     //if (this.submitters.includes(person) == false) {
+        //     if (this.dataset.submitters.filter(e => e.id === person.id).length == 0) {
+        //         this.dataset.submitters.push(person);
+        //         this.dataset.checkedSubmitters.push(person.id);
+        //     }
+        // },
         /*
         Removes a select file the user has uploaded
         */

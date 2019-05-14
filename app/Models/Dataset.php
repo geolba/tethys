@@ -14,7 +14,7 @@ use App\Models\XmlCache;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Models\GeolocationBox;
+// use App\Models\GeolocationBox;
 use App\Models\Coverage;
 
 class Dataset extends Model
@@ -37,7 +37,8 @@ class Dataset extends Model
         'embargo_date',
         'belongs_to_bibliography',
         'editor_id',
-        'preferred_editor',
+        'preferred_reviewer',
+        'preferred_reviewer_email',
         'reviewer_id'
     ];
     //protected $guarded = [];

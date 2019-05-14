@@ -210,16 +210,19 @@
                     </div>
                 </fieldset>
 
-                <div :class="{'form-group':true, 'has-error':errors.has('rights')}">
-                    <legend>Einräumung eines einfachen Nutzungsrechts</legend>                 
+                <div :class="{'form-group':true, 'has-error':errors.has('step-1.rights')}">
+                    {{-- <legend>Einräumung eines einfachen Nutzungsrechts</legend> --}}  
                         
-                        <label for="rights" class="pure-checkbox">                           
-                            <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
-                            I accept
-                        </label>
-                            <button @click="showModal" class="pure-button button-small is-success">
+                    <label for="rights"> 
+                        <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
+                        terms and conditions                        
+                    </label>
+                    <i class="fas fa-info-circle" @click="showModal" style="font-size:24px"></i>     
+                   
+                       
+                            {{-- <button @click="showModal" class="pure-button button-small is-success">
                                 {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
-                            </button>
+                            </button> --}}
                                                         
                             <!-- use the modal component, pass in the prop -->
                             {{-- <button type="button" class="btn" @click="showModal">
@@ -238,7 +241,7 @@
                     
 
                         <br />
-                        <i v-show="errors.has('step-1.rights')" class="fa fa-warning"></i>
+                        <i v-show="errors.has('step-1.rights')" class="fas fa-exclamation-circle"></i>
                         <span v-show="errors.has('step-1.rights')" class="text-danger">@{{ errors.first('step-1.rights') }}</span>
                         
                    
@@ -565,7 +568,7 @@
                     </div>
                 </fieldset>               
 
-                <fieldset id="fieldset-submitters">
+                {{-- <fieldset id="fieldset-submitters">
                     <legend>Submitters</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -582,7 +585,7 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> --}}
                 <br />
                 <div class="pure-controls">
                     <button @click.prevent="prev()" class="pure-button button-small">

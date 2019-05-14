@@ -349,14 +349,14 @@ class IndexController extends Controller
                 }
                 
                 //store submitters
-                if (isset($data['submitters'])) {
-                    //$data_to_sync = [];
-                    foreach ($request->get('submitters') as $key => $submitter_id) {
-                        $pivot_data = ['role' => 'submitter', 'sort_order' => $key + 1];
-                        $data_to_sync[$submitter_id] = $pivot_data;
-                    }
-                    //$dataset->persons()->sync($data_to_sync);
-                }
+                // if (isset($data['submitters'])) {
+                //     //$data_to_sync = [];
+                //     foreach ($request->get('submitters') as $key => $submitter_id) {
+                //         $pivot_data = ['role' => 'submitter', 'sort_order' => $key + 1];
+                //         $data_to_sync[$submitter_id] = $pivot_data;
+                //     }
+                //     //$dataset->persons()->sync($data_to_sync);
+                // }
                 $dataset->persons()->sync($data_to_sync);
 
                 

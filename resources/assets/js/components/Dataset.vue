@@ -51,11 +51,11 @@ function initialState() {
     titles: [],
     descriptions: [],
     checkedContributors: [],
-    checkedSubmitters: [],
+    // checkedSubmitters: [],
 
     persons: [],
     contributors: [],
-    submitters: []
+    // submitters: []
   };
 }
 

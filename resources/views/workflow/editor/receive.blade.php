@@ -33,14 +33,11 @@
                 <div class="pure-g">
 
                     <div class="pure-u-1 pure-u-md-1-1 pure-div">
-                        {!! Form::label('editor_id', 'preferred editor:') !!}
-                        {!! $dataset->preferred_editor !!}
-                       
-                        <span class="help is-danger"> {!! $message !!}</span>
-                      
-                        {{-- <span class="help is-danger" v-if="errors.has('editor_id')" v-text="errors.first('editor_id')"></span> --}}
-
+                        {{-- {!! Form::label('editor_id', 'preferred editor:') !!}
+                        {!! $dataset->preferred_editor !!}                       
+                        <span class="help is-danger"> {!! $message !!}</span> --}}
                     </div>
+                    
                     <div class="pure-u-1 pure-u-md-1-1 pure-div">
                             {!! Form::label('owner', 'dataset owner:') !!}
                             {!! $dataset->user->login !!}

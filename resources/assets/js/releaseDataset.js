@@ -10,7 +10,8 @@ const app = new Vue({
         return {
             dataset: {
                 firstName: '',
-                preferred_editor: ''
+                preferred_reviewer: '',
+                preferred_reviewer_email: ''
             },
             submitted: false
         }

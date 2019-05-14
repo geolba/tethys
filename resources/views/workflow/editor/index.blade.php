@@ -44,8 +44,8 @@
                         {{ $dataset->server_state }}
                     </td>
                     @if ($dataset->server_state == "released") 
-                    {{-- <td>Preferred editor: {{ optional($dataset->editor)->login }} </td> --}}
-                    <td>Preferred editor: {{ $dataset->preferred_editor }} </td>
+                    {{-- <td>Preferred reviewer: {{ optional($dataset->reviewer)->login }} </td> --}}
+                    <td>Preferred reviewer: {{ $dataset->preferred_reviewer }} </td>
                     @elseif ($dataset->server_state == "editor_accepted")
                     <td>in approvement by {{ optional($dataset->editor)->login }} </td>
                     @endif
