@@ -14,7 +14,8 @@
                 <th>Dataset Title</th>
                 <th>ID</th>
                 <th>Server State</th>               
-                <th>Editor</th>              
+                <th>Editor</th> 
+                <th>Date of submission</th>             
                 <th></th>
             </thead>
 
@@ -49,7 +50,11 @@
                     @elseif ($dataset->server_state == "editor_accepted")
                     <td>in approvement by {{ optional($dataset->editor)->login }} </td>
                     @endif
-                   
+                    <td> 
+                        @if ($dataset->server_state == 'released')
+                        {{ $dataset->server_date_modified }}
+                        @endif
+                    </td>      
                     <td>
                         @if ($dataset->server_state == "released")
                         <a href="{{ URL::route('publish.workflow.editor.receive', $dataset->id) }}" class="pure-button">

@@ -128,6 +128,20 @@ class ReviewController extends Controller
         throw new GeneralException(trans('exceptions.publish.review.update_error'));
     }
 
+     /**
+     * Reject dataset back to editor
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function reject($id): View
+    {
+        $dataset = Dataset::with('user:id,login')->findOrFail($id);
+        return view('workflow.review.reject', [
+            'dataset' => $dataset,
+        ]);
+    }
+
     //snakeToCamel
     private static function convertColumnToFieldname($columnname)
     {

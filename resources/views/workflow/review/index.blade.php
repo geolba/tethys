@@ -53,6 +53,10 @@
                             <i class="fa fa-check"></i>
                             <span>Review</span>
                         </a> 
+                        <a href="{{ URL::route('publish.workflow.review.reject', $dataset->id) }}" class="pure-button">
+                            <i class="fas fa-undo"></i>
+                            <span>Reject</span>
+                        </a> 
                         @endif
                     </td>
                     {{-- <td>
