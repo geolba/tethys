@@ -147,17 +147,18 @@
                             <a class="pure-menu-link" href="{{ route('login') }}">LOGIN</a>
                         </li>
                         @else  
+                        <li class="pure-menu-item {{ Route::is('access.user.edit') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ route('access.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> 
+                        </li>	
                         @permission('settings')
-                        <li class="pure-menu-item {{ Route::is('access.user.*') ? 'active' : '' }}">
+                        <li class="pure-menu-item {{ Route::is('access.user.index') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{route('access.user.index') }}"><i class="fa fa-users"></i> User Management</a>
                         </li>
                         <li class="pure-menu-item {{ Route::is('access.role.*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{route('access.role.index') }}"><i class="fa fa-key"></i> Role Management</a>
-                        </li>
-                        <li class="pure-menu-item">
-                            <a class="pure-menu-link" href="{{ route('access.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> EDIT</a> 
-                        </li>	  
+                        </li>                        
                         @endpermission
+                         
                         {{-- <li class="pure-menu-item">
                             <a class="pure-menu-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </li>  --}}
@@ -187,7 +188,9 @@
                 <div class="pure-u-1-2 text-right">					
                     <section class="user-info">
                         @if(Auth::user())
-                        <i class="fa fa-user"></i> <a href="#" rel="User">{{ Auth::user()->login }}</a>					
+                        {{-- <i class="fa fa-user"></i> 
+                        <a href="#" rel="User">{{ Auth::user()->login }}</a> --}}
+                        <a href="{{ route('access.user.edit',['id'=>Auth::user()->id]) }}"><i class="fa fa-user"></i> {{ Auth::user()->login }}</a> 					
                         <span class="divider"></span>
                         <i class="fas fa-sign-out-alt"></i><a href="{{ route('logout') }}">Logout</a>
                         {{-- <span class="divider"></span> --}}

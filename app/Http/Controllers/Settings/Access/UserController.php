@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -105,12 +107,21 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::all('id', 'name');
+        if ($user == null) {
+            return abort(404, 'User not found.');
+        }
 
+        $roles = Role::all('id', 'name');
         //$userRoles = $user->roles->pluck('name','name')->all();
         $checkeds = $user->roles->pluck('id')->toArray();
 
         return view('settings.access.user.edit', compact('user', 'roles', 'checkeds'));
+    }
+
+    private function validateUser($id, $current_password)
+    {
+        $user = User::findOrFail($id);
+        return Hash::check($current_password, $user->password);
     }
 
     /**
@@ -122,36 +133,69 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        // if model state is valid
         $this->validate(request(), [
             'login' => 'required',
             'email' => 'required|email|unique:accounts,email,' . $id,
-            'password' => 'required|min:6|confirmed',
+            'password' => 'nullable|min:6|confirmed',
+            //'current_password' => 'required_with:password'
         ]);
 
+        $valid = true;
         $user = User::findOrFail($id);
-        // $input = $request->except('roles');
-        // $user->fill($input)->save();
+        $roles = Role::all('id', 'name');
+        $input = $request->all();
+        $flash_message = '';
+        $errors = new \Illuminate\Support\MessageBag();
 
-        $input = $request->only(['login', 'email', 'password']); //Retreive the name, email and password fields
-        //$input = $request->all();
-        $user->login = $input['login'];
-        $user->email = $input['email'];
-        $user->password = bcrypt($input['password']);
-        $user->save();
+        if (array_key_exists('current_password', $input)) {
+        // if user is not admin he must enter old_password if a new password is defined
+            if (!Auth::user()->hasRole('Administrator') && $input['current_password'] == null && $input['password'] != null) {
+                //ModelState.AddModelError("OldPassword", Resources.User_Edit_OldPasswordEmpty);
+                //$flash_message = 'Current password should not be empty.';
+                // add your error messages:
+                $errors->add('your_custom_error', 'Current password cannot not be empty, if you define a new password');
+                $valid = false;
+            }
 
-        $roles = $request['roles']; //Retreive all roles
-
-        if (isset($roles)) {
-            $user->roles()->sync($roles); //If one or more role is selected associate user to roles
-        } else {
-            $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+            
+            if ($input['current_password'] != null && $this->validateUser($user->id, $input['current_password']) == false) {
+                //$flash_message = 'Password does not match the current password.';
+                $errors->add('your_custom_error', 'Password does not match the current password.');
+                $valid = false;
+            }
         }
 
-        //return back()->with('flash_message', 'user successfully updated.');
-        return redirect()
-            ->route('access.user.index')
-            ->with('flash_message', 'User successfully edited.');
+        
+      
+        //$input = $request->only(['login', 'email', 'password']); //Retreive the name, email and password fields
+        if ($valid == true) {
+            $user->login = $input['login'];
+            $user->email = $input['email'];
+            if ($input['password']) {
+                $user->password = Hash::make($input['password']);
+            }
+           
+            $user->save();
+
+            $roles = $request['roles']; //Retreive all roles
+
+            if (array_key_exists('roles', $input)) {
+                if (isset($roles)) {
+                    $user->roles()->sync($roles); //If one or more role is selected associate user to roles
+                } else {
+                    $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+                }
+            }
+
+            return back()->with('flash_message', 'user successfully updated.');
+            // return redirect()
+            //     ->route('access.user.index')
+            //     ->with('flash_message', 'User successfully edited.');
+        }
+        return back()
+        ->withInput($input)
+        ->withErrors($errors);
     }
 
     /**

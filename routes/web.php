@@ -140,46 +140,45 @@ Route::group(
 Route::group(
     [
         'namespace' => 'Settings\Access',
-        'middleware' => ['permission:settings'],
         'prefix' => 'settings/access',
         'as' => 'access.',
     ],
     function () {
         //Route::resource('users','UserController');
         Route::get('user', [
-            'as' => 'user.index', 'uses' => 'UserController@index',
+            'as' => 'user.index', 'uses' => 'UserController@index', 'middleware' => ['permission:settings'],
         ]);
         Route::get('user/create', [
-            'as' => 'user.create', 'uses' => 'UserController@create',
+            'as' => 'user.create', 'uses' => 'UserController@create', 'middleware' => ['permission:settings'],
         ]);
         Route::post('user/store', [
-            'as' => 'user.store', 'uses' => 'UserController@store',
+            'as' => 'user.store', 'uses' => 'UserController@store','middleware' => ['permission:settings'],
         ]);
         Route::get('user/edit/{id}', [
-            'as' => 'user.edit', 'uses' => 'UserController@edit',
+            'as' => 'user.edit', 'uses' => 'UserController@edit', 'middleware' => ['auth']
         ]);
         Route::patch('user/update/{id}', [
-            'as' => 'user.update', 'uses' => 'UserController@update',
+            'as' => 'user.update', 'uses' => 'UserController@update', 'middleware' => ['auth']
         ]);
         Route::get('user/destroy/{id}', [
-            'as' => 'user.destroy', 'uses' => 'UserController@destroy',
+            'as' => 'user.destroy', 'uses' => 'UserController@destroy','middleware' => ['permission:settings'],
         ]);
 
         //Route::resource('users','RoleController');
         Route::get('role', [
-            'as' => 'role.index', 'uses' => 'RoleController@index',
+            'as' => 'role.index', 'uses' => 'RoleController@index', 'middleware' => ['permission:settings'],
         ]);
         Route::get('role/create', [
-            'as' => 'role.create', 'uses' => 'RoleController@create',
+            'as' => 'role.create', 'uses' => 'RoleController@create','middleware' => ['permission:settings'],
         ]);
         Route::post('role/store', [
-            'as' => 'role.store', 'uses' => 'RoleController@store',
+            'as' => 'role.store', 'uses' => 'RoleController@store','middleware' => ['permission:settings'],
         ]);
         Route::get('role/edit/{id}', [
-            'as' => 'role.edit', 'uses' => 'RoleController@edit',
+            'as' => 'role.edit', 'uses' => 'RoleController@edit','middleware' => ['permission:settings'],
         ]);
         Route::patch('role/update/{id}', [
-            'as' => 'role.update', 'uses' => 'RoleController@update',
+            'as' => 'role.update', 'uses' => 'RoleController@update','middleware' => ['permission:settings'],
         ]);
     }
 );
