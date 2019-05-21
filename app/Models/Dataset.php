@@ -39,7 +39,8 @@ class Dataset extends Model
         'editor_id',
         'preferred_reviewer',
         'preferred_reviewer_email',
-        'reviewer_id'
+        'reviewer_id',
+        'reject_reviewer_note'
     ];
     //protected $guarded = [];
         /**

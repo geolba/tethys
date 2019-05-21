@@ -142,6 +142,25 @@ class ReviewController extends Controller
         ]);
     }
 
+    public function rejectUpdate(Request $request, $id)
+    {
+        $this->validate(request(), [
+            'reject_reviewer_note' => 'required|min:10|max:255',
+            'server_state' => 'required'
+        ]);
+        $dataset = Dataset::findOrFail($id);
+        $input = $request->all();
+        //$input['server_state'] = 'rejected_reviewer';
+
+        if ($dataset->update($input)) {
+            // event(new PageUpdated($page));
+            return redirect()
+                ->route('publish.workflow.review.index')
+                ->with('flash_message', 'You have successfully rejected one dataset! The editor will be informed.');
+        }
+        throw new GeneralException(trans('exceptions.publish.review.update_error'));
+    }
+
     //snakeToCamel
     private static function convertColumnToFieldname($columnname)
     {

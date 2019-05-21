@@ -979,6 +979,21 @@ textarea.large, input.large {
     background-color: lightblue;
     color: gray;
 }
+.pure-table tr.rejected_reviewer {
+    padding: 0.8em;
+    background-color: orange;
+    color: gray;
+}
+.pure-table tr.rejected_editor {
+    padding: 0.8em;
+    background-color: orange;
+    color: gray;
+}
+.pure-table tr.reviewed {
+    padding: 0.8em;
+    background-color: yellow;
+    color: gray;
+}
 .pure-table tr.approved {
     padding: 0.8em;
     background-color: rgb(86, 86, 241);

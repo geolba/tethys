@@ -33,7 +33,9 @@
                     $rowclass = 'approved';   
                 } elseif ($dataset->server_state == 'reviewed') {
                     $rowclass = 'reviewed';   
-                }                                        
+                } elseif ($dataset->server_state == 'rejected_editor') {
+                    $rowclass = 'rejected_editor';  
+                }                                       
                 @endphp
                 <tr class="{{ $rowclass }}">
                     <td>
@@ -54,7 +56,7 @@
                     </td>
 
                     <td>
-                        @if ($dataset->server_state == "inprogress")
+                        @if ($dataset->server_state == "inprogress" || $dataset->server_state == "rejected_editor")
                         <a href="{{ URL::route('publish.workflow.submit.release', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-share"></i>
                             <span>Release</span>

@@ -15,7 +15,7 @@
                 <th>ID</th>
                 <th>Server State</th>               
                 <th>Editor</th> 
-                <th>Date of submission</th>             
+                <th>Date of last modification</th>             
                 <th></th>
             </thead>
 
@@ -26,7 +26,11 @@
                 // $lastid = $detail->payment->userid;
                 if ($dataset->server_state == 'editor_accepted') {
                     $rowclass = 'editor_accepted';
-                } elseif ($dataset->server_state == 'released') {
+                }  elseif ($dataset->server_state == 'rejected_reviewer') {
+                    $rowclass = 'rejected_reviewer';   
+                } elseif ($dataset->server_state == 'reviewed') {
+                    $rowclass = 'reviewed';   
+                }elseif ($dataset->server_state == 'released') {
                     $rowclass = 'released';   
                 }         
                 @endphp
@@ -47,13 +51,11 @@
                     @if ($dataset->server_state == "released") 
                     {{-- <td>Preferred reviewer: {{ optional($dataset->reviewer)->login }} </td> --}}
                     <td>Preferred reviewer: {{ $dataset->preferred_reviewer }} </td>
-                    @elseif ($dataset->server_state == "editor_accepted")
+                    @elseif ($dataset->server_state == "editor_accepted" || $dataset->server_state == "rejected_reviewer")
                     <td>in approvement by {{ optional($dataset->editor)->login }} </td>
                     @endif
-                    <td> 
-                        @if ($dataset->server_state == 'released')
-                        {{ $dataset->server_date_modified }}
-                        @endif
+                    <td>                        
+                        {{ $dataset->server_date_modified }}                       
                     </td>      
                     <td>
                         @if ($dataset->server_state == "released")
@@ -61,7 +63,7 @@
                             <i class="fa fa-check"></i>
                             <span>Receive editor task</span>
                         </a>                        
-                        @elseif ($dataset->server_state == "editor_accepted")
+                        @elseif ($dataset->server_state == "editor_accepted" || $dataset->server_state == "rejected_reviewer")
                         <a href="{{ URL::route('publish.workflow.editor.edit', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-edit"></i>
                             <span>Edit</span>
@@ -69,7 +71,16 @@
                         <a href="{{ URL::route('publish.workflow.editor.approve', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-share"></i>
                             <span>Approve</span>
-                        </a>  
+                        </a> 
+                        <a href="{{ URL::route('publish.workflow.editor.reject', $dataset->id) }}" class="pure-button">
+                            <i class="fas fa-undo"></i>
+                            <span>Reject</span>
+                        </a> 
+                        @elseif ($dataset->server_state == "reviewed")
+                        <a href="{{ URL::route('publish.workflow.publish.publishUpdate', $dataset->id) }}" class="pure-button">
+                            <i class="fa fa-edit"></i>
+                            <span>Publish</span>
+                        </a>                        
                         @endif
                     </td>
                     {{-- <td>

@@ -13,8 +13,14 @@ const app = new Vue({
                 preferred_reviewer: '',
                 preferred_reviewer_email: ''
             },
-            submitted: false
+            submitted: false,
+            preferation: "no_preferation",
         }
+    },
+    computed: {
+        isPreferationRequired() {
+            return this.preferation === "yes_preferation";
+        },
     },
     methods: {
         checkForm(e) {

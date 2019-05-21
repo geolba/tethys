@@ -101,6 +101,14 @@ Route::group(
             'middleware' => ['permission:dataset-approve'],
             'as' => 'workflow.editor.approveUpdate', 'uses' => 'EditorController@approveUpdate',
         ]);
+        Route::get('workflow/editor/reject/{id}', [
+            'middleware' => ['permission:dataset-editor-reject'],
+            'as' => 'workflow.editor.reject', 'uses' => 'EditorController@reject',
+        ]);
+        Route::post('workflow/editor/reject/{id}', [
+            'middleware' => ['permission:dataset-editor-reject'],
+            'as' => 'workflow.editor.rejectUpdate', 'uses' => 'EditorController@rejectUpdate',
+        ]);
 
         //reviewer
         Route::get('workflow/review/index', [

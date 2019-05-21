@@ -17,6 +17,13 @@
     </div>
 
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {!! Form::label('reject_reviewer_note', 'reviewer note..') !!}       
+        {{-- {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!} --}}
+        {!! Form::textarea('reject_reviewer_note', null, ['class'=>'pure-u-23-24','readonly']) !!}
+       
+    </div>
+
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
         {!! Form::label('project_id', 'Project..') !!}
         <div class="select pure-u-23-24">
         {!! Form::select('project_id', $projects, null, ['id' => 'project_id', 'placeholder' => '--no project--']) !!}

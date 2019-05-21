@@ -26,9 +26,10 @@ class SubmitController extends Controller
         $builder = Dataset::query();
         $myDatasets = $builder
             ->orderBy('server_state')
-            ->whereIn('server_state', ['inprogress', 'released', 'editor_accepted', 'approved', 'reviewed'])
+            ->whereIn('server_state', ['inprogress', 'released', 'editor_accepted', 'approved', 'reviewed', 'rejected_editor', 'rejected_reviewer'])
             ->where('account_id', $user_id)
             ->with('user:id,login')
+            ->orderBy('server_date_modified', 'desc')
             ->get();
         return view('workflow.submitter.index', [
             'datasets' => $myDatasets,
@@ -66,7 +67,7 @@ class SubmitController extends Controller
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));
             return redirect()
-                ->route('publish.workflow.index')
+                ->route('publish.workflow.submit.index')
                 ->with('flash_message', 'You have released your dataset!');
         }
         throw new GeneralException(trans('exceptions.publish.release.update_error'));
@@ -81,7 +82,7 @@ class SubmitController extends Controller
     public function delete($id): RedirectResponse
     {
         $dataset = Dataset::with('files')->findOrFail($id);
-        if ($dataset->server_state != "inprogress") {
+        if ($dataset->server_state != "inprogress" || $dataset->server_state != "rejected_editor") {
             session()->flash(
                 'flash_message',
                 'You cannot delete this datastet!'

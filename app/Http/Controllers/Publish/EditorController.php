@@ -39,10 +39,10 @@ class EditorController extends Controller
         ->where('server_state', 'released')
         // ->whereIn('server_state', ['released'])
         ->orWhere(function ($query) use ($user_id) {
-            $query->where('server_state', 'editor_accepted')
+            $query->whereIn('server_state', ['editor_accepted', 'rejected_reviewer', 'reviewed'])
                   ->where('editor_id', $user_id);
         })
-        ->orderBy('server_state')
+        ->orderBy('server_date_modified', 'desc')
         ->get();
         return view('workflow.editor.index', compact('datasets'));
     }
@@ -210,6 +210,7 @@ class EditorController extends Controller
         $dataset = Dataset::findOrFail($id);
         $input = $request->all();
         $input['server_state'] = 'approved';
+        $input['reject_reviewer_note'] = '';
 
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));
@@ -218,5 +219,38 @@ class EditorController extends Controller
                 ->with('flash_message', 'You have approved one dataset!');
         }
         throw new GeneralException(trans('exceptions.publish.approve.update_error'));
+    }
+
+     /**
+     * Reject dataset back to editor
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function reject($id): View
+    {
+        $dataset = Dataset::with('user:id,login')->findOrFail($id);
+        return view('workflow.editor.reject', [
+            'dataset' => $dataset,
+        ]);
+    }
+
+    public function rejectUpdate(Request $request, $id)
+    {
+        $this->validate(request(), [
+            'reject_editor_note' => 'required|min:10|max:255',
+            'server_state' => 'required'
+        ]);
+        $dataset = Dataset::findOrFail($id);
+        $input = $request->all();
+        //$input['server_state'] = 'rejected_editor';
+
+        if ($dataset->update($input)) {
+            // event(new PageUpdated($page));
+            return redirect()
+                ->route('publish.workflow.editor.index')
+                ->with('flash_message', 'You have successfully rejected one dataset! The submitter will be informed.');
+        }
+        throw new GeneralException(trans('exceptions.publish.review.update_error'));
     }
 }
