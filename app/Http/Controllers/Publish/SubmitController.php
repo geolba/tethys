@@ -60,10 +60,23 @@ class SubmitController extends Controller
     public function releaseUpdate(Request $request, $id)
     {
         $dataset = Dataset::findOrFail($id);
+        if ($dataset->files->count() == 0) {
+            return  back()
+            ->withErrors(['datasets_count' => ['At least one dataset is required.']]);
+        }
 
         $input = $request->all();
+        //immer released setzen
         $input['server_state'] = 'released';
+        //editor wieder löschen falls rejected
+        if ($dataset->editor_id !== null) {
+            $input['editor_id'] = null;
+        }
 
+        if ($dataset->reject_editor_note != null) {
+            $input['reject_editor_note'] = null;
+        }
+        
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));
             return redirect()

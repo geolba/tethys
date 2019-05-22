@@ -3,7 +3,8 @@
     <div class="pure-g">
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('name_long', 'Lizenzname') !!} {!! Form::text('name_long', null, ['class' => 'pure-u-23-24', 'placeholder'
+            {!! Form::label('name_long', 'Lizenzname') !!} 
+            {!! Form::text('name_long', null, ['class' => 'pure-u-23-24', 'placeholder'
             => '--no language--']) !!}
         </div>
 

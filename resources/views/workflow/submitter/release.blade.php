@@ -12,6 +12,17 @@
     </h3>
 </div>
 
+@if (count($errors) > 0)
+  <div class="alert alert-danger">
+    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <ul>
+       @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+       @endforeach
+    </ul>
+  </div>
+@endif
+
 <div class="pure-g  box-content">
 
     <div class="pure-u-1 pure-u-md-1">
@@ -63,7 +74,7 @@
                                 {!! Form::text('preferred_reviewer_email', null, array(
                                     'placeholder' => 'Email', 'id' => 'preferred_reviewer_email', 'class' => 'pure-u-23-24',
                                     'v-model' => 'dataset.preferred_reviewer_email',                                 
-                                    "v-validate" => "this.isPreferationRequired ? 'required|mail' : ''")) !!}                          
+                                    "v-validate" => "this.isPreferationRequired ? 'required|email' : ''")) !!}                          
                                 <em>*</em>
         
                                 <span class="help is-danger" v-if="errors.has('preferred_reviewer_email')" v-text="errors.first('preferred_reviewer_email')"></span>
@@ -98,6 +109,13 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>--}} {{--
 <script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
+<script>
+    window.Laravel = <?php echo json_encode([
+        'csrf_token' => csrf_token(),
+        'dataset' => $dataset
+    ]); ?>
+</script>
+
 <script type="text/javascript" src="{{  asset('backend/publish/releaseDataset.js') }}"></script>
 
 @stop

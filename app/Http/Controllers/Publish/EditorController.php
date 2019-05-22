@@ -210,7 +210,9 @@ class EditorController extends Controller
         $dataset = Dataset::findOrFail($id);
         $input = $request->all();
         $input['server_state'] = 'approved';
-        $input['reject_reviewer_note'] = '';
+        if ($dataset->reject_reviewer_note != null) {
+            $input['[reject_reviewer_note'] = null;
+        }
 
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));

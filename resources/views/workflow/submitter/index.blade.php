@@ -44,6 +44,7 @@
                         @else 
                         no title 
                         @endif
+                        {{ $dataset->files->count() }}
                     </td>
                     <td>
                         {{ $dataset->user->login }}
