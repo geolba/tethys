@@ -252,19 +252,19 @@ class IndexController extends Controller
             'title_main.language' => 'required',
             'abstract_main.value' => 'required|min:4',
             'abstract_main.language' => 'required',
-            'geolocation.xmin' => [
+            'coverage.xmin' => [
                 'nullable',
                 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
-            'geolocation.ymin' => [
+            'coverage.ymin' => [
                 'nullable',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
-            'geolocation.xmax' => [
+            'coverage.xmax' => [
                 'nullable',
                 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
-            'geolocation.ymax' => [
+            'coverage.ymax' => [
                 'nullable',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],

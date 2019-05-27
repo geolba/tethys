@@ -10,20 +10,6 @@
     </div>
 
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        {!! Form::label('server_state', 'Status..') !!}       
-        {{-- {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!} --}}
-        {!! Form::text('server_state', null, ['class'=>'pure-u-23-24','readonly']) !!}
-       
-    </div>
-
-    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        {!! Form::label('reject_reviewer_note', 'reviewer note..') !!}       
-        {{-- {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!} --}}
-        {!! Form::textarea('reject_reviewer_note', null, ['class'=>'pure-u-23-24','readonly']) !!}
-       
-    </div>
-
-    <div class="pure-u-1 pure-u-md-1-2 pure-div">
         {!! Form::label('project_id', 'Project..') !!}
         <div class="select pure-u-23-24">
         {!! Form::select('project_id', $projects, null, ['id' => 'project_id', 'placeholder' => '--no project--']) !!}
@@ -31,10 +17,19 @@
         <small id="projectHelp" class="pure-form-message-inline">project is optional</small>
     </div>
 
-    {{-- <div class="pure-control-group">
-			{!! Form::label('shelf_id', 'Shelf..') !!}
-			{!! Form::select('shelf_id', $shelves, null, ['id' => 'shelf_id']) !!}
-		</div>  --}}
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {!! Form::label('server_state', 'Status..') !!}       
+        {{-- {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!} --}}
+        {!! Form::text('server_state', null, ['class'=>'pure-u-23-24','readonly']) !!}
+       
+    </div>
+
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {!! Form::label('reject_reviewer_note', 'reviewer reject note..') !!}       
+        {{-- {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!} --}}
+        {!! Form::textarea('reject_reviewer_note', null, ['class'=>'pure-u-23-24','readonly']) !!}
+       
+    </div>  
 
    <div class="pure-u-1 pure-u-md-1-2 pure-div">
         {!! Form::label('embargo_date', 'Embargo Date') !!}
@@ -43,6 +38,86 @@
     </div>
 </div>
 </fieldset>
+
+<fieldset id="fieldset-geolocation">
+    <legend>Coverage: Geolocation, Elevation, Depth, Time</legend>
+    <div class="pure-g">       
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {!! Form::label('xmin', 'xmin: ') !!} 
+            {!! Form::text('coverage[xmin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmin']) !!}
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {!! Form::label('ymin', 'ymin: ') !!} 
+            {!! Form::text('coverage[ymin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymin']) !!}
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {!! Form::label('xmax', 'xmax: ') !!} 
+            {!! Form::text('coverage[xmax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmax']) !!}
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {!! Form::label('ymax', 'ymax: ') !!} 
+            {!! Form::text('coverage[ymax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymax']) !!}
+        </div>
+
+        @if (isset($dataset->elevation_absolut))
+        <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('elevation_absolut', 'elevation absolut: ') !!} 
+            {!! Form::text('coverage[elevation_absolut]', null,
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
+        </div>
+        @elseif (isset($dataset->elevation_min) && isset($dataset->elevation_max))
+        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('elevation_min', 'elevation min: ') !!} 
+            {!! Form::text('coverage[elevation_min]', null, 
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+        </div>
+        <div  v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('elevation_max', 'elevation max: ') !!} 
+            {!! Form::text('coverage[elevation_max]', null,
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.elevation_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+        </div>
+        @endif
+    
+        @if (isset($dataset->depth_absolut))
+        <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('depth_absolut', 'depth absolut: ') !!} 
+            {!! Form::text('coverage[depth_absolut]', null,
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.depth_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
+        </div>
+        @elseif (isset($dataset->elevation_min) && isset($dataset->elevation_max))
+        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('depth_min', 'depth min: ') !!} 
+            {!! Form::text('coverage[depth_min]', null, 
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.depth_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+        </div>
+        <div  v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('depth_max', 'depth max: ') !!} 
+            {!! Form::text('coverage[depth_max]', null,
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.depth_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+        </div>
+        @endif
+    
+        @if (isset($dataset->depth_absolut))
+        <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('time_absolut', 'time absolut: ') !!} 
+            {!! Form::text('coverage[time_absolut]', null,
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
+        </div>
+        @elseif (isset($dataset->elevation_min) && isset($dataset->elevation_max))
+        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('time_min', 'time min: ') !!} 
+            {!! Form::text('coverage[time_min]', null, 
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+        </div>
+        <div  v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+            {!! Form::label('time_max', 'time max: ') !!} 
+            {!! Form::text('coverage[time_max]', null,
+            ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+        </div>
+        @endif,
+    </div>
+</fieldset>   
 
 <fieldset id="fieldset-titles">
     <legend>Title</legend>
@@ -55,10 +130,8 @@
         {{ Form::text('titles['.$title->id.'][value]', $title->value, ['class' => 'pure-u-23-24']) }}
     </div>
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        {{ Form::label('language', 'Language..') }}
-        <div class="select pure-u-23-24">
-        {{ Form::select('titles['.$title->id.'][language]', $languages, $title->language, ['placeholder' => '--no language--']) }}
-        </div>
+        {{ Form::label('language', 'Language..') }}       
+        {{ Form::text('titles['.$title->id.'][language]', $title->language, ['placeholder' => '--no language--', 'class' => 'pure-u-23-24', 'readonly']) }}     
     </div>
     @endforeach
 
@@ -76,10 +149,8 @@
         {{ Form::textarea('abstracts['.$abstract->id.'][value]', $abstract->value, ['class' => 'pure-u-23-24', 'size' => '70x6']) }}
     </div>
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        {{ Form::label('language', 'Language..') }}
-        <div class="select pure-u-23-24">
-        {{ Form::select('abstracts['.$abstract->id.'][language]', $languages, $abstract->language, ['placeholder' => '--no language--']) }}
-        </div>
+        {{ Form::label('language', 'Language..') }}       
+        {{ Form::text('abstracts['.$abstract->id.'][language]', $abstract->language, ['placeholder' => '--no language--', 'class' => 'pure-u-23-24', 'readonly']) }}       
     </div>
     @endforeach
 

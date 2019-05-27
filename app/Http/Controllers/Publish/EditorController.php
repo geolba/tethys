@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+// use App\Models\Coverage;
+use Illuminate\Support\Facades\Validator;
 
 class EditorController extends Controller
 {
@@ -87,7 +89,7 @@ class EditorController extends Controller
     public function edit($id): View
     {
         $dataset = Dataset::findOrFail($id);
-        $dataset->load('licenses', 'titles', 'abstracts', 'files');
+        $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage');
 
         $projects = Project::pluck('label', 'id');
 
@@ -123,53 +125,86 @@ class EditorController extends Controller
      */
     public function update(DocumentRequest $request, $id): RedirectResponse
     {
-        $dataset = Dataset::findOrFail($id);
-        //$input = $request->all();
-        $input = $request->except('abstracts', 'licenses', 'titles', '_method', '_token');
-        // foreach ($input as $key => $value) {
-        //     $dataset[$key] = $value;
-        // }
-        //$dataset->update($input);
-        // $dataset->type = $input['type'];
-        // $dataset->thesis_year_accepted = $input['thesis_year_accepted'];
-        // $dataset->project_id = $input['project_id'];
-        // $dataset->save();
+        $rules = [
+            'type' => 'required|min:5',
+            'coverage.xmin' => [
+                'nullable',
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+            ],
+            'coverage.ymin' => [
+                'nullable',
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+            ],
+            'coverage.xmax' => [
+                'nullable',
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+            ],
+            'coverage.ymax' => [
+                'nullable',
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+            ],
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->passes()) {
+            $dataset = Dataset::findOrFail($id);
+            $data = $request->all();
+            $input = $request->except('abstracts', 'licenses', 'titles', 'coverage', '_method', '_token');
+       
+            $licenses = $request->input('licenses');
+            //$licenses = $input['licenses'];
+            $dataset->licenses()->sync($licenses);
 
-        $licenses = $request->input('licenses');
-        //$licenses = $input['licenses'];
-        $dataset->licenses()->sync($licenses);
+            //save the titles:
+            $titles = $request->input('titles');
+            if (is_array($titles) && count($titles) > 0) {
+                foreach ($titles as $key => $formTitle) {
+                    $title = Title::findOrFail($key);
+                    $title->value = $formTitle['value'];
+                    $title->language = $formTitle['language'];
+                    $title->save();
+                }
+            }
 
-        //save the titles:
-        $titles = $request->input('titles');
-        if (is_array($titles) && count($titles) > 0) {
-            foreach ($titles as $key => $formTitle) {
-                $title = Title::findOrFail($key);
-                $title->value = $formTitle['value'];
-                $title->language = $formTitle['language'];
-                $title->save();
+            //save the abstracts:
+            $abstracts = $request->input('abstracts');
+            if (is_array($abstracts) && count($abstracts) > 0) {
+                foreach ($abstracts as $key => $formAbstract) {
+                    $abstract = Description::findOrFail($key);
+                    $abstract->value = $formAbstract['value'];
+                    $abstract->language = $formAbstract['language'];
+                    $abstract->save();
+                }
+            }
+
+            // save coverage
+            if (isset($data['coverage'])) {
+                $formCoverage = $request->input('coverage');
+                $coverage = $dataset->coverage()->updateOrCreate(
+                    ['dataset_id' => $dataset->id],
+                    $formCoverage
+                );
+            }
+
+            if (!$dataset->isDirty(dataset::UPDATED_AT)) {
+                $time = new \Illuminate\Support\Carbon();
+                $dataset->setUpdatedAt($time);
+            }
+            // $dataset->save();
+            if ($dataset->update($input)) {
+                //event(new DatasetUpdated($dataset));
+                session()->flash('flash_message', 'You have updated 1 dataset!');
+                return redirect()->route('publish.workflow.editor.index');
             }
         }
-
-        //save the abstracts:
-        $abstracts = $request->input('abstracts');
-        if (is_array($abstracts) && count($abstracts) > 0) {
-            foreach ($abstracts as $key => $formAbstract) {
-                $abstract = Description::findOrFail($key);
-                $abstract->value = $formAbstract['value'];
-                $abstract->language = $formAbstract['language'];
-                $abstract->save();
-            }
-        }
-
-        if (!$dataset->isDirty(dataset::UPDATED_AT)) {
-            $time = new \Illuminate\Support\Carbon();
-            $dataset->setUpdatedAt($time);
-        }
-        // $dataset->save();
-        if ($dataset->update($input)) {
-            //event(new DatasetUpdated($dataset));
-            session()->flash('flash_message', 'You have updated 1 dataset!');
-            return redirect()->route('publish.workflow.editor.index');
+        else {
+            //TODO Handle validation error
+            //pass validator errors as errors object for ajax response
+            // return response()->json([
+            //     'success' => false,
+            //     'errors' => $validator->errors()->all(),
+            // ], 422);
+            return  back()
+            ->withErrors($validator->errors()->all());
         }
         throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
     }
