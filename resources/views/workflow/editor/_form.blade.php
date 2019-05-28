@@ -36,6 +36,13 @@
         {!! Form::date('embargo_date', null, ['placeholder' => date('y-m-d'), 'class' => 'pure-u-23-24']) !!}
         <small id="projectHelp" class="pure-form-message-inline">embargo_date is optional</small>
     </div>
+   
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {!! Form::label('creating_corporation', 'Creating Corporation') !!} 
+        {!! Form::text('creating_corporation', null, ['class' =>
+        'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+    </div>
+        
 </div>
 </fieldset>
 
@@ -179,8 +186,44 @@
     </div>
 </fieldset>
 
+<fieldset id="fieldset-keywords">
+    <legend>Dataset Keywords</legend>  
+    {{-- <table class="table table-hover" v-if="dataset.keywords.length"> --}}
+        @if ($dataset->subjects->count() > 0)
+        <table id="keywords" class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th style="width: 20px;">Keyword</th>
+                <th>Type</th>
+                <th style="width: 130px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{-- <tr v-for="(item, index) in dataset.keywords"> --}}
+            @foreach($dataset->subjects as $key => $keyword)
+            <tr> 
+                <td>
+                    {{-- <input name="Keyword Value" class="form-control" placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="'required'"
+                        data-vv-scope="step-2" /> --}}
+                        {{ Form::text('keywords['.$keyword->id.'][value]', $keyword->value, ['class' => 'form-control',  'placeholder' => '[KEYWORD VALUE]']) }}
+                </td>
+                <td>
+                    {!! Form::select('keywords['.$keyword->id.'][type]', $keywordTypes, $keyword->type, ['placeholder' => '[keyword type]', 'v-model' =>
+                    'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                </td>
+                <td>
+                    {{-- <button class="pure-button button-small is-warning" @click.prevent="removeKeyword(index)">Remove</button> --}}
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @else
+    <span>...ther are no keywords</span>
+    @endif
+</fieldset>
 
-<fieldset id="fieldset-abstracts">
+<fieldset id="fieldset-files">
     <legend>Files</legend>
     <table id="items" class="pure-table pure-table-horizontal">
         <thead>
@@ -199,7 +242,10 @@
                     <span class="alert">missing file: {{ $file->path_name }}</span> 
                     @endif
                 </td>
-                <td> {{ $file->label }} </td>
+                <td> 
+                    {{-- {{ $file->label }} --}}
+                    {{ Form::text('files['.$file->id.'][label]', $file->label, ['class' => 'form-control',  'placeholder' => '[FILE LABEL]']) }} 
+                </td>
             </tr>
             @endforeach
         </tbody>

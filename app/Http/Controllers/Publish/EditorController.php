@@ -10,6 +10,8 @@ use App\Models\License;
 use App\Models\User;
 use App\Models\Title;
 use App\Models\Description;
+use App\Models\Subject;
+use App\Models\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,7 +91,7 @@ class EditorController extends Controller
     public function edit($id): View
     {
         $dataset = Dataset::findOrFail($id);
-        $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage');
+        $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects');
 
         $projects = Project::pluck('label', 'id');
 
@@ -107,10 +109,12 @@ class EditorController extends Controller
         //$options = License::all();
         $options = License::all('id', 'name_long');
         $checkeds = $dataset->licenses->pluck('id')->toArray();
+        $keywordTypes = ['uncontrolled' => 'uncontrolled', 'swd' => 'swd'];
+
     
         return view(
             'workflow.editor.edit',
-            compact('dataset', 'projects', 'options', 'checkeds', 'years', 'languages')
+            compact('dataset', 'projects', 'options', 'checkeds', 'years', 'languages', 'keywordTypes')
         );
     }
 
@@ -176,6 +180,27 @@ class EditorController extends Controller
                 }
             }
 
+            //save the keywords:
+            $keywords = $request->input('keywords');
+            if (is_array($keywords) && count($keywords) > 0) {
+                foreach ($keywords as $key => $formKeyword) {
+                    $subject = Subject::findOrFail($key);
+                    $subject->value = $formKeyword['value'];
+                    $subject->type = $formKeyword['type'];
+                    $subject->save();
+                }
+            }
+
+            //save the files:
+            $files = $request->input('files');
+            if (is_array($files) && count($files) > 0) {
+                foreach ($files as $key => $formFile) {
+                    $file = File::findOrFail($key);
+                    $file->label = $formFile['label'];
+                    $file->save();
+                }
+            }
+
             // save coverage
             if (isset($data['coverage'])) {
                 $formCoverage = $request->input('coverage');
@@ -195,8 +220,7 @@ class EditorController extends Controller
                 session()->flash('flash_message', 'You have updated 1 dataset!');
                 return redirect()->route('publish.workflow.editor.index');
             }
-        }
-        else {
+        } else {
             //TODO Handle validation error
             //pass validator errors as errors object for ajax response
             // return response()->json([
