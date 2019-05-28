@@ -41,7 +41,8 @@ class Dataset extends Model
         'preferred_reviewer_email',
         'reviewer_id',
         'reject_reviewer_note',
-        'reject_editor_note'
+        'reject_editor_note',
+        'reviewer_note_visible'
     ];
     //protected $guarded = [];
         /**
@@ -300,5 +301,15 @@ class Dataset extends Model
         $embargoDate->second = 59;
 
         return ($embargoDate->gt($now) == true);
+    }
+
+    public function getRemainingTimeAttribute()
+    {
+        $dateDiff =$this->server_date_modified->addDays(14);
+        if ($this->server_state == "approved") {
+            return Carbon::now()->diffInDays($dateDiff, false);
+        } else {
+            return 0;
+        }
     }
 }

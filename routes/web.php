@@ -109,6 +109,14 @@ Route::group(
             'middleware' => ['permission:dataset-editor-reject'],
             'as' => 'workflow.editor.rejectUpdate', 'uses' => 'EditorController@rejectUpdate',
         ]);
+        Route::get('workflow/editor/publish/{id}', [
+            'middleware' => ['permission:dataset-publish'],
+            'as' => 'workflow.editor.publish', 'uses' => 'EditorController@publish',
+        ]);
+        Route::post('workflow/editor/publish/{id}', [
+            'middleware' => ['permission:dataset-publish'],
+            'as' => 'workflow.editor.publishUpdate', 'uses' => 'EditorController@publishUpdate',
+        ]);
 
         //reviewer
         Route::get('workflow/review/index', [
@@ -137,14 +145,14 @@ Route::group(
             'middleware' => ['permission:dataset-publish-list'],
             'as' => 'workflow.publish.index', 'uses' => 'PublishController@index',
         ]);
-        Route::get('workflow/publish/{id}', [
-            'middleware' => ['permission:dataset-publish'],
-            'as' => 'workflow.publish.publish', 'uses' => 'PublishController@publish',
-        ]);
-        Route::post('workflow/publish/{id}', [
-            'middleware' => ['permission:dataset-publish'],
-            'as' => 'workflow.publish.publishUpdate', 'uses' => 'PublishController@publishUpdate',
-        ]);
+        // Route::get('workflow/publish/{id}', [
+        //     'middleware' => ['permission:dataset-publish'],
+        //     'as' => 'workflow.publish.publish', 'uses' => 'PublishController@publish',
+        // ]);
+        // Route::post('workflow/publish/{id}', [
+        //     'middleware' => ['permission:dataset-publish'],
+        //     'as' => 'workflow.publish.publishUpdate', 'uses' => 'PublishController@publishUpdate',
+        // ]);
 
         Route::get('workflow/changestate/{id}/changestate/{targetState}', [
             'as' => 'review.changestate', 'uses' => 'SubmitController@changestate',

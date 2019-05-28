@@ -2,7 +2,7 @@
 @section('content')
 <div class="header">
     <h3 class="header-title">
-        <i class="fa fa-share"></i> Review approved dataset
+        <i class="fa fa-share"></i> Publish reviewed dataset
     </h3>
 </div>
 
@@ -17,7 +17,7 @@
         </div>
         <div id="app1">
 
-            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.publish.publishUpdate', $dataset->id],
+            {!! Form::model($dataset, [ 'method' => 'POST', 'route' => ['publish.workflow.editor.publishUpdate', $dataset->id],
             'id' => 'publishForm', 'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'checkForm'])
             !!}
             <fieldset id="fieldset-General">
@@ -47,7 +47,7 @@
                     </tbody>
                 </table>
                 <div class="instruction">
-                        Are you sure you want to accept the selected dataset?  
+                        Are you sure you want to publish the selected dataset?  
                     </div>
                     <table>
                             <tbody><tr>

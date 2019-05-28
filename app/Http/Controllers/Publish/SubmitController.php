@@ -76,6 +76,9 @@ class SubmitController extends Controller
         if ($dataset->reject_editor_note != null) {
             $input['reject_editor_note'] = null;
         }
+        if ($dataset->reject_reviewer_note != null) {
+            $input['reject_reviewer_note'] = null;
+        }
         
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));

@@ -35,21 +35,36 @@
                 <div class="pure-g">
 
                         <div class="pure-u-1 pure-u-md-1-1 pure-div">
-                                {!! Form::label('server_state', 'Status..') !!}
-                                {!! Form::text('server_state', 'rejected_editor', ['class'=>'pure-u-23-24','readonly']) !!}
-                               
-                            </div>
-                                       
+                            {!! Form::label('server_state', 'Status..') !!}
+                            {!! Form::text('server_state', 'rejected_editor', ['class'=>'pure-u-23-24','readonly']) !!}                               
+                        </div>
+                                    
                     <div class="pure-u-1 pure-u-md-1-1 pure-div">
                             {!! Form::label('reject_editor_note', 'reject note:') !!}
                             {!! Form::textarea('reject_editor_note',null, ['id' => 'reject_editor_note', 'class'=>'pure-u-23-24',
                             'placeholder' => '-- reject note for submitter --', 'size' => '70x6',
                             'v-model' => 'dataset.reject_editor_note', "v-validate" => "'required|min:10|max:255'"]) !!}
-                             <em>*</em>
-                           
-                            <span class="help is-danger" v-if="errors.has('reject_editor_note')" v-text="errors.first('reject_editor_note')"></span>
-    
-                    </div>                   
+                             <em>*</em>                           
+                            <span class="help is-danger" v-if="errors.has('reject_editor_note')" v-text="errors.first('reject_editor_note')"></span>    
+                    </div>      
+                    
+                    @if ($dataset->reject_reviewer_note != null)
+                    <div class="pure-u-1 pure-u-md-1-1">
+                        {!! Form::label('reject_reviewer_note', 'Reviewer reject note..') !!}
+                        {!! Form::text('reject_reviewer_note', null, ['class'=>'pure-u-23-24','readonly']) !!}                               
+                    </div>
+                    <div class="pure-u-1 pure-u-md-1-1">
+                        <label for="BelongsToBibliography" class="pure-checkbox">
+                            <input type="hidden" name="reviewer_note_visible" value="0">
+                            <input name="reviewer_note_visible" value="1" type="checkbox" class="form-check-input"> 
+                            should reviewer note be visible to submitter?
+                        </label> 
+                    </div>
+                    @else
+                    <div class="pure-u-1 pure-u-md-1-1">
+                        <span class="help is-info">There is no reject note from the reviewer</span>
+                    </div>                  
+                    @endif
                 </div>
             </fieldset>
 

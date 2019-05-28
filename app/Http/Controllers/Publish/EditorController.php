@@ -10,6 +10,7 @@ use App\Models\License;
 use App\Models\User;
 use App\Models\Title;
 use App\Models\Description;
+use App\Models\DatasetReference;
 use App\Models\Subject;
 use App\Models\File;
 use Illuminate\Http\RedirectResponse;
@@ -91,7 +92,7 @@ class EditorController extends Controller
     public function edit($id): View
     {
         $dataset = Dataset::findOrFail($id);
-        $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects');
+        $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $projects = Project::pluck('label', 'id');
 
@@ -111,10 +112,27 @@ class EditorController extends Controller
         $checkeds = $dataset->licenses->pluck('id')->toArray();
         $keywordTypes = ['uncontrolled' => 'uncontrolled', 'swd' => 'swd'];
 
+        $referenceTypes = ["rdr-id", "arXiv", "bibcode", "DOI", "EAN13", "EISSN", "Handle", "IGSN", "ISBN", "ISSN", "ISTC", "LISSN", "LSID", "PMID", "PURL", "UPC", "URL", "URN"];
+        $referenceTypes = array_combine($referenceTypes, $referenceTypes);
+
+        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References"]; 
+        // "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes = array_combine($relationTypes, $relationTypes);
+
     
         return view(
             'workflow.editor.edit',
-            compact('dataset', 'projects', 'options', 'checkeds', 'years', 'languages', 'keywordTypes')
+            compact(
+                'dataset',
+                'projects',
+                'options',
+                'checkeds',
+                'years',
+                'languages',
+                'keywordTypes',
+                'referenceTypes',
+                'relationTypes'
+            )
         );
     }
 
@@ -177,6 +195,19 @@ class EditorController extends Controller
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
                     $abstract->save();
+                }
+            }
+
+            //save the references:
+            $references = $request->input('references');
+            if (is_array($references) && count($references) > 0) {
+                foreach ($references as $key => $formReference) {
+                    $reference = DatasetReference::findOrFail($key);
+                    $reference->value = $formReference['value'];
+                    $reference->label = $formReference['label'];
+                    $reference->type = $formReference['type'];
+                    $reference->relation = $formReference['relation'];
+                    $reference->save();
                 }
             }
 
@@ -313,5 +344,43 @@ class EditorController extends Controller
                 ->with('flash_message', 'You have successfully rejected one dataset! The submitter will be informed.');
         }
         throw new GeneralException(trans('exceptions.publish.review.update_error'));
+    }
+
+    /**
+     * Display the specified dataset for publishing.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function publish($id): View
+    {
+        $dataset = Dataset::query()
+        ->with([
+            'titles',
+            'persons' => function ($query) {
+                $query->wherePivot('role', 'author');
+            }
+        ])->findOrFail($id);
+
+        return view('workflow.editor.publish', [
+            'dataset' => $dataset,
+        ]);
+    }
+
+    public function publishUpdate(Request $request, $id)
+    {
+        $dataset = Dataset::findOrFail($id);
+        $input = $request->all();
+        $input['server_state'] = 'published';
+        $time = new \Illuminate\Support\Carbon();
+        $input['server_date_published'] = $time;
+
+        if ($dataset->update($input)) {
+            // event(new PageUpdated($page));
+            return redirect()
+                ->route('publish.workflow.publish.index')
+                ->with('flash_message', 'You have successfully published the dataset!');
+        }
+        throw new GeneralException(trans('exceptions.publish.publish.update_error'));
     }
 }

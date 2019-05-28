@@ -186,6 +186,50 @@
     </div>
 </fieldset>
 
+<fieldset id="fieldset-references">
+        <legend>Dataset References</legend>  
+        {{-- <table class="table table-hover" v-if="dataset.keywords.length"> --}}
+            @if ($dataset->references->count() > 0)
+            <table id="references" class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th style="width: 20px;">Reference value</th>
+                    <th style="width: 20px;">Label</th>
+                    <th>Type</th>
+                    <th>Relation</th>
+                    <th style="width: 130px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{-- <tr v-for="(item, index) in dataset.keywords"> --}}
+                @foreach($dataset->references as $key => $reference)
+                <tr> 
+                    <td>
+                        {{ Form::text('references['.$reference->id.'][value]', $reference->value, ['class' => 'form-control',  'placeholder' => '[REFERENCE VALUE]']) }}
+                    </td>
+                    <td>                            
+                        {{ Form::text('references['.$reference->id.'][label]', $reference->label, ['class' => 'form-control',  'placeholder' => '[REFERENCE LABEL]']) }}
+                        </td>
+                    <td>
+                        {!! Form::select('references['.$reference->id.'][type]', $referenceTypes, $reference->type, ['placeholder' => '[reference type]', 'v-model' =>
+                        'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                    </td>
+                    <td>
+                        {!! Form::select('references['.$reference->id.'][relation]', $relationTypes, $reference->relation, ['placeholder' => '[relation type]', 'v-model' =>
+                        'item.relation', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                        </td>
+                    <td>
+                       
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @else
+        <span>...there are no references</span>
+        @endif
+    </fieldset>
+
 <fieldset id="fieldset-keywords">
     <legend>Dataset Keywords</legend>  
     {{-- <table class="table table-hover" v-if="dataset.keywords.length"> --}}
@@ -219,7 +263,7 @@
         </tbody>
     </table>
     @else
-    <span>...ther are no keywords</span>
+    <span>...there are no keywords</span>
     @endif
 </fieldset>
 

@@ -56,7 +56,7 @@
                    
                     <td>
                         @if ($dataset->server_state == "reviewed")
-                        <a href="{{ URL::route('publish.workflow.publish.publish', $dataset->id) }}" class="pure-button">
+                        <a href="{{ URL::route('publish.workflow.editor.publish', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-check"></i>
                             <span>Publish</span>
                         </a> 

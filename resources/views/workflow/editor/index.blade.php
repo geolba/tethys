@@ -40,7 +40,7 @@
                         {{ $dataset->titles()->first()->value }} 
                         @else 
                         no title 
-                        @endif
+                        @endif                       
                     </td>
                     <td>
                         {{ $dataset->id }}
@@ -77,7 +77,7 @@
                             <span>Reject</span>
                         </a> 
                         @elseif ($dataset->server_state == "reviewed")
-                        <a href="{{ URL::route('publish.workflow.publish.publishUpdate', $dataset->id) }}" class="pure-button">
+                        <a href="{{ URL::route('publish.workflow.editor.publishUpdate', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-edit"></i>
                             <span>Publish</span>
                         </a>                        

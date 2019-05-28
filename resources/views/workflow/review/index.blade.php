@@ -14,7 +14,8 @@
                 <th>Dataset Title</th>
                 <th>ID</th>
                 <th>Server State</th>               
-                <th>Editor</th>              
+                <th>Editor</th>      
+                <th>remaining time</th>        
                 <th></th>
             </thead>
 
@@ -42,10 +43,16 @@
                     </td>
                     <td>
                         {{ $dataset->server_state }}
-                    </td>
-                    @if ($dataset->server_state == "approved")                    
+                    </td>                
                     <td>editor: {{ optional($dataset->editor)->login }}</td>
-                    @endif
+                   <td>
+                        {{-- @php                       
+                        $dateDiff = $dataset['server_date_modified']->addDays(14);
+                        $remainingDays = Carbon\Carbon::now()->diffInDays($dateDiff, false);
+                        @endphp --}}
+
+                        {{  $dataset->remaining_time . ' days' }}
+                   </td>
                    
                     <td>
                         @if ($dataset->server_state == "approved")

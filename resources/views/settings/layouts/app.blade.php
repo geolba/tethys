@@ -113,17 +113,11 @@
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.review.index') }}"><i class="fas fa-list"></i> REVIEW PAGE: Approved datasets</a>
                         </li>	
                         @endpermission
-                        @permission('dataset-publish-list')
+                        {{-- @permission('dataset-publish-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.publish*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.publish.index') }}"><i class="fas fa-list"></i> Publish PAGE: Reviewed datasets</a>
                         </li>	
-                        @endpermission
-                        {{-- <li class="pure-menu-item {{ Route::is('publish.workflow.release') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.release') }}"><i class="fa fa-upload"></i> Release pending datasets</a>
-                        </li>	
-                        <li class="pure-menu-item {{ Route::is('publish.workflow.review') ? 'active' : '' }}">
-                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.review') }}"><i class="fa fa-upload"></i> Review/Publish unpublished datasets</a>
-                        </li>			 --}}
+                        @endpermission --}}                       
                     </ul>
                 </li>
                 @endrole
