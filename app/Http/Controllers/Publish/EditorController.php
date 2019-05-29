@@ -301,7 +301,7 @@ class EditorController extends Controller
         $input = $request->all();
         $input['server_state'] = 'approved';
         if ($dataset->reject_reviewer_note != null) {
-            $input['[reject_reviewer_note'] = null;
+            $input['reject_reviewer_note'] = null;
         }
 
         if ($dataset->update($input)) {

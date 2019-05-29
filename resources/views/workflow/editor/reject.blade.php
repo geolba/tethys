@@ -21,7 +21,7 @@
 
     <div class="pure-u-1 pure-u-md-1">
         <div>
-            <a href="{{ route('publish.workflow.review.index') }}" class="pure-button button-small">
+            <a href="{{ route('publish.workflow.editor.index') }}" class="pure-button button-small">
                 <i class="fa fa-chevron-left"></i>
                 <span>BACK</span>
             </a>
