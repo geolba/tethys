@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
 use App\Models\Subject;
-use App\Models\GeolocationBox;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Coverage;
