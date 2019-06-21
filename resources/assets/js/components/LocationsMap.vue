@@ -1,7 +1,66 @@
 <template>
-  <div>   
-    <div id="map">
+  <div style="position:relative">
+    <!-- <div id="inset">
+      xmin:
+      <input
+        type="text"
+        name="xmin"
+        id="xmin"
+        v-model="geolocation.xmin"
+        data-vv-scope="step-2"
+        v-validate="'decimal'"
+      >
+      <br>ymin:
+      <input
+        type="text"
+        name="ymin"
+        id="ymin"
+        v-model="geolocation.ymin"
+        data-vv-scope="step-2"
+      >
+      xmax:
+      <input
+        type="text"
+        name="xmax"
+        id="xmax"
+        v-model="geolocation.xmax"
+        data-vv-scope="step-2"
+      >
+      <br>ymax:
+      <input
+        type="text"
+        name="ymax"
+        id="ymax"
+        v-model="geolocation.ymax"
+        data-vv-scope="step-2"
+      >
+      <input type="button" v-on:click="zoomTo" value="zoomTo">
+    </div> -->
+    <div id="map"></div>
+
+    <div class="pure-g">
+      <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label for="xmin">xmin: </label> 
+        <input name="xmin" type="text" class="pure-u-23-24"  v-model="geolocation.xmin" data-vv-scope="step-2" id="xmin" v-validate="'decimal'">
+      </div> 
+
+      <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label for="ymin">ymin: </label> 
+        <input  name="ymin" type="text" class="pure-u-23-24" v-model="geolocation.ymin" data-vv-scope="step-2" id="ymin" v-validate="'decimal'">
+      </div>
+
+      <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label for="xmax">xmax: </label>
+        <input name="xmax" type="text" class="pure-u-23-24" v-model="geolocation.xmax" data-vv-scope="step-2"  id="xmax" v-validate="'decimal'">
+      </div>
+
+      <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label for="ymax">ymax: </label> 
+        <input name="ymax" type="text" class="pure-u-23-24" v-model="geolocation.ymax" data-vv-scope="step-2"  id="ymax" v-validate="'decimal'">
+      </div>
+      <input type="button" v-on:click="zoomTo" value="validate coordinates">
     </div>
+
   </div>
 </template>
 
@@ -20,14 +79,50 @@ export default {
   data() {
     return {
       map: [],
-      markers: null
+      drawnItems: null,
+      locationErrors: []
     };
+  },
+   created() {
+    this.$validator.extend('boundingBox', {
+        getMessage: field => 'At least one ' + field + ' needs to be checked.',
+        validate: (value, [testProp]) => {
+            const options = this.dataset.checkedLicenses;
+            return value || options.some((option) => option[testProp]);
+        }
+    });
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    zoomTo() {
+      var _this = this;
+      _this.locationErrors.length = 0;
+      this.drawnItems.clearLayers();
+      var xmin = document.getElementById("xmin").value;
+      var ymin = document.getElementById("ymin").value;
+      var xmax = document.getElementById("xmax").value;
+      var ymax = document.getElementById("ymax").value;
+      var bounds = [[ymin, xmin], [ymax, xmax]];
+      try {
+        var boundingBox = L.rectangle(bounds, { color: "#005F6A", weight: 1 });     
+        // this.geolocation.xmin = xmin;
+        // this.geolocation.ymin = ymin;      
+        // this.geolocation.xmax = xmax;
+        // this.geolocation.ymax = ymax;
+
+        _this.drawnItems.addLayer(boundingBox);
+        _this.map.fitBounds(bounds);
+        _this.$toast.success("valid bounding box");
+      } catch (e) {
+        // _this.errors.push(e);
+        _this.$toast.error(e);
+      }
+    }
+  },
   mounted() {
     const map = L.map("map");
+    this.map = map;
     map.scrollWheelZoom.disable();
     // Construct a bounding box for this map that the user cannot
     var southWest = L.latLng(46.5, 9.9),
@@ -57,7 +152,7 @@ export default {
     // this.addPlaces(this.places)
 
     // Initialise the FeatureGroup to store editable layers
-    var drawnItems = new L.FeatureGroup();
+    var drawnItems = (this.drawnItems = new L.FeatureGroup());
     map.addLayer(drawnItems);
     var drawPluginOptions = {
       position: "topright",
@@ -139,5 +234,15 @@ export default {
   font-weight: bold;
   font-size: 13px;
   text-shadow: 0 0 2px #fff;
+}
+
+#inset {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border: none;
+  width: 120px;
+  z-index: 999;
+  // height: 120px;
 }
 </style>

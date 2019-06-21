@@ -19,7 +19,7 @@ mix.js('resources/assets/js/datasetPublish.js', 'public/backend/publish')
     .js('resources/assets/js/lib.js', 'public/js')
     .js('resources/assets/js/releaseDataset.js', 'public/backend/publish')
     .js('resources/assets/js/approveDataset.js', 'public/backend/publish')
-    .js('resources/assets/js/ckeditor.js', 'public/backend/')
+    .js('resources/assets/js/ckeditor.js', 'public/backend/')   
     .sass('resources/assets/sass/app1.scss', 'public/css', { implementation: require('node-sass') })
     // .sass('node_modules/purecss/build/pure.css', 'public/css',  { implementation: require('node-sass') })
     .scripts([

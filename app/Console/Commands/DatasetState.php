@@ -59,7 +59,8 @@ class DatasetState extends Command
             ->where('id', $dataset->id)
             ->update([
                 'reject_reviewer_note' => 'Dataset was automatically rejected because of the time limit',
-                'server_state' => 'rejected_reviewer'
+                'server_state' => 'rejected_reviewer',
+                'server_date_modified' => DB::raw('now()')
             ]);
         }
     }

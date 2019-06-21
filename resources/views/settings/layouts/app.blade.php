@@ -234,7 +234,7 @@
             if (e.which === 8 && !$(e.target).is("input:not([type=radio]):not([type=checkbox]), textarea, [contentEditable], [contentEditable=true]")) {
                 e.preventDefault();
             }
-	    });
+        });        
     });
 </script>
 <script type="text/javascript" src="{{ asset('backend/functions.js') }}"></script>

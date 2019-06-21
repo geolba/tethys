@@ -54,9 +54,7 @@ class IndexController extends Controller
             ->pluck('part1', 'part1');
         // ->toArray();
 
-        // $persons = Person::where('status', 1)
-        //     ->pluck('last_name', 'id');
-        $projects = Project::pluck('label', 'id');
+        // $projects = Project::pluck('label', 'id');
         $relatedIdentifierTypes = ["ARK", "arXiv", "bibcode", "DOI", "EAN13", "EISSN", "Handle", "IGSN", "ISBN", "ISSN", "ISTC", "LISSN", "LSID", "PMID", "PURL", "UPC", "URL", "URN"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
        
@@ -67,14 +65,14 @@ class IndexController extends Controller
 
         $keywordTypes = ['uncontrolled' => 'uncontrolled'];
 
-        $descriptionTypes = [ 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'other' => 'other'];
+        $descriptionTypes = [ 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'translated' => 'translated', 'other' => 'other'];
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
         return view(
             'publish.create-step1',
-            compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
+            compact('licenses', 'languages', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
         );
     }
 

@@ -201,11 +201,30 @@
                     </div>
                 </fieldset>
 
+                <fieldset id="fieldset-contributors">
+                    <legend>Contributors</legend>
+                    <div class="pure-g">
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>                            
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                            <div class="pure-control-group checkboxlist">
+                                <label v-for="(contributor, index) in dataset.contributors" :for="contributor.id" class="pure-checkbox">                           
+                                                        <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-1">
+                                                        @{{ contributor.full_name }}                               
+                                                    </label>
+                                <br />
+                                {{-- <span>Checked Contributors: @{{ dataset.checkedContributors }}</span> --}}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>  
+
                 <fieldset id="fieldset-publisher">
                     <legend>Publisher</legend>
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('CreatingCorporation', 'Creating Corporation') !!} 
-                        {!! Form::text('CreatingCorporation', null, ['class' =>
+                        {!! Form::text('CreatingCorporation', null, ['readonly', 'class' =>
                         'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                     </div>
                 </fieldset>
@@ -270,16 +289,9 @@
             <div v-if="step === 2 && isInitial" data-vv-scope="step-2">
                 <h1>Step Two: Recommended Elements</h1>
 
-                <fieldset id="fieldset-project">
+                {{-- <fieldset id="fieldset-project">
                     <legend>Project</legend>
                     <div class="pure-g">
-
-                        {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div">                            
-                            <div class="select  pure-u-23-24">
-                                {!! Form::select( 'State', ['unpublished' => 'unpublished', 'inprogress' => 'inprogress'], null, ['id' => 'state',
-                                'placeholder' => '-- select server state --', 'v-model' => 'dataset.state', "v-validate" => "'required'", 'data-vv-scope' => 'step-2'] ) !!}
-                            </div>                            
-                        </div>                        --}}
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('project_id', 'Project..') !!}
@@ -291,7 +303,7 @@
                         </div>  
 
                     </div>
-                </fieldset>
+                </fieldset> --}}
 
                 <fieldset-dates>
                     <legend>Date(s)</legend>
@@ -301,26 +313,7 @@
                         => 'pure-u-23-24', 'v-model' => 'dataset.embargo_date', 'data-vv-scope' => 'step-2']) !!}
                         <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
                     </div>
-                </fieldset-dates>
-
-                <fieldset id="fieldset-contributors">
-                    <legend>Contributors</legend>
-                    <div class="pure-g">
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>                            
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <div class="pure-control-group checkboxlist">
-                                <label v-for="(contributor, index) in dataset.contributors" :for="contributor.id" class="pure-checkbox">                           
-                                                        <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-2">
-                                                        @{{ contributor.full_name }}                               
-                                                    </label>
-                                <br />
-                                {{-- <span>Checked Contributors: @{{ dataset.checkedContributors }}</span> --}}
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>                  
+                </fieldset-dates>                               
                 
                 <fieldset id="fieldset-geolocation">
                     <legend>Geo Location</legend>
@@ -328,23 +321,28 @@
                         <div class="pure-u-1 pure-u-md-1 pure-u-lg-1 pure-div">
                             <locations-map v-bind:geolocation="dataset.coverage"></locations-map>
                         </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('xmin', 'xmin: ') !!} 
-                            {!! Form::text('xmin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmin', 'readonly']) !!}
+                            {!! Form::text('xmin', null, [
+                                'class' => 'pure-u-23-24',
+                                'v-model' => 'dataset.coverage.xmin',
+                                "v-validate" => "'decimal'",
+                                'data-vv-scope' => 'step-2'
+                            ]) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('ymin', 'ymin: ') !!} 
-                            {!! Form::text('ymin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymin', 'readonly']) !!}
+                            {!! Form::text('ymin', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymin', 'data-vv-scope' => 'step-2']) !!}
                         </div>
 
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('xmax', 'xmax: ') !!} 
-                            {!! Form::text('xmax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmax', 'readonly']) !!}
+                            {!! Form::text('xmax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.xmax', 'data-vv-scope' => 'step-2']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('ymax', 'ymax: ') !!} 
-                            {!! Form::text('ymax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymax', 'readonly']) !!}
-                        </div>
+                            {!! Form::text('ymax', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.coverage.ymax', 'data-vv-scope' => 'step-2']) !!}
+                        </div> --}}
                     </div>
                 </fieldset>   
                 
@@ -356,11 +354,11 @@
                             <div class="pure-u-1 pure-u-md-1">
                                 <label for="elevation-option-one" class="pure-radio">
                                     <input id="elevation-option-one" type="radio" v-model="elevation" value="absolut">
-                                    absolut elevation
+                                    absolut elevation (m)
                                 </label>
                                 <label for="elevation-option-two" class="pure-radio">
                                     <input id="elevation-option-two" type="radio" v-model="elevation" value="range">
-                                    elevation range
+                                    elevation range (m)
                                 </label>
                                 <label for="elevation-option-three" class="pure-radio">
                                     <input id="elevation-option-three" type="radio" v-model="elevation" value="no_elevation">
@@ -388,11 +386,11 @@
                             <div class="pure-u-1 pure-u-md-1">
                                 <label for="depth-option-one" class="pure-radio">
                                                                 <input id="depth-option-one" type="radio" v-model="depth" value="absolut">
-                                                                absolut depth
+                                                                absolut depth (m)
                                                             </label>
                                 <label for="depth-option-two" class="pure-radio">
                                                                 <input id="depth-option-two" type="radio" v-model="depth" value="range">
-                                                                depth range
+                                                                depth range (m)
                                                             </label>
                                 <label for="depth-option-three" class="pure-radio">
                                                                 <input id="depth-option-three" type="radio" v-model="depth" value="no_depth">
@@ -435,9 +433,10 @@
                         
                             <div v-show="time === 'absolut'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('time_absolut', 'time absolut: ') !!} 
-                                {!! Form::date('time_absolut', null, ['class' => 'pure-u-23-24',
-                                'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2',
-                                "v-validate" => "this.isTimeAbsolut ? 'required' : '' " ]) !!}
+                                {!! Form::datetimelocal('time_absolut', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
+                                'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'step' => 1,
+                                "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!}
+                                {{-- <datetime name="time_absolut" format="MM-DD-YYYY H:i:s" width="300px" v-model="dataset.coverage.time_absolut"></datetime> --}}
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('time_min', 'time min: ') !!} 
@@ -493,7 +492,8 @@
                     </table>
                 </fieldset>
 
-               <fieldset id="fieldset-keywords">
+               
+                <fieldset id="fieldset-keywords">
                     <legend>Dataset Keywords</legend>
                     <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
                     <table class="table table-hover" v-if="dataset.keywords.length">
@@ -501,6 +501,7 @@
                             <tr>
                                 <th style="width: 20px;">Keyword</th>
                                 <th>Type</th>
+                                <th>Language</th>
                                 <th style="width: 130px;"></th>
                             </tr>
                         </thead>
@@ -515,15 +516,20 @@
                                     'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
                                 </td>
                                 <td>
-                                    <button class="pure-button button-small is-warning" @click.prevent="removeKeyword(index)">Remove</button>
+                                    <input name="Keyword Language" readonly class="form-control" placeholder="[KEYWORD LANGUAGE]" v-model="item.language" v-validate="'required'"
+                                        data-vv-scope="step-2" />
                                 </td>
+                                <td>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeKeyword(index)">Remove</button>
+                                </td>                                
                             </tr>
                         </tbody>
                     </table>
                 </fieldset>
 
                 <br />
-               <div class="pure-controls">
+               
+                <div class="pure-controls">
                     <button @click.prevent="prev()" class="pure-button button-small">
                             <i class="fa fa-arrow-left"></i>
                             <span>Back</span>
@@ -688,9 +694,9 @@
                 <p>
                     <a href="javascript:void(0)" @click="retry()">Retry: Edit inputs</a>
                 </p>
-                <p>
-                    <a href="javascript:void(0)" @click="reset()">Start again</a>
-                </p>              
+                {{-- <p>
+                    <a href="javascript:void(0)" @click="reset()">Submit new dataset</a>
+                </p>               --}}
                 <div v-if="serrors.length > 0">
                     <b>Please correct the following server error(s):</b>
                     <ul class="alert validation-summary-errors">
@@ -730,7 +736,5 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>--}} {{--
  <script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
  <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>
-
-
 
 @stop

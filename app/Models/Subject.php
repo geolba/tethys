@@ -10,7 +10,7 @@ class Subject extends Model
     protected $table = 'document_subjects';
     public $timestamps = false;
 
-    protected $fillable = ['value', 'type'];
+    protected $fillable = ['value', 'type', 'language'];
 
     public function dataset()
     {

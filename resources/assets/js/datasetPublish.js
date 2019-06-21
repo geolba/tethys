@@ -32,10 +32,18 @@ import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
 import dataset from './components/Dataset';
 import LocationsMap from './components/LocationsMap.vue';
-import modal from './components/ShowModal.vue'
+import modal from './components/ShowModal.vue';
+// import datetime from 'vuejs-datetimepicker';
 // import { Validator } from 'vee-validate';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/index.css';
+Vue.use(VueToast);
 
-Vue.use(VeeValidate);
+// Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+    // validity: true
+    useConstraintAttrs: true
+  });
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
@@ -370,7 +378,7 @@ const app = new Vue({
         adds a new Keyword
         */
        addKeyword() {
-        let newKeyword = { value: '', type: '' };
+        let newKeyword = { value: '', type: '', language: this.dataset.language };
         //this.dataset.files.push(uploadedFiles[i]);
         this.dataset.keywords.push(newKeyword);
     },

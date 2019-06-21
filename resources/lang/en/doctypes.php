@@ -19,6 +19,7 @@ return [
     'models' => 'Models',
     'rawdata' => 'Raw Data',
     'supplementarydata' => 'Supplementary Data',
+    'mixedtype' => 'Mixed Type'
     //'diplom' => 'Diploma Thesis',
     //'doctoralthesis'     => 'Doctoral Thesis',
     //'coursematerial'     => 'Course Material',
