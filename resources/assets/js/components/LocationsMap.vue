@@ -51,12 +51,12 @@
 
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
         <label for="xmax">xmax: </label>
-        <input name="xmax" type="text" class="pure-u-23-24" v-model="geolocation.xmax" data-vv-scope="step-2"  id="xmax" v-validate="'decimal'">
+        <input name="xmax" type="text" class="pure-u-23-24" v-model="geolocation.xmax" data-vv-scope="step-2" id="xmax" v-validate="'decimal'">
       </div>
 
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
         <label for="ymax">ymax: </label> 
-        <input name="ymax" type="text" class="pure-u-23-24" v-model="geolocation.ymax" data-vv-scope="step-2"  id="ymax" v-validate="'decimal'">
+        <input name="ymax" type="text" class="pure-u-23-24" v-model="geolocation.ymax" data-vv-scope="step-2" id="ymax" v-validate="'decimal'">
       </div>
       <input type="button" v-on:click="zoomTo" value="validate coordinates">
     </div>
@@ -71,6 +71,9 @@ import "leaflet-draw";
 
 //const L = window.L;
 export default {
+  inject: {
+    $validator: '$validator'
+  },
   props: {
     geolocation: {
       type: Object

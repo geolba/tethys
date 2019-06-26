@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\DatasetReference;
 use App\Models\Subject;
 use App\Models\Page;
+use App\Models\Person;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Coverage;
 
@@ -326,10 +327,16 @@ class IndexController extends Controller
                 //store authors
                 if (isset($data['authors'])) {
                     //$data_to_sync = [];
-                    foreach ($request->get('authors') as $key => $person_id) {
+                    foreach ($request->get('authors') as $key => $person) {
                         $pivot_data = ['role' => 'author', 'sort_order' => $key + 1];
                         // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
-                        $data_to_sync[$person_id] = $pivot_data;
+                        if (isset($person['id'])) {
+                            //$data_to_sync[$person['id']] = $pivot_data;
+                            $dataset->persons()->attach($person['id'], $pivot_data);
+                        } else {
+                            $dataPerson = new Person($person);
+                            $dataset->persons()->save($dataPerson, $pivot_data);
+                        }
                     }
                     //$dataset->persons()->sync($data_to_sync);
                 }
@@ -339,7 +346,8 @@ class IndexController extends Controller
                     //$data_to_sync = [];
                     foreach ($request->get('contributors') as $key => $contributor_id) {
                         $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
-                        $data_to_sync[$contributor_id] = $pivot_data;
+                        //$data_to_sync[$contributor_id] = $pivot_data;
+                        $dataset->persons()->attach(contributor_id, $pivot_data);
                     }
                     //$dataset->persons()->sync($data_to_sync);
                 }
@@ -353,7 +361,7 @@ class IndexController extends Controller
                 //     }
                 //     //$dataset->persons()->sync($data_to_sync);
                 // }
-                $dataset->persons()->sync($data_to_sync);
+                //$dataset->persons()->sync($data_to_sync);
 
                 
                 //save main title:
@@ -467,7 +475,7 @@ class IndexController extends Controller
             return response()->json(array(
                 'success' => true,
                 //'redirect' =>  route('settings.document.edit', ['id' => $dataset->server_state]),
-                'redirect' =>  route('settings.document.edit', ['id' => $dataset->id]),
+                'redirect' =>  route('publish.workflow.submit.release', ['id' => $dataset->id]),
             ));
         } else {
             //TODO Handle validation error

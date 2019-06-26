@@ -187,18 +187,54 @@
                             {{--
                             <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
                         </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <div class="pure-control-group checkboxlist">
                                 <input name="persons" v-model="dataset.checkedAuthors" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">
                                 <label v-for="(person, index) in dataset.persons" :for="person.id" class="pure-checkbox">                           
                                                         <input type="checkbox" name="persons" v-bind:value="person.id"  v-model="dataset.checkedAuthors"  class="form-check-input" data-vv-scope="step-1">
                                                         @{{ person.full_name }}                               
                                                     </label>
-                                <br />
-                                {{-- <span>Checked Authors: @{{ dataset.checkedAuthors }}</span> --}}
+                                <br />                              
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('additionalCreators', 'Add additional creator(s) if creator is not in database') !!} 
+                        <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button>
+                    </div>
+                    <table class="pure-table pure-table-horizontal"  v-if="dataset.persons.length">
+                        <thead>
+                            <tr>
+                                <th>Index</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>                               
+                                <th>Orcid</th>                                                             
+                                <th style="width: 130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in dataset.persons" v-bind:key="item.sort_order" v-bind:class="[item.status==1 ? 'activeClass' : 'inactiveClass']"  >
+                                <td>@{{ index }}</td>
+                                <td>
+                                    <input name="first_name" class="form-control" placeholder="[FIRST NAME]" v-model="item.first_name" v-bind:readonly="item.status==1" v-validate="'required'" data-vv-scope="step-1" />
+                                </td>
+                                <td>
+                                    <input name="last_name" class="form-control" placeholder="[LAST NAME]" v-model="item.last_name"  v-bind:readonly="item.status==1" v-validate="'required'" data-vv-scope="step-1" />
+                                </td> 
+                                <td>
+                                    <input name="email" class="form-control" placeholder="[EMAIL]" v-model="item.email"  v-validate="'required|email'" v-bind:readonly="item.status==1" v-validate="'required'" data-vv-scope="step-1" />
+                                </td>                                 
+                                <td>
+                                    <input name="identifier_orcid" class="form-control" placeholder="[ORCID]" v-model="item.identifier_orcid"  v-bind:readonly="item.status==1" data-vv-scope="step-1" />
+                                    <small id="orcidHelp" class="pure-form-message-inline">ORCID is optional</small>
+                                </td>
+                                <td>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeAuthor(index)">-</button>
+                                </td>                                    
+                            </tr>
+                        </tbody>
+                    </table>
                 </fieldset>
 
                 <fieldset id="fieldset-contributors">
@@ -419,11 +455,11 @@
                             <div class="pure-u-1 pure-u-md-1">
                                 <label for="time-option-one" class="pure-radio">
                                                                 <input id="time-option-one" type="radio" v-model="time" value="absolut">
-                                                                absolut time
+                                                                absolut time (dd.MM.yyyy HH:mm:ss)
                                                             </label>
                                 <label for="time-option-two" class="pure-radio">
                                                                 <input id="time-option-two" type="radio" v-model="time" value="range">
-                                                                time range
+                                                                time range (dd.MM.yyyy HH:mm:ss)
                                                             </label>
                                 <label for="time-option-three" class="pure-radio">
                                                                 <input id="time-option-three" type="radio" v-model="time" value="no_time">
@@ -551,8 +587,6 @@
             <div v-if="step === 3 && isInitial" data-vv-scope="step-3">
                 <h1>Step 3: Other Elements</h1> 
                 
-                
-
                 <fieldset id="fieldset-licenses">
                     <legend>Rights List</legend>
 
@@ -679,7 +713,8 @@
                 <a href="javascript:void(0)" @click="reset()" class="pure-button button-small">Upload new Dataset</a>
                 </p>
                 <p>
-                <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">@{{ redirectLink }}</a>
+                {{-- <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">@{{ redirectLink }}</a> --}}
+                <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">Release your submitted dataset</a>
                 </p>
                 <ul class="list-unstyled">
                 {{-- <li v-for="item in uploadedFiles">
@@ -725,6 +760,13 @@
 
     .has-error .help-block {
         display: block;
+    }
+
+    .activeClass {
+        background-color: aquamarine;
+    }
+    .inactiveClass {
+        background-color: orange;
     }
 </style>
 

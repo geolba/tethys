@@ -43,7 +43,7 @@ Vue.use(VueToast);
 Vue.use(VeeValidate, {
     // validity: true
     useConstraintAttrs: true
-  });
+});
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
@@ -115,18 +115,18 @@ const app = new Vue({
         // add the required rule
         VeeValidate.Validator.extend('translatedLanguage', {
             getMessage: field => 'The translated title must be in a language other than than the dataset language.',
-            validate: (value, [mainLanguage, type]) => {     
+            validate: (value, [mainLanguage, type]) => {
                 if (type == "translated") {
                     return value !== mainLanguage;
-                }      
-                return true;    
-                
+                }
+                return true;
+
             }
         });
     },
     mounted() {
         //this.step = 2;
-        this.reset();     
+        this.reset();
     },
     computed: {
         isInitial() {
@@ -164,10 +164,10 @@ const app = new Vue({
 
         showModal() {
             this.isModalVisible = true;
-          },
-          closeModal() {
+        },
+        closeModal() {
             this.isModalVisible = false;
-          },
+        },
         reset() {
             // reset form to initial state
             this.currentStatus = STATUS_INITIAL;
@@ -232,11 +232,11 @@ const app = new Vue({
             formData.append('abstract_main[language]', this.dataset.abstract_main.language);
 
             if (this.dataset.coverage.xmin !== "" && this.dataset.coverage.ymin != '' &&
-                this.dataset.coverage.xmax !== '' &&  this.dataset.coverage.ymax !== '') {
-                    formData.append('coverage[xmin]', this.dataset.coverage.xmin);
-                    formData.append('coverage[ymin]', this.dataset.coverage.ymin);
-                    formData.append('coverage[xmax]', this.dataset.coverage.xmax);
-                    formData.append('coverage[ymax]', this.dataset.coverage.ymax);
+                this.dataset.coverage.xmax !== '' && this.dataset.coverage.ymax !== '') {
+                formData.append('coverage[xmin]', this.dataset.coverage.xmin);
+                formData.append('coverage[ymin]', this.dataset.coverage.ymin);
+                formData.append('coverage[xmax]', this.dataset.coverage.xmax);
+                formData.append('coverage[ymax]', this.dataset.coverage.ymax);
             }
 
             if (this.isElevationAbsolut) {
@@ -244,31 +244,43 @@ const app = new Vue({
             }
             else if (this.isElevationRange) {
                 formData.append('coverage[elevation_min]', this.dataset.coverage.elevation_min);
-                formData.append('coverage[elevation_max]', this.dataset.coverage.elevation_max);                
-            } 
+                formData.append('coverage[elevation_max]', this.dataset.coverage.elevation_max);
+            }
             if (this.isDepthAbsolut) {
                 formData.append('coverage[depth_absolut]', this.dataset.coverage.depth_absolut);
             }
             else if (this.isDepthRange) {
                 formData.append('coverage[depth_min]', this.dataset.coverage.depth_min);
-                formData.append('coverage[depth_max]', this.dataset.coverage.depth_max);                
-            } 
+                formData.append('coverage[depth_max]', this.dataset.coverage.depth_max);
+            }
             if (this.isTimeAbsolut) {
                 formData.append('coverage[time_absolut]', this.dataset.coverage.time_absolut);
             }
             else if (this.isTimeRange) {
                 formData.append('coverage[time_min]', this.dataset.coverage.time_min);
-                formData.append('coverage[time_max]', this.dataset.coverage.time_max);                
-            }             
-            
-            
+                formData.append('coverage[time_max]', this.dataset.coverage.time_max);
+            }
+
+
             for (var i = 0; i < this.dataset.checkedLicenses.length; i++) {
                 formData.append('licenses[' + i + ']', this.dataset.checkedLicenses[i]);
             }
 
-            for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
-                formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
+            for (var i = 0; i < this.dataset.persons.length; i++) {
+                let person = this.dataset.persons[i];               
+                formData.append('authors[' + i + '][first_name]', person.first_name);
+                formData.append('authors[' + i + '][last_name]', person.last_name);
+                formData.append('authors[' + i + '][email]', person.email);
+                formData.append('authors[' + i + '][identifier_orcid]', person.identifier_orcid);
+                formData.append('authors[' + i + '][status]', person.status);
+                if (person.id !== undefined) {
+                    formData.append('authors[' + i + '][id]', person.id)
+                }
             }
+
+            // for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
+            //     formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
+            // }
             for (var i = 0; i < this.dataset.checkedContributors.length; i++) {
                 formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
             }
@@ -286,7 +298,7 @@ const app = new Vue({
 
             for (var i = 0; i < this.dataset.keywords.length; i++) {
                 let keyword = this.dataset.keywords[i];
-                formData.append('keywords[' + i + '][value]', keyword.value);               
+                formData.append('keywords[' + i + '][value]', keyword.value);
                 formData.append('keywords[' + i + '][type]', keyword.type);
             }
 
@@ -294,14 +306,14 @@ const app = new Vue({
                 let title = this.dataset.titles[i];
                 formData.append('titles[' + i + '][value]', title.value);
                 formData.append('titles[' + i + '][language]', title.language);
-                formData.append('titles[' + i + '][type]', title.type);               
+                formData.append('titles[' + i + '][type]', title.type);
             }
 
             for (var i = 0; i < this.dataset.descriptions.length; i++) {
                 let description = this.dataset.descriptions[i];
                 formData.append('descriptions[' + i + '][value]', description.value);
                 formData.append('descriptions[' + i + '][language]', description.language);
-                formData.append('descriptions[' + i + '][type]', description.type);               
+                formData.append('descriptions[' + i + '][type]', description.type);
             }
 
             /*
@@ -374,20 +386,20 @@ const app = new Vue({
         removeReference(key) {
             this.dataset.references.splice(key, 1);
         },
-         /*
-        adds a new Keyword
-        */
-       addKeyword() {
-        let newKeyword = { value: '', type: '', language: this.dataset.language };
-        //this.dataset.files.push(uploadedFiles[i]);
-        this.dataset.keywords.push(newKeyword);
-    },
+        /*
+       adds a new Keyword
+       */
+        addKeyword() {
+            let newKeyword = { value: '', type: '', language: this.dataset.language };
+            //this.dataset.files.push(uploadedFiles[i]);
+            this.dataset.keywords.push(newKeyword);
+        },
         /*
         Removes a selected keyword
         */
-       removeKeyword(key) {
-        this.dataset.keywords.splice(key, 1);
-    },
+        removeKeyword(key) {
+            this.dataset.keywords.splice(key, 1);
+        },
         addTitle() {
             let newTitle = { value: '', language: '', type: '' };
             //this.dataset.files.push(uploadedFiles[i]);
@@ -416,8 +428,8 @@ const app = new Vue({
             let uploadedFiles = fileList;
 
             /*
-           Adds the uploaded file to the files array
-           */
+            Adds the uploaded file to the files array
+            */
             for (var i = 0; i < uploadedFiles.length; i++) {
                 let fileName = uploadedFiles[i].name.replace(/\.[^/.]+$/, '');
                 let uploadeFile = { file: uploadedFiles[i], label: fileName, sorting: 0 };
@@ -430,10 +442,18 @@ const app = new Vue({
             // }       
 
         },
+        addNewAuthor() {
+            let newAuthor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '' };
+            this.dataset.persons.push(newAuthor);
+        },        
+        removeAuthor(key) {
+            this.dataset.persons.splice(key, 1);
+        },
         onAddAuthor(person) {
             //if person is not in person array
             //if (this.persons.includes(person) == false) {
             if (this.dataset.persons.filter(e => e.id === person.id).length == 0) {
+                //person.sort_order = this.dataset.persons.length;
                 this.dataset.persons.push(person);
                 this.dataset.checkedAuthors.push(person.id);
             }
