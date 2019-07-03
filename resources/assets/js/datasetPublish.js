@@ -114,7 +114,7 @@ const app = new Vue({
         });
         // add the required rule
         VeeValidate.Validator.extend('translatedLanguage', {
-            getMessage: field => 'The translated title must be in a language other than than the dataset language.',
+            getMessage: field => 'The translated ' + field + ' must be in a language other than than the dataset language.',
             validate: (value, [mainLanguage, type]) => {
                 if (type == "translated") {
                     return value !== mainLanguage;

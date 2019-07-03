@@ -24,6 +24,5 @@ return [
         "htm|html"    => "text/html",
         "png" => "image/png",
         "jpg|jpeg|jpe"  => "image/jpeg",
-    ],
-    'max_filesize' => 5120
+    ]
 ];

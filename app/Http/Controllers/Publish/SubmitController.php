@@ -98,16 +98,7 @@ class SubmitController extends Controller
     public function delete($id): RedirectResponse
     {
         $dataset = Dataset::with('files')->findOrFail($id);
-        if ($dataset->server_state != "inprogress" || $dataset->server_state != "rejected_editor") {
-            session()->flash(
-                'flash_message',
-                'You cannot delete this datastet!'
-                . ' There status of  this dataset is '
-                . $dataset->server_state
-                . ' !'
-            );
-            return redirect()->route('settings.project');
-        } else {
+        if ($dataset->server_state == "inprogress" || $dataset->server_state == "rejected_editor") {
             if ($dataset->files->count() > 0) {
                 foreach ($dataset->files as $file) {
                     if (isset($file->path_name)) {
@@ -117,7 +108,16 @@ class SubmitController extends Controller
             }
             $dataset->delete();
             session()->flash('flash_message', 'You have deleted 1 dataset!');
-            return redirect()->route('publish.workflow.index');
+            return redirect()->route('publish.workflow.submit.index');
+        } else {
+            session()->flash(
+                'flash_message',
+                'You cannot delete this datastet!'
+                . ' There status of  this dataset is '
+                . $dataset->server_state
+                . ' !'
+            );
+            return redirect()->route('publish.workflow.submit.index');
         }
     }
 

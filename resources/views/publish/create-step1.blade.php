@@ -114,7 +114,7 @@
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Title[Language]', $languages, null, 
-                                    ['placeholder' => '[language]', 'v-model' => 'item.language',
+                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "data-vv-as" => "title",
                                     "v-validate" => "{required: true, translatedLanguage: [dataset.language, item.type]}",
                                     'data-vv-scope' => 'step-1']) !!}
                                 </td>                              
@@ -168,7 +168,11 @@
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Description[Language]', $languages, null, 
-                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
+                                    ['placeholder' => '[language]',
+                                    'v-model' => 'item.language',
+                                    "data-vv-as" => "description",
+                                    "v-validate" => "{required: true, translatedLanguage: [dataset.language, item.type]}",
+                                    'data-vv-scope' => 'step-1']) !!}
                                 </td>                              
                                 <td>
                                     <button class="pure-button button-small is-warning" @click.prevent="removeDescription(index)">-</button>
@@ -202,6 +206,7 @@
                         {!! Form::label('additionalCreators', 'Add additional creator(s) if creator is not in database') !!} 
                         <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button>
                     </div>
+                    <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">
                     <table class="pure-table pure-table-horizontal"  v-if="dataset.persons.length">
                         <thead>
                             <tr>
@@ -680,7 +685,7 @@
                                 @{{ index +1 }}
                             </td>
                             <td>
-                                <input class="form-control" v-model="item.file.name" />
+                                <input class="form-control" v-model="item.file.name" readonly />
                             </td>
                             <td>
                                 <input class="form-control" v-model="item.label" />

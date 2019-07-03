@@ -271,7 +271,7 @@ class IndexController extends Controller
             $files = count($request->file('files')) - 1;
             foreach (range(0, $files) as $index) {
                 // $rules['files.' . $index] = 'image|max:2048';
-                $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize($index + 1)];
+                $rules['files.' . $index . '.file'] = ['required', new RdrFiletypes(), new RdrFilesize($index + 1)];
             }
         }
         $validator = Validator::make($request->all(), $rules);

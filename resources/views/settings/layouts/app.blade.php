@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin PureRDR</title>
+    <title>BACKEND RDR</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     {{-- <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" />
@@ -30,7 +30,7 @@
 
     <div id="menu">
         <nav class="pure-menu sidebar-menu">
-            <h1 class="site-logo">Admin<strong>Rdr</strong></h1>
+            <h1 class="site-logo">Backend<strong>RDR</strong></h1>
             {{-- <div class="menu-item-divided"></div> --}}
             
             {{-- <h2 class="pure-menu-heading">Home</h2> --}}
