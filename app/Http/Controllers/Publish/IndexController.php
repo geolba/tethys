@@ -271,7 +271,7 @@ class IndexController extends Controller
             $files = count($request->file('files')) - 1;
             foreach (range(0, $files) as $index) {
                 // $rules['files.' . $index] = 'image|max:2048';
-                $rules['files.' . $index . '.file'] = ['required', new RdrFiletypes(), new RdrFilesize($index + 1)];
+                $rules['files.' . $index . '.file'] = [new RdrFilesize($index + 1), 'file', 'required', new RdrFiletypes()];
             }
         }
         $validator = Validator::make($request->all(), $rules);
@@ -480,9 +480,10 @@ class IndexController extends Controller
         } else {
             //TODO Handle validation error
             //pass validator errors as errors object for ajax response
+            $errors = $validator->errors();
             return response()->json([
                 'success' => false,
-                'errors' => $validator->errors()->all(),
+                'errors' => $errors->all(),
             ], 422);
         }
     }

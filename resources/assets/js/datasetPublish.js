@@ -351,10 +351,17 @@ const app = new Vue({
                             _this.serrors.push(errorsArray[index]);
                         }
                     }
+                    //fill with server error
                     if (errorObject.response.data.error) {
                         var error = errorObject.response.data.error;
                         _this.serrors.push(error.message);
                     }
+                    //raundtrip to server was not possible
+                    if (error.message && error.message.includes('413')) {
+                        console.log('The file you tried to upload is too large.')
+                        var error = 'The file you tried to upload is too large.';
+                        _this.serrors.push(error);
+                      }
                     _this.currentStatus = STATUS_FAILED;
                 });
         },
