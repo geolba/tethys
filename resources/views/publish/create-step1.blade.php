@@ -160,7 +160,7 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.descriptions">
                                 <td>
-                                    <input name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" v-validate="'required'" data-vv-scope="step-1" />
+                                    <textarea rows="3" cols="40" name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" v-validate="'required'" data-vv-scope="step-1"></textarea>
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Description[Type]', $descriptionTypes, null, 
@@ -187,7 +187,7 @@
                     <legend>Creator(s)</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <my-autocomplete title="searching active person table" @person="onAddAuthor"></my-autocomplete>
+                            <my-autocomplete title="searching active person table" v-on:person="onAddAuthor"></my-autocomplete>
                             {{--
                             <my-autocomplete :items="[ 'Apple', 'Banana', 'Orange', 'Mango', 'Pear', 'Peach', 'Grape', 'Tangerine', 'Pineapple']"></my-autocomplete> --}}
                         </div>
@@ -207,41 +207,10 @@
                         <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button>
                     </div>
                     <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">
-                    <table class="pure-table pure-table-horizontal"  v-if="dataset.persons.length">
-                        <thead>
-                            <tr>
-                                <th>Index</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>                               
-                                <th>Orcid</th>                                                             
-                                <th style="width: 130px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in dataset.persons" v-bind:key="item.sort_order" v-bind:class="[item.status==1 ? 'activeClass' : 'inactiveClass']"  >
-                                <td>@{{ index }}</td>
-                                <td>
-                                    <input name="first_name" class="form-control" placeholder="[FIRST NAME]" v-model="item.first_name" v-bind:readonly="item.status==1" v-validate="'required'" data-vv-scope="step-1" />
-                                </td>
-                                <td>
-                                    <input name="last_name" class="form-control" placeholder="[LAST NAME]" v-model="item.last_name"  v-bind:readonly="item.status==1" v-validate="'required'" data-vv-scope="step-1" />
-                                </td> 
-                                <td>
-                                    <input name="email" class="form-control" placeholder="[EMAIL]" v-model="item.email"  v-validate="'required|email'" v-bind:readonly="item.status==1" v-validate="'required'" data-vv-scope="step-1" />
-                                </td>                                 
-                                <td>
-                                    <input name="identifier_orcid" class="form-control" placeholder="[ORCID]" v-model="item.identifier_orcid"  v-bind:readonly="item.status==1" data-vv-scope="step-1" />
-                                    <small id="orcidHelp" class="pure-form-message-inline">ORCID is optional</small>
-                                </td>
-                                <td>
-                                    <button class="pure-button button-small is-warning" @click.prevent="removeAuthor(index)">-</button>
-                                </td>                                    
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3>Draggable table</h3>
+                    <creator-table name="persons" v-bind:list="dataset.persons"></creator-table>  
                 </fieldset>
-
+                
                 <fieldset id="fieldset-contributors">
                     <legend>Contributors</legend>
                     <div class="pure-g">
@@ -670,6 +639,7 @@
                         @{{ item.name }} <i class="fa fa-remove"></i><span class="remove-file" v-on:click="removeFile(index)"> Remove</span>
                     </li>
                 </ul> --}}
+             
                 <table class="table table-hover"  v-if="dataset.files.length">
                     <thead>
                         <tr>

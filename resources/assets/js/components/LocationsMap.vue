@@ -35,32 +35,63 @@
         data-vv-scope="step-2"
       >
       <input type="button" v-on:click="zoomTo" value="zoomTo">
-    </div> -->
+    </div>-->
     <div id="map"></div>
 
     <div class="pure-g">
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        <label for="xmin">xmin: </label> 
-        <input name="xmin" type="text" class="pure-u-23-24"  v-model="geolocation.xmin" data-vv-scope="step-2" id="xmin" v-validate="'decimal'">
-      </div> 
-
-      <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        <label for="ymin">ymin: </label> 
-        <input  name="ymin" type="text" class="pure-u-23-24" v-model="geolocation.ymin" data-vv-scope="step-2" id="ymin" v-validate="'decimal'">
+        <label for="xmin">xmin:</label>
+        <input
+          name="xmin"
+          type="text"
+          class="pure-u-23-24"
+          v-model="geolocation.xmin"
+          data-vv-scope="step-2"
+          id="xmin"
+          v-validate="'decimal'"
+        />
       </div>
 
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        <label for="xmax">xmax: </label>
-        <input name="xmax" type="text" class="pure-u-23-24" v-model="geolocation.xmax" data-vv-scope="step-2" id="xmax" v-validate="'decimal'">
+        <label for="ymin">ymin:</label>
+        <input
+          name="ymin"
+          type="text"
+          class="pure-u-23-24"
+          v-model="geolocation.ymin"
+          data-vv-scope="step-2"
+          id="ymin"
+          v-validate="'decimal'"
+        />
       </div>
 
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        <label for="ymax">ymax: </label> 
-        <input name="ymax" type="text" class="pure-u-23-24" v-model="geolocation.ymax" data-vv-scope="step-2" id="ymax" v-validate="'decimal'">
+        <label for="xmax">xmax:</label>
+        <input
+          name="xmax"
+          type="text"
+          class="pure-u-23-24"
+          v-model="geolocation.xmax"
+          data-vv-scope="step-2"
+          id="xmax"
+          v-validate="'decimal'"
+        />
       </div>
-      <input type="button" v-on:click="zoomTo" value="validate coordinates">
+
+      <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label for="ymax">ymax:</label>
+        <input
+          name="ymax"
+          type="text"
+          class="pure-u-23-24"
+          v-model="geolocation.ymax"
+          data-vv-scope="step-2"
+          id="ymax"
+          v-validate="'decimal'"
+        />
+      </div>
+      <input type="button" v-on:click="zoomTo" value="validate coordinates" />
     </div>
-
   </div>
 </template>
 
@@ -72,7 +103,7 @@ import "leaflet-draw";
 //const L = window.L;
 export default {
   inject: {
-    $validator: '$validator'
+    $validator: "$validator"
   },
   props: {
     geolocation: {
@@ -86,13 +117,13 @@ export default {
       locationErrors: []
     };
   },
-   created() {
-    this.$validator.extend('boundingBox', {
-        getMessage: field => 'At least one ' + field + ' needs to be checked.',
-        validate: (value, [testProp]) => {
-            const options = this.dataset.checkedLicenses;
-            return value || options.some((option) => option[testProp]);
-        }
+  created() {
+    this.$validator.extend("boundingBox", {
+      getMessage: field => "At least one " + field + " needs to be checked.",
+      validate: (value, [testProp]) => {
+        const options = this.dataset.checkedLicenses;
+        return value || options.some(option => option[testProp]);
+      }
     });
   },
   computed: {},
@@ -108,9 +139,9 @@ export default {
       var ymax = document.getElementById("ymax").value;
       var bounds = [[ymin, xmin], [ymax, xmax]];
       try {
-        var boundingBox = L.rectangle(bounds, { color: "#005F6A", weight: 1 });     
+        var boundingBox = L.rectangle(bounds, { color: "#005F6A", weight: 1 });
         // this.geolocation.xmin = xmin;
-        // this.geolocation.ymin = ymin;      
+        // this.geolocation.ymin = ymin;
         // this.geolocation.xmax = xmax;
         // this.geolocation.ymax = ymax;
 
@@ -137,18 +168,23 @@ export default {
     var southWest1 = L.latLng(46.35877, 8.782379); //lowerCorner
     var northEast1 = L.latLng(49.037872, 17.189532); //upperCorner
     var layerBounds = L.latLngBounds(southWest1, northEast1);
-    var attribution = "www.basemap.at";
-    var basemap_0 = L.tileLayer(
-      "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png",
-      {
-        attribution: attribution,
-        subdomains: ["maps", "maps1", "maps2", "maps3"],
-        continuousWorld: false,
-        detectRetina: false,
-        bounds: layerBounds
-      }
-    );
-    basemap_0.addTo(map);
+    // var attribution = "www.basemap.at";
+    // var basemap_0 = L.tileLayer(
+    //   "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png",
+    //   {
+    //     attribution: attribution,
+    //     subdomains: ["maps", "maps1", "maps2", "maps3"],
+    //     continuousWorld: false,
+    //     detectRetina: false,
+    //     bounds: layerBounds
+    //   }
+    // );
+    //basemap_0.addTo(map);   
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '© <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+
     map.fitBounds(bounds);
 
     this.map = map;

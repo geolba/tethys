@@ -32,6 +32,7 @@ import MyAutocomplete from './components/MyAutocomplete.vue';
 import VeeValidate from 'vee-validate';
 import dataset from './components/Dataset';
 import LocationsMap from './components/LocationsMap.vue';
+import CreatorTable from './components/CreatorTable.vue';
 import modal from './components/ShowModal.vue';
 // import datetime from 'vuejs-datetimepicker';
 // import { Validator } from 'vee-validate';
@@ -48,9 +49,16 @@ Vue.use(VeeValidate, {
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete, LocationsMap, modal },
+    components: { MyAutocomplete, LocationsMap, modal, CreatorTable },
     data() {
         return {
+            list: [
+                { id: 1, name: "Abby", sport: "basket" },
+                { id: 2, name: "Brooke", sport: "foot" },
+                { id: 3, name: "Courtenay", sport: "volley" },
+                { id: 4, name: "David", sport: "rugby" }
+              ],
+            dragging: true,
             rows: [
                 //initial data
                 // { qty: 5, value: "Something", language: 10, type: "additional", sort_order: 0 },
@@ -274,7 +282,7 @@ const app = new Vue({
                 formData.append('authors[' + i + '][identifier_orcid]', person.identifier_orcid);
                 formData.append('authors[' + i + '][status]', person.status);
                 if (person.id !== undefined) {
-                    formData.append('authors[' + i + '][id]', person.id)
+                    formData.append('authors[' + i + '][id]', person.id);
                 }
             }
 
