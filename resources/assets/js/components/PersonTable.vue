@@ -1,8 +1,8 @@
  <template>
-  <table class="pure-table pure-table-horizontal" v-if="list.length">
+  <table class="pure-table pure-table-horizontal" v-if="personlist.length">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Sort Order</th>
+        <th scope="col">#</th>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
@@ -10,9 +10,9 @@
         <th></th>
       </tr>
     </thead>
-    <draggable v-bind:list="list" tag="tbody" v-on:start="isDragging=true" v-on:end="isDragging=false">      
+    <draggable v-bind:list="personlist" tag="tbody" v-on:start="isDragging=true" v-on:end="isDragging=false">      
       <tr
-        v-for="(item, index) in list"
+        v-for="(item, index) in personlist"
         v-bind:key="item.id"
         v-bind:class="[item.status==1 ? 'activeClass' : 'inactiveClass']"
       >
@@ -74,7 +74,7 @@ export default {
   inject: {
     $validator: "$validator"
   },
-  name: "creator-table",  
+  name: "person-table",  
   components: {
     draggable
   },
@@ -92,7 +92,7 @@ export default {
     };
   },
   props: {
-    list: {
+    personlist: {
       type: Array,
       required: true
     },
@@ -105,7 +105,7 @@ export default {
       console.log("custom-actions: " + action, data.full_name, index);
     },
     removeAuthor(key) {
-      this.list.splice(key, 1);
+      this.personlist.splice(key, 1);
     },
     onMove({ relatedContext, draggedContext }) {
       const relatedElement = relatedContext.element;

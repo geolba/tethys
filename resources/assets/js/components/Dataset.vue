@@ -54,7 +54,7 @@ function initialState() {
     // checkedSubmitters: [],
 
     persons: [],
-    contributors: [],
+    contributors: []
     // submitters: []
   };
 }
@@ -75,7 +75,7 @@ const dataset = new Vue({
       this.title_main.language = val;
       this.abstract_main.language = val;
     }
-  },
+  },  
   methods: {
     reset() {
       Object.assign(this.$data, initialState());

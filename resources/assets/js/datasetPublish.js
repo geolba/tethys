@@ -29,10 +29,11 @@ import axios from 'axios';
 // Vue.component('example', require('./components/Example.vue'));
 //Vue.component('my-autocomplete', require('./components/MyAutocomplete.vue'));
 import MyAutocomplete from './components/MyAutocomplete.vue';
+import messagesEN from './strings/messages/en.js';
 import VeeValidate from 'vee-validate';
 import dataset from './components/Dataset';
 import LocationsMap from './components/LocationsMap.vue';
-import CreatorTable from './components/CreatorTable.vue';
+import PersonTable from './components/PersonTable.vue';
 import modal from './components/ShowModal.vue';
 // import datetime from 'vuejs-datetimepicker';
 // import { Validator } from 'vee-validate';
@@ -40,16 +41,28 @@ import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/index.css';
 Vue.use(VueToast);
 
+const dict = {
+    custom: {
+        keyword_list: {
+            keywords_length: 'Minimum 3 keywords are required'
+        }
+    }
+};
+
 // Vue.use(VeeValidate);
 Vue.use(VeeValidate, {
     // validity: true
-    useConstraintAttrs: true
+    locale: 'en',
+    useConstraintAttrs: true,
+    dictionary: {
+        en: {  messages: messagesEN }        
+      }
 });
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete, LocationsMap, modal, CreatorTable },
+    components: { MyAutocomplete, LocationsMap, modal, PersonTable },
     data() {
         return {
             list: [
@@ -137,6 +150,9 @@ const app = new Vue({
         this.reset();
     },
     computed: {
+        keywords_length() {
+            return this.dataset.keywords.length;
+          },
         isInitial() {
             return this.currentStatus === STATUS_INITIAL;
         },

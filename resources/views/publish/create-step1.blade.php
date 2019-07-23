@@ -208,7 +208,7 @@
                     </div>
                     <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">
                     <h3>Draggable table</h3>
-                    <creator-table name="persons" v-bind:list="dataset.persons"></creator-table>  
+                    <person-table name="persons" v-bind:personlist="dataset.persons"></person-table>  
                 </fieldset>
                 
                 <fieldset id="fieldset-contributors">
@@ -505,6 +505,7 @@
                
                 <fieldset id="fieldset-keywords">
                     <legend>Dataset Keywords</legend>
+                    <input type="hidden" v-validate:keywords_length="'min_value:3'" data-vv-scope="step-2" data-vv-as="keyword list" name="keywords_list">
                     <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
                     <table class="table table-hover" v-if="dataset.keywords.length">
                         <thead>
