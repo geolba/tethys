@@ -342,14 +342,27 @@ class IndexController extends Controller
                 }
 
                 //store contributors
+                // if (isset($data['contributors'])) {
+                //     //$data_to_sync = [];
+                //     foreach ($request->get('contributors') as $key => $contributor_id) {
+                //         $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
+                //         //$data_to_sync[$contributor_id] = $pivot_data;
+                //         $dataset->persons()->attach($contributor_id, $pivot_data);
+                //     }
+                //     //$dataset->persons()->sync($data_to_sync);
+                // }
                 if (isset($data['contributors'])) {
                     //$data_to_sync = [];
-                    foreach ($request->get('contributors') as $key => $contributor_id) {
+                    foreach ($request->get('contributors') as $key => $contributor) {
                         $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
-                        //$data_to_sync[$contributor_id] = $pivot_data;
-                        $dataset->persons()->attach($contributor_id, $pivot_data);
+                        if (isset($contributor['id'])) {
+                            //$data_to_sync[$person['id']] = $pivot_data;
+                            $dataset->persons()->attach($contributor['id'], $pivot_data);
+                        } else {
+                            $dataContributor = new Person($contributor);
+                            $dataset->persons()->save($dataContributor, $pivot_data);
+                        }
                     }
-                    //$dataset->persons()->sync($data_to_sync);
                 }
                 
                 //store submitters

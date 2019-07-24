@@ -206,28 +206,33 @@
                         {!! Form::label('additionalCreators', 'Add additional creator(s) if creator is not in database') !!} 
                         <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button>
                     </div>
-                    <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">
-                    <h3>Draggable table</h3>
-                    <person-table name="persons" v-bind:personlist="dataset.persons"></person-table>  
+                    <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">                  
+                    <person-table name="persons" v-bind:heading="'creator table'" v-bind:personlist="dataset.persons"></person-table>  
                 </fieldset>
                 
                 <fieldset id="fieldset-contributors">
-                    <legend>Contributors</legend>
+                    <legend>Contributor(s)</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>                            
                         </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {{-- <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <div class="pure-control-group checkboxlist">
                                 <label v-for="(contributor, index) in dataset.contributors" :for="contributor.id" class="pure-checkbox">                           
                                                         <input type="checkbox" name="contributors" v-bind:value="contributor.id"  v-model="dataset.checkedContributors"  class="form-check-input" data-vv-scope="step-1">
                                                         @{{ contributor.full_name }}                               
                                                     </label>
                                 <br />
-                                {{-- <span>Checked Contributors: @{{ dataset.checkedContributors }}</span> --}}
+                                <span>Checked Contributors: @{{ dataset.checkedContributors }}</span>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+                        {!! Form::label('additionalContributors', 'Add additional contributor(s) if contributor is not in database') !!} 
+                        <button class="pure-button button-small" @click.prevent="addNewContributor()">+</button>
+                    </div>                   
+                    {{-- <h3>contributor table</h3> --}}
+                    <person-table name="contributors" v-bind:heading="'contributor table'" v-bind:personlist="dataset.contributors"></person-table> 
                 </fieldset>  
 
                 <fieldset id="fieldset-publisher">

@@ -290,6 +290,10 @@ const app = new Vue({
                 formData.append('licenses[' + i + ']', this.dataset.checkedLicenses[i]);
             }
 
+            
+            // for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
+            //     formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
+            // }
             for (var i = 0; i < this.dataset.persons.length; i++) {
                 let person = this.dataset.persons[i];               
                 formData.append('authors[' + i + '][first_name]', person.first_name);
@@ -302,11 +306,19 @@ const app = new Vue({
                 }
             }
 
-            // for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
-            //     formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
+            // for (var i = 0; i < this.dataset.checkedContributors.length; i++) {
+            //     formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
             // }
-            for (var i = 0; i < this.dataset.checkedContributors.length; i++) {
-                formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
+            for (var i = 0; i < this.dataset.contributors.length; i++) {
+                let contributor = this.dataset.contributors[i];  
+                formData.append('contributors[' + i + '][first_name]', contributor.first_name);
+                formData.append('contributors[' + i + '][last_name]', contributor.last_name);
+                formData.append('contributors[' + i + '][email]', contributor.email);
+                formData.append('contributors[' + i + '][identifier_orcid]', contributor.identifier_orcid);
+                formData.append('contributors[' + i + '][status]', contributor.status);
+                if (contributor.id !== undefined) {
+                    formData.append('contributors[' + i + '][id]', contributor.id);
+                }
             }
             // for (var i = 0; i < this.dataset.checkedSubmitters.length; i++) {
             //     formData.append('submitters[' + i + ']', this.dataset.checkedSubmitters[i]);
@@ -489,6 +501,10 @@ const app = new Vue({
                 this.dataset.checkedAuthors.push(person.id);
             }
         },
+        addNewContributor() {
+            let newContributor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '' };
+            this.dataset.contributors.push(newContributor);
+        },     
         onAddContributor(person) {
             //if person is not in contributors array
             //if (this.contributors.includes(person) == false) {

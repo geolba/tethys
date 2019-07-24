@@ -1,4 +1,6 @@
  <template>
+ <div>
+  <h3 v-if="heading && personlist.length">{{ heading }}</h3>
   <table class="pure-table pure-table-horizontal" v-if="personlist.length">
     <thead class="thead-dark">
       <tr>
@@ -66,6 +68,7 @@
       </tr>    
     </draggable>
   </table>
+  </div>
 </template>
 
 <script>
@@ -98,7 +101,8 @@ export default {
     },
     rowIndex: {
       type: Number
-    }
+    },
+    heading: String
   },
   methods: {
     itemAction(action, data, index) {
