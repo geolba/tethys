@@ -66,7 +66,7 @@
                         @elseif ($dataset->server_state == "editor_accepted" || $dataset->server_state == "rejected_reviewer")
                         <a href="{{ URL::route('publish.workflow.editor.edit', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-edit"></i>
-                            <span>Edit</span>
+                            {{-- <span>Edit</span> --}}
                         </a> 
                         <a href="{{ URL::route('publish.workflow.editor.approve', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-share"></i>

@@ -690,13 +690,21 @@
             <!--SUCCESS-->
             <div v-if="isSuccess">
                 <h2>Uploaded @{{ dataset.files.length }} file(s) successfully.</h2>
-                <p>
+                {{-- <p>
                 <a href="javascript:void(0)" @click="reset()" class="pure-button button-small">Upload new Dataset</a>
-                </p>
+                </p> --}}
                 <p>
-                {{-- <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">@{{ redirectLink }}</a> --}}
-                <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">Release your submitted dataset</a>
+                    {{-- <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">@{{ redirectLink }}</a> --}}
+                    <a href="javascript:void(0)" @click="releaseNewDataset()" class="pure-button button-small">
+                            <i class="fa fa-share"></i>
+                            <span>Release</span>
+                    </a>
+                    <a href="javascript:void(0)" @click="deleteNewDataset()" class="pure-button button-small">
+                            <i class="fa fa-trash"></i>
+                            <span>Delete</span>
+                    </a>              
                 </p>
+                
                 <ul class="list-unstyled">
                 {{-- <li v-for="item in uploadedFiles">
                     <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">

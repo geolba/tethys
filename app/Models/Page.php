@@ -6,9 +6,10 @@ namespace App\Models;
 use App\Models\ModelTrait;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;// use Dimsav\Translatable\Translatable;
 
-class Page extends Model
+class Page extends Model implements TranslatableContract
 {
     use ModelTrait;
     use Translatable; // 2. To add translation methods

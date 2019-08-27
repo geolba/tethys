@@ -84,7 +84,8 @@ const app = new Vue({
             currentStatus: null,
             uploadFieldName: 'photos',
             fileCount: 0,
-            redirectLink: null,
+            releaseLink: null,
+            deleteLink: null,
 
             isModalVisible: false,
 
@@ -208,8 +209,11 @@ const app = new Vue({
             // this.dataset.reset();//reset methods will trigger property changed.
             // this.step = 1;
         },
-        editNewDataset() {
-            window.location = this.redirectLink;
+        releaseNewDataset() {
+            window.location = this.releaseLink;
+        },
+        deleteNewDataset() {
+            window.location = this.deleteLink;
         },
         resetDropbox() {
             // reset form to initial state
@@ -369,7 +373,8 @@ const app = new Vue({
                     // this.items = response.data;          
                     //Vue.set(app.skills, 1, "test55");
                     _this.currentStatus = STATUS_SUCCESS;
-                    _this.redirectLink = response.data.redirect;
+                    _this.releaseLink = response.data.release;
+                    _this.deleteLink = response.data.delete;
                     // if (response.data.redirect) {
                     //     window.location = response.data.redirect;
                     // }

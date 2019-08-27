@@ -59,6 +59,14 @@ Route::group(
             'middleware' => ['permission:dataset-list'],
             'as' => 'workflow.submit.index', 'uses' => 'SubmitController@index',
         ]);
+        Route::get('workflow/submit/edit/{id}', [
+            'middleware' => ['permission:dataset-submit', 'isUserDatasetAdmin:true'],
+            'as' => 'workflow.submit.edit', 'uses' => 'SubmitController@edit',
+        ]);
+        Route::post('workflow/submit/edit/{id}', [
+            'middleware' => ['permission:dataset-submit', 'isUserDatasetAdmin:true'],
+            'as' => 'workflow.submit.update', 'uses' => 'SubmitController@update',
+        ]);
         Route::get('workflow/submit/release/{id}', [
             'middleware' => ['permission:dataset-submit', 'isUserDatasetAdmin:true'],
             'as' => 'workflow.submit.release', 'uses' => 'SubmitController@release',
@@ -67,9 +75,13 @@ Route::group(
             'middleware' => ['permission:dataset-submit', 'isUserDatasetAdmin:true'],
             'as' => 'workflow.submit.releaseUpdate', 'uses' => 'SubmitController@releaseUpdate',
         ]);
-        Route::get('workflow/delete/{id}', [
+        Route::get('workflow/submit/delete/{id}', [
             'middleware' => ['isUserDatasetAdmin:true'],
-            'as' => 'workflow.delete', 'uses' => 'SubmitController@delete',
+            'as' => 'workflow.submit.delete', 'uses' => 'SubmitController@delete',
+        ]);
+        Route::post('workflow/submit/delete/{id}', [
+            'middleware' => ['isUserDatasetAdmin:true'],
+            'as' => 'workflow.submit.deleteUpdate', 'uses' => 'SubmitController@deleteUpdate',
         ]);
        
         //editor

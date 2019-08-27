@@ -14,6 +14,7 @@
                 <th>Dataset Title</th>
                 <th>Owner</th>    
                 <th>Server State</th>
+                <th>Date of last modification</th>  
                 <th></th>
             </thead>
 
@@ -27,7 +28,7 @@
                 } elseif ($dataset->server_state == 'released') {
                     $rowclass = 'released';   
                 }  
-                elseif ($dataset->server_state == 'editor_accepted') {
+                elseif ($dataset->server_state == 'editor_accepted' || $dataset->server_state == 'rejected_reviewer') {
                     $rowclass = 'editor_accepted';   
                 } elseif ($dataset->server_state == 'approved') {
                     $rowclass = 'approved';   
@@ -35,7 +36,9 @@
                     $rowclass = 'reviewed';   
                 } elseif ($dataset->server_state == 'rejected_editor') {
                     $rowclass = 'rejected_editor';  
-                }                                       
+                } else {
+                    $rowclass = "";
+                }                                      
                 @endphp
                 <tr class="{{ $rowclass }}">
                     <td>
@@ -55,16 +58,22 @@
                     <td>
                         {{ $dataset->server_state }}
                     </td>
+                    <td>                        
+                        {{ $dataset->server_date_modified }}                       
+                    </td>  
 
                     <td>
                         @if ($dataset->server_state == "inprogress" || $dataset->server_state == "rejected_editor")
+                        <a href="{{ URL::route('publish.workflow.submit.edit', $dataset->id) }}" class="pure-button">
+                            <i class="fa fa-edit"></i>                           
+                        </a> 
                         <a href="{{ URL::route('publish.workflow.submit.release', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-share"></i>
                             <span>Release</span>
                         </a>  
-                        <a href="{{ URL::route('publish.workflow.delete', $dataset->id) }}" class="pure-button">
+                        <a href="{{ URL::route('publish.workflow.submit.delete', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-trash"></i>
-                            <span>Delete</span>
+                            {{-- <span>Delete</span> --}}
                         </a>  
                                                            
                         @endif
