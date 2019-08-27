@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Title;
 use App\Models\Description;
 use App\Models\File;
+use App\Models\Subject;
 
 class SubmitController extends Controller
 {
