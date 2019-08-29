@@ -148,7 +148,7 @@ class RequestController extends Controller
         $repositoryName = "RDR - Data Research Repository";
         $repIdentifier = "rdr.gba.ac.at";
         $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
-        $earliestDateFromDb = Dataset::earliestPublicationDate()->get('server_date_published');
+        $earliestDateFromDb = optional(Dataset::earliestPublicationDate())->server_date_published;
 
         // set parameters for oai-pmh.xslt
         $this->_proc->setParameter('', 'email', $email);
