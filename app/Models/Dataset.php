@@ -258,11 +258,12 @@ class Dataset extends Model
         if (!$column) {
             $column = self::PUBLISHED_AT;
         }
-        return $query->whereNotNull('server_date_published')
+        return $query->select('server_date_published')
+            ->where('server_date_published', '<>', null)
             ->where('server_state', 'published')
             ->orderBy('server_date_published', 'asc')
-            ->first()
-            ->server_date_published;
+            ->first();
+            //->server_date_published;
     }
 
     public function setServerState($targetType)

@@ -51,6 +51,19 @@ return [
             'database' => storage_path().'/database.db',
             'prefix'   => '',
         ],
+
+        'pgsql' => [
+            'driver'   => 'pgsql',
+            'host'     => env('DB_HOST', 'pgsql'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'repository'),
+            'username' => env('DB_USERNAME', 'opus4admin'),
+            'password' => env('DB_PASSWORD', 'opus4admin007'),
+            'charset' => 'utf8',
+            'prefix'   => '',
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
         
         
         'sqlsrv' => [
