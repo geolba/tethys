@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateDatasetAbstractsTable extends Migration
+class CreateDocumentSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateDatasetAbstractsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dataset_abstracts', function (Blueprint $table) {
+        Schema::create('document_subjects', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('document_id')->unsigned();
             $table->foreign('document_id')->references('id')->on('documents')
-                ->onUpdate('cascade')->onDelete('cascade');
+            ->onUpdate('cascade')->onDelete('cascade');
 
+            $table->string('language', 3)->nullable();
             $table->enum(
                 'type',
-                ['methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'translated' => 'translated', 'other' => 'other']
+                ['uncontrolled']
             );
             $table->string('value', 255);
-            $table->string('language', 3);
+            $table->string('external_key', 255)->nullable();
         });
     }
 
@@ -36,6 +37,6 @@ class CreateDatasetAbstractsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dataset_abstracts');
+        Schema::dropIfExists('document_subjects');
     }
 }

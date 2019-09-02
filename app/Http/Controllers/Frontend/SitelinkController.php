@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Dataset;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class SitelinkController extends Controller
 {
@@ -15,13 +16,20 @@ class SitelinkController extends Controller
         $select = DB::table('documents')
             ->where('server_state', 'LIKE', "%" . $serverState . "%");
 
-        $select
-            // ->select(DB::raw('EXTRACT(YEAR FROM server_date_published) as published_date'))
-            // ->select(DB::raw("DATE_PART('year', server_date_published) as published_date"))
-            ->select(DB::raw("YEAR(server_date_published) AS published_date"))
-            ->distinct(true);
-
-        $this->years = $select->pluck('published_date');
+        // $select
+        //     ->select(DB::raw('EXTRACT(YEAR FROM server_date_published) as published_date'))
+        //     // ->select(DB::raw("DATE_PART('year', server_date_published) as published_date"))
+        //     // ->select(DB::raw("YEAR(server_date_published) AS published_date"))
+        //     ->distinct(true);    
+        
+        $years = $select->pluck('server_date_published')->toArray();
+        $this->years  = array_map(function ($pdate) {
+            $dateValue = strtotime($pdate);
+            if ($dateValue != false) {
+                $year =  date("Y", $dateValue);
+                return $year;
+            }
+        }, $years);
         $this->ids = array();
         return view('frontend.sitelink.index')->with(['years' => $this->years, 'documents' => $this->ids]);
     }

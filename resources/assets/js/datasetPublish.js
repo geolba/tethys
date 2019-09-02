@@ -261,10 +261,10 @@ const app = new Vue({
 
             if (this.dataset.coverage.xmin !== "" && this.dataset.coverage.ymin != '' &&
                 this.dataset.coverage.xmax !== '' && this.dataset.coverage.ymax !== '') {
-                formData.append('coverage[xmin]', this.dataset.coverage.xmin);
-                formData.append('coverage[ymin]', this.dataset.coverage.ymin);
-                formData.append('coverage[xmax]', this.dataset.coverage.xmax);
-                formData.append('coverage[ymax]', this.dataset.coverage.ymax);
+                formData.append('coverage[x_min]', this.dataset.coverage.xmin);
+                formData.append('coverage[y_min]', this.dataset.coverage.ymin);
+                formData.append('coverage[x_max]', this.dataset.coverage.xmax);
+                formData.append('coverage[y_max]', this.dataset.coverage.ymax);
             }
 
             if (this.isElevationAbsolut) {

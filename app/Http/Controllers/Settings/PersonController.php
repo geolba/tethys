@@ -82,7 +82,7 @@ class PersonController extends Controller
             'email' => 'required|email|unique:persons,email,' . $id,
             'identifier_orcid' => 'nullable|min:19|max:50',
             'status' => 'required|boolean',
-            'date_of_birth' => 'required|date'
+            'date_of_birth' => 'nullable|date'
         ]);
         $person = Person::findOrFail($id);
         $input = $request->all();

@@ -36,7 +36,7 @@ class EditPersonRequest extends Request
             // ],
             'identifier_orcid' => 'nullable|min:19|max:50',
             'status' => 'required|boolean',
-            'date_of_birth' => 'required|date'
+            'date_of_birth' => 'nullable|date'
         ];
     }
 }

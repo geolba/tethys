@@ -16,11 +16,18 @@ class CreatePersonsTable extends Migration
         Schema::create('persons', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name');
-            $table->integer('registered_at');
-            $table->boolean('status')->default(1);
-
-            $table->timestamps();
+            $table->string('academic_title', 255)->nullable();
+            $table->string('date_of_birth', 100)->nullable();
+            $table->string('email', 100);
+            $table->string('first_name', 255);
+            $table->string('last_name', 255);
+            $table->string('place_of_birth', 255)->nullable();
+            $table->string('identifier_orcid', 50)->nullable();
+            $table->string('identifier_gnd', 50)->nullable();
+            $table->string('identifier_misc', 50)->nullable();
+            $table->boolean('status')->nullable()->default(1);
+            $table->integer('registered_at')->nullable();
+            $table->string('name_type', 50)->nullable();
         });
 
         Schema::create('link_documents_persons', function (Blueprint $table) {

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateDatasetTitlesTable extends Migration
 {
@@ -15,12 +15,13 @@ class CreateDatasetTitlesTable extends Migration
     {
         Schema::create('dataset_titles', function (Blueprint $table) {
             $table->increments('id');
+
             $table->integer('document_id')->unsigned();
-
             $table->foreign('document_id')->references('id')->on('documents')
-            ->onUpdate('cascade')->onDelete('cascade');
+                ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->text('value');
+            $table->enum('type', ['sub' => 'sub', 'alternative' => 'alternative', 'translated' => 'translated', 'other' => 'other']);
+            $table->string('value', 255);
             $table->string('language', 3);
         });
     }

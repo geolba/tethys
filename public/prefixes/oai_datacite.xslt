@@ -105,16 +105,16 @@
         <geoLocation>
             <geoLocationBox>
                 <westBoundLongitude>
-                    <xsl:value-of select="@Xmin" />
+                    <xsl:value-of select="@XMin" />
                 </westBoundLongitude>
                 <eastBoundLongitude>
-                    <xsl:value-of select="@Xmax" />
+                    <xsl:value-of select="@XMax" />
                 </eastBoundLongitude>
                 <southBoundLatitude>
-                    <xsl:value-of select="@Ymin" />
+                    <xsl:value-of select="@YMin" />
                 </southBoundLatitude>
                 <northBoundLatitude>
-                    <xsl:value-of select="@Ymax" />
+                    <xsl:value-of select="@YMax" />
                 </northBoundLatitude>
             </geoLocationBox>
         </geoLocation>

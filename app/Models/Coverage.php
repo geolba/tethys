@@ -19,7 +19,7 @@ class Coverage extends Model
         'time_min',
         'time_max',
         'time_absolut',
-        'xmin', 'xmax', 'ymin', 'ymax'
+        'x_min', 'x_max', 'y_min', 'y_max'
     ];
 
     public function dataset()

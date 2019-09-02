@@ -36,7 +36,7 @@ class AccountsTableSeeder extends Seeder
                 'email' => "editor@geologie.ac.at",
                 'password' => bcrypt('rdr007'),
                 'created_at' => Carbon::now(),
-            ],           
+            ],
             [
                 'login' => "Review",
                 'email' => "review@geologie.ac.at",

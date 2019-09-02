@@ -66,7 +66,7 @@ class IndexController extends Controller
 
         $keywordTypes = ['uncontrolled' => 'uncontrolled'];
 
-        $descriptionTypes = [ 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'translated' => 'translated', 'other' => 'other'];
+        $descriptionTypes = ['methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'translated' => 'translated', 'other' => 'other'];
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 
@@ -250,19 +250,19 @@ class IndexController extends Controller
             'title_main.language' => 'required',
             'abstract_main.value' => 'required|min:4',
             'abstract_main.language' => 'required',
-            'coverage.xmin' => [
+            'coverage.x_min' => [
                 'nullable',
                 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
-            'coverage.ymin' => [
+            'coverage.y_min' => [
                 'nullable',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
-            'coverage.xmax' => [
+            'coverage.x_max' => [
                 'nullable',
                 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
-            'coverage.ymax' => [
+            'coverage.y_max' => [
                 'nullable',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],

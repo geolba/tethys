@@ -359,10 +359,10 @@
   <xsl:template match="Coverage" mode="oai_dc">
     <dc:coverage>     
       <xsl:variable name="geolocation" select="concat(
-      'SOUTH-BOUND LATITUDE: ', @Xmin,
-      ' * WEST-BOUND LONGITUDE: ', @Ymin,
-      ' * NORTH-BOUND LATITUDE: ', @Xmax,
-      ' * EAST-BOUND LONGITUDE: ', @Ymax
+      'SOUTH-BOUND LATITUDE: ', @XMin,
+      ' * WEST-BOUND LONGITUDE: ', @YMin,
+      ' * NORTH-BOUND LATITUDE: ', @XMax,
+      ' * EAST-BOUND LONGITUDE: ', @YMax
       )" />   
       <xsl:value-of select="$geolocation" />
      

@@ -183,6 +183,14 @@ class RolesTableSeeder extends Seeder
             ],
             [
                 'permission_id' => '3', //permission 'dataset-list'
+                'role_id' => '1', //administrator role
+            ],
+            [
+                'permission_id' => '4', //permission 'dataset-submit'
+                'role_id' => '1', //administrator role
+            ],
+            [
+                'permission_id' => '3', //permission 'dataset-list'
                 'role_id' => '2', //submitter role
             ],
             [

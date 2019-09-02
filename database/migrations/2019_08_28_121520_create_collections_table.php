@@ -13,10 +13,26 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
+        Schema::create('collections_roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 255);
+            $table->string('oai_name', 255);
+            $table->integer('position');
+            $table->boolean('visible')->default(1);
+            $table->boolean('visible_frontdoor')->default(1);
+            $table->boolean('visible_oai')->default(1);
+        });
+
         Schema::create('collections', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('role_id')->unsigned()->nullable();
+            $table->foreign('role_id')
+            ->references('id')->on('collections_roles')
+            ->onUpdate('cascade')->onDelete('cascade');
+
             $table->string('number', 255)->nullable();
-            $table->string('name', 255)->nullable();
+            $table->string('name', 255);
             $table->string('oai_subset', 255)->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')
@@ -24,7 +40,6 @@ class CreateCollectionsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('visible')->default(1);
             $table->boolean('visible_publish')->default(1);
-            $table->timestamps();
         });
 
         Schema::create('link_documents_collections', function (Blueprint $table) {
@@ -54,5 +69,6 @@ class CreateCollectionsTable extends Migration
     {
         Schema::dropIfExists('link_documents_collections');
         Schema::dropIfExists('collections');
+        Schema::dropIfExists('collections_roles');
     }
 }
