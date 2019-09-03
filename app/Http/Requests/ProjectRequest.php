@@ -25,7 +25,7 @@ class ProjectRequest extends Request
         return [
             
             'name' => 'required|min:3|max:255',
-            'label' => 'required|min:3|max:10',
+            'label' => 'required|min:3|max:20',
             'description' => 'required'
         ];
     }

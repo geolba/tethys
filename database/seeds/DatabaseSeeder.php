@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call('LanguagesTableSeeder');
         $this->call('PagesTableSeeder');
         $this->call('CollectionsTableSeeder');
+        $this->call('ProjectsTableSeeder');
         $this->command->info('User table seeded!');
     }
 }
