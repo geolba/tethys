@@ -14,10 +14,10 @@ class CreateDocumentXmlCacheTable extends Migration
     public function up()
     {
         Schema::create('document_xml_cache', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('document_id')->primary();
             $table->integer('xml_version');
             $table->string('server_date_modified', 50)->nullable();
-            $table->string('xml_data')->nullable();
+            $table->text('xml_data')->nullable();
         });
     }
 

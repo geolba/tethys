@@ -3,11 +3,11 @@
 return [
     'endpoint' => [
         'localhost' => [
-            'host' => env('SOLR_HOST', 'zontik.gba.geolba.ac.at'),
+            'host' => env('SOLR_HOST', 'repository.geologie.ac.at'),
             'port' => env('SOLR_PORT', '8983'),
             'path' => env('SOLR_PATH', '/solr/'),
-            'core' => env('SOLR_CORE', 'opus4')
+            'core' => env('SOLR_CORE', 'rdr_data')
         ]
         ],
-        'xsltfile' => "solr.xslt"
+        'xsltfile' => "public/solr.xslt"
 ];
