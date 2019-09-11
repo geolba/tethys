@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('slider')
+@section('hero')
 <div class="pure-g slider">
     <div class="container">
         <div class="pure-g">

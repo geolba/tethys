@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"phpfmt.php_bin": "\"C:\\ProgramData\\scoop\\apps\\php-nts\\current\\php.exe\"",
+		"phpfmt.psr2": true
+	}
+}

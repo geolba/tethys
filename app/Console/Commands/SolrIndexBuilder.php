@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Dataset;
-// use Illuminate\Support\Facades\Log;
-// use App\Library\Search\SolariumAdapter;
 
 class SolrIndexBuilder extends Command
 {

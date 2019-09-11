@@ -39,7 +39,7 @@
     <div id="mobile-menu" class="pure-hidden-phone pure-hidden-tablet pure-hidden-desktop">
         <ul></ul>
     </div>
-    @yield('slider')
+    @yield('hero')
 
     <div class="content-container">
         <div class="container">
