@@ -30,8 +30,8 @@
                     availability, long-term preservation and independent publication of your research data.
                 </h4>
                 <p>
-                        The use of RDR as a data centre for archiving and/or publishing research data is invoiced annually. 
-                        The invoice consists of a basic annual contract fee and a usage-related fee.
+                    The use of RDR as a data centre for archiving and/or publishing research data is invoiced annually.
+                    The invoice consists of a basic annual contract fee and a usage-related fee.
                 </p>
             </div>
         </div>
@@ -121,7 +121,7 @@
                 <img src="images/clients/logo_zamg.png" alt="Zamg Client">
             </li>
         </ul>
-    </div>   
+    </div>
 </section>
 
 <!-- About -->
@@ -142,7 +142,8 @@
 </section>
 
 <!-- Why us -->
-<section data-sr id="why-us" class="why u-full-width">
+{{-- <section data-sr id="why-us" class="why u-full-width"> --}}
+<section data-sr id="benefits" class="why u-full-width">
     <div class="container">
         <div class="row">
             <div class="twelve columns">

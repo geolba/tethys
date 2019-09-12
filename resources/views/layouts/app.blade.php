@@ -62,7 +62,7 @@
                     <!-- <li><a href="#introduction">Introduction</a></li> -->
                     <li>
                         <a class="{{ Route::currentRouteName() == 'frontend.home.intro' ? 'current' : '' }}"
-                            href="{{ route('frontend.home.intro') }}">Introduction</a>
+                            href="{{ route('frontend.home.intro') }}">Intro</a>
                     </li>
                     <!-- <li><a href="#work">Work</a></li> -->
                     <li>
@@ -77,7 +77,9 @@
                     <!-- <li><a href="#clients">Clients</a></li> -->
                     <!-- <li><a href="#about">About</a></li> -->
                     <li><a class="{{ Route::currentRouteName() == 'frontend.pages.show' ? 'current' : '' }}"
-                            href="{!! url('/pages/about') !!}">About</a></li>
+                        href="{!! url('/pages/about') !!}">About</a>
+                    </li>
+                    <li class="right"><a href="{{ URL::route('oai') }}" target="_blank"> OAI</a></li>
 
                     <!-- <li><a href="#why-us">Why us?</a></li>            
                     <li><a href="#contact">Contact</a></li> -->
