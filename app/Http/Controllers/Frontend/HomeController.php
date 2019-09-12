@@ -74,9 +74,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function about(): View
+    public function intro(): View
     {
-        return view('frontend.home.about');
+        return view('frontend.home.intro');
     }
 
     /**
@@ -87,6 +87,25 @@ class HomeController extends Controller
     public function news(): View
     {
         return view('frontend.home.news');
+    }
+
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function services(): View
+    {
+        return view('frontend.home.services');
+    }
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function help(): View
+    {
+        return view('frontend.home.help');
     }
 
     /**

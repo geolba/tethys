@@ -268,17 +268,13 @@
       <datestamp>
         <xsl:choose>
           <xsl:when test="ServerDateModified">
-            <xsl:value-of select="ServerDateModified/@Year"/>
--
-            <xsl:value-of select="format-number(ServerDateModified/@Month,'00')"/>
--
+            <xsl:value-of select="ServerDateModified/@Year"/>-
+            <xsl:value-of select="format-number(ServerDateModified/@Month,'00')"/>-
             <xsl:value-of select="format-number(ServerDateModified/@Day,'00')"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="ServerDatePublished/@Year"/>
--
-            <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>
--
+            <xsl:value-of select="ServerDatePublished/@Year"/>-
+            <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>-
             <xsl:value-of select="format-number(ServerDatePublished/@Day,'00')"/>
           </xsl:otherwise>
         </xsl:choose>
@@ -290,9 +286,11 @@
       <xsl:apply-templates select="SetSpec" />
     </header>
     <xsl:choose>
-      <!-- nicht bei ListIdentifiers-->
-      <xsl:when test="$oai_verb!='ListIdentifiers' and @ServerState!='deleted'">
-        <metadata>
+      <!-- nicht bei ListIdentifiers und auch nicht bei gelöschten Datensätzen-->
+      <xsl:when test="$oai_verb!='ListIdentifiers' and @ServerState!='deleted'">    
+        
+        <metadata>       
+        <!-- <xsl:value-of select="$oai_metadataPrefix" /> -->        
           <xsl:choose>
             <xsl:when test="$oai_metadataPrefix='oai_dc'">
               <xsl:apply-templates select="." mode="oai_dc" />
@@ -302,6 +300,7 @@
             </xsl:when>
           </xsl:choose>
         </metadata>
+        
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -453,7 +452,7 @@
     <dc:date>
       <xsl:choose>
         <xsl:when test="PublishedDate">
-          <xsl:value-of select="PublishedDate/@Year"/>
+           <xsl:value-of select="PublishedDate/@Year"/>
 -          <xsl:value-of select="format-number(PublishedDate/@Month,'00')"/>
 -          <xsl:value-of select="format-number(PublishedDate/@Day,'00')"/>
         </xsl:when>

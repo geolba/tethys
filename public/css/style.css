@@ -126,7 +126,13 @@ section {
   text-align: center;
   padding: 80px 0;
 }
+section.normal {
+  text-align: left;
+}
 
+.content-container { 
+  margin-top: 25px;
+}
 /*
 
   Section with featured background image. Every section which will have this
@@ -228,7 +234,6 @@ section {
   position: fixed;
   width: 100%;
   z-index: 3;
-  border-bottom: 1px solid #dcdcdc;
 }
 .header .menu {
   clear: both;
@@ -261,6 +266,7 @@ section {
 }
 
 .navigation.active {
+  /* make visible visible */
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);
   -ms-transform: translateX(0);
@@ -696,6 +702,8 @@ there.
   -o-transform: translateX(0);
   transform: translateX(0);
   }
+
+ 
  
 
 
@@ -729,7 +737,7 @@ there.
 	}
 	.navigation ul li.right {
 		float: none;
-	}
+  } 
 }
 
 /* Larger than desktop */

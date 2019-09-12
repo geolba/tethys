@@ -32,6 +32,7 @@ class Dataset extends Model
         'type',
         'language',
         'server_state',
+        'server_date_published',
         'creating_corporation',
         'project_id',
         'embargo_date',

@@ -429,11 +429,17 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('/imprint', [
         'as' => 'home.imprint', 'uses' => 'HomeController@imprint',
     ]);
-    Route::get('/about', [
-        'as' => 'home.about', 'uses' => 'HomeController@about',
+    Route::get('/intro', [
+        'as' => 'home.intro', 'uses' => 'HomeController@intro',
     ]);
     Route::get('/news', [
         'as' => 'home.news', 'uses' => 'HomeController@news',
+    ]);
+    Route::get('/services', [
+        'as' => 'home.services', 'uses' => 'HomeController@services',
+    ]);
+    Route::get('/help', [
+        'as' => 'home.help', 'uses' => 'HomeController@help',
     ]);
 
     //=================================================Crawlers====================================================

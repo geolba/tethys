@@ -182,7 +182,11 @@ class RequestController extends Controller
             );
         }
 
-        $metadataPrefix = $oaiRequest['metadataPrefix'];
+        $metadataPrefix = null;
+        if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
+            $metadataPrefix = $oaiRequest['metadataPrefix'];
+        }
+        $this->_proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 
         // do not deliver datasets which are restricted by document state
         if (is_null($dataset)

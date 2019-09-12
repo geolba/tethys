@@ -1,130 +1,161 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ app()->getLocale() }}">
+
 <head>
-    <meta charset="utf-8">    
-    <meta http-equiv="Content-Language" content="de">
-   
-    <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
     <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="de">
+
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>RDR - For Scientists</title>
+    <meta name="description" content="An awesome one page website">
+    <meta name="author" content="Arno Kaimbacher">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') RDR</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}"> --}}
 
-    {{-- <link rel='stylesheet' href="{{ asset('css/pure-min.css') }}" /> --}}
-    {{-- <link rel='stylesheet' href="{{ asset('css/grids-responsive-min.css') }}" /> --}}
-    <link rel='stylesheet' href="{{ asset('css/app1.css') }}" />
-    <!--<link rel='stylesheet' href="{{ asset('css/page.css') }}" />--> 
-    <link rel='stylesheet' href="{{ asset('css/styles.css') }}" />
-    <link rel='stylesheet' href="{{ asset('css/langswitch.css') }}" />
-    <!-- Fonts -->
-    {{-- <link rel='stylesheet' href="{{ asset('css/font-awesome.css') }}" /> --}}
-    {{-- <link href="https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C700italic%2C400%2C300%2C700%2C800&amp;ver=3.8.1" type="text/css" rel="stylesheet"> --}}
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet" type='text/css'>
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="/images/favicon/favicon.ico" />
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="images/favicon/site.webmanifest"> -->
+
+    <!-- Javascript
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script type="text/javascript" src="/js/scripts.js"></script>
     @yield('head')
-
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
+
 <body class="layout-home-html">
 
-    @include('partials.nav')
-    <div id="mobile-menu" class="pure-hidden-phone pure-hidden-tablet pure-hidden-desktop">
-        <ul></ul>
-    </div>
+    <!-- Menu -->
+    <header class="header">
+        <nav class="navigation">
+            <a href="#" class="menu-icon {{ Route::currentRouteName() != 'frontend.home.index' ? 'active' : '' }}"">
+                <i class="fa fa-bars"></i>
+            </a>
+            <div class="container">
+                <ul class="menu">
+                    <!-- <li><a href="#hero">Home</a></li> -->
+                    <li>
+                        <a class="{{ Route::currentRouteName() == 'frontend.home.index' ? 'current' : '' }}"
+                            href="{{ url('/') }}">Home</a>
+                    </li>
+                    <!-- <li><a href="#introduction">Introduction</a></li> -->
+                    <li>
+                        <a class="{{ Route::currentRouteName() == 'frontend.home.intro' ? 'current' : '' }}"
+                            href="{{ route('frontend.home.intro') }}">Introduction</a>
+                    </li>
+                    <!-- <li><a href="#work">Work</a></li> -->
+                    <li>
+                        <a class="{{ Route::currentRouteName() == 'frontend.home.services' ? 'current' : '' }}"
+                            href="{{ route('frontend.home.services') }}">Services</a>
+                    </li>
+                    <!-- <li><a href="#help">Help</a></li> -->
+                    <li>
+                        <a class="{{ Route::currentRouteName() == 'frontend.home.help' ? 'current' : '' }}"
+                            href="{{ route('frontend.home.help') }}">Help</a>
+                    </li>
+                    <!-- <li><a href="#clients">Clients</a></li> -->
+                    <!-- <li><a href="#about">About</a></li> -->
+                    <li><a class="{{ Route::currentRouteName() == 'frontend.pages.show' ? 'current' : '' }}"
+                            href="{!! url('/pages/about') !!}">About</a></li>
+
+                    <!-- <li><a href="#why-us">Why us?</a></li>            
+                    <li><a href="#contact">Contact</a></li> -->
+                    <!-- <li class="right"><a href="#">Login</a></li> -->
+                    @if (Auth::guest())
+                    <li class="right">
+                        <a class="{{ Route::currentRouteName() == 'login' ? 'current' : '' }}"
+                            href="{{ route('login') }}">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    @endif
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     @yield('hero')
 
     <div class="content-container">
-        <div class="container">
-            @include('partials.flash')
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
 
-    <!--@yield('footer')-->
-    <div class="footer">
-        <div class="container">
 
-            <div class="pure-g">
-                <div class="pure-u-1 pure-u-md-1-4 footer-about">
+    <!-- Footer -->
+    <section data-sr class="footer u-full-width u-max-full-width">
+        <div class="container">
+            <div class="row">
+                <div class="four columns footer-about">
+                    <!-- <h5>&copy 2015 Tuts+ Web Design.</h5> -->
                     <div class="block">
                         <h3 class="block-title">About RDR</h3>
                         <ul>
-                            {{-- <li><a href="{{ URL::route('frontend.home.about') }}">About Us</a></li> --}}
-                            <li class="last"><a href="{!! URL::route('frontend.pages.show', ['page_slug'=>'about']) !!}">About Us</a></li>
+                            <li class="last"><a
+                                    href="{!! URL::route('frontend.pages.show', ['page_slug'=>'about']) !!}">About
+                                    Us</a></li>
                             <li><a href="{{ URL::route('frontend.home.news') }}">News</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="pure-u-1 pure-u-md-1-4">
-                </div>
-                <div class="pure-u-1 pure-u-md-1-4 footer-links">
+                <div class="four columns footer-links">
                     <div class="block">
                         <h3 class="block-title">TOOLS &amp; SUPPORT</h3>
-                        <ul id="secondary-nav" class="nav">                            
+                        <ul id="secondary-nav" class="nav">
                             <li class="first"><a href="{{ URL::route('frontend.home.contact') }}">Contact</a></li>
-                            {{-- <li><a href="{{ URL::route('frontend.home.imprint') }}">Impressum</a></li> --}}
-                            <li class="last"><a href="{!! URL::route('frontend.pages.show', ['page_slug'=>'imprint']) !!}">Impressum</a></li>
+                            <li class="last"><a
+                                    href="{!! URL::route('frontend.pages.show', ['page_slug'=>'imprint']) !!}">Impressum</a>
+                            </li>
                             <li class="last"><a href="{{ URL::route('frontend.sitelinks.index') }}">Sitelinks</a></li>
-                            <li class="last"><a href="{!! URL::route('frontend.pages.show', ['page_slug'=>'terms-and-conditions']) !!}">Terms and Conditions</a></li>
+                            <li class="last"><a
+                                    href="{!! URL::route('frontend.pages.show', ['page_slug'=>'terms-and-conditions']) !!}">Terms
+                                    and Conditions</a></li>
 
-                            <li><a target="_blank" href="https://github.com/geolba"><i class="fab fa-github"></i> rdr bei GitHub</a></li>
+                            <li><a target="_blank" href="https://github.com/geolba"><i class="fab fa-github"></i> rdr
+                                    bei GitHub</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="pure-u-1 pure-u-md-1-4 block">
+                <div class="four columns block">
                     <div class="block">
                         <h3 class="block-title">CONNECT WITH US</h3>
                         <ul>
-                            <li><a target="_blank" href="https://www.geologie.ac.at/"><i class="fas fa-home"></i> GBA</a></li>
+                            <li><a target="_blank" href="https://www.geologie.ac.at/"><i class="fas fa-home"></i>
+                                    GBA</a></li>
                             <li><span><i class="fas fa-phone"></i> +43-1-7125674</span></li>
-                            <li><a href="mailto:repository@geologie.ac.at?Subject= RDR &amp;body=How can I help you?"><i class="far fa-envelope"></i> repository@geologie.ac.at</a> </li>
+                            <li><a href="mailto:repository@geologie.ac.at?Subject= RDR &amp;body=How can I help you?"><i
+                                        class="far fa-envelope"></i> repository@geologie.ac.at</a> </li>
                             <li></li>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="pure-g">
-                <div class="pure-u-1 pure-u-md-1-4 footer-copyright">
-                    Geologische Bundesanstalt &copy; {{ date('Y') }}
-                    <!--<p id="logo-wrapper">
-                        <a href="http://www.kobv.de/opus4/" title="Opus4 Website">
-                        </a>
-                    </p>-->
-                </div>
-                <div class="pure-u-1 pure-u-md-1-4 footer-funded">
-                {{-- @role('administrator')
-                    I'm an administrator!
-                @else
-                    I'm not an administrator...
-                @endrole --}}
-                </div>
-                <div class="pure-u-1 pure-u-md-1-4 footer-funded">
-                </div>
-                <div class="pure-u-1 pure-u-md-1-4 footer-funded">  
-                </div>
+
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Scripts -->
-    {{-- <script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script> --}} 
-    <script type="text/javascript" src="{{ asset('js/lib.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('div.alert').not('alert-important').delay(3000).slideUp(300);
-        });
-
-    </script>
-    @yield('scripts')
-
+    <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
+
 </html>

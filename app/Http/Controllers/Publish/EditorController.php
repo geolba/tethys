@@ -20,6 +20,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 // use App\Models\Coverage;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class EditorController extends Controller
 {
@@ -372,13 +373,12 @@ class EditorController extends Controller
         $dataset = Dataset::findOrFail($id);
         $input = $request->all();
         $input['server_state'] = 'published';
-        $time = new \Illuminate\Support\Carbon();
-        $input['server_date_published'] = $time;
+        $input['server_date_published'] = Carbon::now()->toDateTimeString(); // Produces something like "2019-03-11 12:25:00"
 
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));
             return redirect()
-                ->route('publish.workflow.publish.index')
+                ->route('publish.workflow.editor.index')
                 ->with('flash_message', 'You have successfully published the dataset!');
         }
         throw new GeneralException(trans('exceptions.publish.publish.update_error'));

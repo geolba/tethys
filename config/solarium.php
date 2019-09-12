@@ -9,5 +9,5 @@ return [
             'core' => env('SOLR_CORE', 'rdr_data')
         ]
         ],
-        'xsltfile' => "public/solr.xslt"
+        'xsltfile' => "solr.xslt"
 ];
