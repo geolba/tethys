@@ -50,7 +50,7 @@
     <header class="header">
         <nav class="navigation">
             <a href="#" class="menu-icon {{ Route::currentRouteName() != 'frontend.home.index' ? 'active' : '' }}"">
-                <i class="fa fa-bars"></i>
+                <i class=" fa fa-bars"></i>
             </a>
             <div class="container">
                 <ul class="menu">
@@ -64,6 +64,11 @@
                         <a class="{{ Route::currentRouteName() == 'frontend.home.intro' ? 'current' : '' }}"
                             href="{{ route('frontend.home.intro') }}">Intro</a>
                     </li>
+                    <li>
+                        <a class="pure-menu-item {{ Route::currentRouteName() == 'frontend.search.index' ? 'current' : '' }}"
+                            href="{{ route('frontend.search.index') }}">  SEARCH</a>
+                    </li>
+
                     <!-- <li><a href="#work">Work</a></li> -->
                     <li>
                         <a class="{{ Route::currentRouteName() == 'frontend.home.services' ? 'current' : '' }}"
@@ -76,9 +81,10 @@
                     </li>
                     <!-- <li><a href="#clients">Clients</a></li> -->
                     <!-- <li><a href="#about">About</a></li> -->
-                    <li><a class="{{ Route::currentRouteName() == 'frontend.pages.show' ? 'current' : '' }}"
-                        href="{!! url('/pages/about') !!}">About</a>
-                    </li>
+                    <!-- <li>
+                        <a class="{{ Route::currentRouteName() == 'frontend.pages.show' ? 'current' : '' }}"
+                            href="{!! url('/pages/about') !!}">About</a>
+                    </li> -->
                     <li class="right"><a href="{{ URL::route('oai') }}" target="_blank"> OAI</a></li>
 
                     <!-- <li><a href="#why-us">Why us?</a></li>            

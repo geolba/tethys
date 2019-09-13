@@ -3,7 +3,9 @@
   
      
            
-            {!! Form::text('query', isset($filter) ? $filter : '', array('class'=>'pure-input-1', 'placeholder'=>'Search for a dataset...')) !!}
+            {!! Form::text('query', isset($filter) ? $filter : '', array('class'=>'u-full-width', 'placeholder'=>'Search for a dataset...')) !!}
+
+            {{-- <input class="u-full-width" placeholder="Search for a dataset..." id="query"></input> --}}
            
             <!--<div id="edit-submit-search-wrapper" class="form-item">
                 <span class="form-submit-wrapper">
