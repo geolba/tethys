@@ -44,7 +44,7 @@
                     <tr>
                         <td>
                             @if($file->exists() === true)
-                            <a href="{{ route('settings.file.download', ['id' => $file->id]) }}"> {{ $file->path_name }} </a> 
+                            <a href="{{ route('file.download', ['id' => $file->id]) }}"> {{ $file->path_name }} </a> 
                             @else
                             <span class="alert">missing file: {{ $file->path_name }}</span> 
                             @endif

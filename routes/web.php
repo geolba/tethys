@@ -25,6 +25,12 @@ Route::get(
     ]
 );
 
+//=============================================================================================================
+//=================================================file download=============================================
+Route::get('file/download/{id}', [
+    'as' => 'file.download', 'uses' => 'Settings\FileController@download',
+]);
+
 //=================================================publish datasets================================================
 Route::group(
     [
@@ -83,7 +89,7 @@ Route::group(
             'middleware' => ['isUserDatasetAdmin:true'],
             'as' => 'workflow.submit.deleteUpdate', 'uses' => 'SubmitController@deleteUpdate',
         ]);
-       
+
         //editor
         Route::get('workflow/editor/index', [
             'middleware' => ['permission:dataset-editor-list'],
@@ -188,16 +194,16 @@ Route::group(
             'as' => 'user.create', 'uses' => 'UserController@create', 'middleware' => ['permission:settings'],
         ]);
         Route::post('user/store', [
-            'as' => 'user.store', 'uses' => 'UserController@store','middleware' => ['permission:settings'],
+            'as' => 'user.store', 'uses' => 'UserController@store', 'middleware' => ['permission:settings'],
         ]);
         Route::get('user/edit/{id}', [
-            'as' => 'user.edit', 'uses' => 'UserController@edit', 'middleware' => ['auth']
+            'as' => 'user.edit', 'uses' => 'UserController@edit', 'middleware' => ['auth'],
         ]);
         Route::patch('user/update/{id}', [
-            'as' => 'user.update', 'uses' => 'UserController@update', 'middleware' => ['auth']
+            'as' => 'user.update', 'uses' => 'UserController@update', 'middleware' => ['auth'],
         ]);
         Route::get('user/destroy/{id}', [
-            'as' => 'user.destroy', 'uses' => 'UserController@destroy','middleware' => ['permission:settings'],
+            'as' => 'user.destroy', 'uses' => 'UserController@destroy', 'middleware' => ['permission:settings'],
         ]);
 
         //Route::resource('users','RoleController');
@@ -205,16 +211,16 @@ Route::group(
             'as' => 'role.index', 'uses' => 'RoleController@index', 'middleware' => ['permission:settings'],
         ]);
         Route::get('role/create', [
-            'as' => 'role.create', 'uses' => 'RoleController@create','middleware' => ['permission:settings'],
+            'as' => 'role.create', 'uses' => 'RoleController@create', 'middleware' => ['permission:settings'],
         ]);
         Route::post('role/store', [
-            'as' => 'role.store', 'uses' => 'RoleController@store','middleware' => ['permission:settings'],
+            'as' => 'role.store', 'uses' => 'RoleController@store', 'middleware' => ['permission:settings'],
         ]);
         Route::get('role/edit/{id}', [
-            'as' => 'role.edit', 'uses' => 'RoleController@edit','middleware' => ['permission:settings'],
+            'as' => 'role.edit', 'uses' => 'RoleController@edit', 'middleware' => ['permission:settings'],
         ]);
         Route::patch('role/update/{id}', [
-            'as' => 'role.update', 'uses' => 'RoleController@update','middleware' => ['permission:settings'],
+            'as' => 'role.update', 'uses' => 'RoleController@update', 'middleware' => ['permission:settings'],
         ]);
     }
 );
@@ -269,11 +275,11 @@ Route::group(['middleware' => ['permission:settings']], function () {
     Route::get('settings/file/download/{id}', [
         'as' => 'settings.file.download', 'uses' => 'Settings\DatasetController@download',
     ]);
-    //=============================================================================================================
-    //=================================================setting file=============================================
-    Route::get('settings/file/download/{id}', [
-        'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
-    ]);
+    // //=============================================================================================================
+    // //=================================================setting file=============================================
+    // Route::get('settings/file/download/{id}', [
+    //     'as' => 'file.download', 'uses' => 'Settings\FileController@download',
+    // ]);
 
     //=================================================setting mimetype=============================================
     Route::get('/settings/mimetype', [
