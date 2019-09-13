@@ -44,7 +44,7 @@ class LanguagesTableSeeder extends Seeder
                 'scope' => 'I',
                 'type' => 'L',
                 'ref_name' => 'Italian',
-                'active' =>true,
+                'active' =>false,
             ],
             [
                 'part2_b' => 'fre',
@@ -53,7 +53,7 @@ class LanguagesTableSeeder extends Seeder
                 'scope' => 'I',
                 'type' => 'L',
                 'ref_name' => 'French',
-                'active' =>true,
+                'active' =>false,
             ],
             [
                 'part2_b' => 'rus',

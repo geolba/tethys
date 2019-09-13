@@ -45,6 +45,9 @@
 </head>
 
 <body class="layout-home-html">
+    <div id="trynewsite">
+        <span>Repository Demo</span>
+    </div>
 
     <!-- Menu -->
     <header class="header">
@@ -66,7 +69,7 @@
                     </li>
                     <li>
                         <a class="pure-menu-item {{ Route::currentRouteName() == 'frontend.search.index' ? 'current' : '' }}"
-                            href="{{ route('frontend.search.index') }}">  SEARCH</a>
+                            href="{{ route('frontend.search.index') }}"> SEARCH</a>
                     </li>
 
                     <!-- <li><a href="#work">Work</a></li> -->
@@ -97,6 +100,14 @@
                             <i class="fas fa-sign-in-alt"></i> Login
                         </a>
                     </li>
+                    @else
+
+                    <li class="right">
+                        <a class="pure-menu-link" href="{{ route('logout') }}">
+                            <i class="fas fa-sign-out-alt"></i> LOG OUT
+                        </a>
+                    </li>
+
                     @endif
                 </ul>
             </div>

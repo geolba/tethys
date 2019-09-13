@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocumentReferencesTable extends Migration
+class CreateDocumentIdentifiersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class CreateDocumentReferencesTable extends Migration
      */
     public function up()
     {
-        //Table for identifiers referencing to related datasets.
-        Schema::create('document_references', function (Blueprint $table) {
+        Schema::create('document_identifiers', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('document_id')->unsigned();
@@ -25,12 +24,8 @@ class CreateDocumentReferencesTable extends Migration
                 'type',
                 ["doi", "handle", "isbn", "issn",  "url", "urn"]
             );
-            $table->enum(
-                'relation',
-                ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"]
-            );
+           
             $table->string('value', 255);
-            $table->string('label', 50);
             $table->timestamps();
         });
     }
@@ -42,6 +37,6 @@ class CreateDocumentReferencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_references');
+        Schema::dropIfExists('document_identifiers');
     }
 }

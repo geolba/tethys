@@ -60,7 +60,7 @@ class RolesTableSeeder extends Seeder
                 'role_id' => '3', //editor role
             ],
             [
-                'account_id' => '3', //Review
+                'account_id' => '4', //Review
                 'role_id' => '4', //reviewer role
             ],
         ]);

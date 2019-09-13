@@ -18,61 +18,61 @@ class PagesTableSeeder extends Seeder
             [
                 // 1
                 //'title'       => 'Terms and conditions',
-                'page_slug'   => 'terms-and-conditions',
+                'page_slug' => 'terms-and-conditions',
                 // 'description' => $faker->text($maxNbChars = 255),
                 'seo_title' => 'Terms and Conditions',
                 'seo_keyword' => 'GBA, repository, terms and conditions',
                 'seo_description' => 'Terms and Conditions',
                 'status' => '1',
-                'created_by'  => 1,
-                'updated_by'  => 1,
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'created_by' => 1,
+                'updated_by' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 // 2
                 //'title'       => 'imprint',
-                'page_slug'   => 'imprint',
+                'page_slug' => 'imprint',
                 // 'description' => $faker->text($maxNbChars = 255),
                 'seo_title' => 'Impressum',
                 'seo_keyword' => 'GBA, repository, imprint',
                 'seo_description' => 'Imprint',
                 'status' => '1',
-                'created_by'  => 1,
-                'updated_by'  => 1,
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'created_by' => 1,
+                'updated_by' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 // 3
                 //'title'       => 'Terms and conditions',
-                'page_slug'   => 'about',
+                'page_slug' => 'about',
                 // 'description' => $faker->text($maxNbChars = 255),
                 'seo_title' => 'About',
                 'seo_keyword' => 'GBA, repository, about',
                 'seo_description' => 'About',
                 'status' => '1',
-                'created_by'  => 1,
-                'updated_by'  => 1,
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'created_by' => 1,
+                'updated_by' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 // 4
                 //'title'       => 'Terms and conditions',
-                'page_slug'   => 'home-welcome',
+                'page_slug' => 'home-welcome',
                 // 'description' => $faker->text($maxNbChars = 255),
                 'seo_title' => 'About',
                 'seo_keyword' => 'GBA, repository, about',
                 'seo_description' => 'About',
                 'status' => '1',
-                'created_by'  => 1,
-                'updated_by'  => 1,
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'created_by' => 1,
+                'updated_by' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ]);
-       
+
         DB::table('page_translations')->insert([
             [
                 'page_id' => 1, //terms and conditions
@@ -90,7 +90,22 @@ class PagesTableSeeder extends Seeder
                 'page_id' => 2, //imprint
                 'locale' => 'de',
                 'title' => 'Impressum',
-                'description' => '<p><strong>Für den Inhalt verantwortlich: hfjklög</strong></p><p>Geologische Bundesanstaltdsfsdf</p><p>Neulinggasse 38, 1030 Wien</p><p>» office@geologie.ac.at</p><p>&nbsp;</p><p>Telefon: +43-1-7125674</p><p>Fax: +43-1-7125674-56</p><p>&nbsp;</p><p>Technische Umsetzung und Betreuung</p><p>Geologische Bundesanstalt</p><p>Abteilung Geoinformation und Abteilung IT &amp; GIS</p><p>Neulinggasse 38, 1030 Wien</p><p>» repository@geologie.ac.at</p><p>&nbsp;</p><p>Bei technischen Problemen steht Ihnen das RDR-Team, erreichbar unter repository@geologie.ac.at, zur Seite.</p><p>&nbsp;</p><p>Hinweise und Haftungsausschluss</p><p>Eine Haftung oder Garantie für Aktualität, Richtigkeit und Vollständigkeit der zur Verfügung gestellten Informationen und Daten ist ausgeschlossen.</p><p>Dieser Hinweis gilt auch für alle anderen Website, auf die durch Hyperlinks verwiesen wird. Die Geologische Bundesanstalt ist für den Inhalt von Websites, die mittels einer solchen Verbindung erreicht werden, nicht verantwortlich.</p><p>&nbsp;</p><p>Bildernachweis</p><p>### Muss dann direkt auf der RDR Webpage ausgefüllt werden sobald diese existiert ###</p><p>&nbsp;</p>',
+                'description' => '<p><strong>Für den Inhalt verantwortlich:</strong></p>
+                <p>Geologische Bundesanstalt</p><p>Neulinggasse 38, 1030 Wien</p>
+                <p>email: office@geologie.ac.at</p>              
+                <p>Telefon: +43-1-7125674</p>
+                <p>Fax: +43-1-7125674-56</p>
+                <p>&nbsp;</p>
+                <p>Technische Umsetzung und Betreuung</p>
+                <p>Geologische Bundesanstalt</p>
+                <p>Abteilung Geoinformation und Abteilung IT &amp; GIS</p>
+                <p>Neulinggasse 38, 1030 Wien</p>
+                <p>email: repository@geologie.ac.at</p>
+                <p>&nbsp;</p>
+                <p>Bei technischen Problemen steht Ihnen das RDR-Team, erreichbar unter repository@geologie.ac.at, zur Seite.</p>
+                <p>&nbsp;</p><p>Hinweise und Haftungsausschluss</p>
+                <p>Eine Haftung oder Garantie für Aktualität, Richtigkeit und Vollständigkeit der zur Verfügung gestellten Informationen und Daten ist ausgeschlossen.</p>
+                <p>Dieser Hinweis gilt auch für alle anderen Website, auf die durch Hyperlinks verwiesen wird. Die Geologische Bundesanstalt ist für den Inhalt von Websites, die mittels einer solchen Verbindung erreicht werden, nicht verantwortlich.</p>',
             ],
             [
                 'page_id' => 2, //imprint
@@ -121,7 +136,7 @@ class PagesTableSeeder extends Seeder
                         veröffentlichen.  Die Texte stehen nach ihrer Veröffentlichung weltweit
                         im Internet zur Verfügung und werden von der Bibliothek dauerhaft
                         archiviert. Die Dokumente sind über Bibliothekskataloge und über die
-                        Suchmaschinen des WWW erschlossen und zugänglich.</p>                
+                        Suchmaschinen des WWW erschlossen und zugänglich.</p>
                 <p>Wenn Sie nach Texten der Hochschule suchen wollen, wählen Sie bitte
                         das Menü "Suchen"; dort stehen Ihnen verschiedene Recherchemöglichkeiten
                         zur Verfügung. Wollen Sie ein Dokument publizieren, wählen Sie bitte das
@@ -134,12 +149,12 @@ class PagesTableSeeder extends Seeder
                 'locale' => 'en',
                 'title' => 'Data Research Repository',
                 'description' => '<div>
-                <p>Theee library offers to publish electronically generated and qualified documents on its online publication system. 
+                <p>The library offers to publish electronically generated and qualified documents on its online publication system.
                 This service is for university members only and free of charge. After publication,
-                the texts are available worldwide on the Internet and will be archived permanently by the library. 
-                The documents are indexed and made accessible in library catalogues and Web search engines.</p>   
+                the texts are available worldwide on the Internet and will be archived permanently by the library.
+                The documents are indexed and made accessible in library catalogues and Web search engines.</p>
                 </div>',
             ],
-         ]);
+        ]);
     }
 }
