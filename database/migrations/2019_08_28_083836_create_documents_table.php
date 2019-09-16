@@ -15,8 +15,9 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('contributing_corporation', 50)->nullable();
-            $table->string('creating_corporation', 50);
+            $table->string('contributing_corporation', 255)->nullable();
+            $table->string('creating_corporation', 255);
+            $table->string('publisher_name', 255)->nullable();
             $table->dateTime('embargo_date')->nullable();
             $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects');

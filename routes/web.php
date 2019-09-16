@@ -272,14 +272,14 @@ Route::group(['middleware' => ['permission:settings']], function () {
     Route::patch('settings/document/update/{id}', [
         'as' => 'settings.document.update', 'uses' => 'Settings\DatasetController@update',
     ]);
-    Route::get('settings/file/download/{id}', [
-        'as' => 'settings.file.download', 'uses' => 'Settings\DatasetController@download',
-    ]);
+    // Route::get('settings/file/download/{id}', [
+    //     'as' => 'settings.file.download', 'uses' => 'Settings\DatasetController@download',
+    // ]);
     // //=============================================================================================================
     // //=================================================setting file=============================================
-    // Route::get('settings/file/download/{id}', [
-    //     'as' => 'file.download', 'uses' => 'Settings\FileController@download',
-    // ]);
+    Route::get('settings/file/download/{id}', [
+        'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
+    ]);
 
     //=================================================setting mimetype=============================================
     Route::get('/settings/mimetype', [

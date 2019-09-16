@@ -418,7 +418,7 @@
     </dc:subject>
   </xsl:template>
 
-  <!-- <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
+  <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
     <dc:creator>
       <xsl:value-of select="@LastName" />
       <xsl:if test="@FirstName != ''">
@@ -431,7 +431,7 @@
         <xsl:text>)</xsl:text>
       </xsl:if>
     </dc:creator>
-  </xsl:template> -->
+  </xsl:template>
 
   <xsl:template match="PersonContributor" mode="oai_dc">
     <dc:contributor>
@@ -502,6 +502,12 @@
       <xsl:value-of select="@PathName" />
     </dc:identifier>
   </xsl:template>
+
+ <xsl:template match="@CreatingCorporation" mode="oai_dc">
+    <dc:language>
+      <xsl:value-of select="." />
+    </dc:language>
+  </xsl:template> 
 
   <xsl:template match="@Language" mode="oai_dc">
     <dc:language>

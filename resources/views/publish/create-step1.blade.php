@@ -236,9 +236,9 @@
                 </fieldset>  
 
                 <fieldset id="fieldset-publisher">
-                    <legend>Publisher</legend>
+                    <legend>Creating Corporation</legend>
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('CreatingCorporation', 'Creating Corporation') !!} 
+                        {!! Form::label('CreatingCorporation', 'Corporation Name') !!} 
                         {!! Form::text('CreatingCorporation', null, ['readonly', 'class' =>
                         'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                     </div>
