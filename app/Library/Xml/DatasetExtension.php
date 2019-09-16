@@ -268,11 +268,13 @@ trait DatasetExtension
             //$licenses = $select->with('datasets')->get();
             //$rows =  $supplier->datasets;
             $rows = $this->{$relation};
-            //if (isset($this->externalFields[$fieldname]['pivot']))
-            //{
-            //  $pivArray = $this->externalFields[$fieldname]['pivot'];
-            //  $rows = $rows->wherePivot('role', $pivArray['role']);
-            //}
+            if (isset($this->externalFields[$fieldname]['pivot'])) {
+                $pivArray = $this->externalFields[$fieldname]['pivot'];
+                $pivotValue = $pivArray['role'];
+                //$through = $this->externalFields[$fieldname]['through'];
+                $rows = $this->{$relation}()->wherePivot('role', $pivotValue)->get();
+                //$rows = $this->belongsToMany($modelclass, $through, 'document_id')->wherePivot('role', $pivotValue)->get();
+            }
         } else {
             $rows = $select->whereHas('dataset', function ($q) use ($datasetId) {
                 $q->where('id', $datasetId);
@@ -287,10 +289,15 @@ trait DatasetExtension
             $objArray = [];
             foreach ($attributes as $property_name) {
                 $fieldName = self::convertColumnToFieldname($property_name);
-                // $field =new Field($fieldName);
-                $fieldval = $row->{$property_name};
-                // $field->setValue($fieldval);
-                // $this->_mapField($field, $dom, $rootNode);
+                $fieldval = "";
+                if ($fieldName == "Type") {
+                    $fieldval = ucfirst($row->{$property_name});
+                } else {
+                    // $field =new Field($fieldName);
+                    $fieldval = $row->{$property_name};
+                    // $field->setValue($fieldval);
+                    // $this->_mapField($field, $dom, $rootNode);
+                }
                 $objArray[$fieldName] = $fieldval;
             }
             $result[] = $objArray;

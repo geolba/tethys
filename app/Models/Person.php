@@ -24,7 +24,7 @@ class Person extends Model
     public function documents()
     {
         return $this->belongsToMany(Dataset::class, 'link_documents_persons', 'person_id', 'document_id')
-            ->withPivot('role');
+        ->withPivot('role', 'sort_order', 'allow_email_contact');
     }
 
     // public function scopeNotLimit($query)

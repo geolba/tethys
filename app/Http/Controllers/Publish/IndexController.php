@@ -62,11 +62,11 @@ class IndexController extends Controller
         $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
-        $titleTypes = ['sub' => 'sub', 'alternative' => 'alternative', 'translated' => 'translated', 'other' => 'other'];
+        $titleTypes = ['sub' => 'Sub', 'alternative' => 'Alternative', 'translated' => 'Translated', 'other' => 'Other'];
 
         $keywordTypes = ['uncontrolled' => 'uncontrolled'];
 
-        $descriptionTypes = ['methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'translated' => 'translated', 'other' => 'other'];
+        $descriptionTypes = ['methods' => 'Methods', 'series_information' => 'Series_information', 'technical_info' => 'Technical_info', 'translated' => 'Translated', 'other' => 'Other'];
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 

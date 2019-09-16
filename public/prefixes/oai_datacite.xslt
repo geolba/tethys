@@ -141,7 +141,7 @@
                     <xsl:value-of select="@Language" />
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="@Type != '' and @Type != 'main'">
+            <xsl:if test="@Type != '' and @Type != 'Main'">
                 <xsl:attribute name="titleType">
                     <xsl:value-of select="@Type" />
                 </xsl:attribute>
@@ -153,6 +153,11 @@
     <xsl:template match="PersonContributor" mode="oai_datacite">
         <contributor>
             <contributorName>
+                <xsl:if test="@NameType != ''">
+                <xsl:attribute name="nameType">
+                    <xsl:value-of select="@NameType" />
+                </xsl:attribute>
+                </xsl:if>
                 <xsl:value-of select="@LastName" />
             </contributorName>
         </contributor>

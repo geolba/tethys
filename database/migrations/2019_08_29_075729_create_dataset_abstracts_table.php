@@ -22,7 +22,7 @@ class CreateDatasetAbstractsTable extends Migration
 
             $table->enum(
                 'type',
-                ['abstract' => 'abstract', 'methods' => 'methods', 'series_information' => 'series_information', 'technical_info' => 'technical_info', 'translated' => 'translated', 'other' => 'other']
+                ['abstract' => 'Abstract', 'methods' => 'Methods', 'series_information' => 'Series_information', 'technical_info' => 'Technical_info', 'translated' => 'Translated', 'other' => 'Other']
             );
             $table->string('value', 255);
             $table->string('language', 3);
