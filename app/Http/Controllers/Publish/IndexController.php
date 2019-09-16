@@ -335,6 +335,8 @@ class IndexController extends Controller
                             $dataset->persons()->attach($person['id'], $pivot_data);
                         } else {
                             $dataPerson = new Person($person);
+                            $dataPerson->status = true;
+                            $dataPerson->name_type = "Organizational";
                             $dataset->persons()->save($dataPerson, $pivot_data);
                         }
                     }
@@ -360,6 +362,8 @@ class IndexController extends Controller
                             $dataset->persons()->attach($contributor['id'], $pivot_data);
                         } else {
                             $dataContributor = new Person($contributor);
+                            $dataContributor->status = true;
+                            $dataContributor->name_type = "Organizational";
                             $dataset->persons()->save($dataContributor, $pivot_data);
                         }
                     }

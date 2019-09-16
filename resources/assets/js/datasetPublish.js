@@ -500,10 +500,15 @@ const app = new Vue({
         onAddAuthor(person) {
             //if person is not in person array
             //if (this.persons.includes(person) == false) {
-            if (this.dataset.persons.filter(e => e.id === person.id).length == 0) {
-                //person.sort_order = this.dataset.persons.length;
-                this.dataset.persons.push(person);
-                this.dataset.checkedAuthors.push(person.id);
+            if (this.dataset.persons.filter(e => e.id === person.id).length > 0) {
+                this.$toast.error("person is already defined as author");
+            } else if (this.dataset.contributors.filter(e => e.id === person.id).length > 0) {
+                this.$toast.error("person is already defined as contributor");
+            } else {
+                 //person.sort_order = this.dataset.persons.length;
+                 this.dataset.persons.push(person);
+                 this.dataset.checkedAuthors.push(person.id);
+                 this.$toast.success("person has been successfully added as author");
             }
         },
         addNewContributor() {
@@ -513,9 +518,14 @@ const app = new Vue({
         onAddContributor(person) {
             //if person is not in contributors array
             //if (this.contributors.includes(person) == false) {
-            if (this.dataset.contributors.filter(e => e.id === person.id).length == 0) {
+            if (this.dataset.contributors.filter(e => e.id === person.id).length > 0) {
+                this.$toast.error("person is already defined as contributor");
+            } else if (this.dataset.persons.filter(e => e.id === person.id).length > 0) {
+                this.$toast.error("person is already defined as author");
+            } else {
                 this.dataset.contributors.push(person);
                 this.dataset.checkedContributors.push(person.id);
+                this.$toast.success("person has been successfully added as contributor");
             }
         },
         // onAddSubmitter(person) {
