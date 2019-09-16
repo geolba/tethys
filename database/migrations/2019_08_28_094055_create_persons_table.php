@@ -27,7 +27,7 @@ class CreatePersonsTable extends Migration
             $table->string('identifier_misc', 50)->nullable();
             $table->boolean('status')->nullable()->default(1);
             $table->integer('registered_at')->nullable();
-            $table->enum('name_type', ['author', 'contributor', 'other'])->nullable();
+            $table->enum('name_type', ['Organizational', 'Personal'])->nullable();
         });
 
         Schema::create('link_documents_persons', function (Blueprint $table) {

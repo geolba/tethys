@@ -383,7 +383,7 @@ class IndexController extends Controller
                     $title = new Title();
                     $title->value = $formTitle['value'];
                     $title->language = $formTitle['language'];
-                    $title->type = 'main';
+                    $title->type = 'Main';
                     //$dataset->addMainTitle($title);
                     $dataset->titles()->save($title);
                 }
@@ -402,7 +402,7 @@ class IndexController extends Controller
                     $abstract = new Description();
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
-                    $abstract->type = 'abstract';
+                    $abstract->type = 'Abstract';
                     //$dataset->addMainAbstract($abstract);
                     $dataset->abstracts()->save($abstract);
                 }
