@@ -245,8 +245,6 @@
                 </fieldset>
 
                 <div :class="{'form-group':true, 'has-error':errors.has('step-1.rights')}">
-                    {{-- <legend>Einräumung eines einfachen Nutzungsrechts</legend> --}}  
-                        
                     <label for="rights"> 
                         <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
                         terms and conditions                        

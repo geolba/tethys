@@ -19,6 +19,7 @@ class CreateDocumentsTable extends Migration
             $table->string('creating_corporation', 255);
             $table->string('publisher_name', 255)->nullable();
             $table->dateTime('embargo_date')->nullable();
+            $table->unsignedInteger('publish_id')->unique()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->enum(

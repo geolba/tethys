@@ -371,9 +371,19 @@ class EditorController extends Controller
     public function publishUpdate(Request $request, $id)
     {
         $dataset = Dataset::findOrFail($id);
+
+        $max = Dataset::max('publish_id');
+        $publish_id = 0;
+        if ($max != null) {
+            $publish_id = $max +1;
+        } else {
+            $publish_id = $publish_id + 1;
+        }
+
         $input = $request->all();
         $input['server_state'] = 'published';
         $input['server_date_published'] = Carbon::now()->toDateTimeString(); // Produces something like "2019-03-11 12:25:00"
+        $input['publish_id'] = $publish_id;
 
         if ($dataset->update($input)) {
             // event(new PageUpdated($page));

@@ -85,6 +85,8 @@ trait DatasetExtension
     {
         $fields = array(
             "Id",
+            "PublisherName",
+            "PublishId",
             "ContributingCorporation",
             "CreatingCorporation",
             "Language",
