@@ -251,6 +251,13 @@ Route::group(
     }
 );
 
+// //=============================================================================================================
+// //=================================================setting file=============================================
+Route::get('settings/file/download/{id}', [
+    'middleware' => ['isUserFileOwner'],
+    'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
+]);
+
 //=================================================setting home - dashboard=======================================
 Route::get('settings/', [
     'as' => 'settings.dashboard', 'uses' => 'Settings\DashboardController@index',
@@ -275,11 +282,6 @@ Route::group(['middleware' => ['permission:settings']], function () {
     // Route::get('settings/file/download/{id}', [
     //     'as' => 'settings.file.download', 'uses' => 'Settings\DatasetController@download',
     // ]);
-    // //=============================================================================================================
-    // //=================================================setting file=============================================
-    Route::get('settings/file/download/{id}', [
-        'as' => 'settings.file.download', 'uses' => 'Settings\FileController@download',
-    ]);
 
     //=================================================setting mimetype=============================================
     Route::get('/settings/mimetype', [
@@ -499,38 +501,6 @@ Route::get('history', [
     'as' => 'borrow.history', 'uses' => 'BorrowController@histori',
 ]);
 
-//=========================================================================================================
-//=================================================setting periode=========================================
-Route::get('/settings/periode', [
-    'as' => 'settings.periode', 'uses' => 'PeriodeController@index',
-]);
-Route::get('settings/periode/edit/{id}', [
-    'as' => 'settings.periode.edit', 'uses' => 'PeriodeController@edit',
-]);
-Route::patch('settings/periode/edit/{id}', [
-    'as' => 'settings.periode.update', 'uses' => 'PeriodeController@update',
-]);
-
-//=============================================================================================================
-//=================================================setting book================================================
-Route::get('/settings/book', [
-    'as' => 'settings.book', 'uses' => 'BookController@index',
-]);
-Route::get('/settings/book/add', [
-    'as' => 'settings.book.add', 'uses' => 'BookController@add',
-]);
-Route::post('settings/book/add', [
-    'as' => 'settings.book.post', 'uses' => 'BookController@store',
-]);
-Route::get('settings/book/edit/{id}', [
-    'as' => 'settings.book.edit', 'uses' => 'BookController@edit',
-]);
-Route::patch('settings/book/edit/{id}', [
-    'as' => 'settings.book.update', 'uses' => 'BookController@update',
-]);
-Route::get('settings/book/delete/{id}', [
-    'as' => 'settings.book.delete', 'uses' => 'BookController@delete',
-]);
 
 //====================================authentication===========================================================================
 // Route::controllers([
