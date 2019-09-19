@@ -23,12 +23,22 @@ trait DatasetExtension
     protected $externalFields = array(
         'TitleMain' => array(
             'model' => Title::class,
-            'options' => array('type' => ['Main', 'Alternative', 'Sub', 'Translated', 'Other']),
+            'options' => array('type' => ['Main']),
+            'fetch' => 'eager'
+        ),
+        'TitleAdditional' => array(
+            'model' => Title::class,
+            'options' => array('type' => ['Alternative', 'Sub', 'Translated', 'Other']),
             'fetch' => 'eager'
         ),
         'TitleAbstract' => array(
             'model' => Description::class,
-            'options' => array('type' => ['Abstract', 'Methods', 'Technical_info', 'Series_information', 'Other']),
+            'options' => array('type' => ['Abstract']),
+            'fetch' => 'eager'
+        ),
+        'TitleAbstractAdditional' => array(
+            'model' => Description::class,
+            'options' => array('type' => ['Methods', 'Technical_info', 'Series_information', 'Other']),
             'fetch' => 'eager'
         ),
         'Licence' => array(

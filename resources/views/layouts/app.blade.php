@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>RDR - For Scientists</title>
+    <title>RDR - Geology Geophysics Meteorology</title>
     <meta name="description" content="An awesome one page website">
     <meta name="author" content="Arno Kaimbacher">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -46,7 +46,7 @@
 
 <body class="layout-home-html">
     <div id="trynewsite">
-        <span>Repository Demo</span>
+        <span>RDR Testphase</span>
     </div>
 
     <!-- Menu -->

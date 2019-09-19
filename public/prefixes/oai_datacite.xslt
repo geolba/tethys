@@ -55,6 +55,7 @@
             </creators>
             <titles>
                 <xsl:apply-templates select="TitleMain" mode="oai_datacite" />
+                <xsl:apply-templates select="TitleAdditional" mode="oai_datacite" />
             </titles>
             <publisher>
                 <xsl:value-of select="@PublisherName" />
@@ -62,6 +63,9 @@
             <publicationYear>
                 <xsl:value-of select="ServerDatePublished/@Year"/>
             </publicationYear>
+            <subjects>
+                <xsl:apply-templates select="Subject" mode="oai_datacite" />
+            </subjects>
             <language>
                 <xsl:value-of select="@Language" />
             </language>
@@ -86,6 +90,7 @@
             </formats>
             <descriptions>
                 <xsl:apply-templates select="TitleAbstract" mode="oai_datacite" />
+                <xsl:apply-templates select="TitleAbstractAdditional" mode="oai_datacite" />
             </descriptions>
             <geoLocations>
                 <xsl:apply-templates select="Coverage" mode="oai_datacite" />
@@ -133,6 +138,19 @@
             <xsl:value-of select="@Value" />
         </description>
     </xsl:template>
+    <xsl:template match="TitleAbstractAdditional" mode="oai_datacite">
+        <description>
+            <xsl:attribute name="xml:lang">
+                <xsl:value-of select="@Language" />
+            </xsl:attribute>
+            <xsl:if test="@Type != ''">
+                <xsl:attribute name="descriptionType">
+                    <xsl:value-of select="@Type" />
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="@Value" />
+        </description>
+    </xsl:template>
 
     <xsl:template match="TitleMain" mode="oai_datacite">
         <title>
@@ -149,6 +167,32 @@
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>
+     <xsl:template match="TitleAdditional" mode="oai_datacite">
+        <title>
+            <xsl:if test="@Language != ''">
+                <xsl:attribute name="xml:lang">
+                    <xsl:value-of select="@Language" />
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@Type != '' and @Type != 'Main'">
+                <xsl:attribute name="titleType">
+                    <xsl:value-of select="@Type" />
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="@Value"/>
+        </title>
+    </xsl:template>
+
+    <xsl:template match="Subject" mode="oai_datacite">
+        <subject>
+     <xsl:if test="@Language != ''">
+        <xsl:attribute name="xml:lang">
+          <xsl:value-of select="@Language" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:value-of select="@Value" /> 
+      </subject>
+  </xsl:template>
 
     <xsl:template match="PersonContributor" mode="oai_datacite">
         <contributor>

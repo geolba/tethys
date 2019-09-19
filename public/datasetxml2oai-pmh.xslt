@@ -315,8 +315,12 @@
     <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
       <!-- dc:title -->
       <xsl:apply-templates select="TitleMain" mode="oai_dc" />
+      <!-- dc:title -->
+      <xsl:apply-templates select="TitleAdditional" mode="oai_dc" />
       <!-- dc:description -->
       <xsl:apply-templates select="TitleAbstract" mode="oai_dc" />
+       <!-- dc:description -->
+      <xsl:apply-templates select="TitleAbstractAdditional" mode="oai_dc" />
       <!-- dc:subject -->
       <xsl:apply-templates select="Subject" mode="oai_dc" />
       <!--<dc:creator>-->
@@ -397,8 +401,21 @@
       <xsl:value-of select="@Value"/>
     </dc:title>
   </xsl:template>
+  <xsl:template match="TitleAdditional" mode="oai_dc">
+    <dc:title>
+      <xsl:value-of select="@Value"/>
+    </dc:title>
+  </xsl:template>
 
   <xsl:template match="TitleAbstract" mode="oai_dc">
+    <dc:description>
+      <xsl:attribute name="xml:lang">
+        <xsl:value-of select="@Language" />
+      </xsl:attribute>
+      <xsl:value-of select="@Value" />
+    </dc:description>
+  </xsl:template>
+  <xsl:template match="TitleAbstractAdditional" mode="oai_dc">
     <dc:description>
       <xsl:attribute name="xml:lang">
         <xsl:value-of select="@Language" />
@@ -409,9 +426,9 @@
 
   <xsl:template match="Subject" mode="oai_dc">
     <dc:subject>
-      <xsl:if test="@language != ''">
+      <xsl:if test="@Language != ''">
         <xsl:attribute name="xml:lang">
-          <xsl:value-of select="php:functionString('Oai_Model_Language::getLanguageCode', @Language, 'part1')" />
+          <xsl:value-of select="@Language" />
         </xsl:attribute>
       </xsl:if>
       <xsl:value-of select="@Value" />
