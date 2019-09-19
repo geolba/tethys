@@ -20,7 +20,7 @@ class CreateDatasetTitlesTable extends Migration
             $table->foreign('document_id')->references('id')->on('documents')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->enum('type', ['main' => 'Main', 'sub' => 'sub', 'Alternative' => 'alternative', 'translated' => 'Translated', 'other' => 'Other']);
+            $table->enum('type', ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other']);
             $table->string('value', 255);
             $table->string('language', 3);
         });
