@@ -69,8 +69,7 @@
 						</td>				
 						<td>
 							<a class="view" href="{{ route('settings.document.show', $document->id) }}"><span>&nbsp;</span></a>
-							<a class="edit" href="{{ route('settings.document.edit', $document->id) }}"><span>&nbsp;</span></a> 
-							<!--<a class="delete" href="{{ route('settings.book.delete', $document->id) }}"><span>&nbsp;</span></a>-->
+							<a class="edit" href="{{ route('settings.document.edit', $document->id) }}"><span>&nbsp;</span></a> 							
 						</td>
 
 					</tr>

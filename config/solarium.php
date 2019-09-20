@@ -2,7 +2,7 @@
 
 return [
     'endpoint' => [
-        'localhost' => [
+        'repository.geologie.ac.at' => [
             'host' => env('SOLR_HOST', 'repository.geologie.ac.at'),
             'port' => env('SOLR_PORT', '8983'),
             'path' => env('SOLR_PATH', '/solr/'),

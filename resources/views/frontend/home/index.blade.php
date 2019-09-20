@@ -8,7 +8,7 @@
         <div class="twelve columns">
             <h1 class="separator">Research Data Repository</h1>
             <h2>
-                A data repository for the research community with secure preservation and data publication.
+                Data Publisher for Geo and Atmospheric Science Austria
             </h2>
         </div>
     </div>

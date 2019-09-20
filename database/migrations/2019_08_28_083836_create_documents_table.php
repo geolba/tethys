@@ -29,7 +29,7 @@ class CreateDocumentsTable extends Migration
             $table->string('language', 10);
             $table->enum(
                 'server_state',
-                ['deleted', 'inprogress', 'published', 'released', 'editor_accepted', 'approved', 'rejected_reviewer', 'rejected_editor', 'reviewed']
+                Config::get('enums.server_states')
             )->default('inprogress');
             $table->boolean('belongs_to_bibliography')->default(0);
             $table->dateTime('created_at');
