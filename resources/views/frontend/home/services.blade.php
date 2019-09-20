@@ -19,11 +19,12 @@
                     <!-- <img src="images/portfolio/work_1.svg"> -->
                     <div class="work-front">
                         <div class="vertical-centered">
+                            <i class="fa fa-hdd icon" aria-hidden="true"></i>
                             <h3>Data Archival</h3>
                         </div>
                     </div>
                     <div class="work-detail">
-                        <div class="vertical-centered">
+                        <div class="vertical-centered">                            
                             <p class="separator orange">Data Archival</p>
                             <p>
                                 RDR provides format-independent archiving services for data protection.
@@ -35,6 +36,7 @@
                     <!-- <img src="images/portfolio/work_2.svg"> -->
                     <div class="work-front">
                         <div class="vertical-centered">
+                            <i class="fas fa-share-alt  icon"></i>
                             <h3>Data Publication</h3>
                         </div>
                     </div>
@@ -50,8 +52,9 @@
                 </li>
                 <li class="four columns isotope-item mobile ui branding">
                     <!-- <img src="images/portfolio/work_3.svg"> -->
-                    <div class="work-front">
+                    <div class="work-front">                        
                         <div class="vertical-centered">
+                            <i class="fas fa-user-edit icon"></i>
                             <h3>Peer Review</h3>
                         </div>
                     </div>

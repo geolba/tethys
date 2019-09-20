@@ -469,16 +469,21 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('pages/{slug}', 'HomeController@showPage')->name('pages.show');
 
     //=================================================solr search====================================================
-    Route::get('/index', [
-        'as' => 'search.index', 'uses' => 'SearchController@index',
-    ]);
+    // Route::get('/index', [
+    //     'as' => 'search.index', 'uses' => 'SearchController@index',
+    // ]);
     Route::post('/queries', [
         'as' => 'queries', 'uses' => 'SearchController@search',
     ]);
     Route::get('/queries/', [
         'as' => 'queries1', 'uses' => 'SearchController@search',
     ]);
-    Route::get('/ping', 'SearchController@ping');
+    // Route::get('/ping', 'SearchController@ping');
+    Route::get('/ping', 'SolariumController@ping');
+    // Route::get('/search', 'SolariumController@search');
+    Route::get('/search', [
+        'as' => 'search.index', 'uses' => 'SolariumController@index',
+    ]);
 });
 
 //=================================================borrow====================================================

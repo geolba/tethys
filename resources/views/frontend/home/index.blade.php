@@ -8,7 +8,7 @@
         <div class="twelve columns">
             <h1 class="separator">Research Data Repository</h1>
             <h2>
-                Data Publisher for Geo and Atmospheric Science Austria
+                Data Publisher for Geo- and Atmospheric Science Austria
             </h2>
         </div>
     </div>
@@ -53,6 +53,7 @@
                     <!-- <img src="images/portfolio/work_1.svg"> -->
                     <div class="work-front">
                         <div class="vertical-centered">
+                            <i class="fa fa-hdd icon" aria-hidden="true"></i>
                             <h3>Data Archival</h3>
                         </div>
                     </div>
@@ -69,6 +70,7 @@
                     <!-- <img src="images/portfolio/work_2.svg"> -->
                     <div class="work-front">
                         <div class="vertical-centered">
+                            <i class="fas fa-share-alt  icon"></i>
                             <h3>Data Publication</h3>
                         </div>
                     </div>
@@ -86,6 +88,7 @@
                     <!-- <img src="images/portfolio/work_3.svg"> -->
                     <div class="work-front">
                         <div class="vertical-centered">
+                            <i class="fas fa-user-edit icon"></i>
                             <h3>Peer Review</h3>
                         </div>
                     </div>

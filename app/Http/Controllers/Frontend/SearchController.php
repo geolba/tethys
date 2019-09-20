@@ -101,6 +101,12 @@ class SearchController extends Controller
     public function index(): View
     {
         $totalNumOfDocs = Dataset::count();
+        // get a select query instance
+        $query = $this->client->createQuery($this->client::QUERY_SELECT);
+        // this executes the query and returns the result
+        $resultset = $this->client->execute($query);
+        // // display the total number of documents found by solr
+        $totalNumOfDocs = $resultset->getNumFound();
         return view('frontend.solrsearch.index', compact('totalNumOfDocs'));
     }
 

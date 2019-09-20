@@ -407,9 +407,48 @@ section.normal {
   margin: 0;
 }
 
+
+
+.search-items {
+  list-style: none;
+  width: 100%;
+  display: inline-block;
+}
+.search-items li {
+  position: relative;
+  overflow: hidden;
+    /* important because we need to overwrite the default skeleton */
+  margin: 0!important;
+  /* width: 33%; */
+  /* border: 10px solid white; */
+
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.search-items li:nth-child(4n) {
+  margin-left: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Work */
 .work {
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
 }
 
 /* Work Filters */
@@ -502,6 +541,11 @@ section.normal {
   color: black;
   padding-left: 20px;
   padding-right: 20px;
+}
+.work-front .icon {
+  line-height: 1;
+  font-size: 40px;
+  color: #00bfffcc;
 }
 
 .work-items li:hover .work-detail{

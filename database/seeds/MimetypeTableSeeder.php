@@ -12,6 +12,13 @@ class MimetypeTableSeeder extends Seeder
        
         DB::table('mime_types')->insert([
             [
+                'name' => 'application/geopackage+sqlite3',
+                'file_extension' => 'gpkg',
+                'enabled' =>true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
                 'name' => 'image/jpeg',
                 'file_extension' => 'jpg|jpeg|jpe',
                 'enabled' =>true,

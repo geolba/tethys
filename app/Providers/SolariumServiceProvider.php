@@ -22,10 +22,10 @@ class SolariumServiceProvider extends ServiceProvider
             $config = array(
                 'endpoint' => array(
                     'localhost' => array(
-                        'host' => '127.0.0.1',
+                        'host' => 'repository.geologie.ac.at',
                         'port' => '8983',
                         'path' => '/solr/',
-                        'core' => 'opus4'
+                        'core' => 'rdr_data'
                     )
                 )
             );
