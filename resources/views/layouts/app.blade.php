@@ -68,8 +68,8 @@
                             href="{{ route('frontend.home.intro') }}">Intro</a>
                     </li>
                     <li>
-                        <a class="pure-menu-item {{ Route::currentRouteName() == 'frontend.search.index' ? 'current' : '' }}"
-                            href="{{ route('frontend.search.index') }}"> SEARCH</a>
+                        <a class="{{ Route::currentRouteName() == 'frontend.search.index' ? 'current' : '' }}"
+                            href="{{ route('frontend.search.index') }}">Search</a>
                     </li>
 
                     <!-- <li><a href="#work">Work</a></li> -->

@@ -24,7 +24,7 @@ class CreateDatasetAbstractsTable extends Migration
                 'type',
                 ['abstract' => 'Abstract', 'methods' => 'Methods', 'series_information' => 'Series_information', 'technical_info' => 'Technical_info', 'translated' => 'Translated', 'other' => 'Other']
             );
-            $table->string('value', 255);
+            $table->text('value');
             $table->string('language', 3);
         });
     }

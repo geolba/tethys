@@ -86,6 +86,8 @@
 @endsection
 
 
+@section('head')
+
 <style>
     .sidebar-simplesearch {
         position: relative;
@@ -107,3 +109,6 @@
         color: #666;
     }
 </style>
+
+@endsection
+

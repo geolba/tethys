@@ -13,6 +13,8 @@ class FileController extends Controller
         //$report = $this->report->find($id);
         $file = File::findOrFail($id);
         $file_path = public_path('storage/' . $file->path_name);
-        return response()->download($file_path, $file->label, ['Content-Type:' . $file->mime_type]);
+        $ext = \Illuminate\Support\Facades\File::extension($file_path);
+        return response()->download($file_path, $file->label . "." . $ext, ['Content-Type:' . $file->mime_type]);
+        // return response()->download($file_path, $file->label, ['Content-Type:' . $file->mime_type]);
     }
 }
