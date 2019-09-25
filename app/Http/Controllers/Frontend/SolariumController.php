@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Input;
+use Illuminate\View\View;
 
 class SolariumController extends Controller
 {
@@ -21,26 +21,54 @@ class SolariumController extends Controller
      */
     public function index(Request $request): View
     {
-        if (Input::has('q')) {
+        if (Input::has('q') && Input::get('q') != "") {
             // Create a search query
             $query = $this->client->createSelect();
-    
-            // Set the query string
-            if (Input::get('q') != "") {
-                $query->setQuery('%P1%', array(Input::get('q')));
-            } else {
-                $query = $this->client->createQuery($this->client::QUERY_SELECT);
+            
+            // if (Input::get('q') != "") {
+            //     // $query->setQuery(Input::get('q'));
+            //     //better use placeholder to escape the search phrase:
+            //     $query->setQuery('%P1%', array(Input::get('q')));
+            // } else {
+            //     $query = $this->client->createQuery($this->client::QUERY_SELECT);
+            // }
+
+            //Set the query string
+            //$query->setQuery(Input::get('q'));
+            $query->setQuery('%P1%', array(Input::get('q')));
+
+
+            // Create a DisMax query
+            $dismax = $query->getDisMax();
+            // Set the fields to query, and their relative weights
+            $dismax->setQueryFields('title^3 abstract^2 subject^1');
+
+            $facetSet = $query->getFacetSet();
+            $facetSet->createFacetField('year')->setField('year');
+            $facetSet->createFacetField('language')->setField('language');
+            $facetSet->createFacetField('datatype')->setField('doctype');
+            
+            
+            if (Input::has('year')) {
+                $query->createFilterQuery('year')->setQuery(sprintf('year:%s', Input::get('year')));
             }
-    
+            if (Input::has('language')) {
+                $query->createFilterQuery('language')->setQuery(sprintf('language:%s', Input::get('language')));
+            }
+            if (Input::has('datatype')) {
+                $query->createFilterQuery('datatype')->setQuery(sprintf('doctype:%s', Input::get('datatype')));
+            }
+
             // Execute the query and return the result
             $resultset = $this->client->select($query);
-    
+
             // Pass the resultset to the view and return.
             return view('frontend.search.index', array(
                 'q' => Input::get('q'),
                 'resultset' => $resultset,
             ));
         }
+        // No query to execute, just return the search form.
         return view('frontend.search.index');
     }
 
@@ -66,7 +94,7 @@ class SolariumController extends Controller
         $query = $this->client->createSelect();
 
         // $query = $this->client->createSelect();
-        $query->setQuery('title:'. $filter);
+        $query->setQuery('title:' . $filter);
         // set a query (all prices starting from 12)
         // $query->setQuery('price:[12 TO *]');
         // set start and rows param (comparable to SQL limit) using fluent interface
@@ -78,11 +106,11 @@ class SolariumController extends Controller
         $response = 'NumFound: ' . $resultset->getNumFound();
         // show documents using the resultset iterator
         foreach ($resultset as $document) {
-            $response =  $response . '<hr/><table>';
-            $response =  $response . '<tr><th>id</th><td>' . $document->id . '</td></tr>';
-            $response =  $response . '<tr><th>title</th><td>' . $document->title_output . '</td></tr>';
-            $response =  $response . '<tr><th>abstract</th><td>' . $document->abstract_output . '</td></tr>';
-            $response =  $response . '</table>';
+            $response = $response . '<hr/><table>';
+            $response = $response . '<tr><th>id</th><td>' . $document->id . '</td></tr>';
+            $response = $response . '<tr><th>title</th><td>' . $document->title_output . '</td></tr>';
+            $response = $response . '<tr><th>abstract</th><td>' . $document->abstract_output . '</td></tr>';
+            $response = $response . '</table>';
         }
         echo $response;
     }

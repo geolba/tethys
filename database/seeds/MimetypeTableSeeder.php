@@ -4,7 +4,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-
 class MimetypeTableSeeder extends Seeder
 {
     public function run()
