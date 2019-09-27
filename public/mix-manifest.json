@@ -8,5 +8,6 @@
     "/js/app.js": "/js/app.js",
     "/js/lib.js": "/js/lib.js",
     "/js/scripts.js": "/js/scripts.js",
+    "/js/search/main.js": "/js/search/main.js",
     "/js/dataTable.js": "/js/dataTable.js"
 }

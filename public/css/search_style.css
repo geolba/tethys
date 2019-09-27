@@ -1,0 +1,400 @@
+.result-list-info {
+    display: block;  
+    justify-content: flex-end;
+    font-size: 16px;
+    color: rgb(66, 66, 66);
+    box-sizing: border-box;
+}
+.results {
+    padding-left: 4%;
+}
+.columns.right-bar {
+    margin-left: 0% !important;
+}
+
+section.search {
+    padding: 31.2px 0 0 0;
+}
+
+
+
+
+/* Seasrch items */
+
+.left-bar .panel-title {
+    margin-top: 8px;
+    margin-bottom: 2px;
+    color: white;
+    display: block;
+    font-weight: bold;
+}
+
+
+.search-items {
+    list-style: none;
+    width: 100%;
+    display: inline-block;
+  }
+  .search-items li {
+    position: relative;
+    overflow: hidden;
+    height: 360px;
+  
+    /* important because we need to overwrite the default skeleton */
+    margin: 0!important;
+    width: 50%;
+    border: 10px solid white;
+  
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .search-items li:nth-child(3n) {
+    margin-left: 0;
+  }
+  .search-items li img{
+    width: auto;
+    height: 100%;
+    display: block;
+   
+  }
+
+  /* Work detail */
+.search-detail {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+  
+    align-items: center;
+    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
+    /* box-shadow: 3px 3px red, -1em 0 0.4em olive; */
+    box-shadow: inset rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; 
+    opacity: 1;
+    border: 1px solid rgb(238, 238, 238);
+    box-sizing: border-box;
+    min-height: 300px;
+    /* background: rgba(0,0,0,.75); */
+    /* color: white; */
+    font-size: 16px;
+
+    padding:20px;  
+    
+  }
+  .search-detail a {
+    cursor: pointer;
+    color: mediumseagreen;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 20px;
+    font-size: 16px;
+  }
+  .search-detail a:hover {
+    color: rgb(0, 128, 0);
+}
+  .search-detail h3 {
+    font-size: 16px;
+    letter-spacing: .05em;
+  }
+  .search-detail p {
+    font-size: 15px;
+    /* text-transform: capitalize; */
+    /* padding-left: 20px;
+    padding-right: 20px; */
+  }
+  
+
+  /* Larger than mobile */
+@media (max-width: 750px) {
+   
+    .search-items li.columns {
+      width: 100%;
+    }
+}
+   
+
+
+/* filter items in the left bar */
+/*-------------------------------------------------- */
+.overflowing {
+    color: #444444;
+    list-style: none;
+}
+
+.overflowing span {
+    color: #444444;
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+ul.filterItems li {
+    min-height: 15px;
+    color: #444;
+    font-size: 12px;
+
+    list-style-type: none;
+    /*list-style-position:inside;*/
+    /*
+ * We want the bullets outside of the list,
+ * so the text is aligned. Now the actual bullet
+ * is outside of the list’s container
+ */
+    list-style-position: outside;
+    /*
+ * Because the bullet is outside of the list’s
+ * container, indent the list entirely
+ */
+    margin-left: 1em;
+}
+
+.filterItems.limited li:nth-of-type(1n+6) {
+    display: none;
+}
+
+ul.filterItems .active {
+    background-color: lightgray;
+}
+ul.filterItems li a {
+cursor: pointer;
+color: lightgray;
+text-decoration: none;
+font-weight: bold;
+font-size: 16px;
+}
+/* ul.filterItems li a:hover {
+    color: #0099cc;
+    cursor: pointer;
+} */
+
+/* Relativer Tooltip */
+.tooltip {
+    position: relative;
+    text-decoration: none;
+    font-weight: bolder;
+    color: #444444;
+    cursor: pointer;
+    overflow: visible;
+    font-size: 8px;
+}
+
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    /* justify-content: space-between; */
+    min-height: 500px;
+}
+
+
+.sidebar.left-bar {    
+    /* background: mediumseagreen none repeat scroll 0% 0%; */ 
+    background-color:#3cb371;
+    float: left;
+    border-left: none;
+    /* width: 250px; */
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+/* height: 100vh; */
+    overflow-y: auto;
+}
+
+
+.sidebar.right-bar {
+    border: none;
+    /* margin-left: 250px; */
+    /* background-color: lightblue; */
+}
+
+
+
+.left-bar .indexheader {    
+    font-weight: bold;
+    display: block;
+    color: white;
+    font-family: Monoton, cursive;
+    /* font-size: 2rem; */
+    text-align: center;
+}
+
+
+
+
+
+
+.sidebar-simplesearch {
+    position: relative;
+    /* margin-bottom: 2.5em; */
+    white-space: nowrap;
+}
+.search-input {
+    height: 50px !important;
+    border-color: currentcolor currentcolor rgb(204, 204, 204) !important;
+    border-style: none none solid !important;
+    border-width: medium medium 1px !important;
+    border-image: none 100% / 1 / 0 stretch !important;
+    /* background: rgb(250, 250, 250) none repeat scroll 0% 0%; */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+    background-color: rgb(250, 250, 250) !important;
+    width: 100%;
+
+  
+  
+    outline: currentcolor none medium;
+    border-radius: 0px !important;
+
+}
+.css-1gklxk5 {
+    position: absolute;
+    top: 8px;
+    cursor: pointer;
+    /* padding-left: 12px; */
+    padding: 0 10px;
+    left: 0.25em;    
+    border: none;   
+}
+.css-1gklxk5 svg.search-icon {
+    fill: rgb(0, 128, 0);
+} 
+.sidebar-simplesearch input[type=text] {
+   
+    padding: 0.00em 40px;
+    color: #666;  
+}
+
+
+
+.css-subject {
+    display: flex;
+    -moz-box-pack: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.css-keyword {
+    background: mediumseagreen none repeat scroll 0% 0%;
+    margin: 3px;
+    padding: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.abstract {
+    overflow: hidden;
+    /* white-space: nowrap; */
+    text-overflow: ellipsis;
+    max-height: 140px;
+  }
+
+  .clamped {
+    line-height: 1.5;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+.clamped-2 {
+    /* Clamp to 2 lines, ie line-height x 2: */
+    max-height: 6em;
+}
+
+.ellipsis {
+    background: #fff;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+}
+
+.fill {
+    background: #fff; 
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+
+
+.filter-items {
+    list-style: outside none none;
+    padding: 0px 0px 12px;
+    margin: 0px;
+    max-height: 240px;
+    position: relative;
+    overflow-y: auto;
+}
+.filter-items li {
+    min-height: 30px;
+    display: flex;
+    flex-direction: row;
+    -moz-box-align: center;
+    align-items: center;
+    padding-left: 2px;
+}
+.css-w1gpbi {
+    border: 0px none;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    padding: 0px;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+}
+
+.css-w1gpbi:checked + label::before {
+    animation: 0s ease 0s 1 normal none running none;
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(11, 106, 255);
+}
+.css-w1gpbi + label::before, .css-w1gpbi + label::after {
+    border-radius: 50%;
+}
+.css-w1gpbi + label::before {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(92, 92, 92);
+  
+    content: "";
+    /* color: rgb(11, 106, 255); */
+    margin-right: calc(8px);
+ 
+    width: calc(17px);
+    height: 16px;
+    display: inline-block;
+vertical-align: middle;
+    margin-top: 2px;
+   
+}
+.css-w1gpbi:checked + label::after {
+    transform: scale(1);
+}
+.css-w1gpbi + label::after {
+    box-sizing: content-box;
+    content: "";
+    
+    position: absolute;
+    top: 11px;
+    left: calc(3px);
+    width: calc(12px);
+    height: calc(12px);
+    margin-top: calc(-6px);
+    transform: scale(0);
+    transform-origin: 50% center 0px;
+    transition: transform 200ms ease-out 0s;
+    z-index: 999;
+    background-color: rgb(108,110,107);
+}
+.css-w1gpbi + label {
+    position: relative;
+    -moz-user-select: none;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 0.4rem 0px;
+    align-items: flex-start;
+    cursor: pointer;
+}
+

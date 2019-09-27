@@ -15,6 +15,7 @@ let mix = require('laravel-mix');
 // .sass('resources/assets/sass/app1.scss', 'public/css')
 
 mix.js('resources/assets/js/datasetPublish.js', 'public/backend/publish')
+    .js('resources/assets/js/search/main.js', 'public/js/search')
     .js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/lib.js', 'public/js')
     .js('resources/assets/js/releaseDataset.js', 'public/backend/publish')
