@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-simplesearch">
-    <form method="GET" action="http://localhost:3002/search" accept-charset="UTF-8">
+    <form method="GET" action="//repository.geologie.ac.at/search" accept-charset="UTF-8">
       <input
         class="search-input"
         placeholder="Enter your search term..."
