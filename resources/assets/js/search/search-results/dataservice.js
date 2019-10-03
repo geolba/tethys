@@ -5,7 +5,7 @@ export default {
     async search (term) {
         // solr endpoint
         // const host = 'http://voyagerdemo.com/';
-        const host = 'http://repository.geologie.ac.at:8983/';
+        const host = '//repository.geologie.ac.at:8983/';
         const path = 'solr/rdr_data/select';
         const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
         const dismaxFields="title^3 abstract^2 subject^1";
