@@ -7,40 +7,18 @@
 <section data-sr id="search" class="search normal u-full-width">
     {{-- <div class="container"> --}}
 
-    {{-- <div class="row">
-        <div class="twelve columns">          
-            <div class="content">
-                <div class="sidebar-simplesearch">
-                    {{ Form::open(array('method' => 'GET')) }}
-    {!! Form::text('q', Input::get('q'), array('class'=>'search-input',
-    'placeholder'=>'Enter your search term')) !!}
-    <span class="input-group-btn">
-        <button type="submit">
-            <i class="fa fa-search"></i>
-        </button>
-    </span>
-    {{ Form::close() }}
-    </div>
-    </div>
-    </div>
-    </div> --}}
-
+    
     <!-- SEARCH RESULTS GO HERE, EXACTLY AS BEFORE -->
+    <div id="test" class="search-container row">
 
-    <div class="search-container row">
-
-        <div class="four columns left-bar">
-            <div class="sidebar left-bar">
-                {{-- <h3 class="indexheader">Refine by</h3> --}}
+        {{-- <div class="four columns left-bar">
+            <div id="left-bar" class="sidebar left-bar">             
                 <h2 class="indexheader">DataXplore</h2>
+
                 @if (isset($resultset))
-
-
-
-                <?php $facet = $resultset->getFacetSet()->getFacet('language'); ?>
+              
                 <div class="panel panel-primary">
                     <h3 class="panel-title">Language</h3>
-
                     <ul class="filter-items">
                         @foreach ($facet as $value => $count)
                         @if ($count)
@@ -48,58 +26,51 @@
                             <input class="css-w1gpbi" name="language" id="{{ $value }}" type="radio"
                                 value="{{ $value }}">
                             <label for="{{ $value }}"><span>{{ $value }} ({{ $count }}) </span></label>
-                        </li>
-                        {{-- <li class="list-group-item">
-                            <a class="firstLabel"
-                                href="?{{ http_build_query(array_merge(Input::all(), array('language' => $value))) }}">{{ $value }}</a>
-                        <span class="badge">{{ $count }}</span>
-                        </li> --}}
+                        </li>                   
                         @endif
                         @endforeach
                     </ul>
                 </div>
 
-                <?php $facet = $resultset->getFacetSet()->getFacet('datatype'); ?>
-                <div class="panel panel-primary">
-                    {{-- <h3 class="panel-title">Datatype</h3> --}}
+            
+                <div class="panel panel-primary">               
                     <h3 class="panel-title">Data Type</h3>
                     <ul class="filterItems">
                         @foreach ($facet as $value => $count)
                         @if ($count)
                         <li class="list-group-item">
                             <a class="firstLabel"
-                                href="?{{ http_build_query(array_merge(Input::all(), array('datatype' => $value))) }}">{{ $value }} ({{ $count }})</a>
-                            {{-- <span class="badge">{{ $count }}</span> --}}
+                                href="?{{ http_build_query(array_merge(Input::all(), array('datatype' => $value))) }}">{{ $value }} ({{ $count }})</a>                          
                         </li>
                         @endif
                         @endforeach
                     </ul>
                 </div>
 
-                <?php $facet = $resultset->getFacetSet()->getFacet('year'); ?>
+             
                 <div class="panel panel-primary">
                     <h3 class="panel-title">Year</h3>
-
                     <ul class="filterItems">
                         @foreach ($facet as $value => $count)
                         @if ($count)
                         <li class="list-group-item">
                             <a class="firstLabel"
-                                href="?{{ http_build_query(array_merge(Input::all(), array('year' => $value))) }}">{{ $value }} ({{ $count }})</a>
-                            {{-- <span class="badge">{{ $count }}</span> --}}
+                                href="?{{ http_build_query(array_merge(Input::all(), array('year' => $value))) }}">{{ $value }} ({{ $count }})</a>                         
                         </li>
                         @endif
                         @endforeach
                     </ul>
                 </div>
                 @endif
-            </div>
-        </div>
 
-        <div class="eight columns right-bar">
-            <div class="sidebar right-bar">
-            <div id="search-input"></div>
-                {{-- <div class="row">
+            </div>
+        </div> --}}
+
+       
+
+        {{--<div class="eight columns right-bar">
+            <div id="right-bar" class="sidebar right-bar">           
+                 <div class="row">
                     <div class="twelve columns">
                         <div class="sidebar-simplesearch">
                             {{ Form::open(array('method' => 'GET')) }}
@@ -122,8 +93,8 @@
                     </div>
                 </div> --}}
 
-                @if (isset($resultset))
-                <div class="results">
+                {{-- @if (isset($resultset))
+                <section class="results">
                     <div class="result-list-info">
                         <div class="resultheader">
                             Your search yielded <strong>{{ $resultset->getNumFound() }}</strong> results:
@@ -175,10 +146,11 @@
                             </ul>
                         </div>
                     </section>
-                </div>
-                @endif
+                </section>
+                @endif 
             </div>
-        </div>
+        </div>--}}
+
     </div>
 
 

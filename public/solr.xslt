@@ -220,7 +220,7 @@
                 </xsl:for-each>
 
                 <!-- subject (uncontrolled) -->
-                <xsl:for-each select="/Opus/Rdr_Dataset/Subject[@Type = 'uncontrolled']">
+                <xsl:for-each select="/Opus/Rdr_Dataset/Subject[@Type = 'Uncontrolled']">
                     <xsl:element name="field">
                         <xsl:attribute name="name">subject</xsl:attribute>
                         <xsl:value-of select="@Value" />

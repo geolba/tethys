@@ -1,18 +1,20 @@
 <template>
   <div class="sidebar-simplesearch">
-    <form method="GET" action="//repository.geologie.ac.at/search" accept-charset="UTF-8">
+    <!-- <form method="GET" action="//repository.geologie.ac.at/search" accept-charset="UTF-8"> -->
+    <div>
       <input
         class="search-input"
         placeholder="Enter your search term..."
         name="q"
         type="text"
-        v-model="term"
+        v-model="term" v-on:keyup.enter="search()"
       />
 
       <!-- <button @click="search()" class="css-1gklxk5 ekqohx90"> -->
       <button class="css-1gklxk5 ekqohx90">
         <svg
           alt="Search"
+          @click="search()"
           class="search-icon"
           height="14"
           xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +26,7 @@
           />
         </svg>
       </button>
-    </form>
+    </div>
   </div>
 </template>
 
