@@ -9,7 +9,7 @@ export default {
         const path = 'solr/rdr_data/select';
         const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
         const dismaxFields = "title^3 abstract^2 subject^1";
-        const facetFields = "facet.field=language";//&fq=year:(2019)";//&facet.query=year:2018";
+        const facetFields = "facet.field=language&facet.field={!key=datatype}doctype";//&fq=year:(2019)";//&facet.query=year:2018";
 
         // $dismax->setQueryFields('title^3 abstract^2 subject^1');
         const api = `${host}${path}?defType=dismax&q=${term}&fl=${fields}&qf=${dismaxFields}&facet=on&${facetFields}&wt=json&rows=20&indent=on`;

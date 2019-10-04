@@ -9,7 +9,10 @@
           <span>{{ item }}</span>     
         </div> -->
 
-         <facet-list v-bind:data="facets"></facet-list>
+         <!-- <facet-list v-bind:data="facets"></facet-list> -->
+          <div class="card" v-for="(valueArray, filterName, index) in facets" :key="index">
+             <facet-list :data="valueArray" :filterName="filterName"></facet-list>
+          </div>
       </div>
     </div>
 

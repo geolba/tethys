@@ -22,6 +22,7 @@ section.search {
 /* Seasrch items */
 
 .left-bar .panel-title {
+    text-transform: capitalize;
     margin-top: 8px;
     margin-bottom: 2px;
     color: white;

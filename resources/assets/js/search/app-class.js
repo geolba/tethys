@@ -27,7 +27,7 @@ export default class App extends Vue {
  
 
   mounted() {
-    console.log('Component mounted.')
+    // console.log('Component mounted.')
   }
 
 }
