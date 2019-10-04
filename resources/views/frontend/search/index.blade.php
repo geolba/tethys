@@ -11,13 +11,12 @@
     <!-- SEARCH RESULTS GO HERE, EXACTLY AS BEFORE -->
     <div id="test" class="search-container row">
 
-        <div class="four columns left-bar">
+        {{-- <div class="four columns left-bar">
             <div id="left-bar" class="sidebar left-bar">             
                 <h2 class="indexheader">DataXplore</h2>
 
                 @if (isset($resultset))
-              
-                <?php $facet = $resultset->getFacetSet()->getFacet('language'); ?>
+                             
                 <div class="panel panel-primary">
                     <h3 class="panel-title">Language</h3>
                     <ul class="filter-items">
@@ -32,8 +31,7 @@
                         @endforeach
                     </ul>
                 </div>
-
-                <?php $facet = $resultset->getFacetSet()->getFacet('datatype'); ?>
+              
                 <div class="panel panel-primary">               
                     <h3 class="panel-title">Data Type</h3>
                     <ul class="filterItems">
@@ -47,8 +45,7 @@
                         @endforeach
                     </ul>
                 </div>
-
-                <?php $facet = $resultset->getFacetSet()->getFacet('year'); ?>
+             
                 <div class="panel panel-primary">
                     <h3 class="panel-title">Year</h3>
                     <ul class="filterItems">
@@ -66,8 +63,6 @@
 
             </div>
         </div>
-
-       
 
         <div class="eight columns right-bar">
             <div id="right-bar" class="sidebar right-bar">           
@@ -150,7 +145,7 @@
                 </section>
                 @endif 
             </div>
-        </div>
+        </div> --}}
 
     </div>
 
@@ -166,5 +161,5 @@
 @endsection
 
 @section('after-scripts')
-{{-- <script type="text/javascript" src="{{  asset('js/search/main.js') }}"></script> --}}
+<script type="text/javascript" src="{{  asset('js/search/main.js') }}"></script>
 @stop
