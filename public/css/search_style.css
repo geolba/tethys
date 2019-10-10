@@ -21,14 +21,7 @@ section.search {
 
 /* Seasrch items */
 
-.left-bar .panel-title {
-    text-transform: capitalize;
-    margin-top: 8px;
-    margin-bottom: 2px;
-    color: white;
-    display: block;
-    font-weight: bold;
-}
+
 
 
 .search-items {
@@ -116,6 +109,15 @@ section.search {
 
 /* filter items in the left bar */
 /*-------------------------------------------------- */
+.left-bar .panel-title {
+    text-transform: capitalize;
+    margin-top: 8px;
+    margin-bottom: 2px;
+    color: white;
+    display: block;
+    font-weight: bold;
+}
+
 .overflowing {
     color: #444444;
     list-style: none;
@@ -128,7 +130,7 @@ section.search {
     cursor: pointer;
 }
 
-ul.filterItems li {
+ul.filter-items li {
     min-height: 15px;
     color: #444;
     font-size: 12px;
@@ -148,21 +150,21 @@ ul.filterItems li {
     margin-left: 1em;
 }
 
-.filterItems.limited li:nth-of-type(1n+6) {
+.filter-items.limited li:nth-of-type(1n+3) {
     display: none;
 }
 
-ul.filterItems .active {
+/* ul.filter-items .active {
     background-color: lightgray;
-}
-ul.filterItems li a {
+} */
+ul.filter-items li a {
 cursor: pointer;
 color: lightgray;
 text-decoration: none;
 font-weight: bold;
 font-size: 16px;
 }
-/* ul.filterItems li a:hover {
+/* ul.filter-items li a:hover {
     color: #0099cc;
     cursor: pointer;
 } */
@@ -319,7 +321,7 @@ font-size: 16px;
     list-style: outside none none;
     padding: 0px 0px 12px;
     margin: 0px;
-    max-height: 240px;
+    /* max-height: 240px; */
     position: relative;
     overflow-y: auto;
 }
@@ -342,7 +344,6 @@ font-size: 16px;
     width: 1px;
     white-space: nowrap;
 }
-
 .css-w1gpbi:checked + label::before {
     animation: 0s ease 0s 1 normal none running none;
     background-color: rgb(255, 255, 255);
@@ -394,5 +395,32 @@ vertical-align: middle;
     margin: 0.4rem 0px;
     align-items: flex-start;
     cursor: pointer;
+}
+
+.active-filter-items a {
+  
+    flex-wrap: wrap;
+    margin: 2px 3px;
+    padding: 5px 8px;
+    font-size: 0.95rem;
+    position: relative;
+}
+.filter-link {
+    display: inline-flex;
+    -moz-box-pack: center;
+    justify-content: center;
+    -moz-box-align: center;
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    min-height: 30px;
+    overflow-wrap: break-word;
+    padding: 5px 12px;
+    line-height: 1.2rem;
+    background-color: rgb(238, 238, 238);
+    color: rgb(66, 66, 66);
+    cursor: pointer;
+    -moz-user-select: none;
+    transition: all 0.3s ease 0s;
 }
 

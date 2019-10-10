@@ -5,28 +5,24 @@
   <div class="panel panel-primary">
     <h3 class="panel-title filterViewModelName">{{ filterName }}</h3>
     <!-- e.g.language -->
-    <ul
-      class="filter-items"
-      v-for="(value, index) in myLanguageFilters"
-      :key="index"
-      v-bind:class="{'limited':filterItems.length > 1}"
-    >
-      <li class="active" role="radio">
-        <input
+    <ul class="filter-items" v-bind:class="{'limited':filterItems.length > 1 && collapsed }">
+      <li v-for="(item, index) in filterItems" :key="index" class="list-group-item">
+        <!-- <input
           class="css-w1gpbi"
           name="language"
-          v-bind:id="value.value"
+          v-bind:id="item.value"
           type="radio"
-          v-bind:value="value.value"
+          v-bind:value="item.value"
         />
-        <label :for="value.value">
-          <span>{{ value.value }} ({{ value.count }})</span>
-        </label>
+        <label :for="item.value">
+          <span click: @click="activateItem(item)">{{ item.value }} ({{ item.count }})</span>
+        </label>-->
+        <a :class="Active ? 'disabled' : ''" @click.prevent="activateItem(item)">{{ item.value }} ({{ item.count }})</a>
       </li>
     </ul>
-    <ul class="overflowing">
+    <ul class="overflowing" v-if="overflowing == true">
       <li>
-        <span @click="toggle()"></span>
+        <span @click="toggle()">{{ uncollapseLabelText }}</span>
       </li>
     </ul>
   </div>
@@ -36,3 +32,11 @@
 import FacetList from "./facet-list-class";
 export default FacetList;
 </script>
+
+<style scoped>
+/* local styles */
+.disabled {
+  color: lightgrey;
+  pointer-events: none;
+}
+</style>
