@@ -9,8 +9,9 @@
         </div>-->
 
         <!-- <facet-list v-bind:data="facets"></facet-list> -->
-        <div class="card" v-for="(item, index) in facets" :key="index">
-          <facet-list :data="item.values" :filterName="item.filterName" @filter="onFilter"></facet-list>
+        <!-- <div class="card" v-for="(item, index) in facets" :key="index"> -->
+          <div class="card" v-for="(values, key, index) in facets" :key="index">
+          <facet-list :data="values" :filterName="key" @filter="onFilter"></facet-list>
         </div>
       </div>
     </div>

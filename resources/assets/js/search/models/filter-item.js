@@ -19,6 +19,9 @@ export default class FilterItem {
         this.category = theCategory;
     }
 
+    get Active() {
+        return this.active;
+    }
     set Active(isActive) {
         this.active = isActive;
     }

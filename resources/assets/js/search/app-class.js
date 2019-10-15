@@ -15,7 +15,7 @@ import FilterItem from './models/filter-item';
 export default class App extends Vue {
 
   results = [];
-  facets = [];
+  facets = {};
   searchTerm = '';
   activeFilterItems = {};
 
@@ -32,20 +32,33 @@ export default class App extends Vue {
       var res = await rdrApi.search(this.searchTerm, this.activeFilterItems);
       this.results = res.response.docs;
       // this.facets = res.facet_counts.facet_fields;
-      this.facets = [];
+      // this.facets = [];
       var facet_fields = res.facet_counts.facet_fields;
       for (var prop in facet_fields) {
-        var facetValues = facet_fields[prop].map((facet, i) => {
+        var facetValues = facet_fields[prop].map((facetValue, i) => {
           if (i % 2 === 0) {
-            // var rObj = { value: facet, count: facet_fields[prop][i + 1] };
-            var rObj = new FilterItem(facet, facet_fields[prop][i + 1]);
+            // var rObj = { value: facetValue, count: facet_fields[prop][i + 1] };
+            var rObj;
+            if (filter.value == facetValue) {
+              rObj = filter;
+            } else if( this.facets[prop].some(e => e.value === facetValue)) {
+              console.log(facetValue + " is included")
+              var indexOfFacetValue =  this.facets[prop].findIndex(i => i.value === facetValue);
+              console.log(indexOfFacetValue);
+              rObj = this.facets[prop][indexOfFacetValue];
+              rObj.count =  facet_fields[prop][i + 1];
+            } else {
+              rObj = new FilterItem(facetValue, facet_fields[prop][i + 1]);
+            }
             return rObj;
           }
         }).filter(function (el) {
           return el != null && el.count > 0;
         });
-        this.facets.push({ filterName: prop, values: facetValues });
+        // this.facets.push({ filterName: prop, values: facetValues });
+        this.facets[prop] = facetValues;
       }
+
     }
   }
 
@@ -55,9 +68,10 @@ export default class App extends Vue {
     //   this.activeFilterItems.pop();
     // }
     this.activeFilterItems = {};
-    while (this.facets.length > 0) {
-      this.facets.pop();
-    }
+    // while (this.facets.length > 0) {
+    //   this.facets.pop();
+    // }
+    this.facets = {};
     this.searchTerm = term;
     var res = await rdrApi.search(this.searchTerm, this.activeFilterItems);
     this.results = res.response.docs;
@@ -72,7 +86,8 @@ export default class App extends Vue {
       }).filter(function (el) {
         return el != null && el.count > 0;
       });
-      this.facets.push({ filterName: prop, values: facetValues });
+      //this.facets.push({ filterName: prop, values: facetValues });
+      this.facets[prop] = facetValues;
     }
     // console.log(this.facets.toString());
   }

@@ -44,7 +44,7 @@ class SolrIndexBuilder extends Command
         foreach ($datasets as $dataset) {
             $datasetId = $dataset->id;
             $time = new \Illuminate\Support\Carbon();
-            $dataset->server_date_published = $time;
+            $dataset->server_date_modified = $time;
             $dataset->save();
             // try {
             //     // Opus_Search_Service::selectIndexingService('onDocumentChange')

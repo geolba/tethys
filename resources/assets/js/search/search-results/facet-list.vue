@@ -17,7 +17,7 @@
         <label :for="item.value">
           <span click: @click="activateItem(item)">{{ item.value }} ({{ item.count }})</span>
         </label>-->
-        <a :class="Active ? 'disabled' : ''" @click.prevent="activateItem(item)">{{ item.value }} ({{ item.count }})</a>
+        <a :class="item.Active ? 'disabled' : ''" @click.prevent="activateItem(item)">{{ item.value }} ({{ item.count }})</a>
       </li>
     </ul>
     <ul class="overflowing" v-if="overflowing == true">
@@ -36,7 +36,10 @@ export default FacetList;
 <style scoped>
 /* local styles */
 .disabled {
-  color: lightgrey;
+  /* background: #dddddd;   */
+  /* color: #EBEBE4; */
+  color:#ffffff;
   pointer-events: none;
+  text-decoration:line-through;
 }
 </style>
