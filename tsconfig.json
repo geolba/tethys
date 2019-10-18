@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {       
+        "module": "es2015",
+        "target": "es5",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "public/js/search",
+        "experimentalDecorators": true,
+    },
+    "include": [
+        "resources/assets/js/**/*"
+    ]
+}

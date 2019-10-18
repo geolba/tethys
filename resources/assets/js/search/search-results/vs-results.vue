@@ -10,12 +10,12 @@
   </div>-->
   <div class="results">
 
-    <div class="result-list-info">
+    <!-- <div class="result-list-info">
       <div class="resultheader">
         Your search yielded
         <strong>{{ results.length }}</strong> results:
       </div>
-    </div>
+    </div> -->
 
     <section class="result-list-container">
       <div class="row">

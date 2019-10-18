@@ -161,5 +161,6 @@
 @endsection
 
 @section('after-scripts')
+{{-- <script type="text/javascript" src="{{  asset('js/search/main.js') }}"></script> --}}
 <script type="text/javascript" src="{{  asset('js/search/main.js') }}"></script>
 @stop

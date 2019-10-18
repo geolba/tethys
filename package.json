@@ -24,6 +24,8 @@
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.15.2",
     "sass-loader": "^7.1.0",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.10",
     "vue-class-component": "^7.1.0",

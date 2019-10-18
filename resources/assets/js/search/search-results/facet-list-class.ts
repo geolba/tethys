@@ -1,4 +1,5 @@
 import { Component, Vue, Prop, Provide } from 'vue-property-decorator';
+import FilterItem from './../models/filter-item';
 
 @Component
 export default class FacetList extends Vue {
@@ -12,10 +13,10 @@ export default class FacetList extends Vue {
     data;
     @Prop([String])
     filterName;
-    @Prop([String])
+    // @Prop([String])
     // alias;
   
-    get alias() {      
+    get alias(): string {      
         return this.filterName == 'datatype' ? 'doctype' : this.filterName
     }
     // get filterItems() {
@@ -38,16 +39,16 @@ export default class FacetList extends Vue {
     //     // }, this);
     //     return facetValues;
     // }
-    get filterItems() {
+    get filterItems(): Array<FilterItem> {
         return this.data;
     }
 
-    get overflowing() {
+    get overflowing(): boolean {
         //ko.observable(self.filterItems().length - self.activeFilterItems().length > ITEMS_PER_FILTER);
         return (this.filterItems.length) > this.ITEMS_PER_FILTER;
     }
 
-    get uncollapseLabelText() {
+    get uncollapseLabelText() : string {
         if (this.collapsed == true) {
             // return myLabels.viewer.sidePanel.more; //"More results";
             return "More results";
@@ -58,7 +59,7 @@ export default class FacetList extends Vue {
         }
     }
 
-    toggle = function () {
+    toggle = function (): void {
         if (this.collapsed == true) {
             this.collapsed = false;
         }
@@ -68,7 +69,7 @@ export default class FacetList extends Vue {
         }
     }
 
-    activateItem = function (filterItem) {  
+    activateItem = function (filterItem: FilterItem): void {  
         filterItem.Category = this.alias;
         filterItem.Active = true;
         this.$emit("filter", filterItem);

@@ -109,7 +109,7 @@
 <!-- Help -->
 <section data-sr id="help" class="help u-full-width featured-bg-image">
     <h4 class="centered">
-        <button class="button inverted">We're here to help!</button>
+        <a class="button inverted" href="{{ URL::route('frontend.home.help') }}">We're here to help!</a>
     </h4>
 </section>
 

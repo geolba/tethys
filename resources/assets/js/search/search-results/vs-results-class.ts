@@ -21,7 +21,7 @@ export default class VsResults extends Vue {
         this.$forceUpdate();
     };
 
-    convert(unixtimestamp) {
+    convert(unixtimestamp: number) {
 
         // Unixtimestamp
         // var unixtimestamp = document.getElementById('timestamp').value;

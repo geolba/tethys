@@ -36,9 +36,8 @@ export default FacetList;
 <style scoped>
 /* local styles */
 .disabled {
-  /* background: #dddddd;   */
   /* color: #EBEBE4; */
-  color:#ffffff;
+  color:lightgray;
   pointer-events: none;
   text-decoration:line-through;
 }
