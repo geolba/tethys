@@ -4,22 +4,22 @@
 
     <!-- Previous Page Link -->
     <li v-if="data.current_page > 1">     
-       <a class="pagination-previous" href="#" rel="prev" v-on:click.prevent="changePage(data.current_page - 1)">&laquo;</a>
+       <a class="pagination-previous" href="javascript:void(0)" rel="prev" v-on:click.prevent="changePage(data.current_page - 1)">&laquo;</a>
     </li>
     <li v-else>
-      <a class="pagination-previous disabled" disabled href="#" rel="prev">&laquo;</a>
+      <a class="pagination-previous disabled" disabled href="javascript:void(0)" rel="prev">&laquo;</a>
     </li>
 
     <li v-for="(page, index) in pages" :key="index" >     
-      <a  href="#"  v-on:click.prevent="changePage(page)" v-bind:class="['pagination-link', page == data.current_page ? 'is-current' : '']">{{ page }}</a>
+      <a  href="javascript:void(0)"  v-on:click.prevent="changePage(page)" v-bind:class="['pagination-link', page == data.current_page ? 'is-current' : '']">{{ page }}</a>
     </li>
 
      <!-- Previous Page Link -->
     <li v-if="data.current_page < numberOfPages">     
-      <a  class="pagination-next" href="#" v-on:click.prevent="changePage(data.current_page + 1)" rel="next">&raquo;</a>
+      <a  class="pagination-next" href="javascript:void(0)" v-on:click.prevent="changePage(data.current_page + 1)" rel="next">&raquo;</a>
     </li>
      <li v-else>
-      <a  class="pagination-next disabled" disabled href="#" rel="next">&raquo;</a>
+      <a  class="pagination-next disabled" disabled href="javascript:void(0)" rel="next">&raquo;</a>
     </li>
 
   </ul>

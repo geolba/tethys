@@ -19,6 +19,7 @@ export default class VsPagination extends Vue {
         let from = (page * this.data.per_page) - this.data.per_page;
         this.$emit('paginate', from);      
     }
+    
     get numberOfPages() {
         return Math.ceil(this.data.total / this.data.per_page);
     }

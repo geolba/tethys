@@ -31,12 +31,19 @@ export default {
       "subject"].toString();
     var limit = "&rows=" + SOLR_CONFIG["limit"];  
     // var limit = solrConfig.limit;
-    var params = "fl=" + fields + "&defType=edismax&wt=json&indent=on";
+
+    var dismaxFields = "title^3 abstract^2 subject^1";
+    var params = "fl=" + fields;
+    if (term == "*%3A*") {
+      params += "&defType=edismax&wt=json&indent=on"; //edismax
+    } else {
+      params += "&defType=dismax&qf=" + dismaxFields + "&wt=json&indent=on"; //dismax
+    }
 
     if (start === undefined) start = "0";
     start = "&start=" + start;
 
-    //const dismaxFields = "title^3 abstract^2 subject^1";
+    
     const facetFields = "&facet=on&facet.field=language&facet.field={!key=datatype}doctype&facet.field=subject";//&fq=year:(2019)";//&facet.query=year:2018";
 
     var filterFields = "";
