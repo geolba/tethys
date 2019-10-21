@@ -8,6 +8,6 @@
         "experimentalDecorators": true,
     },
     "include": [
-        "resources/assets/js/**/*"
+        "resources/js/**/*"
     ]
 }

@@ -202,9 +202,10 @@ return [
     'aliases' => [
 
         'App'       => 'Illuminate\Support\Facades\App',
+        'Arr' => Illuminate\Support\Arr::class,
         'Artisan'   => 'Illuminate\Support\Facades\Artisan',
-        'Auth'      => 'Illuminate\Support\Facades\Auth',
-        'Blade'     => 'Illuminate\Support\Facades\Blade',
+        'Auth' => Illuminate\Support\Facades\Auth::class,
+        'Blade' => Illuminate\Support\Facades\Blade::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus'       => 'Illuminate\Support\Facades\Bus',
         'Cache'     => 'Illuminate\Support\Facades\Cache',

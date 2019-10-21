@@ -1,5 +1,5 @@
 import { Component, Vue, Prop, Provide } from 'vue-property-decorator';
-import FilterItem from './../models/filter-item';
+import FilterItem from '../models/filter-item';
 
 @Component
 export default class FacetList extends Vue {

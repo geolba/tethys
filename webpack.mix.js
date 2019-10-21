@@ -14,17 +14,17 @@ let mix = require('laravel-mix');
 
 // .sass('resources/assets/sass/app1.scss', 'public/css')
 
-mix.js('resources/assets/js/datasetPublish.js', 'public/backend/publish')
-    .js('resources/assets/js/search/main.ts', 'public/js/search')
-    .js('resources/assets/js/app.js', 'public/js')
-    .js('resources/assets/js/lib.js', 'public/js')
-    .js('resources/assets/js/releaseDataset.js', 'public/backend/publish')
-    .js('resources/assets/js/approveDataset.js', 'public/backend/publish')
-    .js('resources/assets/js/ckeditor.js', 'public/backend/')   
-    .sass('resources/assets/sass/app1.scss', 'public/css', { implementation: require('node-sass')})
+mix.js('resources/js/datasetPublish.js', 'public/backend/publish')
+    .js('resources/js/search/main.ts', 'public/js/search')
+    .js('resources/js/app.js', 'public/js')
+    .js('resources/js/lib.js', 'public/js')
+    .js('resources/js/releaseDataset.js', 'public/backend/publish')
+    .js('resources/js/approveDataset.js', 'public/backend/publish')
+    .js('resources/js/ckeditor.js', 'public/backend/')   
+    .sass('resources/sass/app1.scss', 'public/css', { implementation: require('node-sass')})
     //.sass('node_modules/purecss/build/pure.css', 'public/css', { implementation: require('node-sass') })
-    .sass('resources/assets/sass/font-awesome.scss', 'public/css', { implementation: require('node-sass') })
-    .js('resources/assets/js/scripts.js', 'public/js')   
+    .sass('resources/sass/font-awesome.scss', 'public/css', { implementation: require('node-sass') })
+    .js('resources/js/scripts.js', 'public/js')   
     .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-buttons/js/dataTables.buttons.js',

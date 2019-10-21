@@ -38,7 +38,7 @@
                         <input name="remember" id="remember" type="checkbox"> Remember me
                     </label>
                     <button type="submit" class="pure-button pure-button-primary">Login</button>
-                    <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+                    {{-- <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a> --}}
                 </div>
             </form>
         </div>
