@@ -31,17 +31,17 @@
 </template>
 
 
-<script lange="ts">
-import Vue from "vue";
-import { Component, Provide } from "vue-property-decorator";
+<script lang="ts">
+// import Vue from "vue";
+// import { Component, Provide } from "vue-property-decorator";
 
-@Component({})
-export default class VsInput extends Vue {
-  term = "";
-  bar = "bar";
-  search() {
-    //console.log(this.term);
-    this.$emit("search", this.term);
-  }
-}
+// @Component({})
+// export default class VsInput extends Vue {
+//   term = "";  
+//   search() {
+//     this.$emit("search", this.term);
+//   }
+// }
+import VsInput from "./vs-input-class";
+export default VsInput;
 </script>

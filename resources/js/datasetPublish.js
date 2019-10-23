@@ -383,18 +383,18 @@ const app = new Vue({
                     // this.loading = false;
                     this.uploadError = error.response;
                     console.log('FAILURE!!');
-                    let errorObject = JSON.parse(JSON.stringify(error));
+                    // let errorObject = JSON.parse(JSON.stringify(error));
                     // console.log(errorObject);
-                    if (errorObject.response.data.errors) {
-                        var errorsArray = errorObject.response.data.errors;
+                    if (error.response && error.response.data.errors) {
+                        var errorsArray = error.response.data.errors;
                         for (var index in errorsArray) {
                             console.log(errorsArray[index]);
                             _this.serrors.push(errorsArray[index]);
                         }
                     }
                     //fill with server error
-                    if (errorObject.response.data.error) {
-                        var error = errorObject.response.data.error;
+                    if (error.response && error.response.data.error) {
+                        var error = error.response.data.error;
                         _this.serrors.push(error.message);
                     }
                     //raundtrip to server was not possible
@@ -402,6 +402,9 @@ const app = new Vue({
                         console.log('The file you tried to upload is too large.')
                         var error = 'The file you tried to upload is too large.';
                         _this.serrors.push(error);
+                      }
+                      if (error.message && error.message) {
+                        _this.serrors.push( error.message);
                       }
                     _this.currentStatus = STATUS_FAILED;
                 });
