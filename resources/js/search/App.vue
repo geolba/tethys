@@ -22,7 +22,7 @@
         <!-- Search input section -->
         <div class="row">
           <div class="twelve columns">
-            <vs-input @search="onSearch"></vs-input>
+            <vs-input @search="onSearch"  title="searching solr datasets"    placeholder="Enter your search term..."></vs-input>
           </div>
         </div>
 

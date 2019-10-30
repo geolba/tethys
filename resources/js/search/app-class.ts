@@ -31,7 +31,7 @@ export default class App extends Vue {
   numFound: number;
 
   async onPaginate(start: number): Promise<void> {
-    console.log(start);
+    // console.log(start);
     var res = await rdrApi.search(this.searchTerm, this.activeFilterItems, start.toString());
     this.results = res.response.docs;
   }
@@ -65,9 +65,9 @@ export default class App extends Vue {
             if (filter.value == facetValue) {
               rObj = filter;
             } else if (this.facets[prop].some(e => e.value === facetValue)) {
-              console.log(facetValue + " is included")
+              // console.log(facetValue + " is included")
               var indexOfFacetValue = this.facets[prop].findIndex(i => i.value === facetValue);
-              console.log(indexOfFacetValue);
+              // console.log(indexOfFacetValue);
               rObj = this.facets[prop][indexOfFacetValue];
               rObj.count = facet_fields[prop][i + 1];
             } else {

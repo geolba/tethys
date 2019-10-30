@@ -32,12 +32,12 @@ export default {
     var limit = "&rows=" + SOLR_CONFIG["limit"];  
     // var limit = solrConfig.limit;
 
-    var dismaxFields = "title^3 abstract^2 subject^1";
+    var qfFields = "title^3 author^3 subject^2";
     var params = "fl=" + fields;
     if (term == "*%3A*") {
       params += "&defType=edismax&wt=json&indent=on"; //edismax
     } else {
-      params += "&defType=dismax&qf=" + dismaxFields + "&wt=json&indent=on"; //dismax
+      params += "&defType=dismax&qf=" + qfFields + "&wt=json&indent=on"; //dismax
     }
 
     if (start === undefined) start = "0";
@@ -69,6 +69,39 @@ export default {
 
     let res = await axios.get(api);
     // let { data } = res.data;
+    return res.data;//.response;//.docs;
+  },
+
+  async searchTerm(term: string): Promise<any> {
+    // solr endpoint
+    // const host = 'http://voyagerdemo.com/';
+    const host = 'https://repository.geologie.ac.at/';
+    const path = 'solr/rdr_data/select?';
+    var base = host + path;
+
+    //const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
+    var fields = ["id",
+      "server_date_published",
+      "abstract_output",
+      "title_output",
+      "title_additional",
+      "author",
+      "subject"].toString();
+   
+
+    //var dismaxFields = "title^3 abstract^2 subject^1";
+    var qfFields = "title^3 author^2 subject^1";
+    var params = "fl=" + fields;
+    // if (term == "*%3A*") {
+    //   params += "&defType=edismax&wt=json&indent=on"; //edismax
+    // } else {
+      params += "&defType=edismax&qf=" + qfFields + "&wt=json&indent=on"; //dismax
+    // }  
+
+    var query = "&q=" + term + "*";
+    var api = base + params + query;
+
+    let res = await axios.get(api);    
     return res.data;//.response;//.docs;
   }
 

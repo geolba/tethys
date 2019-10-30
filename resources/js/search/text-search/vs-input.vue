@@ -1,13 +1,18 @@
 <template>
   <div class="sidebar-simplesearch">
     <!-- <form method="GET" action="//repository.geologie.ac.at/search" accept-charset="UTF-8"> -->
-    <div>
+     <!-- v-on:keyup.enter="search()" -->
+    <div class="autocomplete__box">
       <input
-        class="search-input"
-        placeholder="Enter your search term..."
+        class="search-input"     
         name="q"
         type="text"
-        v-model="term" v-on:keyup.enter="search()"
+        v-model="display"       
+        @input="searchChanged"
+        v-bind:title="title"
+        v-bind:placeholder="placeholder"
+        v-on:keydown.down="onArrowDown" v-on:keydown.up="onArrowUp" v-on:keydown.enter="onEnter"  @keydown.tab="close"
+        v-on:focus="focus"
       />
 
       <!-- <button @click="search()" class="css-1gklxk5 ekqohx90"> -->
@@ -26,6 +31,27 @@
           />
         </svg>
       </button>
+
+      <!-- clearButtonIcon -->
+      <!-- <span v-show="!isLoading" class="autocomplete__icon autocomplete--clear" @click="clear">       
+        <img src="../assets/close.svg">
+      </span> -->
+
+      <ul class="autocomplete-results pure-u-23-24" v-show="showResults">
+        <li class="loading" v-if="isLoading">Loading results...</li>
+
+        <li
+          v-else
+          v-for="(result, key) in suggestions"
+          :key="key"       
+          class="autocomplete-result-item"         
+          :class="{'is-active' : isSelected(key) }"
+            @click.prevent="select(result)"
+            ref="options"
+        >
+          <strong> {{ result }}</strong>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -37,7 +63,7 @@
 
 // @Component({})
 // export default class VsInput extends Vue {
-//   term = "";  
+//   term = "";
 //   search() {
 //     this.$emit("search", this.term);
 //   }
@@ -45,3 +71,43 @@
 import VsInput from "./vs-input-class";
 export default VsInput;
 </script>
+
+
+<style>
+.sidebar-simplesearch {
+   position: relative;
+  width: 100%;  
+    box-sizing: border-box;
+}
+
+.autocomplete-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  list-style-type: none;
+  z-index: 1000;
+  position: absolute;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: 0;
+  color: black;
+}
+
+.autocomplete-result-item {
+  list-style: none;
+  text-align: left;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.autocomplete-result-item.is-active {
+  background: rgba(0, 180, 255, 0.15);
+}
+
+.autocomplete-result-item:hover {
+  background: rgba(0, 180, 255, 0.075); 
+}
+</style>
