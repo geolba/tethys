@@ -47,7 +47,7 @@ class IndexController extends Controller
     public function createStep1(Request $request)
     {
         #$dataset = $request->session()->get('dataset');
-        $licenses = License::select('id', 'name_long')
+        $licenses = License::select('id', 'name_long', 'link_licence')
             ->orderBy('sort_order')
             ->get();
         $languages = DB::table('languages')

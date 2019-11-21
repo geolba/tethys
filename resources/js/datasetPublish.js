@@ -31,8 +31,9 @@ import axios from 'axios';
 import MyAutocomplete from './components/MyAutocomplete.vue';
 import messagesEN from './strings/messages/en.js';
 import VeeValidate from 'vee-validate';
-import dataset from './components/Dataset';
+import Dataset from './components/Dataset';
 import LocationsMap from './components/LocationsMap.vue';
+import VueCountdown from './components/vue-countdown';
 import PersonTable from './components/PersonTable.vue';
 import modal from './components/ShowModal.vue';
 // import datetime from 'vuejs-datetimepicker';
@@ -62,7 +63,7 @@ Vue.use(VeeValidate, {
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete, LocationsMap, modal, PersonTable },
+    components: { MyAutocomplete, LocationsMap,VueCountdown, modal, PersonTable },
     data() {
         return {
             list: [
@@ -90,35 +91,10 @@ const app = new Vue({
             isModalVisible: false,
 
             step: 0,
-            dataset: dataset,
+            dataset: new Dataset(),
             elevation: "no_elevation",
             depth: "no_depth",
-            time: "no_time",
-            // dataset: {
-            //     type: '',
-            //     state: '',
-            //     rights: null,
-            //     project_id: '',
-
-            //     creating_corporation: "GBA",
-            //     embargo_date: '',
-            //     belongs_to_bibliography: 0,
-
-            //     title_main: {
-            //         value: '',
-            //         language: ''
-            //     },
-            //     abstract_main: {
-            //         value: '',
-            //         language: ''
-            //     },
-            //     checkedAuthors: [],
-            //     checkedLicenses: [],// [],
-            //     files: [],
-            //     references: [],
-            //     checkedContributors: [],
-            //     checkedSubmitters: [],
-            // }
+            time: "no_time"          
         }
     },
     created: function () {
@@ -138,7 +114,7 @@ const app = new Vue({
         VeeValidate.Validator.extend('translatedLanguage', {
             getMessage: field => 'The translated ' + field + ' must be in a language other than than the dataset language.',
             validate: (value, [mainLanguage, type]) => {
-                if (type == "translated") {
+                if (type == "Translated") {
                     return value !== mainLanguage;
                 }
                 return true;
@@ -355,7 +331,6 @@ const app = new Vue({
                 formData.append('descriptions[' + i + '][language]', description.language);
                 formData.append('descriptions[' + i + '][type]', description.type);
             }
-
             /*
             Make the request to the POST /multiple-files URL
             */
@@ -363,7 +338,9 @@ const app = new Vue({
                 formData,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'X-CSRF-TOKEN'    : document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
                     }
                 })
                 .then((response) => {
@@ -375,9 +352,9 @@ const app = new Vue({
                     _this.currentStatus = STATUS_SUCCESS;
                     _this.releaseLink = response.data.release;
                     _this.deleteLink = response.data.delete;
-                    // if (response.data.redirect) {
-                    //     window.location = response.data.redirect;
-                    // }
+                    if (response.data.redirect) {
+                        window.location = response.data.redirect;
+                    }
                 })
                 .catch((error) => {
                     // this.loading = false;
@@ -397,12 +374,18 @@ const app = new Vue({
                         var error = error.response.data.error;
                         _this.serrors.push(error.message);
                     }
-                    //raundtrip to server was not possible
+                    //roundtrip to server was not possible
                     if (error.message && error.message.includes('413')) {
-                        console.log('The file you tried to upload is too large.')
+                        // console.log('The file you tried to upload is too large.')
                         var error = 'The file you tried to upload is too large.';
                         _this.serrors.push(error);
                       }
+                    else  if(error.response && error.response.status == 419) {
+                        // session timed out | not authenticated
+                        // _this.serrors.push(error.response.data.message);    
+                        _this.serrors.push('This page has expired due to inactivity, please refresh and try again');                  
+                        window.location = '/login';
+                    }
                       if (error.message && error.message) {
                         _this.serrors.push( error.message);
                       }
@@ -441,7 +424,7 @@ const app = new Vue({
        adds a new Keyword
        */
         addKeyword() {
-            let newKeyword = { value: '', type: '', language: this.dataset.language };
+            let newKeyword = { value: '', type: 'uncontrolled', language: this.dataset.language };
             //this.dataset.files.push(uploadedFiles[i]);
             this.dataset.keywords.push(newKeyword);
         },
@@ -572,6 +555,9 @@ const app = new Vue({
             // alert('Submit to blah and show blah and etc.');
             // save it
             this.save(status);
+        },
+        handleTimeExpire() {          
+            window.location = '/login';            
         }
     }
 });

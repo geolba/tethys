@@ -145,8 +145,8 @@ class RequestController extends Controller
     private function handleIdentify()
     {
         $email = "repository@geologie.ac.at";
-        $repositoryName = "RDR - Data Research Repository";
-        $repIdentifier = "rdr.gba.ac.at";
+        $repositoryName = "TETHYS - Data Research Repository";
+        $repIdentifier = "tethys.geologie.ac.at";
         $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
         $earliestDateFromDb = optional(Dataset::earliestPublicationDate())->server_date_published;
 
@@ -281,7 +281,7 @@ class RequestController extends Controller
      */
     private function handleListSets()
     {
-        $repIdentifier = "rdr.gba.ac.at";
+        $repIdentifier = "tethys.geologie.ac.at";
         $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
         $this->_xml->appendChild($this->_xml->createElement('Datasets'));
 
@@ -332,7 +332,7 @@ class RequestController extends Controller
             $maxRecords = 100;
         }
 
-        $repIdentifier = "rdr.gba.ac.at";
+        $repIdentifier = "tethys.geologie.ac.at";
         $tokenTempPath = storage_path('app/resumption'); //$this->_configuration->getResumptionTokenPath();
 
         $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
@@ -512,7 +512,7 @@ class RequestController extends Controller
 
         $identify = $sxe->addChild('Identify');
         $identify->addChild('repositoryName', "Data Research Repository");
-        $identify->addChild('baseURL', "http://rdr.gba.geolba.ac.at/");
+        $identify->addChild('baseURL', "http://tethys.geologie.ac.at/");
         $identify->addChild('protocolVersion', '2.0');
         $identify->addChild('adminEmail', 'repository@geologie.ac.at');
         //$identify->addChild('earliestDatestamp', '2017-04-07');

@@ -5,7 +5,8 @@
 		}
 	],
 	"settings": {
-		"phpfmt.php_bin": "\"C:\\ProgramData\\scoop\\apps\\php-nts\\current\\php.exe\"",
+		// "phpfmt.php_bin": "\"C:\\ProgramData\\scoop\\apps\\php-nts\\current\\php.exe\"",
+		"phpfmt.php_bin": "php",
 		"phpfmt.psr2": true
 	}
 }

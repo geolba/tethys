@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -507,7 +506,6 @@ Route::get('history', [
     'as' => 'borrow.history', 'uses' => 'BorrowController@histori',
 ]);
 
-
 //====================================authentication===========================================================================
 // Route::controllers([
 // 'auth' => 'Auth\AuthController',
@@ -515,9 +513,9 @@ Route::get('history', [
 // ]);
 // Auth::routes();
 // Authentication Routes...
- Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
- Route::post('login', 'Auth\LoginController@login');
- Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 // // Registration Routes...
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -527,3 +525,7 @@ Route::get('history', [
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 // Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::get('refresh-csrf', function () {
+    return csrf_token();
+});

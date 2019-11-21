@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>RDR - Geology Geophysics Meteorology</title>
+    <title>TETHYS - Geology Geophysics Meteorology</title>
     <meta name="description" content="An awesome one page website">
     <meta name="author" content="Arno Kaimbacher">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -46,7 +46,7 @@
 
 <body class="layout-home-html">
     <div id="trynewsite">
-        <span>RDR Testphase</span>
+        <span>TETHYS Testphase</span>
     </div>
 
     <!-- Menu -->
@@ -128,7 +128,7 @@
                 <div class="four columns footer-about">
                     <!-- <h5>&copy 2015 Tuts+ Web Design.</h5> -->
                     <div class="block">
-                        <h3 class="block-title">About RDR</h3>
+                        <h3 class="block-title">About TETHYS</h3>
                         <ul>
                             <li class="last"><a
                                     href="{!! URL::route('frontend.pages.show', ['page_slug'=>'about']) !!}">About

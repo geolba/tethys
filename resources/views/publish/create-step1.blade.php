@@ -10,6 +10,10 @@
 </div>
 
 <div id="app" class="box-content" v-cloak>
+    {{-- v-on:time-expire="handleTimeExpire" --}}
+    @if (Auth::check()) 
+        <vue-countdown v-on:time-expire="handleTimeExpire" :seconds="({{config('session.lifetime')}} * 60)"></vue-countdown>
+    @endif
     {{--
     <form action={{ route( 'publish.dataset.store1') }} method="post" class="pure-form" enctype="multipart/form-data">
         --}}
@@ -318,7 +322,7 @@
                     </div>
                 </fieldset> --}}
 
-                <fieldset-dates>
+                <fieldset id="fieldset-dates">
                     <legend>Date(s)</legend>
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         {!! Form::label('EmbargoDate', 'Embargo Date') !!} 
@@ -326,7 +330,7 @@
                         => 'pure-u-23-24', 'v-model' => 'dataset.embargo_date', 'data-vv-scope' => 'step-2']) !!}
                         <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
                     </div>
-                </fieldset-dates>                               
+                </fieldset>                               
                 
                 <fieldset id="fieldset-geolocation">
                     <legend>Geo Location</legend>
@@ -526,8 +530,10 @@
                                         data-vv-scope="step-2" />
                                 </td>
                                 <td>
-                                    {!! Form::select('Keyword[Type]', $keywordTypes, null, ['placeholder' => '[keyword type]', 'v-model' =>
-                                    'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!}
+                                    {{-- {!! Form::select('Keyword[Type]', $keywordTypes, null, ['placeholder' => '[keyword type]', 'v-model' =>
+                                    'item.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-2']) !!} --}}
+                                    <input name="Keyword Type" readonly class="form-control" placeholder="[KEYWORD TYPE]" v-model="item.type" v-validate="'required'"
+                                        data-vv-scope="step-2" />
                                 </td>
                                 <td>
                                     <input name="Keyword Language" readonly class="form-control" placeholder="[KEYWORD LANGUAGE]" v-model="item.language" v-validate="'required'"
@@ -574,36 +580,18 @@
                             @if ($loop->first)
                             <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" v-validate="'required'" 
                             data-vv-as="Licence" data-vv-scope="step-3">
-                            {{ $license->name_long }}
+                            <a href="{{ $license->link_licence }}" target="_blank">{{ $license->name_long }}</a>
                             @else
                             <input name="licenses" value={{ $license->id }} v-model="dataset.checkedLicenses" type="radio" class="form-check-input" data-vv-scope="step-3">
-                            {{ $license->name_long }}
+                            <a href="{{ $license->link_licence }}" target="_blank">{{ $license->name_long }}</a>
                             @endif
                         </label> 
                         @endforeach
                         <br>
                         {{-- <span>Checked license: @{{ dataset.checkedLicenses }}</span> --}}
                     </div>
-                </fieldset>               
+                </fieldset> 
 
-                {{-- <fieldset id="fieldset-submitters">
-                    <legend>Submitters</legend>
-                    <div class="pure-g">
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <my-autocomplete title="searching active person table" @person="onAddSubmitter"></my-autocomplete>
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            <div class="pure-control-group checkboxlist">
-                                <label v-for="(submitter, index) in dataset.submitters" :for="submitter.id" class="pure-checkbox">                           
-                                                        <input type="checkbox" name="submitters" v-bind:value="submitter.id"  v-model="dataset.checkedSubmitters"  class="form-check-input" data-vv-scope="step-3">
-                                                        @{{ submitter.full_name }}                               
-                                                    </label>
-                                <br />
-                                <span>Checked Submitters: @{{ dataset.checkedSubmitters }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset> --}}
                 <br />
                 <div class="pure-controls">
                     <button @click.prevent="prev()" class="pure-button button-small">
@@ -613,7 +601,7 @@
 
                     <button @click.prevent="next('step-3')" class="pure-button button-small">               
                         <i class="fa fa-arrow-right"></i>
-                        <span>Review Dataset</span>
+                        <span>Continue</span>
                     </button>
                 </div>
                 <div v-if="errors.items.length > 0">
@@ -715,10 +703,7 @@
                 <h2>Uploaded failed.</h2>
                 <p>
                     <a href="javascript:void(0)" @click="retry()">Retry: Edit inputs</a>
-                </p>
-                {{-- <p>
-                    <a href="javascript:void(0)" @click="reset()">Submit new dataset</a>
-                </p>               --}}
+                </p>               
                 <div v-if="serrors.length > 0">
                     <b>Please correct the following server error(s):</b>
                     <ul class="alert validation-summary-errors">

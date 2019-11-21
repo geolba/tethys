@@ -39,7 +39,7 @@ class PermissionMiddleware
         //{
         //   abort(401);
         //}
-        return abort(401);
-        //return $next($request);
+        // return abort(403);
+        throw new \Illuminate\Auth\Access\AuthorizationException('This action is unauthorized.');
     }
 }

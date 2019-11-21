@@ -48,7 +48,7 @@ class SolrDocumentXslt
     }
 
     /**
-     * Retrieves XML describing model data of provided RDR dataset.
+     * Retrieves XML describing model data of provided TETHYS dataset.
      *
      * @param Dataset $rdrDataset
      * @return DOMDocument

@@ -21,16 +21,16 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h3 class="separator">Introduction RDR</h3>
+                <h3 class="separator">Introduction TETHYS</h3>
                 <h4>
-                    RDR offers institutions and researchers a comprehensive archiving
+                    TETHYS offers institutions and researchers a comprehensive archiving
                     and publishing service with reliable storage options for backing up
-                    and managing research data. With RDR you can promote research data
+                    and managing research data. With TETHYS you can promote research data
                     management at your institution and make an important contribution to improve
                     availability, long-term preservation and independent publication of your research data.
                 </h4>
                 <p>
-                    The use of RDR as a data centre for archiving and/or publishing research data is invoiced annually.
+                    The use of TETHYS as a data centre for archiving and/or publishing research data is invoiced annually.
                     The invoice consists of a basic annual contract fee and a usage-related fee.
                 </p>
             </div>
@@ -43,7 +43,7 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h3 class="separator">RDR SERVICES</h3>
+                <h3 class="separator">TETHYS SERVICES</h3>
             </div>
         </div>
 
@@ -61,7 +61,7 @@
                         <div class="vertical-centered">
                             <p class="separator orange">Data Archival</p>
                             <p>
-                                RDR provides format-independent archiving services for data protection.
+                                TETHYS provides format-independent archiving services for data protection.
                             </p>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="vertical-centered">
                             <p class="separator orange">Data Publication</p>
                             <p>
-                                With RDR you can publish research data,
+                                With TETHYS you can publish research data,
                                 so that your data is citable and reusable.
                             </p>
                         </div>
@@ -96,7 +96,7 @@
                         <div class="vertical-centered">
                             <p class="separator orange">Peer Review</p>
                             <p>
-                                All RDR datasets undergo a full, efficient peer review process.
+                                All TETHYS datasets undergo a full, efficient peer review process.
                             </p>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
             <div class="twelve columns">
                 <h3 class="separator">About us</h3>
                 <h4>
-                    RDR focuses on disciplines who do not have a tradition
+                    TETHYS focuses on disciplines who do not have a tradition
                     of data sharing thus ensuring better availability,
                     sustainable preservation and (independent) publication
                     capacity of their research data.

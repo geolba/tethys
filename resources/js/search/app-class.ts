@@ -1,4 +1,4 @@
-import { Component, Vue, Prop, Provide } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import VsInput from './text-search/vs-input.vue';
 import VsResults from './search-results/vs-results.vue';
 import FacetList from './search-results/facet-list.vue';

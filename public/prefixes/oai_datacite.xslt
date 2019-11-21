@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /**
- * This file is part of RDR. 
+ * This file is part of TETHYS. 
  *
  * LICENCE
- * RDR is free software; you can redistribute it and/or modify it under the
+ * TETHYS is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the Licence, or any later version.
  * OPUS is distributed in the hope that it will be useful, but WITHOUT ANY
@@ -17,14 +17,14 @@
  * @category    Application
  * @package     Module_Oai
  * @author      Arno Kaimbacher <arno.kaimbacher@geologie.ac.at>
- * @copyright   Copyright (c) 2018-2019, GBA RDR development team
+ * @copyright   Copyright (c) 2018-2019, GBA TETHYS development team
  * @license     http://www.gnu.org/licenses/gpl.html General Public License
  */
 -->
 
 <!--
 /**
- * Transforms the xml representation of an RDR model dataset to datacite
+ * Transforms the xml representation of an TETHYS model dataset to datacite
  * xml as required by the OAI-PMH protocol.
  */
 -->

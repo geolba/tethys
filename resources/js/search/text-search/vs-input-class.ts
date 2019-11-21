@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import debounce from 'lodash/debounce';
 import rdrApi from '../search-results/dataservice';
 
@@ -88,11 +88,6 @@ export default class VsInput extends Vue {
   //   this.loading = false;
   // }
 
-  // reset() {
-  //   this.display = "";
-  //   this.items = [];
-  //   this.showResults = false;
-  // }
   /**
     * Clear all values, results and errors
     */
@@ -230,7 +225,7 @@ export default class VsInput extends Vue {
 
   }
 
-  find(myarray, searchterm): string {
+  private find(myarray, searchterm): string {
     for (var i = 0, len = myarray.length; i < len; i += 1) {
       if (typeof (myarray[i]) === 'string' && myarray[i].toLowerCase().indexOf(searchterm) !== -1) {
         // print or whatever
@@ -239,7 +234,6 @@ export default class VsInput extends Vue {
     }
     return "";
   }
-
 
   /**
     * Close the results list. If nothing was selected clear the search
@@ -256,8 +250,4 @@ export default class VsInput extends Vue {
     //this.removeEventListener()
     this.$emit('close');
   }
-
-
-
-
 }

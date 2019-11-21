@@ -32,7 +32,7 @@ export default {
     var limit = "&rows=" + SOLR_CONFIG["limit"];  
     // var limit = solrConfig.limit;
 
-    var qfFields = "title^3 author^3 subject^2";
+    var qfFields = "title^3 author^2 subject^1";
     var params = "fl=" + fields;
     if (term == "*%3A*") {
       params += "&defType=edismax&wt=json&indent=on"; //edismax
