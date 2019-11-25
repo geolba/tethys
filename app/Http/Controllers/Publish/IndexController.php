@@ -491,7 +491,7 @@ class IndexController extends Controller
 
             return response()->json(array(
                 'success' => true,
-                //'redirect' =>  route('settings.document.edit', ['id' => $dataset->server_state]),
+                'edit' =>  route('publish.workflow.submit.edit', ['id' => $dataset->id]),
                 'release' =>  route('publish.workflow.submit.release', ['id' => $dataset->id]),
                 'delete' =>  route('publish.workflow.submit.delete', ['id' => $dataset->id]),
             ));

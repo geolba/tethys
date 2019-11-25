@@ -43,7 +43,7 @@
                             {!! Form::label('reject_editor_note', 'reject note:') !!}
                             {!! Form::textarea('reject_editor_note',null, ['id' => 'reject_editor_note', 'class'=>'pure-u-23-24',
                             'placeholder' => '-- reject note for submitter --', 'size' => '70x6',
-                            'v-model' => 'dataset.reject_editor_note', "v-validate" => "'required|min:10|max:255'"]) !!}
+                            'v-model' => 'dataset.reject_editor_note', "v-validate" => "'required|min:10|max:500'"]) !!}
                              <em>*</em>                           
                             <span class="help is-danger" v-if="errors.has('reject_editor_note')" v-text="errors.first('reject_editor_note')"></span>    
                     </div>      

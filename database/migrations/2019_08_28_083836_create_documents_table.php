@@ -40,8 +40,8 @@ class CreateDocumentsTable extends Migration
             $table->integer('reviewer_id')->unsigned()->nullable();
             $table->string('preferred_reviewer', 25)->nullable();
             $table->string('preferred_reviewer_email', 50)->nullable();
-            $table->string('reject_editor_note', 255)->nullable();
-            $table->string('reject_reviewer_note', 255)->nullable();
+            $table->string('reject_editor_note', 500)->nullable();
+            $table->string('reject_reviewer_note', 500)->nullable();
             $table->boolean('reviewer_note_visible')->default(false);
         });
     }

@@ -331,7 +331,7 @@ class EditorController extends Controller
     public function rejectUpdate(Request $request, $id)
     {
         $this->validate(request(), [
-            'reject_editor_note' => 'required|min:10|max:255',
+            'reject_editor_note' => 'required|min:10|max:500',
             'server_state' => 'required'
         ]);
         $dataset = Dataset::findOrFail($id);

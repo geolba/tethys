@@ -83,7 +83,7 @@
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleMain', 'Main Title ') !!} 
                             {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
-                            => 'dataset.title_main.value', "v-validate" => "'required|min:3'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-1']) !!}
+                            => 'dataset.title_main.value', "v-validate" => "'required|min:4'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-1']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleLanguage', 'Title Language..') !!}
@@ -110,7 +110,7 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.titles">
                                 <td>
-                                    <input name="Title" class="form-control" placeholder="[TITLE]" v-model="item.value" v-validate="'required'" data-vv-scope="step-1" />
+                                    <input name="Title" class="form-control" placeholder="[TITLE]" v-model="item.value" data-vv-as="Additional Title" v-validate="'required|min:4'" data-vv-scope="step-1" />
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Title[Type]', $titleTypes, null, 
@@ -118,12 +118,12 @@
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Title[Language]', $languages, null, 
-                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "data-vv-as" => "title",
+                                    ['placeholder' => '[language]', 'v-model' => 'item.language', "data-vv-as" => "Additional Title Language",
                                     "v-validate" => "{required: true, translatedLanguage: [dataset.language, item.type]}",
                                     'data-vv-scope' => 'step-1']) !!}
                                 </td>                              
                                 <td>
-                                    <button class="pure-button button-small is-warning" @click.prevent="removeTitle(index)">-</button>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeTitle(index)"> <i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -136,7 +136,7 @@
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
                             {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
-                            'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:3'",
+                            'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:4'",
                             "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-1']) }}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -164,7 +164,7 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.descriptions">
                                 <td>
-                                    <textarea rows="3" cols="40" name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" v-validate="'required'" data-vv-scope="step-1"></textarea>
+                                    <textarea rows="3" cols="40" name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" data-vv-as="Additional Description" v-validate="'required|min:4'" data-vv-scope="step-1"></textarea>
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Description[Type]', $descriptionTypes, null, 
@@ -174,12 +174,12 @@
                                     {!! Form::select('Description[Language]', $languages, null, 
                                     ['placeholder' => '[language]',
                                     'v-model' => 'item.language',
-                                    "data-vv-as" => "description",
+                                    "data-vv-as" => "Additional Description Language",
                                     "v-validate" => "{required: true, translatedLanguage: [dataset.language, item.type]}",
                                     'data-vv-scope' => 'step-1']) !!}
                                 </td>                              
                                 <td>
-                                    <button class="pure-button button-small is-warning" @click.prevent="removeDescription(index)">-</button>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeDescription(index)"> <i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -502,7 +502,7 @@
                                     <input name="Reference Label" class="form-control" v-model="item.label"  v-validate="'required'" data-vv-scope="step-2" />
                                 </td>
                                 <td>
-                                    <button class="pure-button button-small is-warning" @click.prevent="removeReference(index)">Remove</button>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeReference(index)"> <i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -540,7 +540,7 @@
                                         data-vv-scope="step-2" />
                                 </td>
                                 <td>
-                                    <button class="pure-button button-small is-warning" @click.prevent="removeKeyword(index)">Remove</button>
+                                    <button class="pure-button button-small is-warning" @click.prevent="removeKeyword(index)"> <i class="fa fa-trash"></i> </button>
                                 </td>                                
                             </tr>
                         </tbody>
@@ -653,7 +653,7 @@
                                 <input class="form-control" v-model="item.label" />
                             </td>
                             <td>
-                                <button class="pure-button button-small is-warning" @click.prevent="removeFile(index)">Remove</button>
+                                <button class="pure-button button-small is-warning" @click.prevent="removeFile(index)"> <i class="fa fa-trash"></i> </button>
                             </td>
                         </tr>
                     </tbody>
@@ -681,6 +681,10 @@
                 </p> --}}
                 <p>
                     {{-- <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">@{{ redirectLink }}</a> --}}
+                    <a href="javascript:void(0)" @click="editNewDataset()" class="pure-button button-small">
+                        <i class="fa fa-edit"></i>
+                        <span>Edit</span>
+                    </a>
                     <a href="javascript:void(0)" @click="releaseNewDataset()" class="pure-button button-small">
                             <i class="fa fa-share"></i>
                             <span>Release</span>

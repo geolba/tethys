@@ -44,7 +44,7 @@
                             {!! Form::label('reject_reviewer_note', 'reject note:') !!}
                             {!! Form::textarea('reject_reviewer_note',null, ['id' => 'reject_reviewer_note', 'class'=>'pure-u-23-24',
                             'placeholder' => '-- reject note for editor --', 'size' => '70x6',
-                            'v-model' => 'dataset.reject_reviewer_note', "v-validate" => "'required|min:10|max:255'"]) !!}
+                            'v-model' => 'dataset.reject_reviewer_note', "v-validate" => "'required|min:10|max:500'"]) !!}
                              <em>*</em>
                            
                             <span class="help is-danger" v-if="errors.has('reject_reviewer_note')" v-text="errors.first('reject_reviewer_note')"></span>

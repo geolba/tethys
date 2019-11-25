@@ -85,6 +85,7 @@ const app = new Vue({
             currentStatus: null,
             uploadFieldName: 'photos',
             fileCount: 0,
+            editLink: null,
             releaseLink: null,
             deleteLink: null,
 
@@ -184,6 +185,9 @@ const app = new Vue({
             // this.uploadError = null;
             // this.dataset.reset();//reset methods will trigger property changed.
             // this.step = 1;
+        },
+        editNewDataset() {
+            window.location = this.editLink;
         },
         releaseNewDataset() {
             window.location = this.releaseLink;
@@ -316,6 +320,7 @@ const app = new Vue({
                 let keyword = this.dataset.keywords[i];
                 formData.append('keywords[' + i + '][value]', keyword.value);
                 formData.append('keywords[' + i + '][type]', keyword.type);
+                formData.append('keywords[' + i + '][language]', keyword.language);
             }
 
             for (var i = 0; i < this.dataset.titles.length; i++) {
@@ -350,6 +355,7 @@ const app = new Vue({
                     // this.items = response.data;          
                     //Vue.set(app.skills, 1, "test55");
                     _this.currentStatus = STATUS_SUCCESS;
+                    _this.editLink = response.data.edit;
                     _this.releaseLink = response.data.release;
                     _this.deleteLink = response.data.delete;
                     if (response.data.redirect) {

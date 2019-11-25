@@ -145,7 +145,7 @@ class ReviewController extends Controller
     public function rejectUpdate(Request $request, $id)
     {
         $this->validate(request(), [
-            'reject_reviewer_note' => 'required|min:10|max:255',
+            'reject_reviewer_note' => 'required|min:10|max:500',
             'server_state' => 'required'
         ]);
         $dataset = Dataset::findOrFail($id);
