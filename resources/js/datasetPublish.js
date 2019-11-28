@@ -122,6 +122,26 @@ const app = new Vue({
 
             }
         });
+        const isUnique = (value, [objectArray, index]) =>
+        new Promise(resolve => {
+            setTimeout(() => {
+                if (objectArray.some((item, i) => item.value === value && index !== i)) {
+                    return resolve({
+                        valid: false,
+                        data: {
+                            message: value + ' is already taken.'
+                        }
+                    });
+                }
+                return resolve({
+                    valid: true                  
+                });
+            }, 200);
+        });
+        VeeValidate.Validator.extend("unique", {
+            getMessage: (field, params, data) => field + ' ' + data.message,
+            validate: isUnique,           
+        });
     },
     mounted() {
         //this.step = 2;

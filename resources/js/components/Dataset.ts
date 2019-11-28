@@ -65,21 +65,21 @@ export default class Dataset extends Vue {
   //   return initialState();
   // }
   initialState = {};
-  type= "";
-  state= "";
-  rights= null;
-  project_id= "";
+  type = "";
+  state = "";
+  rights = null;
+  project_id = "";
 
-  creating_corporation= "TETHYS Repository";
-  language= "";
-  embargo_date= "";
-  belongs_to_bibliography= 0;
+  creating_corporation = "TETHYS Repository";
+  language = "";
+  embargo_date = "";
+  belongs_to_bibliography = 0;
 
-  title_main= {
+  title_main = {
     value: "",
     language: ""
   };
-  abstract_main= {
+  abstract_main = {
     value: "",
     language: ""
   };
@@ -89,7 +89,7 @@ export default class Dataset extends Vue {
   //   xmax: "",
   //   ymax: ""
   // },
-  coverage= {
+  coverage = {
     xmin: "",
     ymin: "",
     xmax: "",
@@ -104,21 +104,21 @@ export default class Dataset extends Vue {
     time_max: "",
     time_absolut: ""
   };
-  checkedAuthors= [];
-  checkedLicenses= [];
-  files= [];
-  keywords= [];
-  references= [];
-  titles= [];
-  descriptions= [];
-  checkedContributors= [];
+  checkedAuthors = [];
+  checkedLicenses = [];
+  files = [];
+  keywords = [];
+  references = [];
+  titles = [];
+  descriptions = [];
+  checkedContributors = [];
   // checkedSubmitters: [],
 
-  persons= [];
-  contributors= [];
+  persons = [];
+  contributors = [];
   // submitters: []
 
-  created () {
+  created() {
     this.initialState = Object.assign({}, this);
     // let json = JSON.stringify(this.$data);
     // this.reset = () => {
@@ -132,13 +132,13 @@ export default class Dataset extends Vue {
     this.title_main.language = val;
     this.abstract_main.language = val;
   }
-  
-  
+
+
   reset() {
     // Object.assign(this.$data, initialState());
     Object.assign(this.$data, this.initialState);
   }
- 
+
 }
 // export default dataset;
 
