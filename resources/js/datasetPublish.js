@@ -56,14 +56,14 @@ Vue.use(VeeValidate, {
     locale: 'en',
     useConstraintAttrs: true,
     dictionary: {
-        en: {  messages: messagesEN }        
-      }
+        en: { messages: messagesEN }
+    }
 });
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete, LocationsMap,VueCountdown, modal, PersonTable },
+    components: { MyAutocomplete, LocationsMap, VueCountdown, modal, PersonTable },
     data() {
         return {
             list: [
@@ -71,7 +71,7 @@ const app = new Vue({
                 { id: 2, name: "Brooke", sport: "foot" },
                 { id: 3, name: "Courtenay", sport: "volley" },
                 { id: 4, name: "David", sport: "rugby" }
-              ],
+            ],
             dragging: true,
             rows: [
                 //initial data
@@ -95,7 +95,7 @@ const app = new Vue({
             dataset: new Dataset(),
             elevation: "no_elevation",
             depth: "no_depth",
-            time: "no_time"          
+            time: "no_time"
         }
     },
     created: function () {
@@ -123,24 +123,24 @@ const app = new Vue({
             }
         });
         const isUnique = (value, [objectArray, index]) =>
-        new Promise(resolve => {
-            setTimeout(() => {
-                if (objectArray.some((item, i) => item.value === value && index !== i)) {
+            new Promise(resolve => {
+                setTimeout(() => {
+                    if (objectArray.some((item, i) => item.value === value && index !== i)) {
+                        return resolve({
+                            valid: false,
+                            data: {
+                                message: value + ' is already taken.'
+                            }
+                        });
+                    }
                     return resolve({
-                        valid: false,
-                        data: {
-                            message: value + ' is already taken.'
-                        }
+                        valid: true
                     });
-                }
-                return resolve({
-                    valid: true                  
-                });
-            }, 200);
-        });
+                }, 200);
+            });
         VeeValidate.Validator.extend("unique", {
             getMessage: (field, params, data) => field + ' ' + data.message,
-            validate: isUnique,           
+            validate: isUnique,
         });
     },
     mounted() {
@@ -150,7 +150,7 @@ const app = new Vue({
     computed: {
         keywords_length() {
             return this.dataset.keywords.length;
-          },
+        },
         isInitial() {
             return this.currentStatus === STATUS_INITIAL;
         },
@@ -294,12 +294,12 @@ const app = new Vue({
                 formData.append('licenses[' + i + ']', this.dataset.checkedLicenses[i]);
             }
 
-            
+
             // for (var i = 0; i < this.dataset.checkedAuthors.length; i++) {
             //     formData.append('authors[' + i + ']', this.dataset.checkedAuthors[i]);
             // }
             for (var i = 0; i < this.dataset.persons.length; i++) {
-                let person = this.dataset.persons[i];               
+                let person = this.dataset.persons[i];
                 formData.append('authors[' + i + '][first_name]', person.first_name);
                 formData.append('authors[' + i + '][last_name]', person.last_name);
                 formData.append('authors[' + i + '][email]', person.email);
@@ -314,7 +314,7 @@ const app = new Vue({
             //     formData.append('contributors[' + i + ']', this.dataset.checkedContributors[i]);
             // }
             for (var i = 0; i < this.dataset.contributors.length; i++) {
-                let contributor = this.dataset.contributors[i];  
+                let contributor = this.dataset.contributors[i];
                 formData.append('contributors[' + i + '][first_name]', contributor.first_name);
                 formData.append('contributors[' + i + '][last_name]', contributor.last_name);
                 formData.append('contributors[' + i + '][email]', contributor.email);
@@ -364,7 +364,7 @@ const app = new Vue({
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'X-CSRF-TOKEN'    : document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                         'X-Requested-With': 'XMLHttpRequest',
                     }
                 })
@@ -405,16 +405,16 @@ const app = new Vue({
                         // console.log('The file you tried to upload is too large.')
                         var error = 'The file you tried to upload is too large.';
                         _this.serrors.push(error);
-                      }
-                    else  if(error.response && error.response.status == 419) {
+                    }
+                    else if (error.response && error.response.status == 419) {
                         // session timed out | not authenticated
                         // _this.serrors.push(error.response.data.message);    
-                        _this.serrors.push('This page has expired due to inactivity, please refresh and try again');                  
+                        _this.serrors.push('This page has expired due to inactivity, please refresh and try again');
                         window.location = '/login';
                     }
-                      if (error.message && error.message) {
-                        _this.serrors.push( error.message);
-                      }
+                    if (error.message && error.message) {
+                        _this.serrors.push(error.message);
+                    }
                     _this.currentStatus = STATUS_FAILED;
                 });
         },
@@ -505,7 +505,7 @@ const app = new Vue({
         addNewAuthor() {
             let newAuthor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '' };
             this.dataset.persons.push(newAuthor);
-        },        
+        },
         removeAuthor(key) {
             this.dataset.persons.splice(key, 1);
         },
@@ -517,16 +517,16 @@ const app = new Vue({
             } else if (this.dataset.contributors.filter(e => e.id === person.id).length > 0) {
                 this.$toast.error("person is already defined as contributor");
             } else {
-                 //person.sort_order = this.dataset.persons.length;
-                 this.dataset.persons.push(person);
-                 this.dataset.checkedAuthors.push(person.id);
-                 this.$toast.success("person has been successfully added as author");
+                //person.sort_order = this.dataset.persons.length;
+                this.dataset.persons.push(person);
+                this.dataset.checkedAuthors.push(person.id);
+                this.$toast.success("person has been successfully added as author");
             }
         },
         addNewContributor() {
             let newContributor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '' };
             this.dataset.contributors.push(newContributor);
-        },     
+        },
         onAddContributor(person) {
             //if person is not in contributors array
             //if (this.contributors.includes(person) == false) {
@@ -582,8 +582,8 @@ const app = new Vue({
             // save it
             this.save(status);
         },
-        handleTimeExpire() {          
-            window.location = '/login';            
+        handleTimeExpire() {
+            window.location = '/login';
         }
     }
 });

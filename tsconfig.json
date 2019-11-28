@@ -1,12 +1,13 @@
 {
-    "compilerOptions": {       
-        "module": "es2015",
-        "target": "es5",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "public/js/search",
-        "experimentalDecorators": true,
-    },
+  "compilerOptions": {
+    "module": "es2015",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "public/js/search",
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "es2017", "dom" ]
+  },
     "include": [
         "resources/js/**/*"
     ]

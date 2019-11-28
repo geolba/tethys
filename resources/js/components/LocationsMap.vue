@@ -263,7 +263,7 @@ export default {
 // https://github.com/vuejs-templates/webpack/issues/121
 // npm install node-sass sass-loader --save-dev
 <style lang="scss">
-// Import CSS from Leaflet and plugins.
+/* Import CSS from Leaflet and plugins.*/
 @import "~leaflet/dist/leaflet.css";
 @import "~leaflet-draw/dist/leaflet.draw.css";
 
@@ -282,6 +282,6 @@ export default {
   border: none;
   width: 120px;
   z-index: 999;
-  // height: 120px;
+  /*height: 120px;*/
 }
 </style>

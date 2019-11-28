@@ -6,9 +6,10 @@
     <div class="hero-image"></div>
     <div class="container centered">
         <div class="twelve columns">
-            <h1 class="separator">Research Data Repository</h1>
+            <h1 class="main-heading">Tethys</h1>
+            <h2 class="separator">Research Data Repository</h1>
             <h2>
-                Data Publisher for Geo- and Atmospheric Science Austria
+                Data Publisher for Geoscience Austria
             </h2>
         </div>
     </div>

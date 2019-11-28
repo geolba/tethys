@@ -92,14 +92,14 @@
     <div class="pure-u-1 pure-u-md-1">         
         {{-- <canvas id="myChart" width="400" height="260"></canvas>  --}}
         <div class="php-info">
-            @php
+            {{-- @php
                 ob_start();
                 phpinfo();
                 $pinfo = ob_get_contents();
                 ob_end_clean();
                 $pinfo = preg_replace( '%^.*<body>(.*)</body>.*$%ms','$1',$pinfo);
                 echo $pinfo;
-            @endphp
+            @endphp --}}
 </div>
     </div>
 </div>
