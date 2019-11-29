@@ -526,7 +526,7 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.keywords">
                                 <td>
-                                    <input name="Keyword Value" class="form-control" placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="{required: true, unique: [dataset.keywords, index]}"
+                                    <input name="Keyword Value" class="form-control" placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="{required: true, unique: [dataset.keywords, index, 'value']}"
                                         data-vv-scope="step-2" />
                                 </td>
                                 <td>

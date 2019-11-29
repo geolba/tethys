@@ -32,7 +32,7 @@ import MyAutocomplete from './components/MyAutocomplete.vue';
 import messagesEN from './strings/messages/en.js';
 import VeeValidate from 'vee-validate';
 import Dataset from './components/Dataset';
-import LocationsMap from './components/LocationsMap.vue';
+import LocationsMap from './components/locations-map.vue';
 import VueCountdown from './components/vue-countdown';
 import PersonTable from './components/PersonTable.vue';
 import modal from './components/ShowModal.vue';
@@ -122,10 +122,10 @@ const app = new Vue({
 
             }
         });
-        const isUnique = (value, [objectArray, index]) =>
+        const isUnique = (value, [objectArray, index, attribute]) =>
             new Promise(resolve => {
                 setTimeout(() => {
-                    if (objectArray.some((item, i) => item.value === value && index !== i)) {
+                    if (objectArray.some((item, i) => item[attribute] === value && index !== i)) {
                         return resolve({
                             valid: false,
                             data: {

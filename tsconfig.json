@@ -10,5 +10,12 @@
   },
     "include": [
         "resources/js/**/*"
+    ],
+    "files": [
+      "resources/js/typings.d.ts",
+      "resources/js/index.d.ts"
+    ],
+    "exclude": [
+      "node_modules"
     ]
 }

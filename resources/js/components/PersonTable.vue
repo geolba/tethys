@@ -47,12 +47,13 @@
             />
           </td>
           <td>
+             <!-- v-validate="'required|email'" -->
             <input
               name="email"
               class="form-control"
               placeholder="[EMAIL]"
-              v-model="item.email"
-              v-validate="'required|email'"
+              v-model="item.email"             
+              v-validate="{required: true, email: true, unique: [personlist, index, 'email']}"
               v-bind:readonly="item.status==1"
               data-vv-scope="step-1"
             />
