@@ -162,7 +162,7 @@ export default class LocationsMap extends Vue {
       },
       _buildButton: function(){
         this._link = L.DomUtil.create('a','simplebutton-action',this._container);
-        this._link.href = "#";
+        // this._link.href = "#";
         if(this.options.id) {
           this._link.id = this.options.id;
         }

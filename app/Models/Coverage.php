@@ -37,15 +37,15 @@ class Coverage extends Model
 
     public function setTimeAbsolutAttribute($value)
     {
-        $this->attributes['time_absolut'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y H:i:s', $value);
+        $this->attributes['time_absolut'] = \Illuminate\Support\Carbon::createFromFormat('d-m-Y H:i:s', $value);
     }
     public function setTimeMinAttribute($value)
     {
-        $this->attributes['time_min'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y H:i:s', $value);
+        $this->attributes['time_min'] = \Illuminate\Support\Carbon::createFromFormat('d-m-Y H:i:s', $value);
     }
     public function setTimeMaxAttribute($value)
     {
-        $this->attributes['time_max'] = \Illuminate\Support\Carbon::createFromFormat('d.m.Y H:i:s', $value);
+        $this->attributes['time_max'] = \Illuminate\Support\Carbon::createFromFormat('d-m-Y H:i:s', $value);
     }
 
     /**

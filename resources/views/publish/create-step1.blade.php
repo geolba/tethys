@@ -450,22 +450,23 @@
                         
                             <div v-show="time === 'absolut'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('time_absolut', 'time absolut: ') !!} 
-                                {!! Form::datetimelocal('time_absolut', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
-                                'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'step' => 1,
-                                "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!}
+                                {{-- {!! Form::datetime('time_absolut', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm',
+                                'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'format' => 'yyyy-MM-dd HH:mm',
+                                "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!} --}}
+                                <datetime name="time_absolut" v-validate="this.isTimeAbsolut ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='dataset.coverage.time_absolut' ></datetime>
                                 {{-- <datetime name="time_absolut" format="MM-DD-YYYY H:i:s" width="300px" v-model="dataset.coverage.time_absolut"></datetime> --}}
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('time_min', 'time min: ') !!} 
-                                {!! Form::date('time_min', null, ['class' => 'pure-u-23-24',
-                                'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2',
-                                "v-validate" => "this.isTimeRange ? 'required' : '' "]) !!}
+                                {!! Form::datetimelocal('time_min', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss', 
+                                'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', 'step' => 1,
+                                "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!}
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('timemax', 'time max: ') !!} 
-                                {!! Form::date('time_max', null, ['class' => 'pure-u-23-24', 
-                                'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2',
-                                "v-validate" => "this.isTimeRange ? 'required' : '' "]) !!}
+                                {!! Form::datetimelocal('time_max', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
+                                'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', 'step' => 1,
+                                "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!}
                             </div>                            
                         </div>
 

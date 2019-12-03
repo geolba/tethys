@@ -36,6 +36,7 @@ import LocationsMap from './components/locations-map.vue';
 import VueCountdown from './components/vue-countdown';
 import PersonTable from './components/PersonTable.vue';
 import modal from './components/ShowModal.vue';
+import datetime from 'vuejs-datetimepicker';
 // import datetime from 'vuejs-datetimepicker';
 // import { Validator } from 'vee-validate';
 import VueToast from 'vue-toast-notification';
@@ -63,7 +64,7 @@ Vue.use(VeeValidate, {
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const app = new Vue({
     el: '#app',
-    components: { MyAutocomplete, LocationsMap, VueCountdown, modal, PersonTable },
+    components: { MyAutocomplete, LocationsMap, VueCountdown, modal, PersonTable, datetime  },
     data() {
         return {
             list: [
