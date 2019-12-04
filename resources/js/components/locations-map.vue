@@ -56,7 +56,7 @@
           v-validate="'decimal'"
         />
       </div>
-      <input type="button" v-on:click="zoomTo" value="validate coordinates" />
+      <input type="button" v-if="validBoundingBox" v-on:click="zoomTo" value="validate coordinates" />
     </div>
   </div>
 </template>

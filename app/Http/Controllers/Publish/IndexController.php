@@ -221,7 +221,7 @@ class IndexController extends Controller
             'type' => 'required|min:4',
             'belongs_to_bibliography' => 'required|boolean',
         ]);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
             //TODO Handle your data
             return response()->json(array(
                 'response' => 'success'));
@@ -275,7 +275,7 @@ class IndexController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
             //store dataset todo
             //$data = $request->all();
             $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references', 'titles');
@@ -446,7 +446,7 @@ class IndexController extends Controller
                 // }
 
                 if (isset($data['coverage'])) {
-                    $formCoverage = $request->input('coverage');
+                    $formCoverage = (array) $request->input('coverage');
                     $coverage = new Coverage($formCoverage);
                     $dataset->coverage()->save($coverage);
                     //$coverage->dataset()->associate($dataset)->save();
@@ -531,7 +531,7 @@ class IndexController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
             //store dataset todo
             //$data = $request->all();
             $input = $request->except('files', 'licenses', 'abstract_main', 'title_main', 'references');

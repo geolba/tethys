@@ -1,5 +1,6 @@
 // import "leaflet";
 import * as L from "leaflet";
+import DeleteButton from "./DeleteButton";
 import "leaflet-draw";
 import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
 import VueToast from "vue-toast-notification";
@@ -25,14 +26,7 @@ export default class LocationsMap extends Vue {
     duration: 3000
   };
 
-  created() {
-    // this.$validator.extend("boundingBox", {
-    //   getMessage: field => "At least one " + field + " needs to be checked.",
-    //   validate: (value, [testProp]) => {
-    //     const options = this.dataset.checkedLicenses;
-    //     return value || options.some(option => option[testProp]);
-    //   }
-    // });
+  created() {   
   }
 
   zoomTo() {
@@ -129,61 +123,8 @@ export default class LocationsMap extends Vue {
     var drawControl = new L.Control.Draw(drawPluginOptions);
     map.addControl(drawControl);
 
-    var customControl = L.Control.extend({
-      options: {
-        position: "topleft",  
-        faIcon: 'fa-trash'      
-        // faIcon: 'fa-check-circle'
-      },
-      //constructor:
-      initialize: function(options) {     
-        //util.mixin(this.options, options);      
-        L.Util.setOptions(this, options);
-        // properties
-        this.geolocation = options.geolocation;
-      },
-      onAdd: function(map) {
-        this._map = map;
-        this._container = L.DomUtil.create(
-          "div",
-          "leaflet-bar leaflet-control leaflet-control-custom"
-        );
-      
-        this._container.style.backgroundColor = "white";
-        this._container.style.width = "30px";
-        this._container.style.height = "30px";
-        this._buildButton();
-
-        // container.onclick = function() {
-        //   console.log("buttonClicked");
-        // };
-      
-        return  this._container;
-      },
-      _buildButton: function(){
-        this._link = L.DomUtil.create('a','simplebutton-action',this._container);
-        // this._link.href = "#";
-        if(this.options.id) {
-          this._link.id = this.options.id;
-        }
-        if(this.options.text) {
-          this._link.innerHTML = this.options.text;
-        }else{
-          L.DomUtil.create('i','fa ' + this.options.faIcon, this._link);
-        }
-        L.DomEvent.on(this._link, 'click', function(ev) {
-            drawnItems.clearLayers();
-            this.options.geolocation.xmin = "";
-            this.options.geolocation.ymin = "";
-            this.options.geolocation.xmax = "";
-            this.options.geolocation.ymax = "";
-            this._map.fitBounds(bounds);
-          },
-          this);
-      }
-    
-    });  
-    map.addControl(new customControl({ geolocation: this.geolocation }));   
+    var customControl = new DeleteButton({ geolocation: this.geolocation, drawnItems: drawnItems, bounds: bounds  });
+    map.addControl(customControl);   
 
     map.on(
       L.Draw.Event.CREATED,
@@ -223,4 +164,12 @@ export default class LocationsMap extends Vue {
       this
     );
   }
+
+  get validBoundingBox(): boolean {
+    if (this.geolocation.xmin != "" && this.geolocation.ymin != "" && this.geolocation.xmax != "" && this.geolocation.ymax != "" ) {
+        return true;
+    }
+    return false;
+  }
+
 }

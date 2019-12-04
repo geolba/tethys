@@ -264,14 +264,14 @@
                             {{-- <button type="button" class="btn" @click="showModal">
                                 Open Modal!
                             </button>                       --}}
-                          <modal v-if="isModalVisible" @close="closeModal" >
+                          <Modal v-if="isModalVisible" @close="closeModal" >
                             <template slot="header">
                                     {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}                                    
                             </template>  
                             <template slot="body">
                                 Die im GBA-RDR veröffentlichten Informationen und Metadaten unterliegen grundsätzlich den Open-Access-Bedingungen, wenn nicht anders angegeben. Die publizierten Datensets unterliegen einem definierten Zugriffs- sowie Nutzungsrecht welche in den Metadaten eindeutig beschrieben sind.                                   
                             </template>                           
-                          </modal>
+                          </Modal>
                        
 
                     
@@ -458,15 +458,17 @@
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('time_min', 'time min: ') !!} 
-                                {!! Form::datetimelocal('time_min', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss', 
+                                {{-- {!! Form::datetimelocal('time_min', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss', 
                                 'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', 'step' => 1,
-                                "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!}
+                                "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
+                                <datetime name="time_min" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='dataset.coverage.time_min' ></datetime>
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('timemax', 'time max: ') !!} 
-                                {!! Form::datetimelocal('time_max', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
+                                {{-- {!! Form::datetimelocal('time_max', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
                                 'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', 'step' => 1,
-                                "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!}
+                                "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
+                                <datetime name="time_max" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='dataset.coverage.time_max' ></datetime>
                             </div>                            
                         </div>
 
