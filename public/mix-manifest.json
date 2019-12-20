@@ -4,6 +4,7 @@
     "/backend/publish/datasetPublish.js": "/backend/publish/datasetPublish.js",
     "/css/app1.css": "/css/app1.css",
     "/css/font-awesome.css": "/css/font-awesome.css",
+    "/backend/publish/mainEditDataset.js": "/backend/publish/mainEditDataset.js",
     "/backend/publish/releaseDataset.js": "/backend/publish/releaseDataset.js",
     "/js/app.js": "/js/app.js",
     "/js/lib.js": "/js/lib.js",

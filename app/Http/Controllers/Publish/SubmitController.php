@@ -9,7 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
+// use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 // for edit actions:
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,8 @@ use App\Models\Title;
 use App\Models\Description;
 use App\Models\File;
 use App\Models\Subject;
+use App\Models\DatasetReference;
+use Exception;
 
 class SubmitController extends Controller
 {
@@ -28,7 +31,7 @@ class SubmitController extends Controller
         //$this->middleware('auth');
     }
 
-    public function index(): View
+    public function index(): \Illuminate\Contracts\View\View
     {
         $user = Auth::user();
         $user_id = $user->id;
@@ -42,7 +45,7 @@ class SubmitController extends Controller
             ->with('user:id,login')
             ->orderBy('server_date_modified', 'desc')
             ->get();
-        return view('workflow.submitter.index', [
+        return View::make('workflow.submitter.index', [
             'datasets' => $myDatasets,
         ]);
     }
@@ -53,7 +56,7 @@ class SubmitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): View
+    public function edit($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::findOrFail($id);
         $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
@@ -70,26 +73,30 @@ class SubmitController extends Controller
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
-
-        //$options = License::all();
-        $options = License::all('id', 'name_long');
-        $checkeds = $dataset->licenses->pluck('id')->toArray();
+    
+        // $options = License::all('id', 'name_long');
+        $licenses = License::select('id', 'name_long', 'link_licence')
+            ->orderBy('sort_order')
+            ->get();
+        // $checkeds = $dataset->licenses->pluck('id')->toArray();
+        $checkeds = $dataset->licenses->first()->id;
+        
+        
         $keywordTypes = ['uncontrolled' => 'uncontrolled', 'swd' => 'swd'];
 
         $referenceTypes = ["rdr-id", "arXiv", "bibcode", "DOI", "EAN13", "EISSN", "Handle", "IGSN", "ISBN", "ISSN", "ISTC", "LISSN", "LSID", "PMID", "PURL", "UPC", "URL", "URN"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References"]; 
-        // "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
     
-        return view(
+        return View::make(
             'workflow.submitter.edit',
             compact(
                 'dataset',
                 'projects',
-                'options',
+                'licenses',
                 'checkeds',
                 'years',
                 'languages',
@@ -129,12 +136,18 @@ class SubmitController extends Controller
                 'nullable',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
+            'keywords.*.value' => 'required|string',
+            'keywords.*.type' => 'required|string',
+            'files.*.label' => 'required|string',
         ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
+        $customMessages = [
+            'keywords.*.type.required' => 'The types of all keywords are required.'
+        ];
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+        if (!$validator->fails()) {
             $dataset = Dataset::findOrFail($id);
             $data = $request->all();
-            $input = $request->except('abstracts', 'licenses', 'titles', 'coverage', '_method', '_token');
+            $input = $request->except('abstracts', 'licenses', 'titles', 'coverage', 'subjects', 'files', '_method', '_token');
        
             $licenses = $request->input('licenses');
             //$licenses = $input['licenses'];
@@ -147,7 +160,9 @@ class SubmitController extends Controller
                     $title = Title::findOrFail($key);
                     $title->value = $formTitle['value'];
                     $title->language = $formTitle['language'];
-                    $title->save();
+                    if ($title->isDirty()) {
+                        $title->save();
+                    }
                 }
             }
 
@@ -158,7 +173,9 @@ class SubmitController extends Controller
                     $abstract = Description::findOrFail($key);
                     $abstract->value = $formAbstract['value'];
                     $abstract->language = $formAbstract['language'];
-                    $abstract->save();
+                    if ($abstract->isDirty()) {
+                        $abstract->save();
+                    }
                 }
             }
 
@@ -171,18 +188,22 @@ class SubmitController extends Controller
                     $reference->label = $formReference['label'];
                     $reference->type = $formReference['type'];
                     $reference->relation = $formReference['relation'];
-                    $reference->save();
+                    if ($reference->isDirty()) {
+                        $reference->save();
+                    }
                 }
             }
 
             //save the keywords:
-            $keywords = $request->input('keywords');
+            $keywords = $request->input('subjects');
             if (is_array($keywords) && count($keywords) > 0) {
                 foreach ($keywords as $key => $formKeyword) {
                     $subject = Subject::findOrFail($key);
                     $subject->value = $formKeyword['value'];
                     $subject->type = $formKeyword['type'];
-                    $subject->save();
+                    if ($subject->isDirty()) {
+                        $subject->save();
+                    }
                 }
             }
 
@@ -192,20 +213,28 @@ class SubmitController extends Controller
                 foreach ($files as $key => $formFile) {
                     $file = File::findOrFail($key);
                     $file->label = $formFile['label'];
-                    $file->save();
+                    if ($file->isDirty()) {
+                        $file->save();
+                    }
                 }
             }
 
             // save coverage
-            if (isset($data['coverage'])) {
+            if (isset($data['coverage']) && !$this->containsOnlyNull($data['coverage'])) {
                 $formCoverage = $request->input('coverage');
                 $coverage = $dataset->coverage()->updateOrCreate(
                     ['dataset_id' => $dataset->id],
                     $formCoverage
                 );
+            } elseif (isset($data['coverage']) && $this->containsOnlyNull($data['coverage']) 
+            && !is_null($dataset->coverage)) {
+                $dataset->coverage()->delete();
             }
 
-            if (!$dataset->isDirty(dataset::UPDATED_AT)) {
+            $dataset->fill($input);
+            // $dataset->creating_corporation = "Peter";
+
+            if (!$dataset->isDirty()) {
                 $time = new \Illuminate\Support\Carbon();
                 $dataset->setUpdatedAt($time);
             }
@@ -222,10 +251,17 @@ class SubmitController extends Controller
             //     'success' => false,
             //     'errors' => $validator->errors()->all(),
             // ], 422);
-            return  back()
+            return  back()->withInput()
             ->withErrors($validator->errors()->all());
         }
         throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
+    }
+
+    private function containsOnlyNull($input)
+    {
+        return empty(array_filter($input, function ($a) {
+            return $a !== null;
+        }));
     }
 
 
@@ -235,7 +271,7 @@ class SubmitController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function release($id): View
+    public function release($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
         
@@ -244,7 +280,7 @@ class SubmitController extends Controller
         })->pluck('login', 'id');
         //$editors = Role::where('name', 'editor')->first()->users()->get();
 
-        return view('workflow.submitter.release', [
+        return View::make('workflow.submitter.release', [
             'dataset' => $dataset,
             'editors' => $editors,
         ]);
@@ -288,11 +324,11 @@ class SubmitController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function delete($id): View
+    public function delete($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
         
-        return view('workflow.submitter.delete', [
+        return View::make('workflow.submitter.delete', [
             'dataset' => $dataset
         ]);
     }

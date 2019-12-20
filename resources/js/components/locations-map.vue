@@ -8,10 +8,10 @@
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
         <label for="xmin">xmin:</label>
         <input
-          name="xmin"
+          name="coverage[x_min]"          
           type="text"
           class="pure-u-23-24"
-          v-model="geolocation.xmin"
+          v-model="geolocation.x_min"
           data-vv-scope="step-2"
           id="xmin"
           v-validate="'decimal'"
@@ -21,10 +21,10 @@
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
         <label for="ymin">ymin:</label>
         <input
-          name="ymin"
+          name="coverage[y_min]"
           type="text"
           class="pure-u-23-24"
-          v-model="geolocation.ymin"
+          v-model="geolocation.y_min"
           data-vv-scope="step-2"
           id="ymin"
           v-validate="'decimal'"
@@ -34,10 +34,10 @@
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
         <label for="xmax">xmax:</label>
         <input
-          name="xmax"
+          name="coverage[x_max]"
           type="text"
           class="pure-u-23-24"
-          v-model="geolocation.xmax"
+          v-model="geolocation.x_max"
           data-vv-scope="step-2"
           id="xmax"
           v-validate="'decimal'"
@@ -47,10 +47,10 @@
       <div class="pure-u-1 pure-u-md-1-2 pure-div">
         <label for="ymax">ymax:</label>
         <input
-          name="ymax"
+          name="coverage[y_max]"
           type="text"
           class="pure-u-23-24"
-          v-model="geolocation.ymax"
+          v-model="geolocation.y_max"
           data-vv-scope="step-2"
           id="ymax"
           v-validate="'decimal'"

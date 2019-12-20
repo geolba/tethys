@@ -136,11 +136,11 @@ export default class LocationsMap extends Vue {
         // if (type === "rectancle") {
         // layer.bindPopup("A popup!" + layer.getBounds().toBBoxString());
         var bounds = layer.getBounds();
-        this.geolocation.xmin = bounds.getSouthWest().lng;
-        this.geolocation.ymin = bounds.getSouthWest().lat;
+        this.geolocation.x_min = bounds.getSouthWest().lng;
+        this.geolocation.y_min = bounds.getSouthWest().lat;
         // console.log(this.geolocation.xmin);
-        this.geolocation.xmax = bounds.getNorthEast().lng;
-        this.geolocation.ymax = bounds.getNorthEast().lat;
+        this.geolocation.x_max = bounds.getNorthEast().lng;
+        this.geolocation.y_max = bounds.getNorthEast().lat;
         // }
 
         drawnItems.addLayer(layer);
@@ -166,7 +166,7 @@ export default class LocationsMap extends Vue {
   }
 
   get validBoundingBox(): boolean {
-    if (this.geolocation.xmin != "" && this.geolocation.ymin != "" && this.geolocation.xmax != "" && this.geolocation.ymax != "" ) {
+    if (this.geolocation.x_min != "" && this.geolocation.y_min != "" && this.geolocation.x_max != "" && this.geolocation.y_max != "" ) {
         return true;
     }
     return false;

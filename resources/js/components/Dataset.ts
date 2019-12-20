@@ -4,7 +4,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 function initialState() {
   return {
     type: "",
-    state: "",
+    server_state: "",
     rights: null,
     project_id: "",
 
@@ -28,27 +28,27 @@ function initialState() {
     //   ymax: ""
     // },
     coverage: {
-      xmin: "",
-      ymin: "",
-      xmax: "",
-      ymax: "",
-      elevation_min: "",
-      elevation_max: "",
-      elevation_absolut: "",
-      depth_min: "",
-      depth_max: "",
-      depth_absolut: "",
-      time_min: "",
-      time_max: "",
-      time_absolut: ""
+      x_min: null,
+      y_min:null,
+      x_max: null,
+      y_max: null,
+      elevation_min: null,
+      elevation_max: null,
+      elevation_absolut: null,
+      depth_min: null,
+      depth_max: null,
+      depth_absolut: null,
+      time_min: null,
+      time_max: null,
+      time_absolut: null
     },
     checkedAuthors: [],
     checkedLicenses: [], // [],
     files: [],
-    keywords: [],
+    subjects: [],
     references: [],
     titles: [],
-    descriptions: [],
+    abstratcs: [],
     checkedContributors: [],
     // checkedSubmitters: [],
 
@@ -66,7 +66,7 @@ export default class Dataset extends Vue {
   // }
   initialState = {};
   type = "";
-  state = "";
+  server_state = "";
   rights = null;
   project_id = "";
 
@@ -90,10 +90,10 @@ export default class Dataset extends Vue {
   //   ymax: ""
   // },
   coverage = {
-    xmin: "",
-    ymin: "",
-    xmax: "",
-    ymax: "",
+    x_min: "",
+    y_min: "",
+    x_max: "",
+    y_max: "",
     elevation_min: "",
     elevation_max: "",
     elevation_absolut: "",
@@ -107,10 +107,10 @@ export default class Dataset extends Vue {
   checkedAuthors = [];
   checkedLicenses = [];
   files = [];
-  keywords = [];
+  subjects = [];
   references = [];
   titles = [];
-  descriptions = [];
+  abstracts = [];
   checkedContributors = [];
   // checkedSubmitters: [],
 

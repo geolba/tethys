@@ -6,23 +6,57 @@
         <span>Edit Dataset</span>
     </h3>
 </div>
-    
+
+
+@if (count($errors) > 0)
+  <div class="alert alert-danger">
+    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <ul>
+       @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+       @endforeach
+    </ul>
+  </div>
+@endif
+
 <div class="pure-g box-content">
 
-    <div class="pure-u-1 pure-u-md-3-3">        
+    <div class="pure-u-1 pure-u-md-3-3">
         <div>
             <a href="{{ route('publish.workflow.submit.index') }}" class="pure-button button-small">
                 <i class="fa fa-chevron-left"></i>
                 <span>BACK</span>
-            </a>              
+            </a>
         </div>
-        <div>
-            {!! Form::model($dataset, ['method' => 'POST', 'route' => ['publish.workflow.submit.update', $dataset->id], 'class' => 'pure-form', 'enctype' => 'multipart/form-data' ]) !!}
-                @include('workflow/submitter/_form', ['submitButtonText' => 'Edit Dataset', 'bookLabel' => 'Edit Dataset.'])
-                @include('errors._errors')
+        <div id="app1">
+            {!! Form::model($dataset, ['method' => 'POST', 'route' => ['publish.workflow.submit.update', $dataset->id], 'id' => 'submitEditForm',
+            'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'onSubmit' ]) !!}
+            @include('workflow/submitter/_form', ['submitButtonText' => 'Edit Dataset', 'bookLabel' => 'Edit Dataset.'])
+            {{-- @include('errors._errors') --}}
+            
+            <div v-if="errors.items.length > 0">
+                <b>Please correct the following error(s):</b>
+                <ul class="alert validation-summary-errors">
+                    <li style="margin-left:5px;" v-for="error in errors.items">@{{ error.msg }}</li>
+                </ul>
+            </div>
             {!! Form::close() !!}
-        </div>           
+        </div>
     </div>
 
 </div>
+@stop
+
+@section('after-scripts')
+<script>
+    window.Laravel = <?php echo json_encode([
+            'csrf_token' => csrf_token(),
+            'form' => $dataset,
+            'projects' => $projects,
+            'licenses'  => $licenses,
+            'checkeds' => $checkeds
+        ]); ?>        
+</script>
+
+<script type="text/javascript" src="{{  asset('backend/publish/mainEditDataset.js') }}"></script>
 @stop

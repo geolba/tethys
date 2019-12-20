@@ -90,7 +90,7 @@ import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
   components: { draggable }
 })
 export default class PersonTable extends Vue {
-  @Inject("$validator") readonly $validator!: string;
+  @Inject("$validator") readonly $validator;
   // inject: {
   //   $validator: "$validator"
   // },

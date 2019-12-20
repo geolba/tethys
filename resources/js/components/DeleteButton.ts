@@ -7,7 +7,6 @@ export default class DeleteButton extends L.Control {
     faIcon: 'fa-trash',
     id: "",
     text: ""
-    // faIcon: 'fa-check-circle'
   };
 
   geolocation = null;
@@ -15,16 +14,6 @@ export default class DeleteButton extends L.Control {
   bounds = null;
   _map = null;
   _container = null;
-
-  //constructor:
-  // initialize(options) {
-  //   //util.mixin(this.options, options);      
-  //   L.Util.setOptions(this, options);
-  //   // properties
-  //   this.geolocation = options.geolocation;
-  //   this.drawnItems = options.drawnItems;
-  //   this.bounds = options.bounds;
-  // }
 
   constructor(options) {
     super();
@@ -47,11 +36,6 @@ export default class DeleteButton extends L.Control {
     this._container.style.width = "30px";
     this._container.style.height = "30px";
     this._buildButton();
-
-    // container.onclick = function() {
-    //   console.log("buttonClicked");
-    // };
-
     return this._container;
   }
 
@@ -68,10 +52,10 @@ export default class DeleteButton extends L.Control {
     }
     L.DomEvent.on(_link, 'click', function (ev) {
       this.drawnItems.clearLayers();
-      this.options.geolocation.xmin = "";
-      this.options.geolocation.ymin = "";
-      this.options.geolocation.xmax = "";
-      this.options.geolocation.ymax = "";
+      this.options.geolocation.x_min = "";
+      this.options.geolocation.y_min = "";
+      this.options.geolocation.x_max = "";
+      this.options.geolocation.y_max = "";
       this._map.fitBounds(this.bounds);
     },
       this);

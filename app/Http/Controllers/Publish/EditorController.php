@@ -16,11 +16,13 @@ use App\Models\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+// use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 // use App\Models\Coverage;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use \Exception;
 
 class EditorController extends Controller
 {
@@ -34,7 +36,7 @@ class EditorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(): View
+    public function index(): \Illuminate\Contracts\View\View
     {
         $user = Auth::user();
         $user_id = $user->id;
@@ -50,7 +52,7 @@ class EditorController extends Controller
         })
         ->orderBy('server_date_modified', 'desc')
         ->get();
-        return view('workflow.editor.index', compact('datasets'));
+        return View::make('workflow.editor.index', compact($datasets));
     }
 
     /**
@@ -59,11 +61,11 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function receive($id): View
+    public function receive($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
 
-        return view('workflow.editor.receive', [
+        return View::make('workflow.editor.receive', [
             'dataset' => $dataset,
         ]);
     }
@@ -90,7 +92,7 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): View
+    public function edit($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::findOrFail($id);
         $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
@@ -109,8 +111,13 @@ class EditorController extends Controller
             ->pluck('part1', 'part1');
 
         //$options = License::all();
-        $options = License::all('id', 'name_long');
-        $checkeds = $dataset->licenses->pluck('id')->toArray();
+        // $options = License::all('id', 'name_long');
+        $licenses = License::select('id', 'name_long', 'link_licence')
+        ->orderBy('sort_order')
+        ->get();
+        //$checkeds = $dataset->licenses->pluck('id')->toArray();
+        $checkeds = $dataset->licenses->first()->id;
+
         $keywordTypes = ['uncontrolled' => 'uncontrolled', 'swd' => 'swd'];
 
         $referenceTypes = ["rdr-id", "arXiv", "bibcode", "DOI", "EAN13", "EISSN", "Handle", "IGSN", "ISBN", "ISSN", "ISTC", "LISSN", "LSID", "PMID", "PURL", "UPC", "URL", "URN"];
@@ -121,12 +128,12 @@ class EditorController extends Controller
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
     
-        return view(
+        return View::make(
             'workflow.editor.edit',
             compact(
                 'dataset',
                 'projects',
-                'options',
+                'licenses',
                 'checkeds',
                 'years',
                 'languages',
@@ -168,7 +175,7 @@ class EditorController extends Controller
             ],
         ];
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
             $dataset = Dataset::findOrFail($id);
             $data = $request->all();
             $input = $request->except('abstracts', 'licenses', 'titles', 'coverage', '_method', '_token');
@@ -271,7 +278,7 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function approve($id): View
+    public function approve($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
        
@@ -279,7 +286,7 @@ class EditorController extends Controller
             $q->where('name', 'reviewer');
         })->pluck('login', 'id');
 
-        return view('workflow.editor.approve', [
+        return View::make('workflow.editor.approve', [
             'dataset' => $dataset,
             'reviewers' => $reviewers,
         ]);
@@ -320,17 +327,17 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function reject($id): View
+    public function reject($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
-        return view('workflow.editor.reject', [
+        return View::make('workflow.editor.reject', [
             'dataset' => $dataset,
         ]);
     }
 
     public function rejectUpdate(Request $request, $id)
     {
-        $this->validate(request(), [
+        $this->validate($request, [
             'reject_editor_note' => 'required|min:10|max:500',
             'server_state' => 'required'
         ]);
@@ -353,7 +360,7 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function publish($id): View
+    public function publish($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::query()
         ->with([
@@ -363,7 +370,7 @@ class EditorController extends Controller
             }
         ])->findOrFail($id);
 
-        return view('workflow.editor.publish', [
+        return View::make('workflow.editor.publish', [
             'dataset' => $dataset,
         ]);
     }

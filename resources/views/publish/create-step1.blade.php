@@ -152,7 +152,7 @@
                             <button class="pure-button button-small" @click.prevent="addDescription()">+</button>
                         </div>
                     </div>
-                    <table class="pure-table pure-table-horizontal"  v-if="dataset.descriptions.length">
+                    <table class="pure-table pure-table-horizontal"  v-if="dataset.abstracts.length">
                         <thead>
                             <tr>
                                 <th style="width: 20px;">Description</th>
@@ -162,7 +162,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in dataset.descriptions">
+                            <tr v-for="(item, index) in dataset.abstracts">
                                 <td>
                                     <textarea rows="3" cols="40" name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" data-vv-as="Additional Description" v-validate="'required|min:4'" data-vv-scope="step-1"></textarea>
                                 </td>
@@ -253,35 +253,23 @@
                         <input class="form-checkbox" name="rights" id="rights" type="checkbox" v-model="dataset.rights"  v-validate="'required'" data-vv-scope="step-1"> 
                         terms and conditions                        
                     </label>
-                    <i class="fas fa-info-circle" @click="showModal" style="font-size:24px"></i>     
-                   
-                       
-                            {{-- <button @click="showModal" class="pure-button button-small is-success">
-                                {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
-                            </button> --}}
-                                                        
-                            <!-- use the modal component, pass in the prop -->
-                            {{-- <button type="button" class="btn" @click="showModal">
-                                Open Modal!
-                            </button>                       --}}
-                          <Modal v-if="isModalVisible" @close="closeModal" >
-                            <template slot="header">
-                                    {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}                                    
-                            </template>  
-                            <template slot="body">
-                                Die im GBA-RDR veröffentlichten Informationen und Metadaten unterliegen grundsätzlich den Open-Access-Bedingungen, wenn nicht anders angegeben. Die publizierten Datensets unterliegen einem definierten Zugriffs- sowie Nutzungsrecht welche in den Metadaten eindeutig beschrieben sind.                                   
-                            </template>                           
-                          </Modal>
-                       
 
+                    <i class="fas fa-info-circle" @click="showModal" style="font-size:24px"></i>
+                    <Modal v-if="isModalVisible" @close="closeModal" >
+                    <template slot="header">
+                            {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
+                    </template>  
+                    <template slot="body">
+                        Die im GBA-RDR veröffentlichten Informationen und Metadaten unterliegen grundsätzlich den Open-Access-Bedingungen, wenn nicht anders angegeben. Die publizierten Datensets unterliegen einem definierten Zugriffs- sowie Nutzungsrecht welche in den Metadaten eindeutig beschrieben sind.                                   
+                    </template>                           
+                    </Modal>
+
+                    <br />
+                    <i v-show="errors.has('step-1.rights')" class="fas fa-exclamation-circle"></i>
+                    <span v-show="errors.has('step-1.rights')" class="text-danger">@{{ errors.first('step-1.rights') }}</span>
                     
-
-                        <br />
-                        <i v-show="errors.has('step-1.rights')" class="fas fa-exclamation-circle"></i>
-                        <span v-show="errors.has('step-1.rights')" class="text-danger">@{{ errors.first('step-1.rights') }}</span>
-                        
-                   
-                        <span class="help-block">You must agree to continue</span> 
+                
+                    <span class="help-block">You must agree to continue</span> 
                 </div>
 
                 <br />
@@ -517,7 +505,7 @@
                     <legend>Dataset Keywords</legend>
                     <input type="hidden" v-validate:keywords_length="'min_value:3'" data-vv-scope="step-2" data-vv-as="keyword list" name="keywords_list">
                     <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
-                    <table class="table table-hover" v-if="dataset.keywords.length">
+                    <table class="table table-hover" v-if="dataset.subjects.length">
                         <thead>
                             <tr>
                                 <th style="width: 20px;">Keyword</th>
@@ -527,9 +515,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in dataset.keywords">
+                            <tr v-for="(item, index) in dataset.subjects">
                                 <td>
-                                    <input name="Keyword Value" class="form-control" placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="{required: true, unique: [dataset.keywords, index, 'value']}"
+                                    <input name="Keyword Value" class="form-control" placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="{required: true, unique: [dataset.subjects, index, 'value']}"
                                         data-vv-scope="step-2" />
                                 </td>
                                 <td>
@@ -628,12 +616,7 @@
                         Uploading @{{ fileCount }} files...
                     </p>
                 </div>
-                {{-- <button @click.prevent="resetDropbox()" v-bind:disabled="isInitial" class="pure-button is-warning">Reset Dropbox</button>                --}} {{--
-                <ul class="list-unstyled">
-                    <li v-for="(item, index) in dataset.files">
-                        @{{ item.name }} <i class="fa fa-remove"></i><span class="remove-file" v-on:click="removeFile(index)"> Remove</span>
-                    </li>
-                </ul> --}}
+             
              
                 <table class="table table-hover"  v-if="dataset.files.length">
                     <thead>

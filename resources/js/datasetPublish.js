@@ -150,7 +150,7 @@ const app = new Vue({
     },
     computed: {
         keywords_length() {
-            return this.dataset.keywords.length;
+            return this.dataset.subjects.length;
         },
         isInitial() {
             return this.currentStatus === STATUS_INITIAL;
@@ -249,7 +249,7 @@ const app = new Vue({
             formData.append('server_state', status);
             formData.append('type', this.dataset.type);
             formData.append('language', this.dataset.language);
-            // formData.append('server_state', this.dataset.state);
+            // formData.append('server_state', this.dataset.server_state);
             formData.append('rights', Number(this.dataset.rights));
             formData.append('creating_corporation', this.dataset.creating_corporation);
             formData.append('project_id', this.dataset.project_id);
@@ -262,10 +262,10 @@ const app = new Vue({
 
             if (this.dataset.coverage.xmin !== "" && this.dataset.coverage.ymin != '' &&
                 this.dataset.coverage.xmax !== '' && this.dataset.coverage.ymax !== '') {
-                formData.append('coverage[x_min]', this.dataset.coverage.xmin);
-                formData.append('coverage[y_min]', this.dataset.coverage.ymin);
-                formData.append('coverage[x_max]', this.dataset.coverage.xmax);
-                formData.append('coverage[y_max]', this.dataset.coverage.ymax);
+                formData.append('coverage[x_min]', this.dataset.coverage.x_min);
+                formData.append('coverage[y_min]', this.dataset.coverage.y_min);
+                formData.append('coverage[x_max]', this.dataset.coverage.x_max);
+                formData.append('coverage[y_max]', this.dataset.coverage.y_max);
             }
 
             if (this.isElevationAbsolut) {
@@ -337,8 +337,8 @@ const app = new Vue({
                 formData.append('references[' + i + '][relation]', reference.relation);
             }
 
-            for (var i = 0; i < this.dataset.keywords.length; i++) {
-                let keyword = this.dataset.keywords[i];
+            for (var i = 0; i < this.dataset.subjects.length; i++) {
+                let keyword = this.dataset.subjects[i];
                 formData.append('keywords[' + i + '][value]', keyword.value);
                 formData.append('keywords[' + i + '][type]', keyword.type);
                 formData.append('keywords[' + i + '][language]', keyword.language);
@@ -351,8 +351,8 @@ const app = new Vue({
                 formData.append('titles[' + i + '][type]', title.type);
             }
 
-            for (var i = 0; i < this.dataset.descriptions.length; i++) {
-                let description = this.dataset.descriptions[i];
+            for (var i = 0; i < this.dataset.abstracts.length; i++) {
+                let description = this.dataset.abstracts[i];
                 formData.append('descriptions[' + i + '][value]', description.value);
                 formData.append('descriptions[' + i + '][language]', description.language);
                 formData.append('descriptions[' + i + '][type]', description.type);
@@ -453,13 +453,13 @@ const app = new Vue({
         addKeyword() {
             let newKeyword = { value: '', type: 'uncontrolled', language: this.dataset.language };
             //this.dataset.files.push(uploadedFiles[i]);
-            this.dataset.keywords.push(newKeyword);
+            this.dataset.subjects.push(newKeyword);
         },
         /*
         Removes a selected keyword
         */
         removeKeyword(key) {
-            this.dataset.keywords.splice(key, 1);
+            this.dataset.subjects.splice(key, 1);
         },
         addTitle() {
             let newTitle = { value: '', language: '', type: '' };
@@ -475,13 +475,13 @@ const app = new Vue({
         addDescription() {
             let newTitle = { value: '', language: '', type: '' };
             //this.dataset.files.push(uploadedFiles[i]);
-            this.dataset.descriptions.push(newTitle);
+            this.dataset.abstracts.push(newTitle);
         },
         /*
         Removes a selected description
         */
         removeDescription(key) {
-            this.dataset.descriptions.splice(key, 1);
+            this.dataset.abstracts.splice(key, 1);
         },
         filesChange(fieldName, fileList) {
             this.fileCount = fileList.length
