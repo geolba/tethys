@@ -1,14 +1,14 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import axios from 'axios';
+import datetime from 'vuejs-datetimepicker';
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 import LocationsMap from './components/locations-map.vue';
 import Dataset from './components/Dataset';
 
-
 @Component({
     components: {
-        LocationsMap
+        LocationsMap,
+        datetime
     }
 })
 export default class EditDataset extends Vue {
@@ -53,6 +53,9 @@ export default class EditDataset extends Vue {
     // };
     allErros = [];
     success = false;
+    elevation = "no_elevation";
+    depth = "no_depth";
+    time = "no_time";
 
     beforeMount() {
         // this.form = window.Laravel.form;
@@ -60,6 +63,12 @@ export default class EditDataset extends Vue {
         this.projects = window.Laravel.projects;
         this.licenses = window.Laravel.licenses;
         this.checkeds = window.Laravel.checkeds;
+        this.referenceTypes = window.Laravel.referenceTypes;
+        this.relationTypes = window.Laravel.relationTypes;
+    }
+
+    mounted() {
+        this.setRadioButtons();
     }
 
     /*
@@ -90,11 +99,11 @@ export default class EditDataset extends Vue {
             }
         }
         if (from.embargo_date) {
-            from.embargo_date = this.formatDateFormat(new Date(from.embargo_date), 'yyyy-MM-dd');        
+            from.embargo_date = this.formatDateFormat(new Date(from.embargo_date), 'yyyy-MM-dd');
         }
         return from;
     }
-    
+
     formatDateFormat(x, y) {
         var z = {
             M: x.getMonth() + 1,
@@ -114,6 +123,32 @@ export default class EditDataset extends Vue {
 
     isObject(item) {
         return (typeof item === "object" && !Array.isArray(item) && item !== null);
+    }
+
+    setRadioButtons() {
+        if (this.form.coverage.time_absolut != null) {
+            this.time = "absolut";
+        } else if (this.form.coverage.time_min != null) {
+            this.time = "range";
+        } else {
+            this.time = "no_time";
+        }
+        
+        if (this.form.coverage.elevation_absolut != null) {
+            this.elevation = "absolut";
+        } else if (this.form.coverage.elevation_min != null) {
+            this.elevation = "range";
+        } else {
+            this.elevation = "no_elevation";
+        }
+        
+        if (this.form.coverage.depth_absolut != null) {
+            this.depth = "absolut";
+        } else if (this.form.coverage.depth_min != null) {
+            this.depth = "range";
+        } else {
+            this.depth = "no_depth";
+        }
     }
 
     onSubmit() {
@@ -140,5 +175,46 @@ export default class EditDataset extends Vue {
             }
         });
     }
+
+    /*
+      adds a new Keyword
+      */
+    addKeyword() {
+        let newKeyword = { value: '', type: 'uncontrolled', language: this.form.language };
+        //this.dataset.files.push(uploadedFiles[i]);
+        this.form.subjects.push(newKeyword);
+    }
+    /*
+       Removes a selected keyword
+       */
+    removeKeyword(key) {
+        this.form.subjects.splice(key, 1);
+    }
+
+    /*
+        Handles a change on the file upload
+        */
+    addReference() {
+        let newReference = { value: '', label: '', relation: '', type: '' };
+        //this.dataset.files.push(uploadedFiles[i]);
+        this.form.references.push(newReference);
+    }
+
+    /*
+    Removes a selected reference
+    */
+    removeReference(key) {
+        this.form.references.splice(key, 1);
+    }
+
+    // @Watch('form.coverage.time_absolut')
+    // onTimeAbsolutChanged(val) {
+    //   this.time = "absolut";      
+    // }
+
+    // @Watch('form.coverage.time_min')
+    // onTimeMinChanged(val) {
+    //   this.time = "range";      
+    // }
 
 }

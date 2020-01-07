@@ -54,7 +54,9 @@
             'form' => $dataset,
             'projects' => $projects,
             'licenses'  => $licenses,
-            'checkeds' => $checkeds
+            'checkeds' => $checkeds,
+            'referenceTypes' => $referenceTypes,
+            'relationTypes' => $relationTypes
         ]); ?>        
 </script>
 
