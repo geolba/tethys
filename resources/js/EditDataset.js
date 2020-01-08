@@ -56,15 +56,41 @@ export default class EditDataset extends Vue {
     elevation = "no_elevation";
     depth = "no_depth";
     time = "no_time";
+    titleTypes = [];
+
+    get remainingTitleTypes() {
+        // this.titleTypes.filter(e => e != 'Main');
+        var filtered = Object.fromEntries(Object.entries(this.titleTypes).filter(([k,v]) => v != 'Main'));
+        return filtered;
+    }
 
     beforeMount() {
         // this.form = window.Laravel.form;
         this.realMerge(this.form, window.Laravel.form);
+        this.titleTypes = window.Laravel.titleTypes;
+        this.descriptionTypes = window.Laravel.descriptionTypes;
+        this.languages = window.Laravel.languages;
         this.projects = window.Laravel.projects;
         this.licenses = window.Laravel.licenses;
         this.checkeds = window.Laravel.checkeds;
         this.referenceTypes = window.Laravel.referenceTypes;
         this.relationTypes = window.Laravel.relationTypes;
+
+        
+    }
+
+    created() {
+         // add the required rule
+         VeeValidate.Validator.extend('translatedLanguage', {
+            getMessage: field => 'The translated ' + field + ' must be in a language other than than the dataset language.',
+            validate: (value, [mainLanguage, type]) => {
+                if (type == "Translated") {
+                    return value !== mainLanguage;
+                }
+                return true;
+
+            }
+        });
     }
 
     mounted() {
@@ -207,14 +233,30 @@ export default class EditDataset extends Vue {
         this.form.references.splice(key, 1);
     }
 
-    // @Watch('form.coverage.time_absolut')
-    // onTimeAbsolutChanged(val) {
-    //   this.time = "absolut";      
-    // }
+    addTitle() {
+        let newTitle = { value: '', language: this.form.language, type: '' };
+        //this.dataset.files.push(uploadedFiles[i]);
+        this.form.titles.push(newTitle);
+    }
 
-    // @Watch('form.coverage.time_min')
-    // onTimeMinChanged(val) {
-    //   this.time = "range";      
-    // }
+    /*
+    Removes a selected title
+    */
+    removeTitle(key) {
+        this.form.titles.splice(key, 1);
+    }
+
+    addDescription() {
+        let newTitle = { value: '', language: this.form.language, type: '' };
+        //this.dataset.files.push(uploadedFiles[i]);
+        this.form.abstracts.push(newTitle);
+    }
+
+    /*
+    Removes a selected description
+    */
+    removeDescription(key) {
+        this.form.abstracts.splice(key, 1);
+    }
 
 }

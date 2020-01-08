@@ -61,6 +61,12 @@ class SubmitController extends Controller
         $dataset = Dataset::findOrFail($id);
         $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
+        $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
+        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information', 'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
+        $languages = DB::table('languages')
+            ->where('active', true)
+            ->pluck('part1', 'part1');
+
         $projects = Project::pluck('label', 'id');
 
         $datum = date('Y-m-d');
@@ -93,6 +99,9 @@ class SubmitController extends Controller
             'workflow.submitter.edit',
             compact(
                 'dataset',
+                'titleTypes',
+                'descriptionTypes',
+                'languages',
                 'projects',
                 'licenses',
                 'checkeds',
@@ -145,7 +154,15 @@ class SubmitController extends Controller
         if (!$validator->fails()) {
             $dataset = Dataset::findOrFail($id);
             $data = $request->all();
-            $input = $request->except('abstracts', 'licenses', 'titles', 'coverage', 'subjects', 'files', '_method', '_token');
+            $input = $request->except(
+                'abstracts',
+                'licenses',
+                'titles',
+                'coverage',
+                'subjects',
+                'references',
+                'files'
+            );
 
             $licenses = $request->input('licenses');
             //$licenses = $input['licenses'];
@@ -155,11 +172,17 @@ class SubmitController extends Controller
             $titles = $request->input('titles');
             if (is_array($titles) && count($titles) > 0) {
                 foreach ($titles as $key => $formTitle) {
-                    $title = Title::findOrFail($key);
-                    $title->value = $formTitle['value'];
-                    $title->language = $formTitle['language'];
-                    if ($title->isDirty()) {
-                        $title->save();
+                    if (isset($key) && $key != 'undefined') {
+                        $title = Title::findOrFail($key);
+                        $title->value = $formTitle['value'];
+                        $title->language = $formTitle['language'];
+                        $title->type = $formTitle['type'];
+                        if ($title->isDirty()) {
+                            $title->save();
+                        }
+                    } else {
+                        $title = new Title($formTitle);
+                        $dataset->titles()->save($title);
                     }
                 }
             }
@@ -168,11 +191,16 @@ class SubmitController extends Controller
             $abstracts = $request->input('abstracts');
             if (is_array($abstracts) && count($abstracts) > 0) {
                 foreach ($abstracts as $key => $formAbstract) {
-                    $abstract = Description::findOrFail($key);
-                    $abstract->value = $formAbstract['value'];
-                    $abstract->language = $formAbstract['language'];
-                    if ($abstract->isDirty()) {
-                        $abstract->save();
+                    if (isset($key) && $key != 'undefined') {
+                        $abstract = Description::findOrFail($key);
+                        $abstract->value = $formAbstract['value'];
+                        $abstract->language = $formAbstract['language'];
+                        if ($abstract->isDirty()) {
+                            $abstract->save();
+                        }
+                    } else {
+                        $abstract = new Description($formAbstract);
+                        $dataset->abstracts()->save($abstract);
                     }
                 }
             }
@@ -192,8 +220,6 @@ class SubmitController extends Controller
                         }
                     } else {
                         $reference = new DatasetReference($formReference);
-                        // $title->status = true;
-                        // $title->name_type = "Organizational";
                         $dataset->references()->save($reference);
                     }
                 }
@@ -212,8 +238,6 @@ class SubmitController extends Controller
                         }
                     } else {
                         $subject = new Subject($formKeyword);
-                        // $title->status = true;
-                        // $title->name_type = "Organizational";
                         $dataset->subjects()->save($subject);
                     }
                 }

@@ -131,6 +131,16 @@ export default class Dataset extends Vue {
   onLanguageChanged(val) {
     this.title_main.language = val;
     this.abstract_main.language = val;
+    for (let [key, title] of Object.entries(this.titles)) {
+      if (title.type == "Main") {
+        title.language = val;
+      }
+    }
+    for (let [key, abstract] of Object.entries(this.abstracts)) {
+      if (abstract.type == "Abstract") {
+        abstract.language = val;
+      }
+    }
   }
 
 

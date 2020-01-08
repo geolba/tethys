@@ -64,6 +64,166 @@
     </div>
 </fieldset>
 
+<fieldset id="fieldset-titles">
+    <legend>Title</legend>
+    <div>
+
+        {{-- @foreach($dataset->titles as $key => $title)
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {{ Form::label('title', 'Title ' .($key+1).':') }}
+        {{ Form::text('titles['.$title->id.'][value]', $title->value, ['class' => 'pure-u-23-24']) }}
+    </div>
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {{ Form::label('language', 'Language..') }}
+        {{ Form::text('titles['.$title->id.'][language]', $title->language, ['placeholder' => '--no language--', 'class' => 'pure-u-23-24', 'readonly']) }}
+    </div>
+    @endforeach --}}
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label name="TitleMain">Add additional title(s) </label>
+        <button class="pure-button button-small" @click.prevent="addTitle()"><i class="fas fa-plus-circle"></i></button>
+    </div>
+    <table v-if="form.titles.length" class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th style="width: 20px;">Title</th>
+                <th>Type</th>
+                <th>Language</th>
+                <th style="width: 130px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(title, key) in form.titles">
+                <td>
+                    <input type="text" :id="'titles['+title.id+'][value]'" :name="'titles['+title.id+'][value]'"
+                        v-validate="'required'" class="form-control" v-model="title.value">
+                </td>
+                <td>
+                    <template v-if="title.type == 'Main'">
+                        <input v-bind:name="'titles['+title.id+'][type]'" v-model="title.type" class="form-control"
+                            v-validate="'required'" v-bind:readonly="title.type == 'Main'">
+                    </template>
+                    <template v-else>
+                        <select type="text" :id="'titles['+title.id+'][type]'" :name="'titles['+title.id+'][type]'"
+                            class="form-control"
+                            v-validate="{required: true, translatedLanguage: [form.language, title.type]}"
+                            v-model="title.type" v-bind:readonly="title.type == 'Main'">
+                            <option v-for="option in remainingTitleTypes" :value='option'
+                                :disabled="title.type == 'Main'">
+                                @{{ option }}
+                            </option>
+                        </select>
+                    </template>
+                </td>
+                <td>
+                    <template v-if="title.type == 'Main'">
+                        <input v-bind:name="'titles['+title.id+'][language]'" v-model="title.language"
+                            class="form-control" v-validate="'required'" v-bind:readonly="title.type == 'Main'">
+                    </template>
+                    <template v-else>
+                        <select type="text" :id="'titles['+title.id+'][language]'"
+                            :name="'titles['+title.id+'][language]'" class="form-control"
+                            v-validate="{required: true, translatedLanguage: [form.language, title.type]}"
+                            v-model="title.language" v-bind:readonly="title.type == 'Main'">
+                            <option v-for="option in languages" :value='option'>
+                                @{{ option }}
+                            </option>
+                        </select>
+                    </template>
+                </td>
+                <td>
+                    <button v-if="title.id == undefined" class="pure-button button-small is-warning"
+                        @click.prevent="removeTitle(key)">
+                        <i class="fa fa-trash"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</fieldset>
+
+<fieldset id="fieldset-abstracts">
+    <legend>Abstract</legend>
+    <div>
+
+        {{-- @foreach($dataset->abstracts as $key => $abstract)
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {{ Form::label('abstract', 'Abstract ' .($key+1).':') }}
+        <!-- Notice this is an array now: -->
+        {{ Form::textarea('abstracts['.$abstract->id.'][value]', $abstract->value, ['class' => 'pure-u-23-24', 'size' => '70x6']) }}
+    </div>
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {{ Form::label('language', 'Language..') }}
+        {{ Form::text('abstracts['.$abstract->id.'][language]', $abstract->language, ['placeholder' => '--no language--', 'class' => 'pure-u-23-24', 'readonly']) }}
+    </div>
+    @endforeach --}}
+
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        <label name="DescriptionMain">Add additional abstract(s) </label>
+        <button class="pure-button button-small" @click.prevent="addDescription()"><i
+                class="fas fa-plus-circle"></i></button>
+    </div>
+    <table v-if="form.abstracts.length" class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th style="width: 20px;">Value</th>
+                <th>Type</th>
+                <th>Language</th>
+                <th style="width: 130px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(abstract, key) in form.abstracts">
+                <td>
+                    {{-- <label :for="'abstracts['+abstract.id+'][value]'"> @{{ 'Title ' + (key + 1) + ':' }}</label>
+                    --}}
+                    <input type="text" :id="'abstracts['+abstract.id+'][value]'"
+                        :name="'abstracts['+abstract.id+'][value]'" v-validate="'required'" v-model="abstract.value"
+                        class="form-control">
+                </td>
+                <td>
+                    <template v-if="abstract.type == 'Abstract'">
+                        <input v-bind:name="'abstracts['+abstract.id+'][type]'" v-model="abstract.type"
+                            class="form-control" v-validate="'required'" v-bind:readonly="abstract.type == 'Abstract'">
+                    </template>
+                    <template v-else>
+                        <select type="text" :id="'abstracts['+abstract.id+'][type]'"
+                            :name="'abstracts['+abstract.id+'][type]'" class="form-control"
+                            v-validate="{required: true, translatedLanguage: [form.language, abstract.type]}"
+                            v-model="abstract.type" v-bind:readonly="abstract.type == 'Abstract'">
+                            <option v-for="option in descriptionTypes" :value='option'>
+                                @{{ option }}
+                            </option>
+                        </select>
+                    </template>
+                </td>
+                <td>
+                    <template v-if="abstract.type == 'Abstract'">
+                        <input v-bind:name="'abstracts['+abstract.id+'][language]'" v-model="abstract.language"
+                            class="form-control" v-validate="'required'" v-bind:readonly="abstract.type == 'Abstract'">
+                    </template>
+                    <template v-else>
+                        <select type="text" :id="'abstracts['+abstract.id+'][language]'"
+                            :name="'abstracts['+abstract.id+'][language]'" class="form-control"
+                            v-validate="{required: true, translatedLanguage: [form.language, abstract.type]}"
+                            v-model="abstract.language" v-bind:readonly="abstract.type == 'Abstract'">
+                            <option v-for="option in languages" :value='option'>
+                                @{{ option }}
+                            </option>
+                        </select>
+                    </template>
+                </td>
+                <td>
+                    <button v-if="abstract.id == undefined" class="pure-button button-small is-warning"
+                        @click.prevent="removeDescription(key)">
+                        <i class="fa fa-trash"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    </div>
+</fieldset>
+
 <fieldset id="fieldset-dates">
     <legend>Date(s)</legend>
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -179,7 +339,7 @@
 <fieldset id="fieldset-coverage">
     <legend>Coverage</legend>
     <div class="pure-g">
-       
+
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="pure-u-1 pure-u-md-1">
                 <label for="elevation-option-one" class="pure-radio">
@@ -194,161 +354,111 @@
                     <input id="elevation-option-three" type="radio" v-model="elevation" value="no_elevation">
                     no elevation
                 </label>
-            </div>                    
+            </div>
             <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('elevation_absolut', 'elevation absolut: ') !!} 
+                {!! Form::label('elevation_absolut', 'elevation absolut: ') !!}
                 {!! Form::text('elevation_absolut', null,
-                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
+                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_absolut', 'data-vv-scope' => 'step-2',
+                "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
             </div>
             <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('elevation_min', 'elevation min: ') !!} 
-                {!! Form::text('elevation_min', null, 
-                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+                {!! Form::label('elevation_min', 'elevation min: ') !!}
+                {!! Form::text('elevation_min', null,
+                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_min', 'data-vv-scope' => 'step-2',
+                "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
             </div>
-            <div  v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('elevation_max', 'elevation max: ') !!} 
+            <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
+                {!! Form::label('elevation_max', 'elevation max: ') !!}
                 {!! Form::text('elevation_max', null,
-                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-            </div>                            
-        </div>  
-        
+                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_max', 'data-vv-scope' => 'step-2',
+                "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+            </div>
+        </div>
+
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="pure-u-1 pure-u-md-1">
                 <label for="depth-option-one" class="pure-radio">
-                                                <input id="depth-option-one" type="radio" v-model="depth" value="absolut">
-                                                absolut depth (m)
-                                            </label>
+                    <input id="depth-option-one" type="radio" v-model="depth" value="absolut">
+                    absolut depth (m)
+                </label>
                 <label for="depth-option-two" class="pure-radio">
-                                                <input id="depth-option-two" type="radio" v-model="depth" value="range">
-                                                depth range (m)
-                                            </label>
+                    <input id="depth-option-two" type="radio" v-model="depth" value="range">
+                    depth range (m)
+                </label>
                 <label for="depth-option-three" class="pure-radio">
-                                                <input id="depth-option-three" type="radio" v-model="depth" value="no_depth">
-                                                no depth
-                                            </label>
+                    <input id="depth-option-three" type="radio" v-model="depth" value="no_depth">
+                    no depth
+                </label>
             </div>
-        
+
             <div v-show="depth === 'absolut'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('depth_absolut', 'depth absolut: ') !!} {!! Form::text('depth_absolut', null, ['class' => 'pure-u-23-24',
-                'v-model' => 'form.coverage.depth_absolut', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthAbsolut
+                {!! Form::label('depth_absolut', 'depth absolut: ') !!} {!! Form::text('depth_absolut', null, ['class'
+                => 'pure-u-23-24',
+                'v-model' => 'form.coverage.depth_absolut', 'data-vv-scope' => 'step-2', "v-validate" =>
+                "this.isDepthAbsolut
                 ? 'required|integer' : '' " ]) !!}
             </div>
             <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('depth_min', 'depth min: ') !!} {!! Form::text('depth_min', null, ['class' => 'pure-u-23-24', 'v-model' =>
-                'form.coverage.depth_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ? 'required|integer'
+                {!! Form::label('depth_min', 'depth min: ') !!} {!! Form::text('depth_min', null, ['class' =>
+                'pure-u-23-24', 'v-model' =>
+                'form.coverage.depth_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ?
+                'required|integer'
                 : '' "]) !!}
             </div>
             <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('depth_max', 'depth max: ') !!} {!! Form::text('depth_max', null, ['class' => 'pure-u-23-24', 'v-model' =>
-                'form.coverage.depth_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ? 'required|integer'
+                {!! Form::label('depth_max', 'depth max: ') !!} {!! Form::text('depth_max', null, ['class' =>
+                'pure-u-23-24', 'v-model' =>
+                'form.coverage.depth_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ?
+                'required|integer'
                 : '' "]) !!}
-            </div>                            
+            </div>
         </div>
 
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="pure-u-1 pure-u-md-1">
                 <label for="time-option-one" class="pure-radio">
-                                                <input id="time-option-one" type="radio" v-model="time" value="absolut">
-                                                absolut time (dd.MM.yyyy HH:mm:ss)
-                                            </label>
+                    <input id="time-option-one" type="radio" v-model="time" value="absolut">
+                    absolut time (dd.MM.yyyy HH:mm:ss)
+                </label>
                 <label for="time-option-two" class="pure-radio">
-                                                <input id="time-option-two" type="radio" v-model="time" value="range">
-                                                time range (dd.MM.yyyy HH:mm:ss)
-                                            </label>
+                    <input id="time-option-two" type="radio" v-model="time" value="range">
+                    time range (dd.MM.yyyy HH:mm:ss)
+                </label>
                 <label for="time-option-three" class="pure-radio">
-                                                <input id="time-option-three" type="radio" v-model="time" value="no_time">
-                                                no time
-                                            </label>
+                    <input id="time-option-three" type="radio" v-model="time" value="no_time">
+                    no time
+                </label>
             </div>
-        
+
             <div v-show="time === 'absolut'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('time_absolut', 'time absolut: ') !!} 
+                {!! Form::label('time_absolut', 'time absolut: ') !!}
                 {{-- {!! Form::datetime('time_absolut', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm',
                 'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'format' => 'yyyy-MM-dd HH:mm',
                 "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!} --}}
-                <datetime name="time_absolut" v-validate="this.isTimeAbsolut ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='form.coverage.time_absolut' ></datetime>
+                <datetime name="time_absolut"
+                    v-validate="this.isTimeAbsolut ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
+                    data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='form.coverage.time_absolut'></datetime>
                 {{-- <datetime name="time_absolut" format="MM-DD-YYYY H:i:s" width="300px" v-model="dataset.coverage.time_absolut"></datetime> --}}
             </div>
             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('time_min', 'time min: ') !!} 
+                {!! Form::label('time_min', 'time min: ') !!}
                 {{-- {!! Form::datetimelocal('time_min', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss', 
                 'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', 'step' => 1,
                 "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
-                <datetime name="time_min" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='form.coverage.time_min' ></datetime>
+                <datetime name="time_min"
+                    v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
+                    data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='form.coverage.time_min'></datetime>
             </div>
             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('timemax', 'time max: ') !!} 
+                {!! Form::label('timemax', 'time max: ') !!}
                 {{-- {!! Form::datetimelocal('time_max', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
                 'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', 'step' => 1,
                 "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
-                <datetime name="time_max" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='form.coverage.time_max' ></datetime>
-            </div>                            
+                <datetime name="time_max"
+                    v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
+                    data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='form.coverage.time_max'></datetime>
+            </div>
         </div>
-
-    </div>
-</fieldset>
-
-<fieldset id="fieldset-titles">
-    <legend>Title</legend>
-    <div class="pure-g">
-
-        {{-- @foreach($dataset->titles as $key => $title)
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {{ Form::label('title', 'Title ' .($key+1).':') }}
-        {{ Form::text('titles['.$title->id.'][value]', $title->value, ['class' => 'pure-u-23-24']) }}
-    </div>
-    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        {{ Form::label('language', 'Language..') }}
-        {{ Form::text('titles['.$title->id.'][language]', $title->language, ['placeholder' => '--no language--', 'class' => 'pure-u-23-24', 'readonly']) }}
-    </div>
-    @endforeach --}}
-
-    <template v-for="(title, key) in form.titles">
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            <label :for="'titles['+title.id+'][value]'"> @{{ 'Title ' + (key + 1) + ':' }}</label>
-            <input type="text" :id="'titles['+title.id+'][value]'" :name="'titles['+title.id+'][value]'"
-                v-model="title.value" class="pure-u-23-24">
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            <label :for="'titles['+title.id+'][language]'"> @{{ 'Language for title ' + (key + 1) + ':' }}</label>
-            <input type="text" :id="'titles['+title.id+'][language]'" :name="'titles['+title.id+'][language]'"
-                v-model="title.language" class="pure-u-23-24" readonly>
-        </div>
-    </template>
-
-    </div>
-</fieldset>
-
-<fieldset id="fieldset-abstracts">
-    <legend>Abstract</legend>
-    <div class="pure-g">
-
-        {{-- @foreach($dataset->abstracts as $key => $abstract)
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {{ Form::label('abstract', 'Abstract ' .($key+1).':') }}
-        <!-- Notice this is an array now: -->
-        {{ Form::textarea('abstracts['.$abstract->id.'][value]', $abstract->value, ['class' => 'pure-u-23-24', 'size' => '70x6']) }}
-    </div>
-    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-        {{ Form::label('language', 'Language..') }}
-        {{ Form::text('abstracts['.$abstract->id.'][language]', $abstract->language, ['placeholder' => '--no language--', 'class' => 'pure-u-23-24', 'readonly']) }}
-    </div>
-    @endforeach --}}
-
-    <template v-for="(abstract, key) in form.abstracts">
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            <label :for="'abstracts['+abstract.id+'][value]'"> @{{ 'Title ' + (key + 1) + ':' }}</label>
-            <input type="text" :id="'abstracts['+abstract.id+'][value]'" :name="'abstracts['+abstract.id+'][value]'"
-                v-model="abstract.value" class="pure-u-23-24">
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            <label :for="'abstracts['+abstract.id+'][language]'">
-                @{{ 'Language for abstract ' + (key + 1) + ':' }}</label>
-            <input type="text" :id="'abstracts['+abstract.id+'][language]'"
-                :name="'abstracts['+abstract.id+'][language]'" v-model="abstract.language" class="pure-u-23-24"
-                readonly>
-        </div>
-    </template>
 
     </div>
 </fieldset>
@@ -390,7 +500,8 @@
 
 <fieldset id="fieldset-references">
     <legend>Dataset References</legend>
-    <button class="pure-button button-small" @click.prevent="addReference()">Add Reference</button>
+    <label name="ReferenceLabel">Add Reference </label>
+    <button class="pure-button button-small" @click.prevent="addReference()"><i class="fas fa-plus-circle"></i></button>
     {{-- <table class="table table-hover" v-if="dataset.keywords.length"> --}}
     {{-- @if ($dataset->references->count() > 0) --}}
     <table v-show="form.references.length" id="references" class="pure-table pure-table-horizontal">
@@ -421,8 +532,9 @@
                 </td>
                 <td>
                     {{-- {!! Form::select('references['.$reference->id.'][type]', $referenceTypes, $reference->type,
-                    ['placeholder' => '[REFERENCE TYPE]', 'v-model' => 'item.type', "v-validate" => "'required'"]) !!} --}} 
-                    <select v-bind:name="'references[' +  item.id +'][type]'" v-model="item.type" class="form-control" v-validate="'required'">
+                    ['placeholder' => '[REFERENCE TYPE]', 'v-model' => 'item.type', "v-validate" => "'required'"]) !!} --}}
+                    <select v-bind:name="'references[' +  item.id +'][type]'" v-model="item.type" class="form-control"
+                        v-validate="'required'">
                         <option v-for="option in referenceTypes" :value='option'>
                             @{{ option }}
                         </option>
@@ -432,7 +544,8 @@
                 <td>
                     {{-- {!! Form::select('references['.$reference->id.'][relation]', $relationTypes, $reference->relation,
                     ['placeholder' => '[REFERENCE TYPE]', 'v-model' => 'item.relation', "v-validate" => "'required'"]) !!} --}}
-                    <select v-bind:name="'references[' +  item.id +'][relation]'" v-model="item.relation" class="form-control" v-validate="'required'">
+                    <select v-bind:name="'references[' +  item.id +'][relation]'" v-model="item.relation"
+                        class="form-control" v-validate="'required'">
                         <option v-for="option in relationTypes" :value='option'>
                             @{{ option }}
                         </option>
@@ -440,9 +553,9 @@
                 </td>
                 <td>
                     <button v-if="item.id == undefined" class="pure-button button-small is-warning"
-                    @click.prevent="removeReference(index)">
-                    <i class="fa fa-trash"></i>
-                </button>
+                        @click.prevent="removeReference(index)">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 </td>
             </tr>
             {{-- @endforeach --}}
@@ -455,8 +568,8 @@
 
 <fieldset id="fieldset-keywords">
     <legend>Dataset Keywords</legend>
-    {{-- <table class="table table-hover" v-if="dataset.keywords.length"> --}}
-    <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
+    <label name="SubjectLabel">Add Reference </label>
+    <button class="pure-button button-small" @click.prevent="addKeyword()"><i class="fas fa-plus-circle"></i></button>
     @if ($dataset->subjects->count() > 0)
     <table id="keywords" class="pure-table pure-table-horizontal">
         <thead>
@@ -539,7 +652,7 @@
 <br />
 <div class="pure-controls">
     <button :disabled="errors.any()" type="submit" class="pure-button button-small">
-        <i class="fa fa-share"></i>
+        <i class="fas fa-save"></i>
         <span>{!! $submitButtonText !!}</span>
     </button>
 </div>

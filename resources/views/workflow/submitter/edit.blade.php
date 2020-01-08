@@ -31,7 +31,7 @@
         <div id="app1">
             {!! Form::model($dataset, ['method' => 'POST', 'route' => ['publish.workflow.submit.update', $dataset->id], 'id' => 'submitEditForm',
             'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'onSubmit' ]) !!}
-            @include('workflow/submitter/_form', ['submitButtonText' => 'Edit Dataset', 'bookLabel' => 'Edit Dataset.'])
+            @include('workflow/submitter/_form', ['submitButtonText' => 'Save Dataset', 'bookLabel' => 'Edit Dataset.'])
             {{-- @include('errors._errors') --}}
             
             <div v-if="errors.items.length > 0">
@@ -52,6 +52,9 @@
     window.Laravel = <?php echo json_encode([
             'csrf_token' => csrf_token(),
             'form' => $dataset,
+            'titleTypes' => $titleTypes,
+            'descriptionTypes' => $descriptionTypes,
+            'languages' => $languages,
             'projects' => $projects,
             'licenses'  => $licenses,
             'checkeds' => $checkeds,
