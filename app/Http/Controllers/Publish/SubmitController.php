@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use App\Models\Person;
 
 class SubmitController extends Controller
 {
@@ -59,7 +60,7 @@ class SubmitController extends Controller
     public function edit($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::findOrFail($id);
-        $dataset->load('licenses', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
+        $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
         $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information', 'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
@@ -167,6 +168,50 @@ class SubmitController extends Controller
             $licenses = $request->input('licenses');
             //$licenses = $input['licenses'];
             $dataset->licenses()->sync($licenses);
+
+            $dataset->authors()->sync([]);
+            //store authors
+            if (isset($data['authors'])) {
+                // $data_to_sync = [];
+                $index = 0;
+                foreach ($request->get('authors') as $key => $person) {
+                    $pivot_data = ['role' => 'author', 'sort_order' => $index + 1, 'allow_email_contact' => false];
+                    // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
+                    if (isset($person['id'])) {
+                        // $data_to_sync[$person['id']] = $pivot_data;
+                        $dataset->persons()->attach($person['id'], $pivot_data);
+                    } else {
+                        $dataPerson = new Person($person);
+                        $dataPerson->status = true;
+                        $dataPerson->name_type = "Organizational";
+                        $dataset->persons()->save($dataPerson, $pivot_data);
+                    }
+                    $index++;
+                }
+                // $dataset->persons()->sync($data_to_sync);
+            }
+
+            $dataset->contributors()->sync([]);
+            //store contributors
+            if (isset($data['contributors'])) {
+                // $data_to_sync = [];
+                $index = 0;
+                foreach ($request->get('contributors') as $key => $person) {
+                    $pivot_data = ['role' => 'contributor', 'sort_order' => $index + 1, 'allow_email_contact' => false];
+                    // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
+                    if (isset($person['id'])) {
+                        // $data_to_sync[$person['id']] = $pivot_data;
+                        $dataset->persons()->attach($person['id'], $pivot_data);
+                    } else {
+                        $dataPerson = new Person($person);
+                        $dataPerson->status = true;
+                        $dataPerson->name_type = "Organizational";
+                        $dataset->persons()->save($dataPerson, $pivot_data);
+                    }
+                    $index++;
+                }
+                // $dataset->persons()->sync($data_to_sync);
+            }
 
             //save the titles:
             $titles = $request->input('titles');

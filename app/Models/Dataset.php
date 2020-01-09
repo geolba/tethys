@@ -150,7 +150,8 @@ class Dataset extends Model
     public function authors()
     {
         return $this
-            ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
+            ->persons()
+            //->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
             ->wherePivot('role', 'author');
     }
 
@@ -174,7 +175,8 @@ class Dataset extends Model
     public function contributors()
     {
         return $this
-            ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
+        ->persons()
+            // ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
             ->wherePivot('role', 'contributor');
     }
 

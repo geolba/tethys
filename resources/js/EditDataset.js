@@ -4,11 +4,18 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 import LocationsMap from './components/locations-map.vue';
 import Dataset from './components/Dataset';
+import PersonTable from './components/PersonTable.vue';
+import MyAutocomplete from './components/MyAutocomplete.vue';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/index.css';
+Vue.use(VueToast);
 
 @Component({
     components: {
         LocationsMap,
-        datetime
+        datetime,
+        PersonTable,
+        MyAutocomplete
     }
 })
 export default class EditDataset extends Vue {
@@ -90,6 +97,26 @@ export default class EditDataset extends Vue {
                 return true;
 
             }
+        });
+        const isUnique = (value, [objectArray, index, attribute]) =>
+            new Promise(resolve => {
+                setTimeout(() => {
+                    if (objectArray.some((item, i) => item[attribute] === value && index !== i)) {
+                        return resolve({
+                            valid: false,
+                            data: {
+                                message: value + ' is already taken.'
+                            }
+                        });
+                    }
+                    return resolve({
+                        valid: true
+                    });
+                }, 200);
+            });
+        VeeValidate.Validator.extend("unique", {
+            getMessage: (field, params, data) => field + ' ' + data.message,
+            validate: isUnique,
         });
     }
 
@@ -257,6 +284,26 @@ export default class EditDataset extends Vue {
     */
     removeDescription(key) {
         this.form.abstracts.splice(key, 1);
+    }
+
+    onAddAuthor(person) {
+        //if person is not in person array
+        //if (this.persons.includes(person) == false) {
+        if (this.form.authors.filter(e => e.id === person.id).length > 0) {
+            this.$toast.error("person is already defined as author");
+        }  else if (this.form.contributors.filter(e => e.id === person.id).length > 0) {
+            this.$toast.error("person is already defined as contributor");
+        }
+        else {
+            //person.sort_order = this.dataset.persons.length;
+            this.form.authors.push(person);
+            // this.dataset.checkedAuthors.push(person.id);
+            this.$toast.success("person has been successfully added as author");
+        }
+        
+        // else if (this.dataset.contributors.filter(e => e.id === person.id).length > 0) {
+        //     this.$toast.error("person is already defined as contributor");
+        // } 
     }
 
 }

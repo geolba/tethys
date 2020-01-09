@@ -114,6 +114,7 @@ export default class Dataset extends Vue {
   checkedContributors = [];
   // checkedSubmitters: [],
 
+  authors = [];
   persons = [];
   contributors = [];
   // submitters: []

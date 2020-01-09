@@ -5,6 +5,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
+          <th scope="col">ID</th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Email</th>
@@ -21,12 +22,19 @@
         <tr
           v-for="(item, index) in personlist"
           v-bind:key="item.id"
-          v-bind:class="[item.status==1 ? 'activeClass' : 'inactiveClass']"
+          v-bind:class="[item.status==true ? 'activeClass' : 'inactiveClass']"
         >
           <td scope="row">{{ index + 1 }}</td>
+           <td> <input             
+              v-bind:name="heading+'['+item.id+'][id]'"
+              class="form-control"             
+              v-model="item.id"              
+              v-bind:readonly="item.status==1"              
+              data-vv-scope="step-1"
+            /></td>
           <td>
-            <input
-              name="first_name"
+            <input             
+              v-bind:name="heading+'['+item.id+'][first_name]'"
               class="form-control"
               placeholder="[FIRST NAME]"
               v-model="item.first_name"
@@ -37,7 +45,7 @@
           </td>
           <td>
             <input
-              name="last_name"
+             v-bind:name="heading+'['+item.id+'][last_name]'"            
               class="form-control"
               placeholder="[LAST NAME]"
               v-model="item.last_name"
@@ -49,7 +57,7 @@
           <td>
              <!-- v-validate="'required|email'" -->
             <input
-              name="email"
+             v-bind:name="heading+'['+item.id+'][email]'"             
               class="form-control"
               placeholder="[EMAIL]"
               v-model="item.email"             
@@ -60,7 +68,7 @@
           </td>
           <td>
             <input
-              name="identifier_orcid"
+              v-bind:name="heading+'['+item.id+'][identifier_orcid]'"             
               class="form-control"
               placeholder="[ORCID optional]"
               v-model="item.identifier_orcid"
@@ -144,4 +152,10 @@ export default class PersonTable extends Vue {
 .custom-actions button.ui.button > i.icon {
   margin: auto !important;
 }
+ .activeClass {
+        background-color: aquamarine;
+    }
+    .inactiveClass {
+        background-color: orange;
+    }
 </style>

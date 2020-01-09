@@ -64,6 +64,22 @@
     </div>
 </fieldset>
 
+<fieldset id="fieldset-creator">
+    <legend>Creator(s)</legend>
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            <my-autocomplete title="searching active person table" v-on:person="onAddAuthor"></my-autocomplete>           
+        </div>
+    </div>
+    <div class="pure-u-1 pure-u-md-1-2 pure-div">
+        {{-- {!! Form::label('additionalCreators', 'Add additional creator(s) if creator is not in database') !!} 
+        <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button> --}}
+    </div>
+    <input name="authors" v-model="form.authors" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Author">                  
+    <person-table name="authors" v-bind:heading="'authors'" v-bind:personlist="form.authors"></person-table> 
+    <person-table name="contributors" v-bind:heading="'contributors'" v-bind:personlist="form.contributors"></person-table> 
+</fieldset>
+
 <fieldset id="fieldset-titles">
     <legend>Title</legend>
     <div>
@@ -568,7 +584,7 @@
 
 <fieldset id="fieldset-keywords">
     <legend>Dataset Keywords</legend>
-    <label name="SubjectLabel">Add Reference </label>
+    <label name="SubjectLabel">Add Keyword </label>
     <button class="pure-button button-small" @click.prevent="addKeyword()"><i class="fas fa-plus-circle"></i></button>
     @if ($dataset->subjects->count() > 0)
     <table id="keywords" class="pure-table pure-table-horizontal">

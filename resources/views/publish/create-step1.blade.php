@@ -723,13 +723,6 @@
     .has-error .help-block {
         display: block;
     }
-
-    .activeClass {
-        background-color: aquamarine;
-    }
-    .inactiveClass {
-        background-color: orange;
-    }
 </style>
 
 
