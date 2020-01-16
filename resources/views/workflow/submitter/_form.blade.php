@@ -68,16 +68,18 @@
     <legend>Creator(s)</legend>
     <div class="pure-g">
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            <my-autocomplete title="searching active person table" v-on:person="onAddAuthor"></my-autocomplete>           
+            <my-autocomplete title="searching active person table" v-on:person="onAddAuthor"></my-autocomplete>
         </div>
     </div>
     <div class="pure-u-1 pure-u-md-1-2 pure-div">
         {{-- {!! Form::label('additionalCreators', 'Add additional creator(s) if creator is not in database') !!} 
         <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button> --}}
     </div>
-    <input name="authors" v-model="form.authors" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Author">                  
-    <person-table name="authors" v-bind:heading="'authors'" v-bind:personlist="form.authors"></person-table> 
-    <person-table name="contributors" v-bind:heading="'contributors'" v-bind:personlist="form.contributors"></person-table> 
+    <input name="authors" v-model="form.authors" type="hidden" class="form-check-input" v-validate="'required'"
+        data-vv-as="Author">
+    <person-table name="authors" v-bind:heading="'authors'" v-bind:personlist="form.authors"></person-table>
+    <person-table name="contributors" v-bind:heading="'contributors'" v-bind:personlist="form.contributors">
+    </person-table>
 </fieldset>
 
 <fieldset id="fieldset-titles">
@@ -108,18 +110,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(title, key) in form.titles">
+            <tr v-for="(title, index) in form.titles">
                 <td>
-                    <input type="text" :id="'titles['+title.id+'][value]'" :name="'titles['+title.id+'][value]'"
+                    <input v-bind:name="'titles['+index+'][id]'" readonly class="form-control" v-model="title.id" hidden />
+                    <input type="text" :id="'titles['+index+'][value]'" :name="'titles['+index+'][value]'"
                         v-validate="'required'" class="form-control" v-model="title.value">
                 </td>
                 <td>
                     <template v-if="title.type == 'Main'">
-                        <input v-bind:name="'titles['+title.id+'][type]'" v-model="title.type" class="form-control"
+                        <input v-bind:name="'titles['+index+'][type]'" v-model="title.type" class="form-control"
                             v-validate="'required'" v-bind:readonly="title.type == 'Main'">
                     </template>
                     <template v-else>
-                        <select type="text" :id="'titles['+title.id+'][type]'" :name="'titles['+title.id+'][type]'"
+                        <select type="text" :id="'titles['+index+'][type]'" :name="'titles['+index+'][type]'"
                             class="form-control"
                             v-validate="{required: true, translatedLanguage: [form.language, title.type]}"
                             v-model="title.type" v-bind:readonly="title.type == 'Main'">
@@ -132,12 +135,12 @@
                 </td>
                 <td>
                     <template v-if="title.type == 'Main'">
-                        <input v-bind:name="'titles['+title.id+'][language]'" v-model="title.language"
+                        <input v-bind:name="'titles['+index+'][language]'" v-model="title.language"
                             class="form-control" v-validate="'required'" v-bind:readonly="title.type == 'Main'">
                     </template>
                     <template v-else>
-                        <select type="text" :id="'titles['+title.id+'][language]'"
-                            :name="'titles['+title.id+'][language]'" class="form-control"
+                        <select type="text" :id="'titles['+index+'][language]'"
+                            :name="'titles['+index+'][language]'" class="form-control"
                             v-validate="{required: true, translatedLanguage: [form.language, title.type]}"
                             v-model="title.language" v-bind:readonly="title.type == 'Main'">
                             <option v-for="option in languages" :value='option'>
@@ -148,7 +151,7 @@
                 </td>
                 <td>
                     <button v-if="title.id == undefined" class="pure-button button-small is-warning"
-                        @click.prevent="removeTitle(key)">
+                        @click.prevent="removeTitle(index)">
                         <i class="fa fa-trash"></i>
                 </td>
             </tr>
@@ -188,22 +191,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(abstract, key) in form.abstracts">
+            <tr v-for="(abstract, index) in form.abstracts">
                 <td>
-                    {{-- <label :for="'abstracts['+abstract.id+'][value]'"> @{{ 'Title ' + (key + 1) + ':' }}</label>
-                    --}}
-                    <input type="text" :id="'abstracts['+abstract.id+'][value]'"
-                        :name="'abstracts['+abstract.id+'][value]'" v-validate="'required'" v-model="abstract.value"
+                    <input v-bind:name="'abstracts[' +  index +'][id]'" readonly class="form-control" v-model="abstract.id" hidden />
+
+                    <input type="text" :id="'abstracts['+ index +'][value]'"
+                        :name="'abstracts['+index+'][value]'" v-validate="'required'" v-model="abstract.value"
                         class="form-control">
                 </td>
                 <td>
                     <template v-if="abstract.type == 'Abstract'">
-                        <input v-bind:name="'abstracts['+abstract.id+'][type]'" v-model="abstract.type"
+                        <input v-bind:name="'abstracts['+ index +'][type]'" v-model="abstract.type"
                             class="form-control" v-validate="'required'" v-bind:readonly="abstract.type == 'Abstract'">
                     </template>
                     <template v-else>
-                        <select type="text" :id="'abstracts['+abstract.id+'][type]'"
-                            :name="'abstracts['+abstract.id+'][type]'" class="form-control"
+                        <select type="text" :id="'abstracts['+ index +'][type]'"
+                            :name="'abstracts['+ index +'][type]'" class="form-control"
                             v-validate="{required: true, translatedLanguage: [form.language, abstract.type]}"
                             v-model="abstract.type" v-bind:readonly="abstract.type == 'Abstract'">
                             <option v-for="option in descriptionTypes" :value='option'>
@@ -214,12 +217,12 @@
                 </td>
                 <td>
                     <template v-if="abstract.type == 'Abstract'">
-                        <input v-bind:name="'abstracts['+abstract.id+'][language]'" v-model="abstract.language"
+                        <input v-bind:name="'abstracts['+index+'][language]'" v-model="abstract.language"
                             class="form-control" v-validate="'required'" v-bind:readonly="abstract.type == 'Abstract'">
                     </template>
                     <template v-else>
-                        <select type="text" :id="'abstracts['+abstract.id+'][language]'"
-                            :name="'abstracts['+abstract.id+'][language]'" class="form-control"
+                        <select type="text" :id="'abstracts['+index+'][language]'"
+                            :name="'abstracts['+index+'][language]'" class="form-control"
                             v-validate="{required: true, translatedLanguage: [form.language, abstract.type]}"
                             v-model="abstract.language" v-bind:readonly="abstract.type == 'Abstract'">
                             <option v-for="option in languages" :value='option'>
@@ -230,7 +233,7 @@
                 </td>
                 <td>
                     <button v-if="abstract.id == undefined" class="pure-button button-small is-warning"
-                        @click.prevent="removeDescription(key)">
+                        @click.prevent="removeDescription(index)">
                         <i class="fa fa-trash"></i>
                 </td>
             </tr>
@@ -258,99 +261,6 @@
         </div>
     </div>
 </fieldset>
-
-{{-- <fieldset id="fieldset-geolocation">
-    <legend>Coverage: Geolocation, Elevation, Depth, Time</legend>
-    <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('xmin', 'xmin: ') !!}
-            {!! Form::text('coverage[xmin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.xmin'])
-            !!}
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('ymin', 'ymin: ') !!}
-            {!! Form::text('coverage[ymin]', null, ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.ymin'])
-            !!}
-        </div>
-
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('xmax', 'xmax: ') !!}
-            {!! Form::text('coverage[xmax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.xmax'])
-            !!}
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('ymax', 'ymax: ') !!}
-            {!! Form::text('coverage[ymax]', null, ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.ymax'])
-            !!}
-        </div>
-
-        @if (isset($dataset->elevation_absolut))
-        <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('elevation_absolut', 'elevation absolut: ') !!}
-            {!! Form::text('coverage[elevation_absolut]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_absolut', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
-        </div>
-        @elseif (isset($dataset->elevation_min) && isset($dataset->elevation_max))
-        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('elevation_min', 'elevation min: ') !!}
-            {!! Form::text('coverage[elevation_min]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_min', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-        </div>
-        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('elevation_max', 'elevation max: ') !!}
-            {!! Form::text('coverage[elevation_max]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_max', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-        </div>
-        @endif
-
-        @if (isset($dataset->depth_absolut))
-        <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('depth_absolut', 'depth absolut: ') !!}
-            {!! Form::text('coverage[depth_absolut]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.depth_absolut', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
-        </div>
-        @elseif (isset($dataset->elevation_min) && isset($dataset->elevation_max))
-        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('depth_min', 'depth min: ') !!}
-            {!! Form::text('coverage[depth_min]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.depth_min', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-        </div>
-        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('depth_max', 'depth max: ') !!}
-            {!! Form::text('coverage[depth_max]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.depth_max', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-        </div>
-        @endif
-
-        @if (isset($dataset->depth_absolut))
-        <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('time_absolut', 'time absolut: ') !!}
-            {!! Form::text('coverage[time_absolut]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.time_absolut', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
-        </div>
-        @elseif (isset($dataset->elevation_min) && isset($dataset->elevation_max))
-        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('time_min', 'time min: ') !!}
-            {!! Form::text('coverage[time_min]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.time_min', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-        </div>
-        <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
-            {!! Form::label('time_max', 'time max: ') !!}
-            {!! Form::text('coverage[time_max]', null,
-            ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.time_max', 'data-vv-scope' => 'step-2',
-            "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
-        </div>
-        @endif,
-    </div>
-</fieldset> --}}
 
 <fieldset id="fieldset-coverage">
     <legend>Coverage</legend>
@@ -535,21 +445,21 @@
             {{-- @foreach($dataset->references as $key => $reference) --}}
             <tr v-for="(item, index) in form.references">
                 <td>
-                    {{-- {{ Form::text('references['.$reference->id.'][value]', $reference->value, ['class' => 'form-control',  'placeholder' => '[REFERENCE VALUE]']) }}
-                    --}}
-                    <input v-bind:name="'references[' +  item.id +'][value]'" class="form-control"
+                    <input v-bind:name="'references[' +  index +'][id]'" readonly class="form-control" v-model="item.id" hidden />
+
+                    <input v-bind:name="'references[' +  index +'][value]'" class="form-control"
                         placeholder="[REFERENCE VALUE]" v-model="item.value" v-validate="'required'" />
                 </td>
                 <td>
                     {{-- {{ Form::text('references['.$reference->id.'][label]', $reference->label, ['class' => 'form-control',  'placeholder' => '[REFERENCE LABEL]']) }}
                     --}}
-                    <input v-bind:name="'references[' +  item.id +'][label]'" class="form-control"
+                    <input v-bind:name="'references[' +  index +'][label]'" class="form-control"
                         placeholder="[REFERENCE LABEL]" v-model="item.label" v-validate="'required'" />
                 </td>
                 <td>
                     {{-- {!! Form::select('references['.$reference->id.'][type]', $referenceTypes, $reference->type,
                     ['placeholder' => '[REFERENCE TYPE]', 'v-model' => 'item.type', "v-validate" => "'required'"]) !!} --}}
-                    <select v-bind:name="'references[' +  item.id +'][type]'" v-model="item.type" class="form-control"
+                    <select v-bind:name="'references[' +  index +'][type]'" v-model="item.type" class="form-control"
                         v-validate="'required'">
                         <option v-for="option in referenceTypes" :value='option'>
                             @{{ option }}
@@ -560,7 +470,7 @@
                 <td>
                     {{-- {!! Form::select('references['.$reference->id.'][relation]', $relationTypes, $reference->relation,
                     ['placeholder' => '[REFERENCE TYPE]', 'v-model' => 'item.relation', "v-validate" => "'required'"]) !!} --}}
-                    <select v-bind:name="'references[' +  item.id +'][relation]'" v-model="item.relation"
+                    <select v-bind:name="'references[' +  index +'][relation]'" v-model="item.relation"
                         class="form-control" v-validate="'required'">
                         <option v-for="option in relationTypes" :value='option'>
                             @{{ option }}
@@ -595,11 +505,12 @@
                 <th style="width: 130px;"></th>
             </tr>
         </thead>
-        <tbody>
-            {{-- @foreach($dataset->subjects as $key => $keyword) --}}
+        <tbody>         
             <tr v-for="(item, index) in form.subjects" :key="item.id">
+                
                 <td>
-                    <input v-bind:name="'subjects[' +  item.id +'][value]'" class="form-control"
+                    <input v-bind:name="'subjects[' +  index +'][id]'" readonly class="form-control" v-model="item.id" hidden />
+                    <input v-bind:name="'subjects[' +  index +'][value]'" class="form-control"
                         placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="'required'" />
                     {{-- {{ Form::text('keywords['.$keyword->id.'][value]', $keyword->value, ['class' => 'form-control',  'placeholder' => '[KEYWORD VALUE]']) }}
                     --}}
@@ -614,7 +525,7 @@
                             <option value="{{ $option }}">{{ $option }}</option>
                     @endforeach
                     </select> --}}
-                    <input v-bind:name="'subjects[' +  item.id +'][type]'" readonly class="form-control"
+                    <input v-bind:name="'subjects[' +  index +'][type]'" readonly class="form-control"
                         placeholder="[KEYWORD TYPE]" v-model="item.type" v-validate="'required'" />
                 </td>
                 <td>
@@ -623,8 +534,7 @@
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>
-            </tr>
-            {{-- @endforeach --}}
+            </tr>           
         </tbody>
     </table>
     @else
@@ -634,34 +544,65 @@
 
 <fieldset id="fieldset-files">
     <legend>Files</legend>
+
+    {{-- <h3>File Upload</h3>
+    <div class="dropbox">
+        <input type="file" name="uploads" multiple @change="filesChange($event.target.name, $event.target.files)" class="input-file">
+        <p>
+            Drag your file(s) here to begin<br> or click to browse
+        </p>       
+    </div> --}}
+
     <table id="items" class="pure-table pure-table-horizontal">
         <thead>
             <tr>
+                <th>#</th>              
                 <th>Path Name</th>
                 <th>Label</th>
+                <th>New</th>
+                <th style="width: 130px;"></th>
             </tr>
         </thead>
-        <tbody>
-            {{-- @foreach($dataset->files as $key => $file) --}}
+        <tbody>           
             <tr v-for="(file, index) in form.files" :key="file.id">
+                <td>
+                    @{{ index +1 }}
+                </td>               
                 <td>
                     {{-- @if($file->exists() === true)
                     <a href="{{ route('settings.file.download', ['id' => $file->id]) }}"> {{ $file->path_name }} </a>
                     @else
                     <span class="alert">missing file: {{ $file->path_name }}</span>
                     @endif --}}
-                    <a v-if="'storage/' + file.path_name"
-                        v-bind:src=" '/settings/file/download/' + file.id ">@{{ file.path_name }}</a>
+                    <a v-if="file.id != undefined" v-bind:href=" '/settings/file/download/' + file.id ">
+                       
+                      @{{ file.path_name }}                     
+                    </a>
+                    <span v-else> File name will be generated</span>
+
+                
                 </td>
                 <td>
-                    {{-- {{ Form::text('files['.$file->id.'][label]', $file->label, ['class' => 'form-control',  'placeholder' => '[FILE LABEL]']) }}
-                    --}}
-                    <input v-bind:name="'files[' +  file.id +'][label]'" class="form-control" placeholder="[FILE LABEL]"
+                    <input v-bind:name="'files[' +  index +'][id]'" readonly class="form-control" v-model="file.id" hidden />
+                    <input v-bind:name="'files['+index+'][label]'" class="form-control" placeholder="[FILE LABEL]"
                         v-model="file.label" v-validate="'required'" />
                 </td>
-            </tr>
-            {{-- @endforeach --}}
+                <td>
+                    <i v-if="file.file" class="fas fa-file-upload"></i>
+                    <input type="hidden"  v-bind:name="'files['+index+'][file]'" class="form-control" v-bind:file="file.file"/>
+                </td>
+                <td>
+                    <button v-if="file.id == undefined" class="pure-button button-small is-warning"
+                        @click.prevent="removeFile(index)">
+                        <i class="fa fa-trash"></i>
+                </td>
+            </tr>           
         </tbody>
+
+
+      
+
+
     </table>
 </fieldset>
 
@@ -672,3 +613,11 @@
         <span>{!! $submitButtonText !!}</span>
     </button>
 </div>
+
+@if($errors->any())        
+<ul class="alert validation-summary-errors">    
+    @foreach($errors->all() as $error)
+        <li style="margin-left:5px;">{{ $error }}</li>
+    @endforeach
+</ul>
+@endif

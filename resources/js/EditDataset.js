@@ -206,6 +206,14 @@ export default class EditDataset extends Vue {
 
     onSubmit() {
         // var dataform = new FormData();
+        // var dataform = document.getElementById('submitEditForm');
+        // var length = this.form.files.length;   
+        // for (var i = 0; i < length; i++) {
+        //     if (this.form.files[i].file != undefined) {
+        //         var file = this.form.files[i];
+        //         dataform.append('files[undefined][file]', file.file, file.label);
+        //     }
+        // }
         // dataform.append('name', this.form.name);
         // // dataform.append('comments', this.form.comments);
         // console.log(this.form.name);
@@ -305,5 +313,33 @@ export default class EditDataset extends Vue {
         //     this.$toast.error("person is already defined as contributor");
         // } 
     }
+
+    filesChange(fieldName, fileList) {
+        var fileCount = fileList.length
+        // this.dataset.files = this.$refs.files.files; 
+        let uploadedFiles = fileList;
+
+        /*
+        Adds the uploaded file to the files array
+        */
+        for (var i = 0; i < uploadedFiles.length; i++) {
+            let fileName = uploadedFiles[i].name.replace(/\.[^/.]+$/, '');
+            let uploadeFile = { file: uploadedFiles[i], label: fileName, sort_order: 0 };
+            //this.dataset.files.push(uploadedFiles[i]);
+            this.form.files.push(uploadeFile);
+        }
+        // if (this.dataset.files.length > 0)
+        // {
+        //     this.currentStatus = STATUS_SAVING;
+        // } 
+    }
+
+    /*
+        Removes a select file the user has uploaded
+        */
+       removeFile(key) {
+        this.form.files.splice(key, 1);
+    }
+
 
 }

@@ -26,7 +26,7 @@
         >
           <td scope="row">{{ index + 1 }}</td>
            <td> <input             
-              v-bind:name="heading+'['+item.id+'][id]'"
+              v-bind:name="heading+'['+index+'][id]'"
               class="form-control"             
               v-model="item.id"              
               v-bind:readonly="item.status==1"              
@@ -34,7 +34,7 @@
             /></td>
           <td>
             <input             
-              v-bind:name="heading+'['+item.id+'][first_name]'"
+              v-bind:name="heading+'['+index+'][first_name]'"
               class="form-control"
               placeholder="[FIRST NAME]"
               v-model="item.first_name"
@@ -45,7 +45,7 @@
           </td>
           <td>
             <input
-             v-bind:name="heading+'['+item.id+'][last_name]'"            
+             v-bind:name="heading+'['+index+'][last_name]'"            
               class="form-control"
               placeholder="[LAST NAME]"
               v-model="item.last_name"
@@ -57,7 +57,7 @@
           <td>
              <!-- v-validate="'required|email'" -->
             <input
-             v-bind:name="heading+'['+item.id+'][email]'"             
+             v-bind:name="heading+'['+index+'][email]'"             
               class="form-control"
               placeholder="[EMAIL]"
               v-model="item.email"             
@@ -68,7 +68,7 @@
           </td>
           <td>
             <input
-              v-bind:name="heading+'['+item.id+'][identifier_orcid]'"             
+              v-bind:name="heading+'['+index+'][identifier_orcid]'"             
               class="form-control"
               placeholder="[ORCID optional]"
               v-model="item.identifier_orcid"

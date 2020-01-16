@@ -10,8 +10,9 @@ use App\Models\Description;
 use App\Models\File;
 use App\Models\License;
 // use Illuminate\View\View;
-use App\Models\Project;
+use App\Models\Person;
 // for edit actions:
+use App\Models\Project;
 use App\Models\Subject;
 use App\Models\Title;
 use App\Models\User;
@@ -23,7 +24,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use App\Models\Person;
+use App\Rules\RdrFiletypes;
+use App\Rules\RdrFilesize;
 
 class SubmitController extends Controller
 {
@@ -151,6 +153,14 @@ class SubmitController extends Controller
         $customMessages = [
             'keywords.*.type.required' => 'The types of all keywords are required.',
         ];
+        if (null != $request->file('files')) {
+            $data = $request->all();
+            $files = count($request->input('files')) - 1;
+            foreach (range(0, $files) as $index) {
+                // $rules['files.' . $index] = 'image|max:2048';
+                $rules['files.' . $index . '.file'] = [new RdrFilesize($index + 1), 'file', new RdrFiletypes()];
+            }
+        }
         $validator = Validator::make($request->all(), $rules, $customMessages);
         if (!$validator->fails()) {
             $dataset = Dataset::findOrFail($id);
@@ -217,8 +227,9 @@ class SubmitController extends Controller
             $titles = $request->input('titles');
             if (is_array($titles) && count($titles) > 0) {
                 foreach ($titles as $key => $formTitle) {
-                    if (isset($key) && $key != 'undefined') {
-                        $title = Title::findOrFail($key);
+                    // if (isset($key) && $key != 'undefined') {
+                    if (isset($formTitle['id'])) {
+                        $title = Title::findOrFail($formTitle['id']);
                         $title->value = $formTitle['value'];
                         $title->language = $formTitle['language'];
                         $title->type = $formTitle['type'];
@@ -236,8 +247,9 @@ class SubmitController extends Controller
             $abstracts = $request->input('abstracts');
             if (is_array($abstracts) && count($abstracts) > 0) {
                 foreach ($abstracts as $key => $formAbstract) {
-                    if (isset($key) && $key != 'undefined') {
-                        $abstract = Description::findOrFail($key);
+                    // if (isset($key) && $key != 'undefined') {
+                    if (isset($formAbstract['id'])) {
+                        $abstract = Description::findOrFail($formAbstract['id']);
                         $abstract->value = $formAbstract['value'];
                         $abstract->language = $formAbstract['language'];
                         if ($abstract->isDirty()) {
@@ -254,8 +266,9 @@ class SubmitController extends Controller
             $references = $request->input('references');
             if (is_array($references) && count($references) > 0) {
                 foreach ($references as $key => $formReference) {
-                    if (isset($key) && $key != 'undefined') {
-                        $reference = DatasetReference::findOrFail($key);
+                    // if (isset($key) && $key != 'undefined') {
+                    if (isset($formReference['id'])) {
+                        $reference = DatasetReference::findOrFail($formReference['id']);
                         $reference->value = $formReference['value'];
                         $reference->label = $formReference['label'];
                         $reference->type = $formReference['type'];
@@ -274,8 +287,8 @@ class SubmitController extends Controller
             $keywords = $request->input('subjects');
             if (is_array($keywords) && count($keywords) > 0) {
                 foreach ($keywords as $key => $formKeyword) {
-                    if (isset($key) && $key != 'undefined') {
-                        $subject = Subject::findOrFail($key);
+                    if (isset($formKeyword['id'])) {
+                        $subject = Subject::findOrFail($formKeyword['id']);
                         $subject->value = $formKeyword['value'];
                         $subject->type = $formKeyword['type'];
                         if ($subject->isDirty()) {
@@ -289,14 +302,41 @@ class SubmitController extends Controller
             }
 
             //save the files:
-            $files = $request->input('files');
+            $files = $request->get('files');
             if (is_array($files) && count($files) > 0) {
+                $index = 1;
                 foreach ($files as $key => $formFile) {
-                    $file = File::findOrFail($key);
-                    $file->label = $formFile['label'];
-                    if ($file->isDirty()) {
-                        $file->save();
+                    // if (isset($key) && $key != 'undefined') {
+                    if (isset($formFile['id'])) {
+                        $file = File::findOrFail($formFile['id']);
+                        $file->label = $formFile['label'];
+                        if ($file->isDirty()) {
+                            $file->save();
+                        }
+                    } else {
+                        $file = $formFile['file'];
+                        $label = urldecode($formFile['label']);
+                        $sort_order = $index;//$formFile['sort_order'];
+                        $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
+                        $mimeType = $file->getMimeType();
+                        $datasetFolder = 'files/' . $dataset->id;
+                        $path = $file->storeAs($datasetFolder, $fileName);
+                        $size = Storage::size($path);
+                        //$path = Storage::putFile('files', $image, $fileName);
+                        $fileDb = new File([
+                            'path_name' => $path,
+                            'file_size' => $size,
+                            'mime_type' => $mimeType,
+                            'label' => $label,
+                            'sort_order' => $sort_order,
+                            'visible_in_frontdoor' => 1,
+                            'visible_in_oai' => 1
+                        ]);
+                        //$test = $file->path_name;
+                        $dataset->files()->save($fileDb);
+                        $fileDb->createHashValues();
                     }
+                    $index++;
                 }
             }
 
