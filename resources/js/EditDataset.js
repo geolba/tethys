@@ -1,7 +1,16 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import datetime from 'vuejs-datetimepicker';
+import messagesEN from './strings/messages/en.js';
 import VeeValidate from 'vee-validate';
-Vue.use(VeeValidate);
+// Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+    // validity: true
+    locale: 'en',
+    useConstraintAttrs: true,
+    dictionary: {
+        en: { messages: messagesEN }
+    }
+});
 import LocationsMap from './components/locations-map.vue';
 import Dataset from './components/Dataset';
 import PersonTable from './components/PersonTable.vue';
@@ -30,7 +39,7 @@ export default class EditDataset extends Vue {
     //     language: '',
     //     type: '',
     //     project_id: '',  
-    //     creating_corporation: 'TETHYS Repository',
+    //     creating_corporation: 'TETHYS RDR',
     //     embargo_date: '',
     //     coverage: {
     //         xmin: "",
@@ -67,8 +76,35 @@ export default class EditDataset extends Vue {
 
     get remainingTitleTypes() {
         // this.titleTypes.filter(e => e != 'Main');
-        var filtered = Object.fromEntries(Object.entries(this.titleTypes).filter(([k,v]) => v != 'Main'));
+        var filtered = Object.fromEntries(Object.entries(this.titleTypes).filter(([k, v]) => v != 'Main'));
         return filtered;
+    }
+
+    get keywords_length() {
+        return this.form.subjects.length;
+    }
+
+    get files_length() {
+        return this.form.files.length;
+    }
+
+    get isElevationAbsolut() {
+        return this.elevation == "absolut";
+    }
+    get isElevationRange() {
+        return this.elevation == "range";
+    }
+    get isDepthAbsolut() {
+        return this.depth == "absolut";
+    }
+    get isDepthRange() {
+        return this.depth == "range";
+    }
+    get isTimeAbsolut() {
+        return this.time == "absolut";
+    }
+    get isTimeRange() {
+        return this.time == "range";
     }
 
     beforeMount() {
@@ -83,12 +119,12 @@ export default class EditDataset extends Vue {
         this.referenceTypes = window.Laravel.referenceTypes;
         this.relationTypes = window.Laravel.relationTypes;
 
-        
+
     }
 
     created() {
-         // add the required rule
-         VeeValidate.Validator.extend('translatedLanguage', {
+        // add the required rule
+        VeeValidate.Validator.extend('translatedLanguage', {
             getMessage: field => 'The translated ' + field + ' must be in a language other than than the dataset language.',
             validate: (value, [mainLanguage, type]) => {
                 if (type == "Translated") {
@@ -186,7 +222,7 @@ export default class EditDataset extends Vue {
         } else {
             this.time = "no_time";
         }
-        
+
         if (this.form.coverage.elevation_absolut != null) {
             this.elevation = "absolut";
         } else if (this.form.coverage.elevation_min != null) {
@@ -194,13 +230,65 @@ export default class EditDataset extends Vue {
         } else {
             this.elevation = "no_elevation";
         }
-        
+
         if (this.form.coverage.depth_absolut != null) {
             this.depth = "absolut";
         } else if (this.form.coverage.depth_min != null) {
             this.depth = "range";
         } else {
             this.depth = "no_depth";
+        }
+    }
+
+    @Watch('elevation')
+    onElevationChanged(val, oldVal) {
+        if (val == "absolut") {
+            //formData.append('coverage[elevation_absolut]', this.dataset.coverage.elevation_absolut);
+            this.form.coverage.elevation_min = null;
+            this.form.coverage.elevation_max = null;           
+        }
+        else if (val == "range") {
+            this.form.coverage.elevation_absolut = null;            
+        } else {
+            this.form.coverage.elevation_min = null;
+            this.form.coverage.elevation_max = null;
+            this.form.coverage.elevation_absolut = null;           
+        }
+    }
+
+    @Watch('depth')
+    onDepthChanged(val, oldVal) {
+        if (val == "absolut") {           
+            this.form.coverage.depth_min = null;
+            this.form.coverage.depth_max = null;
+        }
+        else if (val == "range") {
+            this.form.coverage.depth_absolut = null;
+        } else {
+            this.form.coverage.depth_min = null;
+            this.form.coverage.depth_max = null;
+            this.form.coverage.depth_absolut = null;
+        }
+    }
+
+    @Watch('time')
+    onTimeChanged(val, oldVal) {
+        if (val == "absolut") {           
+            this.form.coverage.time_min = null;
+            this.form.coverage.time_max = null;
+            this.$refs.minTimeDatepicker.clearDate();
+            this.$refs.maxTimeDatepicker.clearDate();
+        }
+        else if (val == "range") {
+            this.form.coverage.time_absolut = null;
+            this.$refs.absoluteTimeDatepicker.clearDate();
+        } else {
+            this.form.coverage.time_min = null;
+            this.form.coverage.time_max = null;
+            this.form.coverage.time_absolut = null;
+            this.$refs.minTimeDatepicker.clearDate();
+            this.$refs.maxTimeDatepicker.clearDate();
+            this.$refs.absoluteTimeDatepicker.clearDate();
         }
     }
 
@@ -230,7 +318,7 @@ export default class EditDataset extends Vue {
         this.submitted = true;
         this.$validator.validate().then(result => {
             if (result) {
-                // console.log('From Submitted!');
+                // console.log('From Submitted!');        
                 document.getElementById("submitEditForm").submit();
                 return;
             }
@@ -299,7 +387,7 @@ export default class EditDataset extends Vue {
         //if (this.persons.includes(person) == false) {
         if (this.form.authors.filter(e => e.id === person.id).length > 0) {
             this.$toast.error("person is already defined as author");
-        }  else if (this.form.contributors.filter(e => e.id === person.id).length > 0) {
+        } else if (this.form.contributors.filter(e => e.id === person.id).length > 0) {
             this.$toast.error("person is already defined as contributor");
         }
         else {
@@ -308,7 +396,7 @@ export default class EditDataset extends Vue {
             // this.dataset.checkedAuthors.push(person.id);
             this.$toast.success("person has been successfully added as author");
         }
-        
+
         // else if (this.dataset.contributors.filter(e => e.id === person.id).length > 0) {
         //     this.$toast.error("person is already defined as contributor");
         // } 
@@ -324,7 +412,17 @@ export default class EditDataset extends Vue {
         */
         for (var i = 0; i < uploadedFiles.length; i++) {
             let fileName = uploadedFiles[i].name.replace(/\.[^/.]+$/, '');
-            let uploadeFile = { file: uploadedFiles[i], label: fileName, sort_order: 0 };
+            console.log(uploadedFiles[i]);
+            var file = {
+                'lastModified': uploadedFiles[i].lastModified,
+                // 'lastModifiedDate': uploadedFiles[i].lastModifiedDate,
+                'name': uploadedFiles[i].name,
+                'size': uploadedFiles[i].size,
+                'type': uploadedFiles[i].type,
+                'webkitRelativePath': uploadedFiles[i].value,
+            }
+            console.log(file);
+            let uploadeFile = { file: JSON.stringify(file), label: fileName, sort_order: 0 };
             //this.dataset.files.push(uploadedFiles[i]);
             this.form.files.push(uploadeFile);
         }
@@ -337,7 +435,7 @@ export default class EditDataset extends Vue {
     /*
         Removes a select file the user has uploaded
         */
-       removeFile(key) {
+    removeFile(key) {
         this.form.files.splice(key, 1);
     }
 

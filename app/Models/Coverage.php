@@ -21,7 +21,7 @@ class Coverage extends Model
         'time_min',
         'time_max',
         'time_absolut',
-        'x_min', 'x_max', 'y_min', 'y_max'
+        'x_min', 'x_max', 'y_min', 'y_max',
     ];
 
     /**
@@ -35,17 +35,17 @@ class Coverage extends Model
         'time_absolut',
     ];
 
-    public function setTimeAbsolutAttribute($value)
+    public function setTimeAbsolutAttribute($date)
     {
-        $this->attributes['time_absolut'] = \Illuminate\Support\Carbon::createFromFormat('d-m-Y H:i:s', $value);
+        $this->attributes['time_absolut'] = empty($date) ? null : \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $date);
     }
-    public function setTimeMinAttribute($value)
+    public function setTimeMinAttribute($date)
     {
-        $this->attributes['time_min'] = \Illuminate\Support\Carbon::createFromFormat('d-m-Y H:i:s', $value);
+        $this->attributes['time_min'] = empty($date) ? null : \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $date);
     }
-    public function setTimeMaxAttribute($value)
+    public function setTimeMaxAttribute($date)
     {
-        $this->attributes['time_max'] = \Illuminate\Support\Carbon::createFromFormat('d-m-Y H:i:s', $value);
+        $this->attributes['time_max'] = empty($date) ? null : \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $date);
     }
 
     /**

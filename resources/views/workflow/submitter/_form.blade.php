@@ -1,9 +1,9 @@
 <fieldset id="fieldset-State">
     <legend>State & notes</legend>
     <div class="pure-g">
-        @if(!empty($reject_reviewer_note))
+        @if($dataset->reject_editor_note)
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
-            {!! Form::label('reject_reviewer_note', 'editor reject note..') !!}
+            {!! Form::label('reject_editor_note', 'editor reject note..') !!}
             {{-- {!! Form::select('server_state', Config::get('enums.server_states'), null, ['id' => 'server_state', 'placeholder' => '-- select server state --']) !!} --}}
             {!! Form::textarea('reject_editor_note', null, ['class'=>'pure-u-23-24','readonly', 'v-model' =>
             'form.reject_editor_note']) !!}
@@ -34,8 +34,7 @@
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
             {!! Form::label('type', 'Type..') !!}
             <div class="select  pure-u-23-24">
-                {!! Form::select('type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type
-                --',
+                {!! Form::select('type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --',
                 'v-model' => 'form.type', "v-validate" => "'required'"]) !!}
             </div>
         </div>
@@ -55,7 +54,7 @@
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
             {!! Form::label('creating_corporation', 'Creating Corporation') !!}
-            {!! Form::text('creating_corporation', null, ['class' =>
+            {!! Form::text('creating_corporation', null, ['readonly', 'class' =>
             'pure-u-23-24', 'v-model' => 'form.creating_corporation', "v-validate" => "'required'"]) !!}
             <span class="md-error" v-if="errors.has('form.creating_corporation')">creating corporation is
                 required.</span>
@@ -114,7 +113,7 @@
                 <td>
                     <input v-bind:name="'titles['+index+'][id]'" readonly class="form-control" v-model="title.id" hidden />
                     <input type="text" :id="'titles['+index+'][value]'" :name="'titles['+index+'][value]'"
-                        v-validate="'required'" class="form-control" v-model="title.value">
+                       v-validate="'required|min:4|max:255'" class="form-control" v-model="title.value">
                 </td>
                 <td>
                     <template v-if="title.type == 'Main'">
@@ -124,7 +123,7 @@
                     <template v-else>
                         <select type="text" :id="'titles['+index+'][type]'" :name="'titles['+index+'][type]'"
                             class="form-control"
-                            v-validate="{required: true, translatedLanguage: [form.language, title.type]}"
+                            v-validate="{required: true}"
                             v-model="title.type" v-bind:readonly="title.type == 'Main'">
                             <option v-for="option in remainingTitleTypes" :value='option'
                                 :disabled="title.type == 'Main'">
@@ -196,7 +195,7 @@
                     <input v-bind:name="'abstracts[' +  index +'][id]'" readonly class="form-control" v-model="abstract.id" hidden />
 
                     <input type="text" :id="'abstracts['+ index +'][value]'"
-                        :name="'abstracts['+index+'][value]'" v-validate="'required'" v-model="abstract.value"
+                        :name="'abstracts['+index+'][value]'" v-validate="'required|min:4|max:2500'" v-model="abstract.value"
                         class="form-control">
                 </td>
                 <td>
@@ -207,7 +206,7 @@
                     <template v-else>
                         <select type="text" :id="'abstracts['+ index +'][type]'"
                             :name="'abstracts['+ index +'][type]'" class="form-control"
-                            v-validate="{required: true, translatedLanguage: [form.language, abstract.type]}"
+                            v-validate="{required: true}"
                             v-model="abstract.type" v-bind:readonly="abstract.type == 'Abstract'">
                             <option v-for="option in descriptionTypes" :value='option'>
                                 @{{ option }}
@@ -283,21 +282,45 @@
             </div>
             <div v-show="elevation === 'absolut'" class="pure-u-1 pure-u-md-1">
                 {!! Form::label('elevation_absolut', 'elevation absolut: ') !!}
-                {!! Form::text('elevation_absolut', null,
-                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_absolut', 'data-vv-scope' => 'step-2',
-                "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!}
+                {{-- {!! Form::text('elevation_absolut', null,
+                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_absolut',
+                "v-validate" => "this.isElevationAbsolut ? 'required|integer' : '' " ]) !!} --}}
+                 <input
+                 name="coverage[elevation_absolut]"
+                 type="text"
+                 class="pure-u-23-24"
+                 v-model="form.coverage.elevation_absolut"               
+                 id="elevation_absolut"
+                 v-validate.immediate="{ required: isElevationAbsolut, integer: true}"                 
+               />
             </div>
             <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
                 {!! Form::label('elevation_min', 'elevation min: ') !!}
-                {!! Form::text('elevation_min', null,
-                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_min', 'data-vv-scope' => 'step-2',
-                "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+                {{-- {!! Form::text('elevation_min', null,
+                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_min',
+                "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!} --}}
+                 <input
+                 name="coverage[elevation_min]"
+                 type="text"
+                 class="pure-u-23-24"
+                 v-model="form.coverage.elevation_min"                
+                 id="elevation_min"                 
+                 v-validate.immediate="{ required: this.isElevationRange, integer: true}" 
+                 />
             </div>
             <div v-show="elevation === 'range'" class="pure-u-1 pure-u-md-1">
                 {!! Form::label('elevation_max', 'elevation max: ') !!}
-                {!! Form::text('elevation_max', null,
-                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_max', 'data-vv-scope' => 'step-2',
-                "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!}
+                {{-- {!! Form::text('elevation_max', null,
+                ['class' => 'pure-u-23-24', 'v-model' => 'form.coverage.elevation_max',
+                "v-validate" => "this.isElevationRange ? 'required|integer' : '' "]) !!} --}}
+                <input
+                name="coverage[elevation_max]"
+                type="text"
+                class="pure-u-23-24"
+                v-model="form.coverage.elevation_max"             
+                id="elevation_max"               
+                v-validate.immediate="{ required: this.isElevationRange, integer: true}" 
+                />
             </div>
         </div>
 
@@ -318,25 +341,37 @@
             </div>
 
             <div v-show="depth === 'absolut'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('depth_absolut', 'depth absolut: ') !!} {!! Form::text('depth_absolut', null, ['class'
-                => 'pure-u-23-24',
-                'v-model' => 'form.coverage.depth_absolut', 'data-vv-scope' => 'step-2', "v-validate" =>
-                "this.isDepthAbsolut
-                ? 'required|integer' : '' " ]) !!}
+                {!! Form::label('depth_absolut', 'depth absolut: ') !!}               
+                 <input
+                 name="coverage[depth_absolut]"
+                 type="text"
+                 class="pure-u-23-24"
+                 v-model="form.coverage.depth_absolut"               
+                 id="depth_absolut"
+                 v-validate.immediate="{ required: this.isDepthAbsolut, integer: true}"                 
+               />
             </div>
             <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('depth_min', 'depth min: ') !!} {!! Form::text('depth_min', null, ['class' =>
-                'pure-u-23-24', 'v-model' =>
-                'form.coverage.depth_min', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ?
-                'required|integer'
-                : '' "]) !!}
+                {!! Form::label('depth_min', 'depth min: ') !!}                
+                 <input
+                 name="coverage[depth_min]"
+                 type="text"
+                 class="pure-u-23-24"
+                 v-model="form.coverage.depth_min"                
+                 id="depth_min"                 
+                 v-validate.immediate="{ required: this.isDepthRange, integer: true}" 
+                 />
             </div>
             <div v-show="depth === 'range'" class="pure-u-1 pure-u-md-1">
-                {!! Form::label('depth_max', 'depth max: ') !!} {!! Form::text('depth_max', null, ['class' =>
-                'pure-u-23-24', 'v-model' =>
-                'form.coverage.depth_max', 'data-vv-scope' => 'step-2', "v-validate" => "this.isDepthRange ?
-                'required|integer'
-                : '' "]) !!}
+                {!! Form::label('depth_max', 'depth max: ') !!}                
+                <input
+                name="coverage[depth_max]"
+                type="text"
+                class="pure-u-23-24"
+                v-model="form.coverage.depth_max"             
+                id="depth_max"               
+                v-validate.immediate="{ required: this.isDepthRange, integer: true}" 
+                />
             </div>
         </div>
 
@@ -344,11 +379,11 @@
             <div class="pure-u-1 pure-u-md-1">
                 <label for="time-option-one" class="pure-radio">
                     <input id="time-option-one" type="radio" v-model="time" value="absolut">
-                    absolut time (dd.MM.yyyy HH:mm:ss)
+                    absolut time (yyyy-MM-dd HH:mm:ss)
                 </label>
                 <label for="time-option-two" class="pure-radio">
                     <input id="time-option-two" type="radio" v-model="time" value="range">
-                    time range (dd.MM.yyyy HH:mm:ss)
+                    time range (yyyy-MM-dd HH:mm:ss)
                 </label>
                 <label for="time-option-three" class="pure-radio">
                     <input id="time-option-three" type="radio" v-model="time" value="no_time">
@@ -361,9 +396,9 @@
                 {{-- {!! Form::datetime('time_absolut', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm',
                 'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'format' => 'yyyy-MM-dd HH:mm',
                 "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!} --}}
-                <datetime name="time_absolut"
-                    v-validate="this.isTimeAbsolut ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
-                    data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='form.coverage.time_absolut'></datetime>
+                <datetime ref="absoluteTimeDatepicker" name="coverage[time_absolut]"
+                    v-validate.immediate="this.isTimeAbsolut ? 'required' : '' "
+                    format="YYYY-MM-DD h:i:s" v-model='form.coverage.time_absolut'></datetime>
                 {{-- <datetime name="time_absolut" format="MM-DD-YYYY H:i:s" width="300px" v-model="dataset.coverage.time_absolut"></datetime> --}}
             </div>
             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
@@ -371,18 +406,18 @@
                 {{-- {!! Form::datetimelocal('time_min', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss', 
                 'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', 'step' => 1,
                 "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
-                <datetime name="time_min"
-                    v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
-                    data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='form.coverage.time_min'></datetime>
+                <datetime ref="minTimeDatepicker" name="coverage[time_min]"
+                    v-validate.immediate="this.isTimeRange ? 'required' : '' "
+                    format="YYYY-MM-DD h:i:s" v-model='form.coverage.time_min'></datetime>
             </div>
             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                 {!! Form::label('timemax', 'time max: ') !!}
                 {{-- {!! Form::datetimelocal('time_max', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
                 'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', 'step' => 1,
                 "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
-                <datetime name="time_max"
-                    v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
-                    data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='form.coverage.time_max'></datetime>
+                <datetime ref="maxTimeDatepicker" name="coverage[time_max]"
+                    v-validate.immediate="this.isTimeRange ? 'required' : '' "
+                    format="YYYY-MM-DD h:i:s" v-model='form.coverage.time_max'></datetime>
             </div>
         </div>
 
@@ -495,6 +530,7 @@
 <fieldset id="fieldset-keywords">
     <legend>Dataset Keywords</legend>
     <label name="SubjectLabel">Add Keyword </label>
+    <input type="hidden" v-validate:keywords_length="'min_value:3'" data-vv-as="keyword list" name="keywords_list">
     <button class="pure-button button-small" @click.prevent="addKeyword()"><i class="fas fa-plus-circle"></i></button>
     @if ($dataset->subjects->count() > 0)
     <table id="keywords" class="pure-table pure-table-horizontal">
@@ -545,21 +581,24 @@
 <fieldset id="fieldset-files">
     <legend>Files</legend>
 
-    {{-- <h3>File Upload</h3>
-    <div class="dropbox">
-        <input type="file" name="uploads" multiple @change="filesChange($event.target.name, $event.target.files)" class="input-file">
+    {{-- <h3>File Upload</h3>--}}
+    {{-- <div class="dropbox"> --}}
+    <div>
+        <input type="hidden" v-validate:files_length="'min_value:1'" data-vv-scope="step-4" data-vv-as="files list" name="files_list">
+        {{-- <input type="file" name="uploads[]" multiple @change="filesChange($event.target.name, $event.target.files)" class="input-file">
         <p>
             Drag your file(s) here to begin<br> or click to browse
-        </p>       
-    </div> --}}
+        </p>        --}}
+    </div> 
 
     <table id="items" class="pure-table pure-table-horizontal">
         <thead>
             <tr>
                 <th>#</th>              
                 <th>Path Name</th>
+                <th>ID</th>
                 <th>Label</th>
-                <th>New</th>
+                {{-- <th>New</th> --}}
                 <th style="width: 130px;"></th>
             </tr>
         </thead>
@@ -574,8 +613,7 @@
                     @else
                     <span class="alert">missing file: {{ $file->path_name }}</span>
                     @endif --}}
-                    <a v-if="file.id != undefined" v-bind:href=" '/settings/file/download/' + file.id ">
-                       
+                    <a v-if="file.id != undefined" v-bind:href=" '/settings/file/download/' + file.id ">                       
                       @{{ file.path_name }}                     
                     </a>
                     <span v-else> File name will be generated</span>
@@ -583,14 +621,16 @@
                 
                 </td>
                 <td>
-                    <input v-bind:name="'files[' +  index +'][id]'" readonly class="form-control" v-model="file.id" hidden />
+                    <input v-bind:name="'files[' +  index +'][id]'" readonly class="form-control" v-model="file.id" />
+                </td>
+                <td>                    
                     <input v-bind:name="'files['+index+'][label]'" class="form-control" placeholder="[FILE LABEL]"
                         v-model="file.label" v-validate="'required'" />
                 </td>
-                <td>
+                {{-- <td>
                     <i v-if="file.file" class="fas fa-file-upload"></i>
-                    <input type="hidden"  v-bind:name="'files['+index+'][file]'" class="form-control" v-bind:file="file.file"/>
-                </td>
+                    <input  type="text" v-bind:name="'files['+index+'][file]'" class="form-control" v-model="file.file"/>
+                </td> --}}
                 <td>
                     <button v-if="file.id == undefined" class="pure-button button-small is-warning"
                         @click.prevent="removeFile(index)">
@@ -613,11 +653,3 @@
         <span>{!! $submitButtonText !!}</span>
     </button>
 </div>
-
-@if($errors->any())        
-<ul class="alert validation-summary-errors">    
-    @foreach($errors->all() as $error)
-        <li style="margin-left:5px;">{{ $error }}</li>
-    @endforeach
-</ul>
-@endif

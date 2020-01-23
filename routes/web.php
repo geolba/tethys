@@ -111,6 +111,10 @@ Route::group(
             'middleware' => ['permission:dataset-editor-update'],
             'as' => 'workflow.editor.update', 'uses' => 'EditorController@update',
         ]);
+        Route::get('workflow/editor/file/download/{id}', [
+            'middleware' => ['permission:dataset-editor-update'],
+            'as' => 'workflow.editor.file.download', 'uses' => 'EditorController@download',
+        ]);
         Route::get('workflow/editor/approve/{id}', [
             'middleware' => ['permission:dataset-approve'],
             'as' => 'workflow.editor.approve', 'uses' => 'EditorController@approve',

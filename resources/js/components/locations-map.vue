@@ -14,7 +14,7 @@
           v-model="geolocation.x_min"
           data-vv-scope="step-2"
           id="xmin"
-          v-validate="'decimal'"
+          v-validate="'decimal|required'"
         />
       </div>
 
@@ -27,7 +27,7 @@
           v-model="geolocation.y_min"
           data-vv-scope="step-2"
           id="ymin"
-          v-validate="'decimal'"
+          v-validate="'decimal|required'"
         />
       </div>
 
@@ -40,7 +40,7 @@
           v-model="geolocation.x_max"
           data-vv-scope="step-2"
           id="xmax"
-          v-validate="'decimal'"
+          v-validate="'decimal|required'"
         />
       </div>
 
@@ -53,7 +53,7 @@
           v-model="geolocation.y_max"
           data-vv-scope="step-2"
           id="ymax"
-          v-validate="'decimal'"
+          v-validate="'decimal|required'"
         />
       </div>
       <input type="button" v-if="validBoundingBox" v-on:click="zoomTo" value="validate coordinates" />

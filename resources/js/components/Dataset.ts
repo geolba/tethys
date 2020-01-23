@@ -8,7 +8,7 @@ function initialState() {
     rights: null,
     project_id: "",
 
-    creating_corporation: "GBA Repository",
+    creating_corporation: "TETHYS RDR",
     language: "",
     embargo_date: "",
     belongs_to_bibliography: 0,
@@ -70,7 +70,7 @@ export default class Dataset extends Vue {
   rights = null;
   project_id = "";
 
-  creating_corporation = "TETHYS Repository";
+  creating_corporation = "TETHYS RDR";
   language = "";
   embargo_date = "";
   belongs_to_bibliography = 0;

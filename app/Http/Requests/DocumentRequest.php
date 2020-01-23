@@ -24,7 +24,7 @@ class DocumentRequest extends Request
     public function rules()
     {
         return [
-            'type' => 'required|min:5',
+            'type' => 'required|min:3',
             'server_state' => 'required',
             // 'author' => 'required|min:4',
             // 'stock' => 'required|integer',

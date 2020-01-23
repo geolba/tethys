@@ -145,7 +145,7 @@ class RequestController extends Controller
     private function handleIdentify()
     {
         $email = "repository@geologie.ac.at";
-        $repositoryName = "TETHYS - Data Research Repository";
+        $repositoryName = "TETHYS RDR";
         $repIdentifier = "tethys.geologie.ac.at";
         $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
         $earliestDateFromDb = optional(Dataset::earliestPublicationDate())->server_date_published;

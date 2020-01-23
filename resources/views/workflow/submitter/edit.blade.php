@@ -32,8 +32,19 @@
             {!! Form::model($dataset, ['method' => 'POST', 'route' => ['publish.workflow.submit.update', $dataset->id], 'id' => 'submitEditForm',
             'class' => 'pure-form', 'enctype' => 'multipart/form-data', 'v-on:submit.prevent' => 'onSubmit' ]) !!}
             @include('workflow/submitter/_form', ['submitButtonText' => 'Save Dataset', 'bookLabel' => 'Edit Dataset.'])
-            {{-- @include('errors._errors') --}}
+           
+            {{-- @if (count($errors) > 0) 
+            <div>      
+                <b>Please correct the following error(s):</b>
+                <ul class="alert validation-summary-errors">    
+                    @foreach($errors->all() as $error)
+                        <li style="margin-left:5px;">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div> 
+            @endif --}}
             
+            <!-- client errors -->
             <div v-if="errors.items.length > 0">
                 <b>Please correct the following error(s):</b>
                 <ul class="alert validation-summary-errors">

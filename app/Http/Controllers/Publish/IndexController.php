@@ -55,7 +55,7 @@ class IndexController extends Controller
             ->pluck('part1', 'part1');
         // ->toArray();
 
-        // $projects = Project::pluck('label', 'id');
+        $projects = Project::pluck('label', 'id');
         $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn",  "url", "urn"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
        
@@ -73,7 +73,7 @@ class IndexController extends Controller
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
         return view(
             'publish.create-step1',
-            compact('licenses', 'languages', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
+            compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
         );
     }
 
@@ -246,26 +246,38 @@ class IndexController extends Controller
             'type' => 'required|min:5',
             'rights' => 'required|boolean|in:1',
             'belongs_to_bibliography' => 'required|boolean',
-            'title_main.value' => 'required|min:4',
+            'title_main.value' => 'required|min:4|max:255',
             'title_main.language' => 'required',
-            'abstract_main.value' => 'required|min:4',
+            'titles.*.value' => 'required|min:4|max:255',
+            'abstract_main.value' => 'required|min:4|max:2500',
             'abstract_main.language' => 'required',
+            'descriptions.*.value' => 'required|min:4|max:2500',
             'coverage.x_min' => [
-                'nullable',
+                'required',
                 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
             'coverage.y_min' => [
-                'nullable',
+                'required',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
             'coverage.x_max' => [
-                'nullable',
+                'required',
                 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
             'coverage.y_max' => [
-                'nullable',
+                'required',
                 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
+            'keywords'  => 'required|array|min:3',
+            'keywords.*.value' => 'required|string',
+            'keywords.*.type' => 'required|string',
+            'files'  => 'required|array|min:1',
+            'files.*.label' => 'required|string',
+        ];
+        $customMessages = [
+            'keywords.required' => 'Minimal three keywords are required.',
+            'keywords.*.type.required' => 'The types of all keywords are required.',
+            'files.min' => 'Minimal one file is required.',
         ];
         if (null != $request->file('files')) {
             $files = count($request->file('files')) - 1;
@@ -274,7 +286,7 @@ class IndexController extends Controller
                 $rules['files.' . $index . '.file'] = [new RdrFilesize($index + 1), 'file', 'required', new RdrFiletypes()];
             }
         }
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, $customMessages);
         if (!$validator->fails()) {
             //store dataset todo
             //$data = $request->all();
@@ -501,7 +513,7 @@ class IndexController extends Controller
             $errors = $validator->errors();
             return response()->json([
                 'success' => false,
-                'errors' => $errors->all(),
+                'errors' => $errors,
             ], 422);
         }
     }

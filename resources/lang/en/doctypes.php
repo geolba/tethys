@@ -13,12 +13,12 @@ return [
     |
      */
 
-    'analysisdata' => 'Analysis Data',
-    'interpreteddata' => 'Interpreted Data',
-    'measurementdata' => 'Measurement Data',
+    'analysisdata' => 'Analysis',
+    'measurementdata' => 'Measurements',
+    'monitoring' => 'Monitoring',
+    'remotesensing' => 'Remote Sensing',
+    'gis' => 'GIS',
     'models' => 'Models',
-    'rawdata' => 'Raw Data',
-    'supplementarydata' => 'Supplementary Data',
     'mixedtype' => 'Mixed Type'
     //'diplom' => 'Diploma Thesis',
     //'doctoralthesis'     => 'Doctoral Thesis',

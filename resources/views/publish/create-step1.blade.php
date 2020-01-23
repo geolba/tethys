@@ -69,7 +69,7 @@
                         </div>
                     </div> --}}
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        <label for="documentType">Datensatztyp<span class="required" title="Dieses Feld muss ausgefüllt werden."> *</span></label>
+                        <label for="documentType">Dataset Type<span class="required" title="Dieses Feld muss ausgefüllt werden."> *</span></label>
                         <div class="select  pure-u-23-24" title="Bitte wählen Sie einen Datensatztyp aus der Liste aus.">
                             {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
                             'dataset.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
@@ -83,7 +83,7 @@
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleMain', 'Main Title ') !!} 
                             {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
-                            => 'dataset.title_main.value', "v-validate" => "'required|min:4'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-1']) !!}
+                            => 'dataset.title_main.value', "v-validate" => "'required|min:4|max:255'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-1']) !!}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleLanguage', 'Title Language..') !!}
@@ -110,7 +110,7 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.titles">
                                 <td>
-                                    <input name="Title" class="form-control" placeholder="[TITLE]" v-model="item.value" data-vv-as="Additional Title" v-validate="'required|min:4'" data-vv-scope="step-1" />
+                                    <input name="Title" class="form-control" placeholder="[TITLE]" v-model="item.value" data-vv-as="Additional Title" v-validate="'required|min:4|max:255'" data-vv-scope="step-1" />
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Title[Type]', $titleTypes, null, 
@@ -136,7 +136,7 @@
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
                             {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
-                            'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:4'",
+                            'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:4|max:2500'",
                             "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-1']) }}
                         </div>
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
@@ -164,7 +164,7 @@
                         <tbody>
                             <tr v-for="(item, index) in dataset.abstracts">
                                 <td>
-                                    <textarea rows="3" cols="40" name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" data-vv-as="Additional Description" v-validate="'required|min:4'" data-vv-scope="step-1"></textarea>
+                                    <textarea rows="3" cols="40" name="Description[Value]" class="form-control" placeholder="[DESCRIPTION]" v-model="item.value" data-vv-as="Additional Description" v-validate="'required|min:4|max:2500'" data-vv-scope="step-1"></textarea>
                                 </td>
                                 <td>                                   
                                     {!! Form::select('Description[Type]', $descriptionTypes, null, 
@@ -294,7 +294,7 @@
             <div v-if="step === 2 && isInitial" data-vv-scope="step-2">
                 <h1>Step Two: Recommended Elements</h1>
 
-                {{-- <fieldset id="fieldset-project">
+                <fieldset id="fieldset-project">
                     <legend>Project</legend>
                     <div class="pure-g">
 
@@ -308,7 +308,7 @@
                         </div>  
 
                     </div>
-                </fieldset> --}}
+                </fieldset>            
 
                 <fieldset id="fieldset-dates">
                     <legend>Date(s)</legend>
@@ -424,11 +424,11 @@
                             <div class="pure-u-1 pure-u-md-1">
                                 <label for="time-option-one" class="pure-radio">
                                                                 <input id="time-option-one" type="radio" v-model="time" value="absolut">
-                                                                absolut time (dd.MM.yyyy HH:mm:ss)
+                                                                absolut time (yyyy-MM-dd HH:mm:ss)
                                                             </label>
                                 <label for="time-option-two" class="pure-radio">
                                                                 <input id="time-option-two" type="radio" v-model="time" value="range">
-                                                                time range (dd.MM.yyyy HH:mm:ss)
+                                                                time range (yyyy-MM-dd HH:mm:ss)
                                                             </label>
                                 <label for="time-option-three" class="pure-radio">
                                                                 <input id="time-option-three" type="radio" v-model="time" value="no_time">
@@ -441,7 +441,7 @@
                                 {{-- {!! Form::datetime('time_absolut', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm',
                                 'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'format' => 'yyyy-MM-dd HH:mm',
                                 "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!} --}}
-                                <datetime name="time_absolut" v-validate="this.isTimeAbsolut ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='dataset.coverage.time_absolut' ></datetime>
+                                <datetime name="time_absolut" v-validate="this.isTimeAbsolut ? 'required|date_format:yyyy-MM-dd HH:mm:ss' : '' " data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='dataset.coverage.time_absolut' ></datetime>
                                 {{-- <datetime name="time_absolut" format="MM-DD-YYYY H:i:s" width="300px" v-model="dataset.coverage.time_absolut"></datetime> --}}
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
@@ -449,14 +449,14 @@
                                 {{-- {!! Form::datetimelocal('time_min', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss', 
                                 'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', 'step' => 1,
                                 "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
-                                <datetime name="time_min" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='dataset.coverage.time_min' ></datetime>
+                                <datetime name="time_min" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='dataset.coverage.time_min' ></datetime>
                             </div>
                             <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                                 {!! Form::label('timemax', 'time max: ') !!} 
                                 {{-- {!! Form::datetimelocal('time_max', null, ['class' => 'pure-u-23-24', 'placeholder' => 'dd.MM.yyyy HH:mm:ss',
                                 'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', 'step' => 1,
                                 "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
-                                <datetime name="time_max" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="DD-MM-YYYY h:i:s" v-model='dataset.coverage.time_max' ></datetime>
+                                <datetime name="time_max" v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' " data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='dataset.coverage.time_max' ></datetime>
                             </div>                            
                         </div>
 
@@ -607,6 +607,7 @@
                 <h1>File Upload</h1>
 
                 <div class="dropbox">
+                    <input type="hidden" v-validate:files_length="'min_value:1'" data-vv-scope="step-4" data-vv-as="files list" name="files_list">
                     <input type="file" multiple name="files" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)"
                         class="input-file" data-vv-scope="step-4">
                     <p v-if="isInitial">
@@ -648,10 +649,16 @@
                         <i class="fa fa-arrow-left"></i>
                         <span>Zurück</span>
                 </button>
-                <button @click.prevent="submit('inprogress')" class="pure-button button-small">               
+                <button @click.prevent="submit('step-4')" class="pure-button button-small" v-bind:disabled="errors.any()">               
                     <i class="fa fa-save"></i>
                     <span>Save Dataset</span>
                 </button>
+                <div v-if="errors.items.length > 0">
+                    <b>Please correct the following error(s):</b>
+                    <ul class="alert validation-summary-errors">
+                        <li style="margin-left:5px;" v-for="error in errors.items">@{{ error.msg }}</li>
+                    </ul>
+                </div>
                 {{-- <button @click.prevent="submit('unpublished')" class="pure-button button-small">               
                     <i class="fa fa-upload"></i>
                     <span>Release Dataset</span>

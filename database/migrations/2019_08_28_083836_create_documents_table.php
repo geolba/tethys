@@ -24,7 +24,8 @@ class CreateDocumentsTable extends Migration
             $table->foreign('project_id')->references('id')->on('projects');
             $table->enum(
                 'type',
-                ['analysisdata', 'interpreteddata', 'measurementdata', 'models', 'rawdata', 'supplementarydata', 'mixedtype']
+                // ['analysisdata', 'interpreteddata', 'measurementdata', 'models', 'rawdata', 'supplementarydata', 'mixedtype']
+                ['analysisdata', 'measurementdata', 'monitoring', 'remotesensing', 'gis', 'models', 'mixedtype']
             );
             $table->string('language', 10);
             $table->enum(

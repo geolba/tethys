@@ -129,29 +129,37 @@ class SubmitController extends Controller
     public function update(DocumentRequest $request, $id): RedirectResponse
     {
         $rules = [
-            'type' => 'required|min:5',
-            'coverage.xmin' => [
-                'nullable',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
+            'type' => 'required|min:3',
+            'titles.*.value' => 'required|min:4|max:255',
+            'titles.*.language' => 'required',
+            'descriptions.*.value' => 'required|min:4|max:2500',
+            'descriptions.*.language' => 'required',
+            'coverage.x_min' => [
+                'required',
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
-            'coverage.ymin' => [
-                'nullable',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
+            'coverage.y_min' => [
+                'required',
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
-            'coverage.xmax' => [
-                'nullable',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
+            'coverage.x_max' => [
+                'required',
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
             ],
-            'coverage.ymax' => [
-                'nullable',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
+            'coverage.y_max' => [
+                'required',
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
             ],
-            'keywords.*.value' => 'required|string',
-            'keywords.*.type' => 'required|string',
+            'subjects'  => 'required|array|min:3',
+            'subjects.*.value' => 'required|string',
+            'subjects.*.type' => 'required|string',
+            'files'  => 'required|array|min:1',
             'files.*.label' => 'required|string',
         ];
         $customMessages = [
-            'keywords.*.type.required' => 'The types of all keywords are required.',
+            'subjects.min' => 'Minimal three keywords are required.',
+            'subjects.*.type.required' => 'The types of all keywords are required.',
+            'files.min' => 'Minimal one file is required.',
         ];
         if (null != $request->file('files')) {
             $data = $request->all();
@@ -168,6 +176,8 @@ class SubmitController extends Controller
             $input = $request->except(
                 'abstracts',
                 'licenses',
+                'authors',
+                'contributors',
                 'titles',
                 'coverage',
                 'subjects',
@@ -303,6 +313,7 @@ class SubmitController extends Controller
 
             //save the files:
             $files = $request->get('files');
+            // $files = $request->file('files');
             if (is_array($files) && count($files) > 0) {
                 $index = 1;
                 foreach ($files as $key => $formFile) {
@@ -314,7 +325,12 @@ class SubmitController extends Controller
                             $file->save();
                         }
                     } else {
-                        $file = $formFile['file'];
+                        $uploads = $request->file('uploads');
+                        $fileIndex = $formFile['file'];
+                        $file = $uploads[$fileIndex];
+                       
+
+                        // $file = new \Illuminate\Http\UploadedFile($file);
                         $label = urldecode($formFile['label']);
                         $sort_order = $index;//$formFile['sort_order'];
                         $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
@@ -372,8 +388,10 @@ class SubmitController extends Controller
             //     'success' => false,
             //     'errors' => $validator->errors()->all(),
             // ], 422);
-            return back()->withInput()
-                ->withErrors($validator->errors()->all());
+            // $errors = $validator->errors();
+            return back()->withErrors($validator);
+                // return redirect()->route('publish.workflow.submit.edit', ['id' => $id])->withInput()
+                // ->withErrors($validator);
         }
         throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
     }
@@ -424,6 +442,9 @@ class SubmitController extends Controller
 
         if ($dataset->reject_editor_note != null) {
             $input['reject_editor_note'] = null;
+        }
+        if ($dataset->reviewer_id !== null) {
+            $input['reviewer_id'] = null;
         }
         if ($dataset->reject_reviewer_note != null) {
             $input['reject_reviewer_note'] = null;

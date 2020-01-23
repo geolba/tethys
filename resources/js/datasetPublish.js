@@ -152,6 +152,9 @@ const app = new Vue({
         keywords_length() {
             return this.dataset.subjects.length;
         },
+        files_length() {
+            return this.dataset.files.length;
+        },
         isInitial() {
             return this.currentStatus === STATUS_INITIAL;
         },
@@ -578,10 +581,15 @@ const app = new Vue({
             }
             return true;
         },
-        submit(status) {
+        submit(scope) {
             // alert('Submit to blah and show blah and etc.');
             // save it
-            this.save(status);
+            // this.save(status);
+            this.$validator.validateAll(scope).then((result) => {
+                if (result) {
+                    this.save("inprogress");
+                }
+            });
         },
         handleTimeExpire() {
             window.location = '/login';
