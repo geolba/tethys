@@ -19,10 +19,13 @@ use Illuminate\Support\Facades\Auth;
 // use Illuminate\View\View;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-// use App\Models\Coverage;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use \Exception;
+use App\Rules\RdrFiletypes;
+use App\Rules\RdrFilesize;
+use App\Models\Person;
 
 class EditorController extends Controller
 {
@@ -97,7 +100,7 @@ class EditorController extends Controller
      */
     public function edit($id): \Illuminate\Contracts\View\View
     {
-        $dataset = Dataset::findOrFail($id); 
+        $dataset = Dataset::findOrFail($id);
         $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];

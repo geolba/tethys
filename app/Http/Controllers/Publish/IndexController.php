@@ -55,6 +55,9 @@ class IndexController extends Controller
             ->pluck('part1', 'part1');
         // ->toArray();
 
+        $messages = DB::table('messages')
+            ->pluck('help_text', 'metadata_element');
+
         $projects = Project::pluck('label', 'id');
         $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn",  "url", "urn"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
@@ -73,7 +76,7 @@ class IndexController extends Controller
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
         return view(
             'publish.create-step1',
-            compact('licenses', 'languages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
+            compact('licenses', 'languages', 'messages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
         );
     }
 
@@ -243,7 +246,7 @@ class IndexController extends Controller
         // ]);
         $rules = [
             // 'server_state' => 'required',
-            'type' => 'required|min:5',
+            'type' => 'required|min:3',
             'rights' => 'required|boolean|in:1',
             'belongs_to_bibliography' => 'required|boolean',
             'title_main.value' => 'required|min:4|max:255',
@@ -273,12 +276,22 @@ class IndexController extends Controller
             'keywords.*.type' => 'required|string',
             'files'  => 'required|array|min:1',
             'files.*.label' => 'required|string',
+            // 'authors.*.email' => 'required|email|max:50|unique:persons,email',
         ];
         $customMessages = [
             'keywords.required' => 'Minimal three keywords are required.',
             'keywords.*.type.required' => 'The types of all keywords are required.',
             'files.min' => 'Minimal one file is required.',
+            'authors.*.email.unique' => 'email of new author is not unique in database.',
         ];
+        if (isset($data['authors'])) {
+            foreach ($request->get('authors') as $index => $person) {
+                // echo "Item at index {$index} has sm_id value {$item->sm_id}";
+                if ($person['status'] == false) {
+                    $rules['authors.' . $index . '.email'] = ['email', 'required', 'unique:persons,email'];
+                }
+            }
+        }
         if (null != $request->file('files')) {
             $files = count($request->file('files')) - 1;
             foreach (range(0, $files) as $index) {

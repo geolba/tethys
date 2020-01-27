@@ -29,7 +29,7 @@
               v-bind:name="heading+'['+index+'][id]'"
               class="form-control"             
               v-model="item.id"              
-              v-bind:readonly="item.status==1"              
+              readonly             
               data-vv-scope="step-1"
             /></td>
           <td>

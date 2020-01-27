@@ -43,6 +43,12 @@ import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/index.css';
 Vue.use(VueToast);
 
+// import VTooltip from 'v-tooltip';
+// Vue.use(VTooltip);
+import Tooltip from 'vue-directive-tooltip';
+import 'vue-directive-tooltip/dist/vueDirectiveTooltip.css';
+Vue.use(Tooltip);
+
 const dict = {
     custom: {
         keyword_list: {
@@ -147,6 +153,10 @@ const app = new Vue({
     mounted() {
         //this.step = 2;
         this.reset();
+        console.log(this.messages);
+    },
+    beforeMount() {       
+        this.messages = window.Laravel.messages;   
     },
     computed: {
         keywords_length() {
@@ -544,14 +554,6 @@ const app = new Vue({
                 this.$toast.success("person has been successfully added as contributor");
             }
         },
-        // onAddSubmitter(person) {
-        //     //if person is not in submitters array
-        //     //if (this.submitters.includes(person) == false) {
-        //     if (this.dataset.submitters.filter(e => e.id === person.id).length == 0) {
-        //         this.dataset.submitters.push(person);
-        //         this.dataset.checkedSubmitters.push(person.id);
-        //     }
-        // },
         /*
         Removes a select file the user has uploaded
         */

@@ -2,6 +2,18 @@
 
 @section('title', 'Publish') 
 
+@section('styles') 
+<style>
+.vue-tooltip.tooltip-custom {
+  background-color: #00a9d8;
+  z-index: 9999;
+}
+.vue-tooltip.tooltip-custom .tooltip-content {  
+  z-index: 9999;
+}
+  </style>
+@stop
+
 @section('content')
 <div class="header">
     <h3 class="header-title">
@@ -69,16 +81,21 @@
                         </div>
                     </div> --}}
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        <label for="documentType">Dataset Type<span class="required" title="Dieses Feld muss ausgefüllt werden."> *</span></label>
+                        <label for="documentType">Dataset Type<span class="required" title="Dieses Feld muss ausgefüllt werden."> 
+                            *  <i  v-tooltip="{ content: messages.dataset_type, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>       
+                         </span>
+                        </label>
                         <div class="select  pure-u-23-24" title="Bitte wählen Sie einen Datensatztyp aus der Liste aus.">
                             {!! Form::select('Type', Lang::get('doctypes'), null, ['id' => 'type', 'placeholder' => '-- select type --', 'v-model' =>
                             'dataset.type', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                         </div>
-                    </div>                   
+                    </div> 
+                    
+                           
                 </div>
 
                 <fieldset id="fieldset-titles">
-                    <legend>Title(s)</legend>
+                    <legend>Title(s)  <i  v-tooltip="{ content: messages.titles, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i> </legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             {!! Form::label('TitleMain', 'Main Title ') !!} 
@@ -734,11 +751,13 @@
 
 
 @stop 
-@section('after-scripts') {{--
-<script type="text/javascript" src="{{ asset('js/lib.js') }}"></script> --}} {{--
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>--}} {{--
- <script type="text/javascript" src="{{ resource_path('assets\js\datasetPublish.js') }}"></script> --}}
+@section('after-scripts') 
+<script>
+    window.Laravel = <?php echo json_encode([            
+            'languages' => $languages,
+            'messages' => $messages,            
+        ]); ?>        
+</script>
  <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>
 
 @stop
