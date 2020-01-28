@@ -113,6 +113,7 @@ export default class EditDataset extends Vue {
         this.titleTypes = window.Laravel.titleTypes;
         this.descriptionTypes = window.Laravel.descriptionTypes;
         this.languages = window.Laravel.languages;
+        this.messages = window.Laravel.messages;
         this.projects = window.Laravel.projects;
         this.licenses = window.Laravel.licenses;
         this.checkeds = window.Laravel.checkeds;

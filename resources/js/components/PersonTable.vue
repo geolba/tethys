@@ -104,6 +104,9 @@
 <script lang="ts">
 import draggable from "vuedraggable";
 import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
+import Tooltip from 'vue-directive-tooltip';
+import 'vue-directive-tooltip/dist/vueDirectiveTooltip.css';
+Vue.use(Tooltip);
 
 @Component({
   components: { draggable }

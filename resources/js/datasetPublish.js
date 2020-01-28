@@ -151,7 +151,6 @@ const app = new Vue({
     mounted() {
         //this.step = 2;
         this.reset();
-        console.log(this.messages);
     },
     beforeMount() {       
         this.messages = window.Laravel.messages;   

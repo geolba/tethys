@@ -108,6 +108,10 @@ class EditorController extends Controller
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
+
+        $messages = DB::table('messages')
+        ->pluck('help_text', 'metadata_element');
+
         $projects = Project::pluck('label', 'id');
 
         $datum = date('Y-m-d');
@@ -144,6 +148,7 @@ class EditorController extends Controller
                 'titleTypes',
                 'descriptionTypes',
                 'languages',
+                'messages',
                 'projects',
                 'licenses',
                 'checkeds',

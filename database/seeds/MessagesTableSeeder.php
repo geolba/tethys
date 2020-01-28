@@ -23,7 +23,7 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 2 
+                // 2
                 'metadata_element' => 'dataset_type',
                 'help_text' => 'Hier ist die Datenpublikation nach fix vorgegebenen Kategorien zu klassifizieren.',
                 'created_at' => Carbon::now(),

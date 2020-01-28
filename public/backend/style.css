@@ -1020,4 +1020,8 @@ textarea.large, input.large {
   .help.is-info {
     color: #4dc0b5;
   }
+
+  i {
+      cursor: pointer;
+  }
  

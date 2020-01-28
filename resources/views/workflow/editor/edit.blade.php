@@ -55,6 +55,7 @@
             'titleTypes' => $titleTypes,
             'descriptionTypes' => $descriptionTypes,
             'languages' => $languages,
+            'messages' => $messages,
             'projects' => $projects,
             'licenses'  => $licenses,
             'checkeds' => $checkeds,
