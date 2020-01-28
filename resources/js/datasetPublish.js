@@ -43,8 +43,6 @@ import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/index.css';
 Vue.use(VueToast);
 
-// import VTooltip from 'v-tooltip';
-// Vue.use(VTooltip);
 import Tooltip from 'vue-directive-tooltip';
 import 'vue-directive-tooltip/dist/vueDirectiveTooltip.css';
 Vue.use(Tooltip);

@@ -9,7 +9,16 @@
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Orcid</th>
+          <th scope="col">
+            <label for="language">
+              <span>
+                Orcid <i
+                  v-tooltip="{ content: messages.orcid, class: 'tooltip-custom tooltip-other-custom' }"
+                  class="far fa-lg fa-question-circle"
+                ></i>
+              </span>
+            </label>
+          </th>
           <th></th>
         </tr>
       </thead>
@@ -25,15 +34,17 @@
           v-bind:class="[item.status==true ? 'activeClass' : 'inactiveClass']"
         >
           <td scope="row">{{ index + 1 }}</td>
-           <td> <input             
-              v-bind:name="heading+'['+index+'][id]'"
-              class="form-control"             
-              v-model="item.id"              
-              readonly             
-              data-vv-scope="step-1"
-            /></td>
           <td>
-            <input             
+            <input
+              v-bind:name="heading+'['+index+'][id]'"
+              class="form-control"
+              v-model="item.id"
+              readonly
+              data-vv-scope="step-1"
+            />
+          </td>
+          <td>
+            <input
               v-bind:name="heading+'['+index+'][first_name]'"
               class="form-control"
               placeholder="[FIRST NAME]"
@@ -45,7 +56,7 @@
           </td>
           <td>
             <input
-             v-bind:name="heading+'['+index+'][last_name]'"            
+              v-bind:name="heading+'['+index+'][last_name]'"
               class="form-control"
               placeholder="[LAST NAME]"
               v-model="item.last_name"
@@ -55,12 +66,12 @@
             />
           </td>
           <td>
-             <!-- v-validate="'required|email'" -->
+            <!-- v-validate="'required|email'" -->
             <input
-             v-bind:name="heading+'['+index+'][email]'"             
+              v-bind:name="heading+'['+index+'][email]'"
               class="form-control"
               placeholder="[EMAIL]"
-              v-model="item.email"             
+              v-model="item.email"
               v-validate="{required: true, email: true, unique: [personlist, index, 'email']}"
               v-bind:readonly="item.status==1"
               data-vv-scope="step-1"
@@ -68,7 +79,7 @@
           </td>
           <td>
             <input
-              v-bind:name="heading+'['+index+'][identifier_orcid]'"             
+              v-bind:name="heading+'['+index+'][identifier_orcid]'"
               class="form-control"
               placeholder="[ORCID optional]"
               v-model="item.identifier_orcid"
@@ -117,6 +128,8 @@ export default class PersonTable extends Vue {
   rowIndex;
   @Prop(String)
   heading;
+  @Prop({ required: true, type: Array })
+  messages;
 
   // props: {
   //   personlist: {
@@ -152,10 +165,10 @@ export default class PersonTable extends Vue {
 .custom-actions button.ui.button > i.icon {
   margin: auto !important;
 }
- .activeClass {
-        background-color: aquamarine;
-    }
-    .inactiveClass {
-        background-color: orange;
-    }
+.activeClass {
+  background-color: aquamarine;
+}
+.inactiveClass {
+  background-color: orange;
+}
 </style>

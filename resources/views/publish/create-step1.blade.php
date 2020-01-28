@@ -37,10 +37,16 @@
                 <fieldset id="fieldset-language">
                     <legend>Dataset Language</legend>
                     <div class="pure-g">
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('Language', 'Language..') !!}
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">                            
+                            <label for="language">
+                                <span>
+                                    Language.. 
+                                    <i v-tooltip="{ content: messages.dataset_language, class: 'tooltip-custom tooltip-other-custom' }"
+                                        class="far fa-lg fa-question-circle"></i>
+                                </span>
+                            </label>
                             <div class="select  pure-u-23-24">
-                                {!! Form::select('Language', $languages, null, ['placeholder' => '[language]', 'v-model' => 'dataset.language', "v-validate"
+                                {!! Form::select('language', $languages, null, ['placeholder' => '[language]', 'v-model' => 'dataset.language', "v-validate"
                                 => "'required'", 'data-vv-scope' => 'step-0']) !!}
                             </div>
                             <small id="languageHelp" class="pure-form-message-inline">select dataset main language</small>
@@ -95,10 +101,19 @@
                 </div>
 
                 <fieldset id="fieldset-titles">
-                    <legend>Title(s)  <i  v-tooltip="{ content: messages.titles, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i> </legend>
+                    <legend>
+                        Title(s)  
+                        {{-- <i  v-tooltip="{ content: messages.titles, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>  --}}
+                    </legend>
                     <div class="pure-g">
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('TitleMain', 'Main Title ') !!} 
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">                            
+                            <label for="TitleMain">
+                                <span>
+                                    Main Title  
+                                    <i v-tooltip="{ content: messages.main_title, class: 'tooltip-custom tooltip-other-custom' }"
+                                        class="far fa-lg fa-question-circle"></i>
+                                </span>
+                            </label>
                             {!! Form::text('TitleMain[Value]', null, ['class' => 'pure-u-23-24', 'v-model'
                             => 'dataset.title_main.value', "v-validate" => "'required|min:4|max:255'", "data-vv-as" => "Main Title", 'data-vv-scope' => 'step-1']) !!}
                         </div>
@@ -111,8 +126,14 @@
                             {!! Form::text('TitleMain[Language]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.title_main.language', 'readonly']) !!}
                         </div>                        
                     </div>
-                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('TitleMain', 'Add additional title(s) ') !!} 
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">                      
+                        <label>
+                            <span>
+                                Add additional title(s) <i
+                                    v-tooltip="{ content: messages.additional_titles, class: 'tooltip-custom tooltip-other-custom' }"
+                                    class="far fa-lg fa-question-circle"></i>
+                            </span>
+                        </label>
                         <button class="pure-button button-small" @click.prevent="addTitle()">+</button>
                     </div>
                     <table class="pure-table pure-table-horizontal"  v-if="dataset.titles.length">
@@ -150,8 +171,14 @@
                 <fieldset id="fieldset-description">
                     <legend>Description</legend>
                     <div class="pure-g">                        
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('TitleAbstract', 'Main Abstract ') !!} 
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">                            
+                            <label for="TitleAbstract">
+                                <span>
+                                    Main Abstract 
+                                    <i v-tooltip="{ content: messages.main_abstract, class: 'tooltip-custom tooltip-other-custom' }"
+                                        class="far fa-lg fa-question-circle"></i>
+                                </span>
+                            </label>
                             {{ Form::textarea('TitleAbstract[Value]', null, ['class' => 'pure-u-23-24',
                             'size' => '70x6', 'v-model' => 'dataset.abstract_main.value', "v-validate" => "'required|min:4|max:2500'",
                             "data-vv-as" => "Main Abstract", 'data-vv-scope' => 'step-1']) }}
@@ -164,8 +191,14 @@
                             </div> --}}
                             {!! Form::text('TitleAbstract[Language]', null, ['class' => 'pure-u-23-24', 'v-model' => 'dataset.abstract_main.language', 'readonly']) !!}
                         </div>
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('AddtionalDescription', 'Add additional descriptions(s) ') !!} 
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">                           
+                            <label>
+                                <span>
+                                    Add additional descriptions(s) <i
+                                        v-tooltip="{ content: messages.additional_descriptions, class: 'tooltip-custom tooltip-other-custom' }"
+                                        class="far fa-lg fa-question-circle"></i>
+                                </span>
+                            </label>
                             <button class="pure-button button-small" @click.prevent="addDescription()">+</button>
                         </div>
                     </div>
@@ -205,7 +238,10 @@
                 </fieldset>
 
                 <fieldset id="fieldset-creator">
-                    <legend>Creator(s)</legend>
+                    <legend>
+                        Creator 
+                        <i  v-tooltip="{ content: messages.creator, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <my-autocomplete title="searching active person table" v-on:person="onAddAuthor"></my-autocomplete>
@@ -228,11 +264,14 @@
                         <button class="pure-button button-small" @click.prevent="addNewAuthor()">+</button>
                     </div>
                     <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'" data-vv-as="Creator" data-vv-scope="step-1">                  
-                    <person-table name="persons" v-bind:heading="'creator table'" v-bind:personlist="dataset.persons"></person-table>  
+                    <person-table name="persons" v-bind:messages="messages" v-bind:heading="'creator table'" v-bind:personlist="dataset.persons"></person-table>  
                 </fieldset>
                 
                 <fieldset id="fieldset-contributors">
-                    <legend>Contributor(s)</legend>
+                    <legend>
+                        Contributor  
+                        <i  v-tooltip="{ content: messages.contributor, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-2 pure-div">
                             <my-autocomplete title="searching active person table" @person="onAddContributor"></my-autocomplete>                            
@@ -253,13 +292,19 @@
                         <button class="pure-button button-small" @click.prevent="addNewContributor()">+</button>
                     </div>                   
                     {{-- <h3>contributor table</h3> --}}
-                    <person-table name="contributors" v-bind:heading="'contributor table'" v-bind:personlist="dataset.contributors"></person-table> 
+                    <person-table name="contributors" v-bind:messages="messages" v-bind:heading="'contributor table'" v-bind:personlist="dataset.contributors"></person-table> 
                 </fieldset>  
 
                 <fieldset id="fieldset-publisher">
                     <legend>Creating Corporation</legend>
-                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('CreatingCorporation', 'Corporation Name') !!} 
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">                        
+                        <label for="CreatingCorporation">
+                            <span>
+                                Corporation Name  
+                                <i v-tooltip="{ content: messages.corporate_name, class: 'tooltip-custom tooltip-other-custom' }"
+                                    class="far fa-lg fa-question-circle"></i>
+                            </span>
+                        </label>
                         {!! Form::text('CreatingCorporation', null, ['readonly', 'class' =>
                         'pure-u-23-24', 'v-model' => 'dataset.creating_corporation', "v-validate" => "'required'", 'data-vv-scope' => 'step-1']) !!}
                     </div>
@@ -315,8 +360,14 @@
                     <legend>Project</legend>
                     <div class="pure-g">
 
-                        <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                            {!! Form::label('project_id', 'Project..') !!}
+                        <div class="pure-u-1 pure-u-md-1-2 pure-div">                            
+                            <label for="project_id">
+                                <span>
+                                    Project..
+                                    <i v-tooltip="{ content: messages.project, class: 'tooltip-custom tooltip-other-custom' }"
+                                        class="far fa-lg fa-question-circle"></i>
+                                </span>
+                            </label>
                             <div class="select pure-u-23-24">
                                 {!! Form::select('project_id', $projects, null, ['id' => 'project_id', 'placeholder' => '--no project--', 'v-model' => 'dataset.project_id', 'data-vv-scope' => 'step-2'])
                                 !!}
@@ -329,8 +380,14 @@
 
                 <fieldset id="fieldset-dates">
                     <legend>Date(s)</legend>
-                    <div class="pure-u-1 pure-u-md-1-2 pure-div">
-                        {!! Form::label('EmbargoDate', 'Embargo Date') !!} 
+                    <div class="pure-u-1 pure-u-md-1-2 pure-div">                      
+                        <label for="EmbargoDate">
+                            <span>
+                                Embargo Date..
+                                <i v-tooltip="{ content: messages.embargo_date, class: 'tooltip-custom tooltip-other-custom' }"
+                                    class="far fa-lg fa-question-circle"></i>
+                            </span>
+                        </label>
                         {!! Form::date('EmbargoDate', null, ['placeholder' => date('y-m-d'), 'class'
                         => 'pure-u-23-24', 'v-model' => 'dataset.embargo_date', 'data-vv-scope' => 'step-2']) !!}
                         <small id="projectHelp" class="pure-form-message-inline">EmbargoDate is optional</small>
@@ -338,7 +395,10 @@
                 </fieldset>                               
                 
                 <fieldset id="fieldset-geolocation">
-                    <legend>Geo Location</legend>
+                    <legend>
+                        Geo Location  
+                        <i  v-tooltip="{ content: messages.geolocation, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1 pure-u-lg-1 pure-div">
                             <locations-map v-bind:geolocation="dataset.coverage"></locations-map>
@@ -369,7 +429,10 @@
                 </fieldset>   
                 
                <fieldset id="fieldset-coverage">
-                    <legend>Coverage</legend>
+                    <legend>
+                        Coverage 
+                        <i  v-tooltip="{ content: messages.coverage, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
                     <div class="pure-g">
                        
                         <div class="pure-u-1 pure-u-md-1-2">
@@ -480,16 +543,40 @@
                     </div>
                 </fieldset>
                 
-                <fieldset id="fieldset-references">
-                    <legend>Dataset References</legend>
+                <fieldset id="fieldset-references">                    
+                    <legend>
+                        Dataset References  
+                        <i  v-tooltip="{ content: messages.dataset_references, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
                     <button class="pure-button button-small" @click.prevent="addReference()">Add Reference</button>
                     <table class="table table-hover"  v-if="dataset.references.length">
                         <thead>
                             <tr>
-                                <th style="width: 20px;">Value of the identifier</th>
-                                <th>Type</th>
+                                <th style="width: 20px;">                                   
+                                    <span>
+                                        Value of the identifier <i
+                                          v-tooltip="{ content: messages.reference_value, class: 'tooltip-custom tooltip-other-custom' }"
+                                          class="far fa-lg fa-question-circle"
+                                        ></i>
+                                      </span>
+                                </th>
+                                <th>
+                                    <span>
+                                        Type <i
+                                          v-tooltip="{ content: messages.reference_type, class: 'tooltip-custom tooltip-other-custom' }"
+                                          class="far fa-lg fa-question-circle"
+                                        ></i>
+                                      </span>
+                                </th>
                                 <th>Relation</th>
-                                <th>Label</th>
+                                <th>
+                                    <span>
+                                        Label <i
+                                          v-tooltip="{ content: messages.reference_label, class: 'tooltip-custom tooltip-other-custom' }"
+                                          class="far fa-lg fa-question-circle"
+                                        ></i>
+                                      </span>
+                                </th>
                                 <th style="width: 130px;"></th>
                             </tr>
                         </thead>
@@ -519,14 +606,30 @@
 
                
                 <fieldset id="fieldset-keywords">
-                    <legend>Dataset Keywords</legend>
+                    <legend>
+                        Dataset Keywords   
+                        <i  v-tooltip="{ content: messages.dataset_keywords, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
                     <input type="hidden" v-validate:keywords_length="'min_value:3'" data-vv-scope="step-2" data-vv-as="keyword list" name="keywords_list">
                     <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
                     <table class="table table-hover" v-if="dataset.subjects.length">
-                        <thead>
+                       <thead>
                             <tr>
-                                <th style="width: 20px;">Keyword</th>
-                                <th>Type</th>
+                                <th style="width: 20px;">
+                                    <span>
+                                        Keyword Value <i
+                                            v-tooltip="{ content: messages.keyword_value, class: 'tooltip-custom tooltip-other-custom' }"
+                                            class="far fa-lg fa-question-circle"></i>
+                                    </span>
+                                </th>
+                                <th>
+                                    <span>
+                                        Keyword Type <i
+                                          v-tooltip="{ content: messages.keyword_type, class: 'tooltip-custom tooltip-other-custom' }"
+                                          class="far fa-lg fa-question-circle"
+                                        ></i>
+                                      </span>
+                                </th>
                                 <th>Language</th>
                                 <th style="width: 130px;"></th>
                             </tr>
@@ -579,8 +682,11 @@
             <div v-if="step === 3 && isInitial" data-vv-scope="step-3">
                 <h1>Step 3: Other Elements</h1> 
                 
-                <fieldset id="fieldset-licenses">
-                    <legend>Rights List</legend>
+                <fieldset id="fieldset-licenses">                    
+                    <legend>
+                        Rights List   
+                        <i  v-tooltip="{ content: messages.rights_list, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                    </legend>
 
                     <div class="pure-control-group checkboxlist">
                         @foreach ($licenses as $indexKey => $license)
@@ -621,8 +727,11 @@
             </div>
 
             <div v-if="step === 4 && (isInitial || isSaving)" data-vv-scope="step-4">
-                <h1>File Upload</h1>
-
+                <h1>
+                    File Upload
+                    <i  v-tooltip="{ content: messages.file_upload, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
+                </h1>
+                
                 <div class="dropbox">
                     <input type="hidden" v-validate:files_length="'min_value:1'" data-vv-scope="step-4" data-vv-as="files list" name="files_list">
                     <input type="file" multiple name="files" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)"
@@ -641,7 +750,14 @@
                         <tr>
                             <th style="width: 20px;">Sorting</th>
                             <th>File</th>
-                            <th>Label</th>
+                            <th>
+                                <span>
+                                    Label <i
+                                      v-tooltip="{ content: messages.file_label, class: 'tooltip-custom tooltip-other-custom' }"
+                                      class="far fa-lg fa-question-circle"
+                                    ></i>
+                                  </span>
+                            </th>
                             <th style="width: 130px;"></th>
                         </tr>
                     </thead>
@@ -664,7 +780,7 @@
                 </table>
                 <button @click.prevent="prev()" class="pure-button button-small">
                         <i class="fa fa-arrow-left"></i>
-                        <span>Zurück</span>
+                        <span>Back</span>
                 </button>
                 <button @click.prevent="submit('step-4')" class="pure-button button-small" v-bind:disabled="errors.any()">               
                     <i class="fa fa-save"></i>
@@ -699,6 +815,7 @@
                             <i class="fa fa-share"></i>
                             <span>Release</span>
                     </a>
+                    <i v-tooltip="{ content: messages.upload_successfull_release, class: 'tooltip-custom tooltip-other-custom' }" class="far fa-lg fa-question-circle"></i>
                     <a href="javascript:void(0)" @click="deleteNewDataset()" class="pure-button button-small">
                             <i class="fa fa-trash"></i>
                             <span>Delete</span>
