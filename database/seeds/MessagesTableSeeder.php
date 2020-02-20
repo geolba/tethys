@@ -185,23 +185,26 @@ class MessagesTableSeeder extends Seeder
             [
                 // 21
                 'metadata_element' => 'reference_type',
-                'help_text' => 'Hier kann die ID wie eine DOI (z.B. https://doi.pangaea.de/10.1594/PANGAEA.701578), 
-                eine URL/URN (z.B. http://resource.geolba.ac.at/structure/167), 
-                eine ISBN (z.B. 978-3950462555), 
-                eine HANDEL (z.B. https://hdl.handle.net/20.500.11756/582326e3) 
-                oder ISSN (z.B. 1563-0846) angegeben werden .',
+                'help_text' => 'Typen von Ressourcenbezeichnern, wie z.B. DOI, HANDLE, ISBN, ISSN, URL, URN.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 // 22
-                'metadata_element' => 'reference_label',
-                'help_text' => 'Freitext zur Bezeichnung oder Beschreibung der hochgeladenen Datei.',
+                'metadata_element' => 'reference_relation',
+                'help_text' => 'Vordefinierte Typen von Beziehungen. Details dazu sind im Data Policy nachzulesen.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 // 23
+                'metadata_element' => 'reference_label',
+                'help_text' => 'Freitext zur Bezeichnung oder Beschreibung der Referenz.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                // 24
                 'metadata_element' => 'dataset_keywords',
                 'help_text' => 'Es sind mindestens drei Schlüsselwörter in der Hauptsprache anzugeben. 
                 Die angegebenen Schlüsselwörter kommen im Titel nicht vor. ',
@@ -209,7 +212,7 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 24
+                // 25
                 'metadata_element' => 'keyword_value',
                 'help_text' => 'Angabe eines Schlüsselwortes in Abhängigkeit von der 
                 gewählten Hauptsprache (Dataset_language).',
@@ -217,7 +220,7 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 25
+                // 26
                 'metadata_element' => 'keyword_type',
                 'help_text' => 'Aktuell können hier nur unkontrollierte Schlüsselwörter in Freitext  
                 angegeben werden und somit keine vordefinierte Vokabulare 
@@ -226,7 +229,7 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 26
+                // 27
                 'metadata_element' => 'rights_list',
                 'help_text' => 'Nutzungsbestimmungen nach Creative Commons (Lizenzmodelle); 
                 Informationen über die Rechte bzw. auch Nutzung der Datenpublikation; 
@@ -237,7 +240,7 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 27
+                // 28
                 'metadata_element' => 'file_upload',
                 'help_text' => 'Upload von Dokumenten bzw. Daten (mehrere Dokumente möglich) in 
                 vorgegebenen Datenformaten, wie z.B. csv, txt, pdf, GeoPackage etc. 
@@ -247,14 +250,14 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 28
+                // 29
                 'metadata_element' => 'file_label',
                 'help_text' => 'Freitext zur Bezeichnung oder Beschreibung der hochgeladenen Datei.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 29
+                // 30
                 'metadata_element' => 'upload_successfull_release',
                 'help_text' => 'Mit Release wird die Datenpublikation gespeichert. 
                 Die Datenpublikation kann später fortgesetzt oder gelöscht werden. ',
@@ -262,14 +265,14 @@ class MessagesTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 29
+                // 31
                 'metadata_element' => 'release_define reviewer',
                 'help_text' => 'Optionale Angabe eines bevorzugten Reviewers.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                // 29
+                // 32
                 'metadata_element' => 'release_release',
                 'help_text' => 'Mit Release wird die Datenpublikation in den Review-Prozess übergeben 
                 und kann nicht mehr bearbeitet werden.',

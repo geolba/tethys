@@ -58,7 +58,8 @@
                 <xsl:apply-templates select="TitleAdditional" mode="oai_datacite" />
             </titles>
             <publisher>
-                <xsl:value-of select="@PublisherName" />
+                <!-- <xsl:value-of select="@PublisherName" /> -->
+                <xsl:value-of select="@CreatingCorporation" />
             </publisher>
             <publicationYear>
                 <xsl:value-of select="ServerDatePublished/@Year"/>

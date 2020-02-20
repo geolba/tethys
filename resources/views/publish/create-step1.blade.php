@@ -211,7 +211,7 @@
                     <div class="pure-u-1 pure-u-md-1-2 pure-div">
                         <label>
                             <span>
-                                Add additional descriptions(s) <i @click.prevent
+                                Add additional description(s) <i @click.prevent
                                     v-tooltip.click="{ content: messages.additional_descriptions, class: 'tooltip-custom tooltip-other-custom' }"
                                     class="far fa-lg fa-question-circle"></i>
                             </span>
@@ -575,8 +575,8 @@
                                             'v-model' => 'dataset.coverage.time_absolut', 'data-vv-scope' => 'step-2', 'format' => 'yyyy-MM-dd HH:mm',
                                             "v-validate" => "this.isTimeAbsolut ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' " ]) !!} --}}
                     <datetime name="time_absolut"
-                        v-validate="this.isTimeAbsolut ? 'required|date_format:yyyy-MM-dd HH:mm:ss' : '' "
-                        data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='dataset.coverage.time_absolut'>
+                        v-validate="this.isTimeAbsolut ? 'required' : '' " format="YYYY-MM-DD h:i:s"
+                        data-vv-scope="step-2" v-model='dataset.coverage.time_absolut'>
                     </datetime>
                     {{-- <datetime name="time_absolut" format="MM-DD-YYYY H:i:s" width="300px" v-model="dataset.coverage.time_absolut"></datetime> --}}
                 </div>
@@ -586,8 +586,8 @@
                                             'v-model' => 'dataset.coverage.time_min', 'data-vv-scope' => 'step-2', 'step' => 1,
                                             "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
                     <datetime name="time_min"
-                        v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
-                        data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='dataset.coverage.time_min'></datetime>
+                        v-validate="this.isTimeRange ? 'required' : '' " format="YYYY-MM-DD h:i:s"
+                        data-vv-scope="step-2" v-model='dataset.coverage.time_min'></datetime>
                 </div>
                 <div v-show="time === 'range'" class="pure-u-1 pure-u-md-1">
                     {!! Form::label('timemax', 'time max: ') !!}
@@ -595,8 +595,8 @@
                                             'v-model' => 'dataset.coverage.time_max', 'data-vv-scope' => 'step-2', 'step' => 1,
                                             "v-validate" => "this.isTimeRange ? 'required|date_format:dd.MM.yyyy HH:mm:ss' : '' "]) !!} --}}
                     <datetime name="time_max"
-                        v-validate="this.isTimeRange ? 'required|date_format:dd-MM-yyyy HH:mm:ss' : '' "
-                        data-vv-scope="step-2" format="YYYY-MM-DD h:i:s" v-model='dataset.coverage.time_max'></datetime>
+                        v-validate="this.isTimeRange ? 'required' : '' " format="YYYY-MM-DD h:i:s"
+                        data-vv-scope="step-2" v-model='dataset.coverage.time_max'></datetime>
                 </div>
             </div>
 
@@ -627,7 +627,10 @@
                                 class="far fa-lg fa-question-circle"></i>
                         </span>
                     </th>
-                    <th>Relation</th>
+                    <th>Relation<i
+                        @click.prevent v-tooltip.click="{ content: messages.reference_relation, class: 'tooltip-custom tooltip-other-custom' }"
+                            class="far fa-lg fa-question-circle"></i>
+                    </th>
                     <th>
                         <span>
                             Label <i
