@@ -121,4 +121,9 @@ class HomeController extends Controller
             throw new GeneralException(trans('exceptions.backend.access.pages.not_found'));
         }
     }
+
+    public function php_info()
+    {
+        dd(phpinfo());
+    }
 }

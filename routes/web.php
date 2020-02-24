@@ -453,6 +453,9 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('/help', [
         'as' => 'home.help', 'uses' => 'HomeController@help',
     ]);
+    Route::get('/info', [
+        'as' => 'home.php_info', 'uses' => 'HomeController@php_info',
+    ]);
 
     //=================================================Crawlers====================================================
     Route::get('sitelinks', [
