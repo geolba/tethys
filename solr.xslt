@@ -330,10 +330,10 @@
                 </xsl:if>
 
                 <!-- publisher name (single valued) -->
-                <xsl:if test="/Opus/Rdr_Dataset/@CreatingCorporation">
+                <xsl:if test="/Opus/Rdr_Dataset/@PublisherName">
                     <xsl:element name="field">
                         <xsl:attribute name="name">publisher_name</xsl:attribute>
-                        <xsl:value-of select="/Opus/Rdr_Dataset/@CreatingCorporation"/>
+                        <xsl:value-of select="/Opus/Rdr_Dataset/@PublisherName"/>
                     </xsl:element>
                 </xsl:if>
 
