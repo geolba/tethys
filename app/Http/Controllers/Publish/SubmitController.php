@@ -16,6 +16,8 @@ use App\Models\Project;
 use App\Models\Subject;
 use App\Models\Title;
 use App\Models\User;
+use App\Rules\RdrFilesize;
+use App\Rules\RdrFiletypes;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,8 +26,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use App\Rules\RdrFiletypes;
-use App\Rules\RdrFilesize;
 
 class SubmitController extends Controller
 {
@@ -65,13 +65,14 @@ class SubmitController extends Controller
         $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
-        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information', 'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
+        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information',
+            'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
-        
+
         $messages = DB::table('messages')
-        ->pluck('help_text', 'metadata_element');
+            ->pluck('help_text', 'metadata_element');
 
         $projects = Project::pluck('label', 'id');
 
@@ -98,7 +99,10 @@ class SubmitController extends Controller
         $referenceTypes = ["rdr-id", "doi", "handle", "isbn", "issn", "url", "urn"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+            "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy",
+            "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf",
+            "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         return View::make(
@@ -140,24 +144,24 @@ class SubmitController extends Controller
             'descriptions.*.language' => 'required',
             'coverage.x_min' => [
                 'required',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
             ],
             'coverage.y_min' => [
                 'required',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
             ],
             'coverage.x_max' => [
                 'required',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
             ],
             'coverage.y_max' => [
                 'required',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
             ],
-            'subjects'  => 'required|array|min:3',
+            'subjects' => 'required|array|min:3',
             'subjects.*.value' => 'required|string',
             'subjects.*.type' => 'required|string',
-            'files'  => 'required|array|min:1',
+            'files' => 'required|array|min:1',
             'files.*.label' => 'required|string',
         ];
         $customMessages = [
@@ -332,11 +336,10 @@ class SubmitController extends Controller
                         $uploads = $request->file('uploads');
                         $fileIndex = $formFile['file'];
                         $file = $uploads[$fileIndex];
-                       
 
                         // $file = new \Illuminate\Http\UploadedFile($file);
                         $label = urldecode($formFile['label']);
-                        $sort_order = $index;//$formFile['sort_order'];
+                        $sort_order = $index; //$formFile['sort_order'];
                         $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
                         $mimeType = $file->getMimeType();
                         $datasetFolder = 'files/' . $dataset->id;
@@ -350,7 +353,7 @@ class SubmitController extends Controller
                             'label' => $label,
                             'sort_order' => $sort_order,
                             'visible_in_frontdoor' => 1,
-                            'visible_in_oai' => 1
+                            'visible_in_oai' => 1,
                         ]);
                         //$test = $file->path_name;
                         $dataset->files()->save($fileDb);
@@ -394,8 +397,8 @@ class SubmitController extends Controller
             // ], 422);
             // $errors = $validator->errors();
             return back()->withErrors($validator);
-                // return redirect()->route('publish.workflow.submit.edit', ['id' => $id])->withInput()
-                // ->withErrors($validator);
+            // return redirect()->route('publish.workflow.submit.edit', ['id' => $id])->withInput()
+            // ->withErrors($validator);
         }
         throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
     }

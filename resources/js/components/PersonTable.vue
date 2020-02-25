@@ -12,7 +12,7 @@
           <th scope="col">
             <label for="language">
               <span>
-                Orcid <i
+                ORCID <i
                   v-tooltip="{ content: messages.orcid, class: 'tooltip-custom tooltip-other-custom' }"
                   class="far fa-lg fa-question-circle"
                 ></i>

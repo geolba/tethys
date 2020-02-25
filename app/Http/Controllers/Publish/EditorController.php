@@ -2,30 +2,30 @@
 namespace App\Http\Controllers\Publish;
 
 use App\Exceptions\GeneralException;
-use App\Http\Requests\DocumentRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DocumentRequest;
 use App\Models\Dataset;
-use App\Models\Project;
-use App\Models\License;
-use App\Models\User;
-use App\Models\Title;
-use App\Models\Description;
 use App\Models\DatasetReference;
-use App\Models\Subject;
+use App\Models\Description;
 use App\Models\File;
+use App\Models\License;
+use App\Models\Person;
+use App\Models\Project;
+use App\Models\Subject;
+use App\Models\Title;
+use App\Models\User;
+use App\Rules\RdrFilesize;
+use App\Rules\RdrFiletypes;
+// use Illuminate\View\View;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\View\View;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
 use \Exception;
-use App\Rules\RdrFiletypes;
-use App\Rules\RdrFilesize;
-use App\Models\Person;
 
 class EditorController extends Controller
 {
@@ -47,14 +47,14 @@ class EditorController extends Controller
         $builder = Dataset::query();
         //"select * from [documents] where [server_state] in (?) or ([server_state] = ? and [editor_id] = ?)"
         $datasets = $builder
-        ->where('server_state', 'released')
-        // ->whereIn('server_state', ['released'])
-        ->orWhere(function ($query) use ($user_id) {
-            $query->whereIn('server_state', ['editor_accepted', 'rejected_reviewer', 'reviewed'])
-                  ->where('editor_id', $user_id);
-        })
-        ->orderBy('server_date_modified', 'desc')
-        ->get();
+            ->where('server_state', 'released')
+            // ->whereIn('server_state', ['released'])
+            ->orWhere(function ($query) use ($user_id) {
+                $query->whereIn('server_state', ['editor_accepted', 'rejected_reviewer', 'reviewed'])
+                    ->where('editor_id', $user_id);
+            })
+            ->orderBy('server_date_modified', 'desc')
+            ->get();
         // return View::make('workflow.editor.index', compact('datasets'));
         return View::make('workflow.editor.index', [
             'datasets' => $datasets,
@@ -79,7 +79,7 @@ class EditorController extends Controller
     public function receiveUpdate(Request $request, $id)
     {
         $dataset = Dataset::findOrFail($id);
-      
+
         try {
             $dataset->setServerState("editor_accepted");
             $user = Auth::user();
@@ -104,13 +104,14 @@ class EditorController extends Controller
         $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
-        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information', 'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
+        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information',
+            'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
 
         $messages = DB::table('messages')
-        ->pluck('help_text', 'metadata_element');
+            ->pluck('help_text', 'metadata_element');
 
         $projects = Project::pluck('label', 'id');
 
@@ -124,23 +125,25 @@ class EditorController extends Controller
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
-        
+
         // $options = License::all('id', 'name_long');
         $licenses = License::select('id', 'name_long', 'link_licence')
             ->orderBy('sort_order')
             ->get();
         // $checkeds = $dataset->licenses->pluck('id')->toArray();
         $checkeds = $dataset->licenses->first()->id;
-                
+
         $keywordTypes = ['uncontrolled' => 'uncontrolled', 'swd' => 'swd'];
 
         $referenceTypes = ["rdr-id", "doi", "handle", "isbn", "issn", "url", "urn"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+            "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy",
+            "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf",
+            "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
-    
         return View::make(
             'workflow.editor.edit',
             compact(
@@ -180,24 +183,24 @@ class EditorController extends Controller
             'descriptions.*.language' => 'required',
             'coverage.x_min' => [
                 'required',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
             ],
             'coverage.y_min' => [
                 'required',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
             ],
             'coverage.x_max' => [
                 'required',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
             ],
             'coverage.y_max' => [
                 'required',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
             ],
-            'subjects'  => 'required|array|min:3',
+            'subjects' => 'required|array|min:3',
             'subjects.*.value' => 'required|string',
             'subjects.*.type' => 'required|string',
-            'files'  => 'required|array|min:1',
+            'files' => 'required|array|min:1',
             'files.*.label' => 'required|string',
         ];
         $customMessages = [
@@ -372,11 +375,10 @@ class EditorController extends Controller
                         $uploads = $request->file('uploads');
                         $fileIndex = $formFile['file'];
                         $file = $uploads[$fileIndex];
-                       
 
                         // $file = new \Illuminate\Http\UploadedFile($file);
                         $label = urldecode($formFile['label']);
-                        $sort_order = $index;//$formFile['sort_order'];
+                        $sort_order = $index; //$formFile['sort_order'];
                         $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
                         $mimeType = $file->getMimeType();
                         $datasetFolder = 'files/' . $dataset->id;
@@ -390,7 +392,7 @@ class EditorController extends Controller
                             'label' => $label,
                             'sort_order' => $sort_order,
                             'visible_in_frontdoor' => 1,
-                            'visible_in_oai' => 1
+                            'visible_in_oai' => 1,
                         ]);
                         //$test = $file->path_name;
                         $dataset->files()->save($fileDb);
@@ -434,8 +436,8 @@ class EditorController extends Controller
             // ], 422);
             // $errors = $validator->errors();
             return back()->withErrors($validator);
-                // return redirect()->route('publish.workflow.submit.edit', ['id' => $id])->withInput()
-                // ->withErrors($validator);
+            // return redirect()->route('publish.workflow.submit.edit', ['id' => $id])->withInput()
+            // ->withErrors($validator);
         }
         throw new GeneralException(trans('exceptions.backend.dataset.update_error'));
     }
@@ -466,7 +468,7 @@ class EditorController extends Controller
     public function approve($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::with('user:id,login')->findOrFail($id);
-       
+
         $reviewers = User::whereHas('roles', function ($q) {
             $q->where('name', 'reviewer');
         })->pluck('login', 'id');
@@ -506,7 +508,7 @@ class EditorController extends Controller
         throw new GeneralException(trans('exceptions.publish.approve.update_error'));
     }
 
-     /**
+    /**
      * Reject dataset back to editor
      *
      * @param  int  $id
@@ -524,7 +526,7 @@ class EditorController extends Controller
     {
         $this->validate($request, [
             'reject_editor_note' => 'required|min:10|max:500',
-            'server_state' => 'required'
+            'server_state' => 'required',
         ]);
         $dataset = Dataset::findOrFail($id);
         $input = $request->all();
@@ -548,12 +550,12 @@ class EditorController extends Controller
     public function publish($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::query()
-        ->with([
-            'titles',
-            'persons' => function ($query) {
-                $query->wherePivot('role', 'author');
-            }
-        ])->findOrFail($id);
+            ->with([
+                'titles',
+                'persons' => function ($query) {
+                    $query->wherePivot('role', 'author');
+                },
+            ])->findOrFail($id);
 
         return View::make('workflow.editor.publish', [
             'dataset' => $dataset,
@@ -567,7 +569,7 @@ class EditorController extends Controller
         $max = Dataset::max('publish_id');
         $publish_id = 0;
         if ($max != null) {
-            $publish_id = $max +1;
+            $publish_id = $max + 1;
         } else {
             $publish_id = $publish_id + 1;
         }

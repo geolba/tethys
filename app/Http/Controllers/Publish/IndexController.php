@@ -2,25 +2,25 @@
 //https://www.5balloons.info/multi-page-step-form-in-laravel-with-validation/
 namespace App\Http\Controllers\Publish;
 
-use App\Models\Dataset;
 use App\Http\Controllers\Controller;
-use App\Models\License;
-use App\Models\File;
-use App\Models\Project;
-use App\Models\Title;
+use App\Models\Coverage;
+use App\Models\Dataset;
+use App\Models\DatasetReference;
 use App\Models\Description;
-use App\Rules\RdrFiletypes;
+use App\Models\File;
+use App\Models\License;
+use App\Models\Page;
+use App\Models\Person;
+use App\Models\Project;
+use App\Models\Subject;
+use App\Models\Title;
 use App\Rules\RdrFilesize;
+use App\Rules\RdrFiletypes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use App\Models\DatasetReference;
-use App\Models\Subject;
-use App\Models\Page;
-use App\Models\Person;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Coverage;
 
 class IndexController extends Controller
 {
@@ -35,7 +35,7 @@ class IndexController extends Controller
         $datasets = $builder
         //->where('server_state', 'inprogress')
         ->whereIn('server_state', ['inprogress', 'unpublished'])
-        ->get();
+            ->get();
         return view('publish.index', compact('datasets'));
     }
 
@@ -59,17 +59,21 @@ class IndexController extends Controller
             ->pluck('help_text', 'metadata_element');
 
         $projects = Project::pluck('label', 'id');
-        $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn",  "url", "urn"];
+        $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn", "url", "urn"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
-       
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+
+        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+            "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy",
+            "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf",
+            "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         $titleTypes = ['Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
 
         $keywordTypes = ['uncontrolled' => 'uncontrolled'];
 
-        $descriptionTypes = ['Methods' => 'Methods', 'Series_information' => 'Series_information', 'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
+        $descriptionTypes = ['Methods' => 'Methods', 'Series_information' => 'Series_information',
+            'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 
@@ -257,24 +261,24 @@ class IndexController extends Controller
             'descriptions.*.value' => 'required|min:4|max:2500',
             'coverage.x_min' => [
                 'required',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
             ],
             'coverage.y_min' => [
                 'required',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
             ],
             'coverage.x_max' => [
                 'required',
-                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'
+                'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
             ],
             'coverage.y_max' => [
                 'required',
-                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'
+                'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
             ],
-            'keywords'  => 'required|array|min:3',
+            'keywords' => 'required|array|min:3',
             'keywords.*.value' => 'required|string',
             'keywords.*.type' => 'required|string',
-            'files'  => 'required|array|min:1',
+            'files' => 'required|array|min:1',
             'files.*.label' => 'required|string',
             // 'authors.*.email' => 'required|email|max:50|unique:persons,email',
         ];
@@ -316,7 +320,7 @@ class IndexController extends Controller
             DB::beginTransaction(); //Start transaction!
             try {
                 $dataset->save();
-               
+
                 //store related files
                 if (isset($data['files'])) {
                     foreach ($data['files'] as $uploadedFile) {
@@ -336,7 +340,7 @@ class IndexController extends Controller
                             'label' => $label,
                             'sort_order' => $sorting,
                             'visible_in_frontdoor' => 1,
-                            'visible_in_oai' => 1
+                            'visible_in_oai' => 1,
                         ]);
                         //$test = $file->path_name;
                         $dataset->files()->save($file);
@@ -344,11 +348,11 @@ class IndexController extends Controller
                     }
                 }
 
-                 //store licenses:
-                 $licenses = $request->input('licenses');
-                 $dataset->licenses()->sync($licenses);
+                //store licenses:
+                $licenses = $request->input('licenses');
+                $dataset->licenses()->sync($licenses);
 
-                 $data_to_sync = [];
+                $data_to_sync = [];
                 //store authors
                 if (isset($data['authors'])) {
                     //$data_to_sync = [];
@@ -393,7 +397,7 @@ class IndexController extends Controller
                         }
                     }
                 }
-                
+
                 //store submitters
                 // if (isset($data['submitters'])) {
                 //     //$data_to_sync = [];
@@ -405,7 +409,6 @@ class IndexController extends Controller
                 // }
                 //$dataset->persons()->sync($data_to_sync);
 
-                
                 //save main title:
                 if (isset($data['title_main'])) {
                     $formTitle = $request->input('title_main');
@@ -417,7 +420,7 @@ class IndexController extends Controller
                     $dataset->titles()->save($title);
                 }
 
-                 //save additional titles
+                //save additional titles
                 if (isset($data['titles'])) {
                     foreach ($request->get('titles') as $key => $title) {
                         $titleReference = new Title($title);
@@ -480,7 +483,7 @@ class IndexController extends Controller
                 // Create relation between Dataset and actual User.
                 $user = Auth::user();
                 $dataset->user()->associate($user)->save();
-                
+
                 // $error = 'Always throw this error';
                 // throw new \Exception($error);
 
@@ -516,9 +519,9 @@ class IndexController extends Controller
 
             return response()->json(array(
                 'success' => true,
-                'edit' =>  route('publish.workflow.submit.edit', ['id' => $dataset->id]),
-                'release' =>  route('publish.workflow.submit.release', ['id' => $dataset->id]),
-                'delete' =>  route('publish.workflow.submit.delete', ['id' => $dataset->id]),
+                'edit' => route('publish.workflow.submit.edit', ['id' => $dataset->id]),
+                'release' => route('publish.workflow.submit.release', ['id' => $dataset->id]),
+                'delete' => route('publish.workflow.submit.delete', ['id' => $dataset->id]),
             ));
         } else {
             //TODO Handle validation error
@@ -549,7 +552,7 @@ class IndexController extends Controller
             'abstract_main.language' => 'required',
         ];
         if (null != $request->file('files')) {
-            $files = count($request->file('files')) -1;
+            $files = count($request->file('files')) - 1;
             foreach (range(0, $files) as $index) {
                 // $rules['files.' . $index] = 'image|max:2048';
                 $rules['files.' . $index . '.file'] = ['required', 'file', new RdrFiletypes(), new RdrFilesize($index)];
@@ -566,7 +569,7 @@ class IndexController extends Controller
             DB::beginTransaction(); //Start transaction!
             try {
                 // $dataset->save();
-               
+
                 //store related files
                 if (isset($data['files'])) {
                     foreach ($data['files'] as $uploadedFile) {
@@ -594,8 +597,8 @@ class IndexController extends Controller
                     }
                 }
 
-                 //store licenses:
-                 $licenses = $request->input('licenses');
+                //store licenses:
+                $licenses = $request->input('licenses');
                 //  $dataset->licenses()->sync($licenses);
 
                 //store authors
@@ -618,7 +621,7 @@ class IndexController extends Controller
                     }
                     // $dataset->persons()->sync($data_to_sync);
                 }
-                
+
                 //store submitters
                 if (isset($data['submitters'])) {
                     $data_to_sync = [];
@@ -629,7 +632,6 @@ class IndexController extends Controller
                     // $dataset->persons()->sync($data_to_sync);
                 }
 
-                
                 //save main title:
                 if (isset($data['title_main'])) {
                     $formTitle = $request->input('title_main');
@@ -655,7 +657,7 @@ class IndexController extends Controller
                         // $dataset->references()->save($dataReference);
                     }
                 }
-                                 
+
                 // $error = 'Always throw this error';
                 // throw new \Exception($error);
 
@@ -691,7 +693,7 @@ class IndexController extends Controller
 
             return response()->json(array(
                 'success' => true,
-                'redirect' =>  route('settings.document.edit', ['id' => $dataset->server_state]),
+                'redirect' => route('settings.document.edit', ['id' => $dataset->server_state]),
             ));
         } else {
             //TODO Handle validation error

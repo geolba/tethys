@@ -18,7 +18,8 @@ class MessagesTableSeeder extends Seeder
             [
                 // 1
                 'metadata_element' => 'dataset_language',
-                'help_text' => 'In Abhängigkeit der Publikationssprache sollten die Metadaten in Englisch oder Deutsch eingegeben werden.',
+                'help_text' => 'In Abhängigkeit der Publikationssprache sollten 
+                die Metadaten in Englisch oder Deutsch eingegeben werden.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

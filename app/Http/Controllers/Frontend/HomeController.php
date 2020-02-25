@@ -122,7 +122,7 @@ class HomeController extends Controller
         }
     }
 
-    public function php_info()
+    public function phpInfo()
     {
         dd(phpinfo());
     }
