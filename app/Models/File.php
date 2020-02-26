@@ -64,7 +64,8 @@ class File extends Model
      */
     private function getPath()
     {
-        return  storage_path('app/public/' . $this->path_name);
+        //return  storage_path('app/public/' . $this->path_name);
+        return  public_path('storage/' . $this->path_name);
     }
 
     public function exists()

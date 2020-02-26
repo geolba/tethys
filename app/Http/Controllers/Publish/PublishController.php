@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 
 class PublishController extends Controller
 {
@@ -28,7 +27,6 @@ class PublishController extends Controller
         //"select * from [documents] where [server_state] in (?) or ([server_state] = ? and [editor_id] = ?)"
         $datasets = $builder
             ->where('server_state', 'reviewed')
-          
             ->get();
         return view('workflow.publish.index', [
             'datasets' => $datasets,
