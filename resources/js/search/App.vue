@@ -34,12 +34,19 @@
         </div>
 
         <div class="row">
-          <div class="active-filter-items twelve columns">
+          <!-- <div class="active-filter-items twelve columns">
             <a class="filter-link" v-for="(value, key, index) in activeFilterItems" :key="index">
               <span>{{ key + ": " }}</span>
               <span v-if="value && value.length > 0">{{ value.join(', ') }}</span>
             </a>
-          </div>
+          </div> -->
+            <div class="twelve columns">
+              <span class="active-filter-items" v-for="(values, key, index) in activeFilterCategories" :key="index">    
+                  <active-facet-category :data="values" :categoryName="key" @clearFacetCategory="onClearFacetCategory"></active-facet-category>              
+              </span>
+            </div>
+      
+         
         </div>
 
         <!-- Results section -->

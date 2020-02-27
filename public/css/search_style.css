@@ -426,14 +426,14 @@ vertical-align: middle;
     cursor: pointer;
 }
 
-.active-filter-items a {
+/* .active-filter-items a {
   
     flex-wrap: wrap;
     margin: 2px 3px;
     padding: 5px 8px;
     font-size: 0.95rem;
     position: relative;
-}
+} */
 .filter-link {
     display: inline-flex;
     -moz-box-pack: center;

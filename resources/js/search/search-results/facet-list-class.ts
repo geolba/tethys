@@ -2,7 +2,7 @@ import { Component, Vue, Prop, Provide } from 'vue-property-decorator';
 import FilterItem from '../models/filter-item';
 
 @Component
-export default class FacetList extends Vue {
+export default class ActiveFacetList extends Vue {
 
     ITEMS_PER_FILTER = 2;
     bar = '';
