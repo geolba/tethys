@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
-import FacetList from "./facet-list-class";
-export default FacetList;
+import FacetCategory from "./facet-category-class";
+export default FacetCategory;
 </script>
 
 <style scoped>

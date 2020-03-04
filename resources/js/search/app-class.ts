@@ -1,7 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import VsInput from './text-search/vs-input.vue';
 import VsResults from './search-results/vs-results.vue';
-import FacetList from './search-results/facet-list.vue';
+import FacetCategory from './search-results/facet-category.vue';
 import ActiveFacetCategory from './search-results/active-facet-category.vue';
 import VsPagination from './search-results/vs-pagination.vue';
 import rdrApi from './search-results/dataservice';
@@ -11,7 +11,7 @@ import FilterItem from './models/filter-item';
   components: {
     VsInput,
     VsResults,
-    FacetList,
+    FacetCategory,
     ActiveFacetCategory,
     VsPagination
   }

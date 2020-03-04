@@ -49,7 +49,7 @@
 
                 <div class="pure-u-1 pure-u-md-1-2 pure-div">
                     {!! Form::label('publisher_name', 'Publisher Name') !!}
-                    {!! Form::text('publisher_name', 'Geologische Bundesanstalt Österreich', ['readonly', 'class' =>
+                    {!! Form::text('publisher_name', 'Geologische Bundesanstalt (GBA)', ['readonly', 'class' =>
                     'pure-u-23-24', ]) !!}
                 </div>
                 <div class="pure-controls instruction ">
