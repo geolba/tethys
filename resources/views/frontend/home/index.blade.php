@@ -226,7 +226,7 @@
 
             </ul>
         </div>
-        <div class="eight columns contact-us-form">
+        {{-- <div class="eight columns contact-us-form">
             <form>
                 <div class="row">
                     <div class="six columns">
@@ -240,7 +240,7 @@
                 <input class="button u-pull-right" type="submit" value="Send">
             </form>
 
-        </div>
+        </div> --}}
     </div>
 </section>
 

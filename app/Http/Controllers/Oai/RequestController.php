@@ -9,6 +9,7 @@ use App\Exceptions\OaiModelException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Oai\OaiModelError;
 use App\Models\Oai\ResumptionToken;
+use \Exception;
  
 class RequestController extends Controller
 {
@@ -145,7 +146,7 @@ class RequestController extends Controller
     private function handleIdentify()
     {
         $email = "repository@geologie.ac.at";
-        $repositoryName = "TETHYS RDR";
+        $repositoryName = "Tethys RDR";
         $repIdentifier = "tethys.geologie.ac.at";
         $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
         $earliestDateFromDb = optional(Dataset::earliestPublicationDate())->server_date_published;
@@ -226,9 +227,9 @@ class RequestController extends Controller
         }
 
         if (empty($dataId) or !preg_match('/^\d+$/', $dataId)) {
-            throw new Oai_Model_Exception(
+            throw new OaiModelException(
                 'The value of the identifier argument is unknown or illegal in this repository.',
-                Oai_Model_Error::IDDOESNOTEXIST
+                OaiModelError::IDDOESNOTEXIST
             );
         }
 
