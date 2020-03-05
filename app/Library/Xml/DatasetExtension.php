@@ -6,9 +6,9 @@ use App\Models\Description;
 use App\Models\License;
 use App\Models\Person;
 use App\Models\File;
-use App\Models\GeolocationBox;
 use App\Models\Coverage;
 use App\Models\Subject;
+use App\Models\DatasetReference;
 
 /**
  * DatasetExtension short summary.
@@ -63,6 +63,11 @@ trait DatasetExtension
             //                'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
             'relation' => 'persons',
+            'fetch' => 'eager'
+        ),
+        'Reference' => array(
+            'model' => DatasetReference::class,
+            'relation' => 'references',
             'fetch' => 'eager'
         ),
         'Subject' => array(

@@ -306,7 +306,8 @@ class Dataset extends Model
         $embargoDate->minute = 59;
         $embargoDate->second = 59;
 
-        return ($embargoDate->gt($now) == true);
+        return ($embargoDate->lessThan($now));
+        //return ($embargoDate->gt($now) == true);
     }
 
     public function getRemainingTimeAttribute()

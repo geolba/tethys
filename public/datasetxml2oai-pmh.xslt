@@ -354,6 +354,8 @@
       <xsl:apply-templates select="@Language" mode="oai_dc" />
       <!-- dc:rights -->
       <xsl:apply-templates select="Licence" mode="oai_dc" />
+      <!-- dc:relation -->
+      <xsl:apply-templates select="Reference" mode="oai_dc" />
       <!-- dc:coverage -->
       <xsl:apply-templates select="Coverage" mode="oai_dc" />
     </oai_dc:dc>
@@ -401,6 +403,7 @@
       <xsl:value-of select="@Value"/>
     </dc:title>
   </xsl:template>
+
   <xsl:template match="TitleAdditional" mode="oai_dc">
     <dc:title>
       <xsl:value-of select="@Value"/>
@@ -434,6 +437,14 @@
       <xsl:value-of select="@Value" />
     </dc:subject>
   </xsl:template>
+
+   <xsl:template match="Reference" mode="oai_dc">
+    <dc:relation>      
+      <xsl:value-of select="@Value" />
+    </dc:relation>
+  </xsl:template>
+
+   
 
   <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
     <dc:creator>

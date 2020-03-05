@@ -77,6 +77,11 @@
                 <xsl:text>Dataset</xsl:text>
                 <!-- <xsl:value-of select="@Type" /> -->
             </resourceType>
+            <xsl:if test="Reference">
+            <relatedIdentifiers>
+                <xsl:apply-templates select="Reference" mode="oai_datacite" />
+            </relatedIdentifiers>
+             </xsl:if>
             <rightsList>
                 <xsl:apply-templates select="Licence" mode="oai_datacite" />
             </rightsList>
@@ -193,6 +198,18 @@
       </xsl:if>
       <xsl:value-of select="@Value" /> 
       </subject>
+  </xsl:template>
+
+   <xsl:template match="Reference" mode="oai_datacite">
+        <relatedIdentifier>
+     <xsl:attribute name="relatedIdentifierType">
+        <xsl:value-of select="@Type" />
+    </xsl:attribute>
+      <xsl:attribute name="relationType">
+        <xsl:value-of select="@Relation" />
+    </xsl:attribute>
+      <xsl:value-of select="@Value" /> 
+      </relatedIdentifier>
   </xsl:template>
 
     <xsl:template match="PersonContributor" mode="oai_datacite">
