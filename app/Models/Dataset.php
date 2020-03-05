@@ -258,17 +258,18 @@ class Dataset extends Model
      *
      * @return \Carbon\Carbon\Date
      */
-    public function scopeEarliestPublicationDate($query, string $column = null)
+    public static function earliestPublicationDate(string $column = null)
     {
         if (!$column) {
             $column = self::PUBLISHED_AT;
         }
-        return $query->select('server_date_published')
+        $result = Dataset::select('server_date_published')
             ->where('server_date_published', '<>', null)
             ->where('server_state', 'published')
             ->orderBy('server_date_published', 'asc')
             ->first();
             //->server_date_published;
+        return $result;
     }
 
     public function setServerState($targetType)

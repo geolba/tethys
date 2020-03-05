@@ -149,7 +149,7 @@ class RequestController extends Controller
         $repositoryName = "Tethys RDR";
         $repIdentifier = "tethys.geologie.ac.at";
         $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
-        $earliestDateFromDb = optional(Dataset::earliestPublicationDate())->server_date_published;
+        $earliestDateFromDb = Dataset::earliestPublicationDate() != null ?  Dataset::earliestPublicationDate()->server_date_published: null;
 
         // set parameters for oai-pmh.xslt
         $this->_proc->setParameter('', 'email', $email);
