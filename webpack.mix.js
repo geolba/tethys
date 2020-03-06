@@ -16,6 +16,7 @@ let mix = require('laravel-mix');
 
 mix.js('resources/js/datasetPublish.js', 'public/backend/publish')
     .js('resources/js/search/main.ts', 'public/js/search')
+    .js('resources/js/landingpage/main.ts', 'public/js/landingpage')
     .js('resources/js/app.js', 'public/js')
     .js('resources/js/lib.js', 'public/js')
     .js('resources/js/releaseDataset.js', 'public/backend/publish')

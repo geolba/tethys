@@ -87,4 +87,11 @@ export default App;
 #app {
   color: #56b983;
 }
+
+.content {
+    flex: 1 1 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>

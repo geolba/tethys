@@ -52,6 +52,8 @@ class PagesController extends Controller
         // ->orderBy('link_documents_persons.sort_order', 'desc')
         // ->get();
 
-        return view('frontend.dataset.show', compact('dataset', 'authors', 'contributors', 'submitters'));
+        // return view('frontend.dataset.show', compact('dataset', 'authors', 'contributors', 'submitters'));
+
+        return view('frontend.dataset.show', compact('id'));
     }
 }

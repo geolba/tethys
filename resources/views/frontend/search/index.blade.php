@@ -9,7 +9,7 @@
 
     
     <!-- SEARCH RESULTS GO HERE, EXACTLY AS BEFORE -->
-    <div id="test" class="search-container row">
+    <div id="app" class="search-container row">
 
         {{-- <div class="four columns left-bar">
             <div id="left-bar" class="sidebar left-bar">             

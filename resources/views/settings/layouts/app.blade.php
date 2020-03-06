@@ -53,9 +53,9 @@
                 <li class="treeview">
                     <h2 class="pure-menu-heading">Settings  <span class="fas fa-angle-down"></h2>
                     <ul class="pure-menu-list treeview-menu {{ Route::is('settings.*') ? 'menu-open' : '' }} style="display: none; {{ Route::is('settings.*') ? 'display: block;' : '' }}">				
-                        <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
+                        {{-- <li class="pure-menu-item {{ Route::is('settings.document*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.document') }}"><i class="fa fa-database"></i> Datasets</a>
-                        </li>
+                        </li> --}}
                         {{-- <li class="pure-menu-item {{ Route::is('settings.collection*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.collection') }}"><i class="fa fa-archive"></i> Collections</a>
                         </li> --}}

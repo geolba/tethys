@@ -7,6 +7,7 @@
     "/backend/publish/mainEditDataset.js": "/backend/publish/mainEditDataset.js",
     "/backend/publish/releaseDataset.js": "/backend/publish/releaseDataset.js",
     "/js/app.js": "/js/app.js",
+    "/js/landingpage/main.js": "/js/landingpage/main.js",
     "/js/lib.js": "/js/lib.js",
     "/js/scripts.js": "/js/scripts.js",
     "/js/search/main.js": "/js/search/main.js",
