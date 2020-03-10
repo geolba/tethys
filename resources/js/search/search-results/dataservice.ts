@@ -54,7 +54,7 @@ export default {
     Object.entries(filterItems).forEach(([key, valueArray]) => {
       // console.log(`${key} ${valueArray}`);
       valueArray.forEach(function (value) {
-        filterFields += "&fq=" + key + ":(" + value + ")";
+        filterFields += '&fq=' + key + ':("' +  value + '")';
       });
 
     });

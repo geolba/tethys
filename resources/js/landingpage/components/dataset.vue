@@ -1,19 +1,19 @@
 <template>
-  <div class="box" v-if="post">
+  <div class="box" v-if="dataset">
     <div class="dataset_heaader">
-      <div class="dataset__blog-meta">published: {{ toDayDateTimeString(post.server_date_published) }}</div>
-      <h1 class="dataset__title">{{ post.title_output }}</h1>
+      <div class="dataset__blog-meta">published: {{ toDayDateTimeString(dataset.server_date_published) }}</div>
+      <h1 class="dataset__title">{{ dataset.title_output }}</h1>
     
-      <p class="dataset__id">{{ post.id }}</p>
+      <p class="dataset__id">{{ dataset.id }}</p>
     </div>
     <div class="dataset">
-        <p class="dataset__abstract">{{ post.abstract_output }}</p>
+        <p class="dataset__abstract">{{ dataset.abstract_output }}</p>
     
 
-    <p class="dataset__abstract" v-if="post.subject && post.subject.length > 0">keywords: {{ post.subject.join(', ') }}</p>
-    <p class="dataset__abstract">creating corporation: {{ post.creating_corporation }}</p>
-   <p class="dataset__abstract">publisher: {{ post.publisher_name }}</p>
-
+    <p class="dataset__abstract" v-if="dataset.subject && dataset.subject.length > 0">keywords: {{ dataset.subject.join(', ') }}</p>
+    <p class="dataset__abstract">creating corporation: {{ dataset.creating_corporation }}</p>
+   <p class="dataset__abstract">publisher: {{ dataset.publisher_name }}</p>
+   <p class="dataset__abstract">coverage: {{ dataset.geo_location }}</p>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default class Dataset extends Vue {
 
   metaInfo() {
     return {
-      title: this.post && this.post.title
+      title: this.dataset && this.dataset.title
     };
   }
 
@@ -63,7 +63,7 @@ export default class Dataset extends Vue {
     return time;
   }
 
-  post = null;
+  dataset = null;
   host = "https://repository.geologie.ac.at/";
   path = "solr/rdr_data/select?";
   endpoint = this.host + this.path;
@@ -72,8 +72,8 @@ export default class Dataset extends Vue {
   getPost(id) {
     axios(this.endpoint + "&q=id:" + id)
       .then(response => {
-        this.post = response.data.response.docs[0];
-        // this.post.title_output = "Ein etwas längerer Titel zum Testen!!! Test";
+        this.dataset = response.data.response.docs[0];
+        // this.dataset.title_output = "Ein etwas längerer Titel zum Testen!!! Test";
       })
       .catch(error => {
         console.log("-----error-------");
@@ -90,7 +90,7 @@ export default class Dataset extends Vue {
 <style lang="scss" scoped>
 .box {
   margin: 0 auto;
-  padding: 115px 20px 70px;
+  padding: 100px 20px 70px;
   // background-color: salmon;
   
    
@@ -113,8 +113,8 @@ export default class Dataset extends Vue {
   }
   &__id {
     position: absolute;
-    font-size: 280px;
-    bottom: -50px;
+    font-size: 250px;
+    bottom: -40px;
     margin: 0;
     color: #eeeeee;
     right: -20px;

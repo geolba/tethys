@@ -36,8 +36,8 @@
  */
 -->
 
-<xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet version="1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <xsl:output method="xml" indent="yes" />
@@ -66,7 +66,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                
+
                 <xsl:element name="field">
                     <xsl:attribute name="name">year</xsl:attribute>
                     <xsl:value-of select="$year"/>
@@ -77,7 +77,8 @@
                     <xsl:variable name="yearInverted" select="65535 - $year"/>
                     <xsl:element name="field">
                         <xsl:attribute name="name">year_inverted</xsl:attribute>
-                        <xsl:value-of select="$yearInverted"/>:<xsl:value-of select="$year"/>
+                        <xsl:value-of select="$yearInverted"/>
+:                        <xsl:value-of select="$year"/>
                     </xsl:element>
                 </xsl:if>
 
@@ -102,7 +103,7 @@
                 <xsl:element name="field">
                     <xsl:attribute name="name">language</xsl:attribute>
                     <xsl:value-of select="$language" />
-                </xsl:element>            
+                </xsl:element>
 
                 <!-- title / title_output -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/TitleMain">
@@ -131,7 +132,7 @@
                         </xsl:element>
                     </xsl:if>
                 </xsl:for-each>
-                
+
                 <!-- author -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/PersonAuthor">
                     <xsl:element name="field">
@@ -147,9 +148,9 @@
                     <xsl:attribute name="name">author_sort</xsl:attribute>
                     <xsl:for-each select="/Opus/Rdr_Dataset/PersonAuthor">
                         <xsl:value-of select="@LastName" />
-                        <xsl:text> </xsl:text>
+                        <xsl:text></xsl:text>
                         <xsl:value-of select="@FirstName" />
-                        <xsl:text> </xsl:text>
+                        <xsl:text></xsl:text>
                     </xsl:for-each>
                 </xsl:element>
 
@@ -188,7 +189,7 @@
                     <xsl:element name="field">
                         <xsl:attribute name="name">referee</xsl:attribute>
                         <xsl:value-of select="@FirstName" />
-                        <xsl:text> </xsl:text>
+                        <xsl:text></xsl:text>
                         <xsl:value-of select="@LastName" />
                     </xsl:element>
                 </xsl:for-each>
@@ -199,13 +200,13 @@
                         <xsl:element name="field">
                             <xsl:attribute name="name">persons</xsl:attribute>
                             <xsl:value-of select="@FirstName" />
-                            <xsl:text> </xsl:text>
+                            <xsl:text></xsl:text>
                             <xsl:value-of select="@LastName" />
                         </xsl:element>
                     </xsl:if>
                 </xsl:for-each>
 
-                <!-- doctype -->
+                <!-- datatype -->
                 <xsl:element name="field">
                     <xsl:attribute name="name">doctype</xsl:attribute>
                     <xsl:value-of select="/Opus/Rdr_Dataset/@Type" />
@@ -231,13 +232,13 @@
                 <xsl:element name="field">
                     <xsl:attribute name="name">belongs_to_bibliography</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="/Opus/Rdr_Dataset/@BelongsToBibliography = 0" >
+                        <xsl:when test="/Opus/Rdr_Dataset/@BelongsToBibliography = 0">
                             <xsl:text>false</xsl:text>
-                       </xsl:when>
-                       <xsl:otherwise>
+                        </xsl:when>
+                        <xsl:otherwise>
                             <xsl:text>true</xsl:text>
-                       </xsl:otherwise>
-                    </xsl:choose>                    
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
 
                 <!-- collections: project, app_area, institute, ids -->
@@ -290,7 +291,15 @@
                         <xsl:value-of select="@Value" />
                     </xsl:element>
                 </xsl:for-each>
-                
+
+                <!-- abstract additional -->
+                <xsl:for-each select="/Opus/Rdr_Dataset/TitleAbstractAdditional">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">abstract_additional</xsl:attribute>
+                        <xsl:value-of select="@Value" />
+                    </xsl:element>
+                </xsl:for-each>
+
                 <!-- series ids and series number per id (modeled as dynamic field) -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/Series">
                     <xsl:element name="field">
@@ -300,14 +309,16 @@
 
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>series_number_for_id_</xsl:text><xsl:value-of select="@Id"/>
+                            <xsl:text>series_number_for_id_</xsl:text>
+                            <xsl:value-of select="@Id"/>
                         </xsl:attribute>
                         <xsl:value-of select="@Number"/>
                     </xsl:element>
 
                     <xsl:element name="field">
                         <xsl:attribute name="name">
-                            <xsl:text>doc_sort_order_for_seriesid_</xsl:text><xsl:value-of select="@Id"/>
+                            <xsl:text>doc_sort_order_for_seriesid_</xsl:text>
+                            <xsl:value-of select="@Id"/>
                         </xsl:attribute>
                         <xsl:value-of select="@DocSortOrder"/>
                     </xsl:element>
@@ -345,11 +356,57 @@
                     </xsl:element>
                 </xsl:if>
 
+                <xsl:if test="/Opus/Rdr_Dataset/Coverage">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">geo_location</xsl:attribute>
+                        <xsl:variable name="geolocation" select="concat(
+                        'SOUTH-BOUND LATITUDE: ', /Opus/Rdr_Dataset/Coverage/@XMin,
+                        ' * WEST-BOUND LONGITUDE: ', /Opus/Rdr_Dataset/Coverage/@YMin,
+                        ' * NORTH-BOUND LATITUDE: ', /Opus/Rdr_Dataset/Coverage/@XMax,
+                        ' * EAST-BOUND LONGITUDE: ', /Opus/Rdr_Dataset/Coverage/@YMax
+                        )" />
+                        <!-- <xsl:variable name="geolocation" select="concat('test', /Opus/Rdr_Dataset/Coverage/@XMin)" /> -->
+                        <xsl:value-of select="$geolocation" />
+                        <xsl:text>&#xA;</xsl:text>
+                        <xsl:if test="@ElevationMin != '' and @ElevationMax != ''">
+                            <xsl:value-of select="concat(' * ELEVATION MIN: ', @ElevationMin, ' * ELEVATION MAX: ', @ElevationMax)" />
+                        </xsl:if>
+                        <xsl:if test="@ElevationAbsolut != ''">
+                            <xsl:value-of select="concat(' * ELEVATION ABSOLUT: ', @ElevationAbsolut)" />
+                        </xsl:if>
+
+                        <xsl:text>&#xA;</xsl:text>
+                        <xsl:if test="@DepthMin != '' and @DepthMax != ''">
+                            <xsl:value-of select="concat(' * DEPTH MIN: ', @DepthMin, ' * DEPTH MAX: ', @DepthMax)" />
+                        </xsl:if>
+                        <xsl:if test="@DepthAbsolut != ''">
+                            <xsl:value-of select="concat(' * DEPTH ABSOLUT: ', @DepthAbsolut)" />
+                        </xsl:if>
+
+                        <xsl:text>&#xA;</xsl:text>
+                        <xsl:if test="@TimeMin != '' and @TimeMax != ''">
+                            <xsl:value-of select="concat(' * TIME MIN: ', @TimeMin, ' * TIME MAX: ', @TimeMax)" />
+                        </xsl:if>
+                        <xsl:if test="@TimeAbsolut != ''">
+                            <xsl:value-of select="concat(' * TIME ABSOLUT: ', @TimeAbsolut)" />
+                        </xsl:if>
+                    </xsl:element>
+                </xsl:if>
+
                 <!-- identifier (multi valued) -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/Identifier">
                     <xsl:element name="field">
                         <xsl:attribute name="name">identifier</xsl:attribute>
                         <xsl:value-of select="@Value"/>
+                    </xsl:element>
+                </xsl:for-each>
+
+                <!-- identifier (multi valued) -->
+                <xsl:for-each select="/Opus/Rdr_Dataset/Reference">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">reference</xsl:attribute>
+                         <xsl:value-of select="json-to-xml(/Opus/Rdr_Dataset/Reference)"/>
+                        <!-- <xsl:value-of select="@Value"/> -->
                     </xsl:element>
                 </xsl:for-each>
 

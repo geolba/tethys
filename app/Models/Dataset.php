@@ -187,6 +187,11 @@ class Dataset extends Model
     {
         return $this->hasMany(Title::class, 'document_id', 'id');
     }
+
+    public function mainTitle()
+    {
+        return $this->hasMany(Title::class, 'document_id', 'id')->where('type', 'Main')->first();
+    }
     
     public function addMainTitle(Title $title)
     {
@@ -205,6 +210,10 @@ class Dataset extends Model
         return $this->hasMany(Description::class, 'document_id', 'id');
     }
 
+    public function mainAbstract()
+    {
+        return $this->hasMany(Description::class, 'document_id', 'id')->where('type', 'Abstract')->first();
+    }
     public function addMainAbstract(Description $title)
     {
         $title->type = 'abstract';
@@ -319,5 +328,16 @@ class Dataset extends Model
         } else {
             return 0;
         }
+    }
+
+    public function geoLocation()
+    {
+        // return $this->coverage->x_min;
+        $geolocation =
+        'SOUTH-BOUND LATITUDE: ' . $this->coverage->x_min . ","
+        . ' * WEST-BOUND LONGITUDE: ' . $this->coverage->y_min . ","
+        . ' * NORTH-BOUND LATITUDE: ' . $this->coverage->x_max . ","
+        . ' * EAST-BOUND LONGITUDE: ' . $this->coverage->y_max;
+        return $geolocation;
     }
 }

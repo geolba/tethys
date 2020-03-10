@@ -32,20 +32,20 @@ class PagesController extends Controller
         $dataset->load('titles');
         $dataset->load('abstracts');
 
-        $authors = $dataset->persons()
-        ->wherePivot('role', 'author')
-        ->orderBy('link_documents_persons.sort_order', 'desc')
-        ->get();
+        // $authors = $dataset->persons()
+        // ->wherePivot('role', 'author')
+        // ->orderBy('link_documents_persons.sort_order', 'desc')
+        // ->get();
 
-        $contributors = $dataset->persons()
-        ->wherePivot('role', 'contributor')
-        ->orderBy('link_documents_persons.sort_order', 'desc')
-        ->get();
+        // $contributors = $dataset->persons()
+        // ->wherePivot('role', 'contributor')
+        // ->orderBy('link_documents_persons.sort_order', 'desc')
+        // ->get();
 
-        $submitters = $dataset->persons()
-        ->wherePivot('role', 'submitter')
-        ->orderBy('link_documents_persons.sort_order', 'desc')
-        ->get();
+        // $submitters = $dataset->persons()
+        // ->wherePivot('role', 'submitter')
+        // ->orderBy('link_documents_persons.sort_order', 'desc')
+        // ->get();
 
         // $authors = $dataset->persons()
         // ->wherePivot('role', 'author')
@@ -54,6 +54,7 @@ class PagesController extends Controller
 
         // return view('frontend.dataset.show', compact('dataset', 'authors', 'contributors', 'submitters'));
 
-        return view('frontend.dataset.show', compact('id'));
+        return view('frontend.dataset.show', compact('dataset'));
+        //return view('frontend.dataset.show', compact('id'));//wenn über solr
     }
 }
