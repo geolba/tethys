@@ -227,6 +227,10 @@ class Dataset extends Model
     {
         return $this->belongsToMany(License::class, 'link_documents_licences', 'document_id', 'licence_id');
     }
+    public function license()
+    {
+        return $this->belongsToMany(License::class, 'link_documents_licences', 'document_id', 'licence_id')->first();
+    }
 
     public function files()
     {
