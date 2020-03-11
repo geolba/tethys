@@ -27,13 +27,13 @@
               <div class="twelve columns">
                 <ul class="tab-nav">
                   <li class="metadata-link">                   
-                      <a class="remove-check button active" href="#one">Metadaten</a>                   
+                      <span class="remove-check button active" name="#one">Metadaten</span>                   
                   </li>
                   <li class="file-link">                    
-                      <a class="remove-check button" href="#two">Inhalt</a>                  
+                      <span class="remove-check button" name="#two">Inhalt</span>                  
                   </li>
                   <li class="file-link">                    
-                    <a class="remove-check button" href="#three">Technische Metadaten</a>                  
+                    <span class="remove-check button" name="#three">Technische Metadaten</span>                  
                 </li>
                 </ul>
 
@@ -102,6 +102,13 @@
 
                   <div class="tab-pane content-technical-metadata" id="three">
                     <p class="dataset__abstract">Status: {{ $dataset->server_state }}</p>
+                    <p class="dataset__abstract">Eingestellt von: {{ $dataset->user->login }}</p>
+                    <p class="dataset__abstract">Erstellt am: {{ $dataset->created_at->toDateString() }}</p>
+                    @if($dataset->embargo_date != null)
+                    <p class="dataset__abstract">Ende des Embargo-Zeitraums: {{ $dataset->embargo_date->toDateString() }}</p>
+                    @else
+                    <p class="dataset__abstract">Ende des Embargo-Zeitraums: - </p>
+                    @endif
                   </div>
 
                 </div>
@@ -134,14 +141,14 @@
     display: inline;
   }
 
-  ul.tab-nav li a.button {
+  ul.tab-nav li span.button {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     margin-bottom: -1px;
     border-bottom: none;
   }
 
-  ul.tab-nav li a.active.button {
+  ul.tab-nav li span.active.button {
     border-bottom: 0.175em solid #fff;
   }
 
@@ -256,15 +263,15 @@
 <script type="text/javascript" >
 (function() {
     function main() {
-        var tabButtons = [].slice.call(document.querySelectorAll('ul.tab-nav li a.button'));
+        var tabButtons = [].slice.call(document.querySelectorAll('ul.tab-nav li span.button'));
 
         tabButtons.map(function(button) {
             button.addEventListener('click', function() {
-                document.querySelector('li a.active.button').classList.remove('active');
+                document.querySelector('li span.active.button').classList.remove('active');
                 button.classList.add('active');
 
                 document.querySelector('.tab-pane.active').classList.remove('active');
-                document.querySelector(button.getAttribute('href')).classList.add('active');
+                document.querySelector(button.getAttribute('name')).classList.add('active');
             })
         })
     }
