@@ -23,7 +23,7 @@ class File extends Model
         return $this->hasMany(HashValue::class, 'file_id', 'id');
     }
 
-     /**
+    /**
      * Create hash value model objects from original file.
      *
      * TODO throws Exception in case hash computation is not possible
@@ -34,7 +34,7 @@ class File extends Model
     public function createHashValues()
     {
         $hashtypes = array('md5', 'sha512');
-        
+
         foreach ($hashtypes as $type) {
             $hash = new HashValue();
             $hash->type = $type;
@@ -44,7 +44,7 @@ class File extends Model
         }
     }
 
-     /**
+    /**
      * Get the hash value of the file
      *
      * @param string $type Type of the hash value, @see hash_file();
@@ -65,11 +65,21 @@ class File extends Model
     private function getPath()
     {
         //return  storage_path('app/public/' . $this->path_name);
-        return  public_path('storage/' . $this->path_name);
+        return public_path('storage/' . $this->path_name);
     }
 
     public function exists()
     {
         return \Illuminate\Support\Facades\File::exists(public_path('storage/' . $this->path_name));
+    }
+
+    public function formatSize($precision = 1)
+    {
+        $size = $this->file_size;
+        $unit = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+        for ($i = 0; $size >= 1024 && $i < count($unit) - 1; $i++) {
+            $size /= 1024;
+        }
+        return round($size, $precision) . ' ' . $unit[$i];
     }
 }

@@ -496,26 +496,26 @@
         },
         {
             "name": "felixkiss/uniquewith-validator",
-            "version": "3.3.1",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/felixkiss/uniquewith-validator.git",
-                "reference": "c9d088543f93d3ebca6c1cc40ba8cbd6d855d79c"
+                "reference": "7ce4ff83c9003718e8febe1d4670eb869a720c5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/felixkiss/uniquewith-validator/zipball/c9d088543f93d3ebca6c1cc40ba8cbd6d855d79c",
-                "reference": "c9d088543f93d3ebca6c1cc40ba8cbd6d855d79c",
+                "url": "https://api.github.com/repos/felixkiss/uniquewith-validator/zipball/7ce4ff83c9003718e8febe1d4670eb869a720c5c",
+                "reference": "7ce4ff83c9003718e8febe1d4670eb869a720c5c",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.*|^6.0",
-                "illuminate/validation": "5.*|^6.0",
+                "illuminate/support": "^5.5|^6.0|^7.0",
+                "illuminate/validation": "^5.5|^6.0|^7.0",
                 "php": "^7.1.3"
             },
             "require-dev": {
                 "bossa/phpspec2-expect": "^3.0",
-                "phpspec/phpspec": "^5.0"
+                "phpspec/phpspec": "^5.0|^6.0"
             },
             "type": "library",
             "extra": {
@@ -545,7 +545,7 @@
             "keywords": [
                 "laravel"
             ],
-            "time": "2019-09-10T07:24:13+00:00"
+            "time": "2020-03-10T21:45:55+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -970,16 +970,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.64",
+            "version": "1.0.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
+                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
-                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
+                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
                 "shasum": ""
             },
             "require": {
@@ -1050,7 +1050,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-02-05T18:14:17+00:00"
+            "time": "2020-03-08T18:53:20+00:00"
         },
         {
             "name": "mcamara/laravel-localization",

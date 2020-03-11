@@ -26,21 +26,33 @@
               <!-- HTML markup for the tab navigation: -->
               <div class="twelve columns">
                 <ul class="tab-nav">
-                  <li class="metadata-link">                   
-                      <span class="remove-check button active" name="#one">Metadaten</span>                   
+                  <li class="metadata-link">
+                    <span class="remove-check button active" name="#one">Metadaten</span>
                   </li>
-                  <li class="file-link">                    
-                      <span class="remove-check button" name="#two">Inhalt</span>                  
+                  <li class="file-link">
+                    <span class="remove-check button" name="#two">Inhalt</span>
                   </li>
-                  <li class="file-link">                    
-                    <span class="remove-check button" name="#three">Technische Metadaten</span>                  
-                </li>
+                  <li class="file-link">
+                    <span class="remove-check button" name="#three">Technische Metadaten</span>
+                  </li>
                 </ul>
 
                 <!-- HTML markup for tab content: Tab panes -->
                 <div class="tab-content">
 
                   <div class="tab-pane content-metadata active" id="one">
+
+                    @if($dataset->additionalTitles()->exists())
+                    <p class="dataset__abstract">
+                      Zusätzliche Titel:
+                      <ul>
+                        @foreach ($dataset->additionalTitles as $title)
+                        <li>{{ $title->type }}: {{ $title->value }}</li>
+                        <br />
+                        @endforeach
+                      </ul>
+                    </p>
+                    @endif
 
                     <p class="dataset__abstract">{{ $dataset->mainAbstract()->value }}</p>
 
@@ -62,23 +74,40 @@
                     </p>
                     @endif
 
+                    @if($dataset->references()->exists())
+                    <p class="dataset__abstract">
+                      Referenzen:
+                      <ul>
+                        @foreach ($dataset->references as $reference)
+                        <li>{{ $reference->value }}</li>
+                        <br />
+                        @endforeach
+                      </ul>
+                    </p>
+                    @endif
+
                     <p class="dataset__abstract">Erstellungsjahr: {{ $dataset->server_date_published->year }}</p>
                     <p class="dataset__abstract">Sprache: {{ $dataset->language }}</p>
                     <p class="dataset__abstract">Objekttyp: {{ $dataset->type }}</p>
                     <p class="dataset__abstract">Lizenz: {{ $dataset->license()->name_long }}</p>
-
-                    <p class="dataset__abstract">Herausgeber: {{ $dataset->creating_corporation }}</p>
-                    <p class="dataset__abstract">Publisher: {{ $dataset->publisher_name }}</p>
                     <p class="dataset__abstract">Coverage: {{ $dataset->geoLocation() }}</p>
 
                   </div>
 
                   <div class="tab-pane content-file" id="two">
+                    @if($dataset->embargo_date != null)
+                    <p class="dataset__abstract">Ende des Embargo-Zeitraums:
+                      {{ $dataset->embargo_date->toDateString() }}</p>
+                    @else
+                    <p class="dataset__abstract">Ende des Embargo-Zeitraums: - </p>
+                    @endif
+
                     @if($dataset->hasEmbargoPassed() == true)
                     <table id="items" class="pure-table pure-table-horizontal">
                       <thead>
                         <tr>
                           <th>Path Name</th>
+                          <th>File Size</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -91,6 +120,9 @@
                             <span class="alert">missing file: {{ $file->path_name }}</span>
                             @endif
                           </td>
+                          <td>
+                            <span>{{ $file->formatSize(2) }}</span>
+                          </td>
                         </tr>
                         @endforeach
                       </tbody>
@@ -101,14 +133,14 @@
                   </div>
 
                   <div class="tab-pane content-technical-metadata" id="three">
+                    <p class="dataset__abstract">Persistenter Identifikator:
+                      {{ "http://www.tethys.at/" . $dataset->id }}</p>
                     <p class="dataset__abstract">Status: {{ $dataset->server_state }}</p>
                     <p class="dataset__abstract">Eingestellt von: {{ $dataset->user->login }}</p>
                     <p class="dataset__abstract">Erstellt am: {{ $dataset->created_at->toDateString() }}</p>
-                    @if($dataset->embargo_date != null)
-                    <p class="dataset__abstract">Ende des Embargo-Zeitraums: {{ $dataset->embargo_date->toDateString() }}</p>
-                    @else
-                    <p class="dataset__abstract">Ende des Embargo-Zeitraums: - </p>
-                    @endif
+                    <p class="dataset__abstract">Herausgeber: {{ $dataset->creating_corporation }}</p>
+                    <p class="dataset__abstract">Publisher: {{ $dataset->publisher_name }}</p>
+
                   </div>
 
                 </div>
@@ -150,6 +182,9 @@
 
   ul.tab-nav li span.active.button {
     border-bottom: 0.175em solid #fff;
+    border-bottom-color: #00bfffcc;
+    color: #00bfffcc;
+    /* background-color: #6c6e6b; */
   }
 
   .tab-content .tab-pane {
@@ -260,8 +295,8 @@
 
 
 @section('after-scripts')
-<script type="text/javascript" >
-(function() {
+<script type="text/javascript">
+  (function() {
     function main() {
         var tabButtons = [].slice.call(document.querySelectorAll('ul.tab-nav li span.button'));
 

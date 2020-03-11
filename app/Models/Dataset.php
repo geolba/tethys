@@ -187,6 +187,10 @@ class Dataset extends Model
     {
         return $this->hasMany(Title::class, 'document_id', 'id');
     }
+    public function additionalTitles()
+    {
+        return $this->hasMany(Title::class, 'document_id', 'id')->where('type', '!=', 'Main');
+    }
 
     public function mainTitle()
     {
