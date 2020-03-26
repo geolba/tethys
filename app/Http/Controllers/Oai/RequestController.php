@@ -1,16 +1,16 @@
 <?php
 namespace App\Http\Controllers\Oai;
 
-use Illuminate\Http\Request;
+use App\Exceptions\OaiModelException;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
-use Illuminate\Support\Facades\Log;
-use App\Exceptions\OaiModelException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Oai\OaiModelError;
 use App\Models\Oai\ResumptionToken;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use \Exception;
- 
+
 class RequestController extends Controller
 {
     /**
@@ -19,17 +19,16 @@ class RequestController extends Controller
      *
      * @var array
      */
-    private $deliveringDocumentStates = array('published', 'deleted');  // maybe deleted documents too
+    private $deliveringDocumentStates = array('published', 'deleted'); // maybe deleted documents too
     private $xMetaDissRestriction = array('doctoralthesis', 'habilitation');
     const SET_SPEC_PATTERN = '[A-Za-z0-9\-_\.!~\*\'\(\)]+';
-
 
     /**
      * Holds xml representation of document information to be processed.
      *
      * @var \DomDocument  Defaults to null.
      */
-    protected $_xml = null;
+    protected $xml = null;
 
     /**
      * Holds the stylesheet for the transformation.
@@ -43,7 +42,7 @@ class RequestController extends Controller
      *
      * @var \XSLTProcessor  Defaults to null.
      */
-    protected $_proc = null;
+    protected $proc = null;
 
     /**
      * Load an xslt stylesheet.
@@ -54,19 +53,19 @@ class RequestController extends Controller
     {
         $this->xslt = new \DomDocument;
         $this->xslt->load($stylesheet);
-        $this->_proc->importStyleSheet($this->xslt);
+        $this->proc->importStyleSheet($this->xslt);
         if (isset($_SERVER['HTTP_HOST'])) {
-            $this->_proc->setParameter('', 'host', $_SERVER['HTTP_HOST']);
+            $this->proc->setParameter('', 'host', $_SERVER['HTTP_HOST']);
         }
-        //$this->_proc->setParameter('', 'server', $this->getRequest()->getBaseUrl());
+        //$this->proc->setParameter('', 'server', $this->getRequest()->getBaseUrl());
     }
 
     public function __construct()
     {
         //$this->middleware('auth');
         // Initialize member variables.
-        $this->_xml = new \DomDocument;
-        $this->_proc = new \XSLTProcessor;
+        $this->xml = new \DomDocument;
+        $this->proc = new \XSLTProcessor;
     }
 
     public function index(Request $request)
@@ -82,40 +81,38 @@ class RequestController extends Controller
         } catch (OaiModelException $e) {
             $errorCode = OaiModelError::mapCode($e->getCode());
             //$this->getLogger()->err($errorCode);
-            $this->_proc->setParameter('', 'oai_error_code', $errorCode);
+            $this->proc->setParameter('', 'oai_error_code', $errorCode);
             //$this->getLogger()->err($e->getMessage());
-            $this->_proc->setParameter('', 'oai_error_message', htmlentities($e->getMessage()));
+            $this->proc->setParameter('', 'oai_error_message', htmlentities($e->getMessage()));
         } catch (Exception $e) {
             //$this->getLogger()->err($e);
-            $this->_proc->setParameter('', 'oai_error_code', 'unknown');
-            $this->_proc->setParameter('', 'oai_error_message', 'An internal error occured.');
+            $this->proc->setParameter('', 'oai_error_code', 'unknown');
+            $this->proc->setParameter('', 'oai_error_message', 'An internal error occured.');
             //$this->getResponse()->setHttpResponseCode(500);
         }
-        // $xml = $this->_xml->saveXML();
-        $xml = $this->_proc->transformToXML($this->_xml);
+        // $xml = $this->xml->saveXML();
+        $xml = $this->proc->transformToXML($this->xml);
 
-         //$xml = $this->doc->asXML();
-         return response($xml)//->view('rss', array('rss'=>$this->rss))
-             ->header('Content-Type', 'application/xml')
-             ->header('charset', 'utf-8');
+        //$xml = $this->doc->asXML();
+        return response($xml) //->view('rss', array('rss'=>$this->rss))
+        ->header('Content-Type', 'application/xml')
+            ->header('charset', 'utf-8');
     }
-
-
 
     private function __handleRequest(array $oaiRequest)
     {
-         // Setup stylesheet
+        // Setup stylesheet
         $this->loadStyleSheet('datasetxml2oai-pmh.xslt');
 
         // Set response time
-        $this->_proc->setParameter('', 'responseDate', date("Y-m-d\TH:i:s\Z"));
+        $this->proc->setParameter('', 'responseDate', date("Y-m-d\TH:i:s\Z"));
 
         // set OAI base url
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
-        $this->_proc->setParameter('', 'baseURL', url('/') . $uri[0]);
+        $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
 
         if (isset($oaiRequest['verb'])) {
-            $this->_proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
+            $this->proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
             if ($oaiRequest['verb'] == 'Identify') {
                 $this->handleIdentify();
             } elseif ($oaiRequest['verb'] == 'ListMetadataFormats') {
@@ -133,7 +130,7 @@ class RequestController extends Controller
             }
         } else {
             $oaiRequest['verb'] = 'Identify';
-            $this->_proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
+            $this->proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
             $this->doc = $this->handleIdentify();
         }
     }
@@ -148,16 +145,17 @@ class RequestController extends Controller
         $email = "repository@geologie.ac.at";
         $repositoryName = "Tethys RDR";
         $repIdentifier = "tethys.geologie.ac.at";
-        $sampleIdentifier = "oai:" . $repIdentifier . ":27";//$this->_configuration->getSampleIdentifier();
-        $earliestDateFromDb = Dataset::earliestPublicationDate() != null ?  Dataset::earliestPublicationDate()->server_date_published: null;
+        $sampleIdentifier = "oai:" . $repIdentifier . ":27"; //$this->_configuration->getSampleIdentifier();
+        $earliestDateFromDb = Dataset::earliestPublicationDate() != null ?
+        Dataset::earliestPublicationDate()->server_date_published : null;
 
         // set parameters for oai-pmh.xslt
-        $this->_proc->setParameter('', 'email', $email);
-        $this->_proc->setParameter('', 'repositoryName', $repositoryName);
-        $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
-        $this->_proc->setParameter('', 'sampleIdentifier', $sampleIdentifier);
-        $this->_proc->setParameter('', 'earliestDatestamp', $earliestDateFromDb);
-        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
+        $this->proc->setParameter('', 'email', $email);
+        $this->proc->setParameter('', 'repositoryName', $repositoryName);
+        $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
+        $this->proc->setParameter('', 'sampleIdentifier', $sampleIdentifier);
+        $this->proc->setParameter('', 'earliestDatestamp', $earliestDateFromDb);
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
     }
 
     /**
@@ -176,7 +174,7 @@ class RequestController extends Controller
         try {
             //$dataset = new Opus_Document($docId);
             $dataset = Dataset::findOrFail($dataId);
-        } catch (ModelNotFoundException  $ex) {
+        } catch (ModelNotFoundException $ex) {
             throw new OaiModelException(
                 'The value of the identifier argument is unknown or illegal in this repository.',
                 OaiModelError::IDDOESNOTEXIST
@@ -187,17 +185,17 @@ class RequestController extends Controller
         if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
             $metadataPrefix = $oaiRequest['metadataPrefix'];
         }
-        $this->_proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+        $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 
         // do not deliver datasets which are restricted by document state
         if (is_null($dataset)
             //or (false === in_array($dataset->getServerState(), $this->_deliveringDocumentStates))
-            or  (false === $dataset->whereIn('server_state', $this->deliveringDocumentStates))
+             or (false === $dataset->whereIn('server_state', $this->deliveringDocumentStates))
             or (false === $dataset->hasEmbargoPassed())) {
             throw new OaiModelException('Document is not available for OAI export!', OaiModelError::NORECORDSMATCH);
         }
 
-        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
         $this->createXmlRecord($dataset);
     }
 
@@ -236,9 +234,6 @@ class RequestController extends Controller
         return $dataId;
     }
 
-    
-
-
     /**
      * Implements response for OAI-PMH verb 'ListMetadataFormats'.
      *
@@ -247,7 +242,7 @@ class RequestController extends Controller
      */
     private function handleListMetadataFormats()
     {
-        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
     }
 
     /**
@@ -258,7 +253,7 @@ class RequestController extends Controller
      */
     private function handleListRecords($oaiRequest)
     {
-        $maxRecords = 30;//$this->_configuration->getMaxListRecords();
+        $maxRecords = 30; //$this->_configuration->getMaxListRecords();
         $this->handlingOfLists($oaiRequest, $maxRecords);
     }
 
@@ -270,7 +265,7 @@ class RequestController extends Controller
      */
     private function handleListIdentifiers(array &$oaiRequest)
     {
-        $maxIdentifier = 5;//$this->_configuration->getMaxListIdentifiers();
+        $maxIdentifier = 5; //$this->_configuration->getMaxListIdentifiers();
         $this->handlingOfLists($oaiRequest, $maxIdentifier);
     }
 
@@ -283,8 +278,8 @@ class RequestController extends Controller
     private function handleListSets()
     {
         $repIdentifier = "tethys.geologie.ac.at";
-        $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
-        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
+        $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
 
         //$oaiSets = new Oai_Model_Sets();
         $sets = array(
@@ -298,26 +293,24 @@ class RequestController extends Controller
         //$sets = $this->getSetsForDocumentTypes();
 
         foreach ($sets as $type => $name) {
-            $opusDoc = $this->_xml->createElement('Rdr_Sets');
-            $typeAttr = $this->_xml->createAttribute('Type');
-            $typeValue = $this->_xml->createTextNode($type);
+            $opusDoc = $this->xml->createElement('Rdr_Sets');
+            $typeAttr = $this->xml->createAttribute('Type');
+            $typeValue = $this->xml->createTextNode($type);
             $typeAttr->appendChild($typeValue);
             $opusDoc->appendChild($typeAttr);
-            $nameAttr = $this->_xml->createAttribute('TypeName');
-            $nameValue = $this->_xml->createTextNode($name);
+            $nameAttr = $this->xml->createAttribute('TypeName');
+            $nameValue = $this->xml->createTextNode($name);
             $nameAttr->appendChild($nameValue);
             $opusDoc->appendChild($nameAttr);
-            $this->_xml->documentElement->appendChild($opusDoc);
+            $this->xml->documentElement->appendChild($opusDoc);
         }
     }
 
-
     private function handleIllegalVerb()
     {
-        $this->_proc->setParameter('', 'oai_error_code', 'badVerb');
-        $this->_proc->setParameter('', 'oai_error_message', 'The verb provided in the request is illegal.');
+        $this->proc->setParameter('', 'oai_error_code', 'badVerb');
+        $this->proc->setParameter('', 'oai_error_message', 'The verb provided in the request is illegal.');
     }
-
 
     /**
      * Helper method for handling lists.
@@ -336,9 +329,9 @@ class RequestController extends Controller
         $repIdentifier = "tethys.geologie.ac.at";
         $tokenTempPath = storage_path('app/resumption'); //$this->_configuration->getResumptionTokenPath();
 
-        $this->_proc->setParameter('', 'repIdentifier', $repIdentifier);
-        $this->_xml->appendChild($this->_xml->createElement('Datasets'));
-        
+        $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
+
         // do some initialisation
         $cursor = 0;
         //$totalIds = 0;
@@ -349,7 +342,7 @@ class RequestController extends Controller
         if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
             $metadataPrefix = $oaiRequest['metadataPrefix'];
         }
-        $this->_proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+        $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 
         // parameter resumptionToken is given
         if (false === empty($oaiRequest['resumptionToken'])) {
@@ -372,8 +365,7 @@ class RequestController extends Controller
             $reldocIds = $finder->pluck('id')->toArray();
         }
 
-       
-          // handling of document ids
+        // handling of document ids
         $restIds = $reldocIds;
         $workIds = array_splice($restIds, 0, $maxRecords);
         //foreach ($datasets as $dataset)
@@ -385,21 +377,21 @@ class RequestController extends Controller
 
     private function createXmlRecord(Dataset $dataset)
     {
-        //$node = $this->_xml->createElement('Rdr_Dataset');
+        //$node = $this->xml->createElement('Rdr_Dataset');
         $domNode = $this->getDatasetXmlDomNode($dataset);
-          // add frontdoor url
+        // add frontdoor url
         $this->addLandingPageAttribute($domNode, $dataset->id);
 
         // add access rights to element
         //$this->_addAccessRights($domNode, $dataset);
 
-        $node = $this->_xml->importNode($domNode, true);
+        $node = $this->xml->importNode($domNode, true);
 
         //$node->setAttribute("Id",  $dataset->id);
         //$node->setAttribute("ServerState",  $dataset->server_state);
 
         ////$child =  new \DOMElement("ServerDateModified");
-        //$child =   $this->_xml->createElement('ServerDateModified');
+        //$child =   $this->xml->createElement('ServerDateModified');
         //$child->setAttribute("Year",  $dataset->server_date_modified->format('Y'));
         //$child->setAttribute("Month",  $dataset->server_date_modified->month);
         //$child->setAttribute("Day",  $dataset->server_date_modified->day);
@@ -409,7 +401,7 @@ class RequestController extends Controller
         $this->addSpecInformation($node, 'data-type:' . $dataset->type);
         //$this->addSpecInformation($node, 'bibliography:' . 'false');
 
-        $this->_xml->documentElement->appendChild($node);
+        $this->xml->documentElement->appendChild($node);
     }
 
     /**
@@ -431,12 +423,12 @@ class RequestController extends Controller
 
     private function addSpecInformation(\DOMNode $document, $information)
     {
-        $setSpecAttribute = $this->_xml->createAttribute('Value');
-        $setSpecAttributeValue = $this->_xml->createTextNode($information);
+        $setSpecAttribute = $this->xml->createAttribute('Value');
+        $setSpecAttributeValue = $this->xml->createTextNode($information);
         $setSpecAttribute->appendChild($setSpecAttributeValue);
 
-        $setSpecElement = $this->_xml->createElement('SetSpec');
-         //$setSpecElement =new \DOMElement("SetSpec");
+        $setSpecElement = $this->xml->createElement('SetSpec');
+        //$setSpecElement =new \DOMElement("SetSpec");
         $setSpecElement->appendChild($setSpecAttribute);
         $document->appendChild($setSpecElement);
     }
@@ -454,7 +446,7 @@ class RequestController extends Controller
         $xmlModel = new \App\Library\Xml\XmlModel();
         $xmlModel->setModel($dataset);
         $xmlModel->excludeEmptyFields();
-        $cache = ($dataset->xmlCache) ?  $dataset->xmlCache : new \App\Models\XmlCache();
+        $cache = ($dataset->xmlCache) ? $dataset->xmlCache : new \App\Models\XmlCache();
         $xmlModel->setXmlCache($cache);
         return $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
     }

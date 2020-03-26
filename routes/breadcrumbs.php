@@ -1,4 +1,5 @@
 <?php
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 // Dashboard
 Breadcrumbs::register('settings.dashboard', function ($trail) {

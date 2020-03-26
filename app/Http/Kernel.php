@@ -8,15 +8,15 @@ class Kernel extends HttpKernel
 
     /**
      * The application's global HTTP middleware stack.
-         *
-        * These middleware are run during every request to your application.
-        * @var array
-        */
+     *
+     * These middleware are run during every request to your application.
+     * @var array
+     */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
     /**
@@ -65,6 +65,6 @@ class Kernel extends HttpKernel
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         'isUserDatasetAdmin' => \App\Http\Middleware\WebAuthorizeDataset::class,
         'isUserFileOwner' => \App\Http\Middleware\WebAuthorizeFile::class,
-        
+
     ];
 }

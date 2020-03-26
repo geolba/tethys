@@ -9,7 +9,7 @@
       <div class="content">
 
         <div class="box" v-if="dataset">
-          <div class="dataset_heaader">
+          <div class="dataset_header">
             <div class="dataset__blog-meta">published: {{ $dataset->server_date_published->toDayDateTimeString() }}
             </div>
             <h1 class="dataset__title">{{ $dataset->mainTitle()->value }}</h1>
@@ -95,6 +95,8 @@
                   </div>
 
                   <div class="tab-pane content-file" id="two">
+                    <p class="dataset__abstract">Size: {{ $dataset->files()->count() }} </p>
+
                     @if($dataset->embargo_date != null)
                     <p class="dataset__abstract">Ende des Embargo-Zeitraums:
                       {{ $dataset->embargo_date->toDateString() }}</p>
@@ -134,7 +136,7 @@
 
                   <div class="tab-pane content-technical-metadata" id="three">
                     <p class="dataset__abstract">Persistenter Identifikator:
-                      {{ "http://www.tethys.at/" . $dataset->id }}</p>
+                      {{ "https://www.tethys.at/dataset/" . $dataset->id }}</p>
                     <p class="dataset__abstract">Status: {{ $dataset->server_state }}</p>
                     <p class="dataset__abstract">Eingestellt von: {{ $dataset->user->login }}</p>
                     <p class="dataset__abstract">Erstellt am: {{ $dataset->created_at->toDateString() }}</p>
@@ -187,6 +189,9 @@
     /* background-color: #6c6e6b; */
   }
 
+  .tab-nav {
+    z-index: 2;
+  }
   .tab-content .tab-pane {
     display: none;
     /* visibility: hidden; */
@@ -252,7 +257,7 @@
 
   }
 
-  .dataset_heaader {
+  .dataset_header {
     /* //  background-color: lightgray; */
     position: relative;
   }
@@ -281,13 +286,13 @@
     right: -20px;
     line-height: 1;
     font-weight: 900;
-    z-index: 0;
+    z-index: -1;    
   }
 
   .dataset__blog-meta {
     padding: 10px 0 20px;
     color: #c2c2c2;
-    // font-size: 0.8em;
+    /* font-size: 0.8em; */
     margin-top: -1.7em;
   }
 </style>

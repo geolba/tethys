@@ -4,18 +4,18 @@ namespace App\Models;
 
 use App\Library\Xml\DatasetExtension;
 use App\Models\Collection;
-use App\Models\License;
-use App\Models\User;
-use App\Models\Project;
+use App\Models\Coverage;
 use App\Models\Description;
-use App\Models\Title;
-use App\Models\Person;
-use App\Models\XmlCache;
 use App\Models\File;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\License;
+use App\Models\Person;
+use App\Models\Project;
+use App\Models\Title;
+use App\Models\User;
+use App\Models\XmlCache;
 use Carbon\Carbon;
 // use App\Models\GeolocationBox;
-use App\Models\Coverage;
+use Illuminate\Database\Eloquent\Model;
 
 class Dataset extends Model
 {
@@ -45,10 +45,10 @@ class Dataset extends Model
         'reviewer_id',
         'reject_reviewer_note',
         'reject_editor_note',
-        'reviewer_note_visible'
+        'reviewer_note_visible',
     ];
     //protected $guarded = [];
-        /**
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -96,7 +96,7 @@ class Dataset extends Model
         return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 
-        /**
+    /**
      * Get the account that the dataset belongs to
      */
     public function user()
@@ -175,7 +175,7 @@ class Dataset extends Model
     public function contributors()
     {
         return $this
-        ->persons()
+            ->persons()
             // ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
             ->wherePivot('role', 'contributor');
     }
@@ -196,7 +196,7 @@ class Dataset extends Model
     {
         return $this->hasMany(Title::class, 'document_id', 'id')->where('type', 'Main')->first();
     }
-    
+
     public function addMainTitle(Title $title)
     {
         $title->type = 'main';
@@ -251,7 +251,6 @@ class Dataset extends Model
         return $this->hasMany(\App\Models\Subject::class, 'document_id', 'id');
     }
 
-
     /**
      * Get the xml-cache record associated with the dataset.
      *
@@ -285,7 +284,7 @@ class Dataset extends Model
             ->where('server_state', 'published')
             ->orderBy('server_date_published', 'asc')
             ->first();
-            //->server_date_published;
+        //->server_date_published;
         return $result;
     }
 
@@ -300,7 +299,6 @@ class Dataset extends Model
         return $this->project()->exists();
     }
 
-   
     public function hasEmbargoPassed($now = null)
     {
         $embargoDate = $this->embargo_date;
@@ -320,7 +318,7 @@ class Dataset extends Model
         // $dt->year   = 2015;
         // $dt->month  = 04;
         // $dt->day    = 21;
-        $embargoDate->hour   = 23;
+        $embargoDate->hour = 23;
         $embargoDate->minute = 59;
         $embargoDate->second = 59;
 
@@ -330,7 +328,7 @@ class Dataset extends Model
 
     public function getRemainingTimeAttribute()
     {
-        $dateDiff =$this->server_date_modified->addDays(14);
+        $dateDiff = $this->server_date_modified->addDays(14);
         if ($this->server_state == "approved") {
             return Carbon::now()->diffInDays($dateDiff, false);
         } else {
@@ -346,6 +344,34 @@ class Dataset extends Model
         . ' * WEST-BOUND LONGITUDE: ' . $this->coverage->y_min . ","
         . ' * NORTH-BOUND LATITUDE: ' . $this->coverage->x_max . ","
         . ' * EAST-BOUND LONGITUDE: ' . $this->coverage->y_max;
+
+        $elevation = '';
+        if ($this->coverage->elevation_min != null && $this->coverage->elevation_max != null) {
+            $elevation = $elevation . '* ELEVATION MIN: ' . $this->coverage->elevation_min
+            . ', * ELEVATION MAX: ' . $this->coverage->elevation_max;
+        } elseif ($this->coverage->elevation_absolut != null) {
+            $elevation = $elevation . '* ELEVATION ABSOLUT: ' . $this->coverage->elevation_absolut;
+        }
+        $geolocation = $elevation == '' ? $geolocation : $geolocation . ", " . $elevation;
+
+        $depth = '';
+        if ($this->coverage->depth_min != null && $this->coverage->depth_max != null) {
+            $depth = $depth . '* DEPTH MIN: ' . $this->coverage->depth_min
+            . ', * DEPTH MAX: ' . $this->coverage->depth_max;
+        } elseif ($this->coverage->depth_absolut != null) {
+            $depth = $depth . '* DEPTH ABSOLUT: ' . $this->coverage->depth_absolut;
+        }
+        $geolocation = $depth == '' ? $geolocation : $geolocation . ", " . $depth;
+
+        $time = '';
+        if ($this->coverage->time_min != null && $this->coverage->time_max != null) {
+            $time = $time . '* TIME MIN: ' . $this->coverage->time_min
+            . ', * TIME MAX: ' . $this->coverage->time_max;
+        } elseif ($this->coverage->time_absolut != null) {
+            $time = $time . '* TIME ABSOLUT: ' . $this->coverage->time_absolut;
+        }
+        $geolocation = $time == '' ? $geolocation : $geolocation . ", " . $time;
+
         return $geolocation;
     }
 }

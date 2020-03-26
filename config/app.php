@@ -245,7 +245,7 @@ return [
         // 'HTML' => 'Illuminate\Html\HtmlFacade',
         // 'Form' => 'Collective\Html\FormFacade',
         // 'Html' => 'Collective\Html\HtmlFacade',
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
         //'Datatables' => Yajra\DataTables\Facades\DataTables::class
 
     ],
