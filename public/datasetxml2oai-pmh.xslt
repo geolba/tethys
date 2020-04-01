@@ -162,12 +162,8 @@
         <metadataPrefix>
           <xsl:text>oai_datacite</xsl:text>
         </metadataPrefix>
-        <schema>
-          http://schema.datacite.org/meta/kernel-4.1/metadata.xsd
-        </schema>
-        <metadataNamespace>
-          http://datacite.org/schema/kernel-4
-        </metadataNamespace>
+        <schema>http://schema.datacite.org/meta/kernel-4.1/metadata.xsd</schema>
+        <metadataNamespace>http://datacite.org/schema/kernel-4</metadataNamespace>
       </metadataFormat>
     </ListMetadataFormats>
   </xsl:template>
@@ -266,16 +262,28 @@
         <xsl:value-of select="@Id" />
       </identifier>
       <datestamp>
-        <xsl:choose>
-          <xsl:when test="ServerDateModified">
-            <xsl:value-of select="ServerDateModified/@Year"/>-
-            <xsl:value-of select="format-number(ServerDateModified/@Month,'00')"/>-
-            <xsl:value-of select="format-number(ServerDateModified/@Day,'00')"/>
+         <xsl:choose>
+          <xsl:when test="ServerDateModified">            
+            <xsl:variable name="dateModified" select="concat(
+            ServerDateModified/@Year, '-',
+            format-number(ServerDateModified/@Month,'00'), '-',
+            format-number(ServerDateModified/@Day,'00'), 'T',
+            format-number(ServerDateModified/@Hour,'00'), ':',
+            format-number(ServerDateModified/@Minute,'00'), ':',
+            format-number(ServerDateModified/@Second,'00'), 'Z'
+            )" />
+            <xsl:value-of select="$dateModified" />
           </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="ServerDatePublished/@Year"/>-
-            <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>-
-            <xsl:value-of select="format-number(ServerDatePublished/@Day,'00')"/>
+          <xsl:otherwise>           
+             <xsl:variable name="datePublished" select="concat(
+            ServerDatePublished/@Year, '-',
+            format-number(ServerDatePublished/@Month,'00'), '-',
+            format-number(ServerDatePublished/@Day,'00'), 'T',
+            format-number(ServerDatePublished/@Hour,'00'), ':',
+            format-number(ServerDatePublished/@Minute,'00'), ':',
+            format-number(ServerDatePublished/@Second,'00'), 'Z'
+            )" />
+            <xsl:value-of select="$datePublished" />          
           </xsl:otherwise>
         </xsl:choose>
       </datestamp>
@@ -287,10 +295,10 @@
     </header>
     <xsl:choose>
       <!-- nicht bei ListIdentifiers und auch nicht bei gelöschten Datensätzen-->
-      <xsl:when test="$oai_verb!='ListIdentifiers' and @ServerState!='deleted'">    
-        
-        <metadata>       
-        <!-- <xsl:value-of select="$oai_metadataPrefix" /> -->        
+      <xsl:when test="$oai_verb!='ListIdentifiers' and @ServerState!='deleted'">
+
+        <metadata>
+          <!-- <xsl:value-of select="$oai_metadataPrefix" /> -->
           <xsl:choose>
             <xsl:when test="$oai_metadataPrefix='oai_dc'">
               <xsl:apply-templates select="." mode="oai_dc" />
@@ -300,7 +308,7 @@
             </xsl:when>
           </xsl:choose>
         </metadata>
-        
+
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -319,7 +327,7 @@
       <xsl:apply-templates select="TitleAdditional" mode="oai_dc" />
       <!-- dc:description -->
       <xsl:apply-templates select="TitleAbstract" mode="oai_dc" />
-       <!-- dc:description -->
+      <!-- dc:description -->
       <xsl:apply-templates select="TitleAbstractAdditional" mode="oai_dc" />
       <!-- dc:subject -->
       <xsl:apply-templates select="Subject" mode="oai_dc" />
@@ -362,39 +370,39 @@
   </xsl:template>
 
   <xsl:template match="Coverage" mode="oai_dc">
-    <dc:coverage>     
+    <dc:coverage>
       <xsl:variable name="geolocation" select="concat(
       'SOUTH-BOUND LATITUDE: ', @XMin,
       ' * WEST-BOUND LONGITUDE: ', @YMin,
       ' * NORTH-BOUND LATITUDE: ', @XMax,
       ' * EAST-BOUND LONGITUDE: ', @YMax
-      )" />   
+      )" />
       <xsl:value-of select="$geolocation" />
-     
+
       <xsl:text>&#xA;</xsl:text>
       <xsl:if test="@ElevationMin != '' and @ElevationMax != ''">
-          <xsl:value-of select="concat(' * ELEVATION MIN: ', @ElevationMin, ' * ELEVATION MAX: ', @ElevationMax)" />        
+        <xsl:value-of select="concat(' * ELEVATION MIN: ', @ElevationMin, ' * ELEVATION MAX: ', @ElevationMax)" />
       </xsl:if>
-       <xsl:if test="@ElevationAbsolut != ''">
-          <xsl:value-of select="concat(' * ELEVATION ABSOLUT: ', @ElevationAbsolut)" />        
+      <xsl:if test="@ElevationAbsolut != ''">
+        <xsl:value-of select="concat(' * ELEVATION ABSOLUT: ', @ElevationAbsolut)" />
       </xsl:if>
 
       <xsl:text>&#xA;</xsl:text>
       <xsl:if test="@DepthMin != '' and @DepthMax != ''">
-          <xsl:value-of select="concat(' * DEPTH MIN: ', @DepthMin, ' * DEPTH MAX: ', @DepthMax)" />        
+        <xsl:value-of select="concat(' * DEPTH MIN: ', @DepthMin, ' * DEPTH MAX: ', @DepthMax)" />
       </xsl:if>
-       <xsl:if test="@DepthAbsolut != ''">
-          <xsl:value-of select="concat(' * DEPTH ABSOLUT: ', @DepthAbsolut)" />        
+      <xsl:if test="@DepthAbsolut != ''">
+        <xsl:value-of select="concat(' * DEPTH ABSOLUT: ', @DepthAbsolut)" />
       </xsl:if>
 
-       <xsl:text>&#xA;</xsl:text>
+      <xsl:text>&#xA;</xsl:text>
       <xsl:if test="@TimeMin != '' and @TimeMax != ''">
-          <xsl:value-of select="concat(' * TIME MIN: ', @TimeMin, ' * TIME MAX: ', @TimeMax)" />        
+        <xsl:value-of select="concat(' * TIME MIN: ', @TimeMin, ' * TIME MAX: ', @TimeMax)" />
       </xsl:if>
-       <xsl:if test="@TimeAbsolut != ''">
-          <xsl:value-of select="concat(' * TIME ABSOLUT: ', @TimeAbsolut)" />        
-      </xsl:if>      
-      
+      <xsl:if test="@TimeAbsolut != ''">
+        <xsl:value-of select="concat(' * TIME ABSOLUT: ', @TimeAbsolut)" />
+      </xsl:if>
+
     </dc:coverage>
   </xsl:template>
 
@@ -438,13 +446,13 @@
     </dc:subject>
   </xsl:template>
 
-   <xsl:template match="Reference" mode="oai_dc">
-    <dc:relation>      
+  <xsl:template match="Reference" mode="oai_dc">
+    <dc:relation>
       <xsl:value-of select="@Value" />
     </dc:relation>
   </xsl:template>
 
-   
+
 
   <xsl:template match="PersonAuthor|PersonEditor" mode="oai_dc">
     <dc:creator>
@@ -480,7 +488,7 @@
     <dc:date>
       <xsl:choose>
         <xsl:when test="PublishedDate">
-           <xsl:value-of select="PublishedDate/@Year"/>
+          <xsl:value-of select="PublishedDate/@Year"/>
 -          <xsl:value-of select="format-number(PublishedDate/@Month,'00')"/>
 -          <xsl:value-of select="format-number(PublishedDate/@Day,'00')"/>
         </xsl:when>
@@ -531,11 +539,11 @@
     </dc:identifier>
   </xsl:template>
 
- <xsl:template match="@CreatingCorporation" mode="oai_dc">
+  <xsl:template match="@CreatingCorporation" mode="oai_dc">
     <dc:language>
       <xsl:value-of select="." />
     </dc:language>
-  </xsl:template> 
+  </xsl:template>
 
   <xsl:template match="@Language" mode="oai_dc">
     <dc:language>
