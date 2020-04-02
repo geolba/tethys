@@ -262,8 +262,8 @@
         <xsl:value-of select="@Id" />
       </identifier>
       <datestamp>
-         <xsl:choose>
-          <xsl:when test="ServerDateModified">            
+        <xsl:choose>
+          <xsl:when test="ServerDateModified">
             <xsl:variable name="dateModified" select="concat(
             ServerDateModified/@Year, '-',
             format-number(ServerDateModified/@Month,'00'), '-',
@@ -274,8 +274,8 @@
             )" />
             <xsl:value-of select="$dateModified" />
           </xsl:when>
-          <xsl:otherwise>           
-             <xsl:variable name="datePublished" select="concat(
+          <xsl:otherwise>
+            <xsl:variable name="datePublished" select="concat(
             ServerDatePublished/@Year, '-',
             format-number(ServerDatePublished/@Month,'00'), '-',
             format-number(ServerDatePublished/@Day,'00'), 'T',
@@ -283,7 +283,7 @@
             format-number(ServerDatePublished/@Minute,'00'), ':',
             format-number(ServerDatePublished/@Second,'00'), 'Z'
             )" />
-            <xsl:value-of select="$datePublished" />          
+            <xsl:value-of select="$datePublished" />
           </xsl:otherwise>
         </xsl:choose>
       </datestamp>
@@ -325,12 +325,6 @@
       <xsl:apply-templates select="TitleMain" mode="oai_dc" />
       <!-- dc:title -->
       <xsl:apply-templates select="TitleAdditional" mode="oai_dc" />
-      <!-- dc:description -->
-      <xsl:apply-templates select="TitleAbstract" mode="oai_dc" />
-      <!-- dc:description -->
-      <xsl:apply-templates select="TitleAbstractAdditional" mode="oai_dc" />
-      <!-- dc:subject -->
-      <xsl:apply-templates select="Subject" mode="oai_dc" />
       <!--<dc:creator>-->
       <!-- Creator: Autor (falls vorhanden), sonst Herausgeber (falls vorhanden), sonst Urhebende Koerperschaft  -->
       <xsl:choose>
@@ -343,6 +337,18 @@
           </dc:creator>
         </xsl:when>
       </xsl:choose>
+      <!-- dc:subject -->
+      <xsl:apply-templates select="Subject" mode="oai_dc" />
+      <!-- dc:description -->
+      <xsl:apply-templates select="TitleAbstract" mode="oai_dc" />
+      <!-- dc:description -->
+      <xsl:apply-templates select="TitleAbstractAdditional" mode="oai_dc" />
+      <!-- dc:publisher -->
+      <dc:publisher>
+        <!-- <xsl:value-of select="@PublisherName" /> -->
+        <xsl:value-of select="@CreatingCorporation" />
+      </dc:publisher>
+
       <!-- dc:contributor -->
       <xsl:apply-templates select="PersonContributor" mode="oai_dc" />
       <!-- dc:date (call-template, weil die 'Funktion' nur einmal aufgerufen werden soll, nicht einmal für jedes Date-->
@@ -351,22 +357,26 @@
       <xsl:apply-templates select="EmbargoDate" mode="oai_dc" />
       <!-- dc:type -->
       <!-- <xsl:apply-templates select="@Type" mode="oai_dc" /> -->
-       <dc:type>Dataset</dc:type>
+      <dc:type>Dataset</dc:type>
       <!-- dc:format -->
       <xsl:apply-templates select="File/@MimeType" mode="oai_dc" />
+      <!-- <dc:format> -->
+      <xsl:apply-templates select="File" mode="oai_dc" />
       <!-- dc:identifier -->
       <dc:identifier>
         <xsl:value-of select="@landingpage"/>
       </dc:identifier>
-      <xsl:apply-templates select="File" mode="oai_dc" />
       <!-- dc:language -->
       <xsl:apply-templates select="@Language" mode="oai_dc" />
-      <!-- dc:rights -->
-      <xsl:apply-templates select="Licence" mode="oai_dc" />
       <!-- dc:relation -->
       <xsl:apply-templates select="Reference" mode="oai_dc" />
       <!-- dc:coverage -->
       <xsl:apply-templates select="Coverage" mode="oai_dc" />
+      <!-- dc:rights -->
+      <xsl:apply-templates select="Licence" mode="oai_dc" />
+      <xsl:if test="EmbargoDate">
+        <dc:rights>embargo</dc:rights>
+      </xsl:if>
     </oai_dc:dc>
   </xsl:template>
 
@@ -489,15 +499,15 @@
     <dc:date>
       <xsl:choose>
         <xsl:when test="PublishedDate">
-         <xsl:variable name="publishedDate" select="concat(
+          <xsl:variable name="publishedDate" select="concat(
                     PublishedDate/@Year, '-',
                     format-number(PublishedDate/@Month,'00'), '-',
                     format-number(PublishedDate/@Day,'00')        
                 )" />
-         <xsl:value-of select="$publishedDate" />
-        </xsl:when>       
+          <xsl:value-of select="$publishedDate" />
+        </xsl:when>
         <xsl:otherwise>
-         <xsl:variable name="serverDatePublished" select="concat(
+          <xsl:variable name="serverDatePublished" select="concat(
                     ServerDatePublished/@Year, '-',
                     format-number(ServerDatePublished/@Month,'00'), '-',
                     format-number(ServerDatePublished/@Day,'00')        

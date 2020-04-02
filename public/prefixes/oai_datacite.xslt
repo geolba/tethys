@@ -304,6 +304,15 @@
                     <xsl:value-of select="@LinkLicence" />
                 </xsl:attribute>
             </xsl:if>
+            <xsl:attribute name="schemeURI">
+                <xsl:text>https://spdx.org/licenses/</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="rightsIdentifierScheme">
+                <xsl:text>SPDX</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="rightsIdentifier">
+                <xsl:text>CC-BY-NC-ND-4.0</xsl:text>
+            </xsl:attribute>
             <xsl:value-of select="@NameLong" />
         </rights>
     </xsl:template>
