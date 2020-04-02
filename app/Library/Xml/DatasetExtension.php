@@ -108,7 +108,7 @@ trait DatasetExtension
             "PublishedDate", "PublishedYear",
             "PublisherName", "PublisherPlace",
             "PublicationState",
-            "ServerDateCreated",
+            "EmbargoDate", "CreatedAt",
             "ServerDateModified",
             "ServerDatePublished",
             "ServerDateDeleted",
@@ -132,8 +132,8 @@ trait DatasetExtension
              // Initialize available date fields and set up date validator
             // if the particular field is present
         $dateFields = array(
-            'ServerDateCreated', 'PublishedDate',
-            'ServerDateModified', 'ServerDatePublished', 'ServerDateDeleted', 'EmbargoDate'
+            'EmbargoDate', 'CreatedAt', 'PublishedDate',
+            'ServerDatePublished', 'ServerDateDeleted', 'EmbargoDate'
         );
         foreach ($dateFields as $fieldName) {
             $this->getField($fieldName)

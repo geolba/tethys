@@ -350,7 +350,8 @@
       <!-- dc:date: embargo date -->
       <xsl:apply-templates select="EmbargoDate" mode="oai_dc" />
       <!-- dc:type -->
-      <xsl:apply-templates select="@Type" mode="oai_dc" />
+      <!-- <xsl:apply-templates select="@Type" mode="oai_dc" /> -->
+       <dc:type>Dataset</dc:type>
       <!-- dc:format -->
       <xsl:apply-templates select="File/@MimeType" mode="oai_dc" />
       <!-- dc:identifier -->
@@ -488,19 +489,20 @@
     <dc:date>
       <xsl:choose>
         <xsl:when test="PublishedDate">
-          <xsl:value-of select="PublishedDate/@Year"/>
--          <xsl:value-of select="format-number(PublishedDate/@Month,'00')"/>
--          <xsl:value-of select="format-number(PublishedDate/@Day,'00')"/>
-        </xsl:when>
-        <xsl:when test="CompletedDate">
-          <xsl:value-of select="CompletedDate/@Year"/>
--          <xsl:value-of select="format-number(CompletedDate/@Month,'00')"/>
--          <xsl:value-of select="format-number(CompletedDate/@Day,'00')"/>
-        </xsl:when>
+         <xsl:variable name="publishedDate" select="concat(
+                    PublishedDate/@Year, '-',
+                    format-number(PublishedDate/@Month,'00'), '-',
+                    format-number(PublishedDate/@Day,'00')        
+                )" />
+         <xsl:value-of select="$publishedDate" />
+        </xsl:when>       
         <xsl:otherwise>
-          <xsl:value-of select="ServerDatePublished/@Year"/>
--          <xsl:value-of select="format-number(ServerDatePublished/@Month,'00')"/>
--          <xsl:value-of select="format-number(ServerDatePublished/@Day,'00')"/>
+         <xsl:variable name="serverDatePublished" select="concat(
+                    ServerDatePublished/@Year, '-',
+                    format-number(ServerDatePublished/@Month,'00'), '-',
+                    format-number(ServerDatePublished/@Day,'00')        
+                )" />
+          <xsl:value-of select="$serverDatePublished" />
         </xsl:otherwise>
       </xsl:choose>
     </dc:date>
@@ -517,7 +519,7 @@
 
 
   <!-- für ListRecords -->
-  <xsl:template match="@Type" mode="oai_dc">
+  <!-- <xsl:template match="@Type" mode="oai_dc">
     <dc:type>
       <xsl:value-of select="." />
     </dc:type>
@@ -525,7 +527,7 @@
       <xsl:text>data-type:</xsl:text>
       <xsl:value-of select="." />
     </dc:type>
-  </xsl:template>
+  </xsl:template> -->
 
   <xsl:template match="File/@MimeType" mode="oai_dc">
     <dc:format>

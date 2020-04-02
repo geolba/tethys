@@ -73,15 +73,18 @@
             <contributors>
                 <xsl:apply-templates select="PersonContributor" mode="oai_datacite" />
             </contributors>
+            <dates>
+                <xsl:call-template name="RdrDate2" mode="oai_datacite" />
+            </dates>
             <resourceType resourceTypeGeneral="Dataset">
                 <xsl:text>Dataset</xsl:text>
                 <!-- <xsl:value-of select="@Type" /> -->
             </resourceType>
             <xsl:if test="Reference">
-            <relatedIdentifiers>
-                <xsl:apply-templates select="Reference" mode="oai_datacite" />
-            </relatedIdentifiers>
-             </xsl:if>
+                <relatedIdentifiers>
+                    <xsl:apply-templates select="Reference" mode="oai_datacite" />
+                </relatedIdentifiers>
+            </xsl:if>
             <rightsList>
                 <xsl:apply-templates select="Licence" mode="oai_datacite" />
             </rightsList>
@@ -110,6 +113,31 @@
                 </geoLocation> -->
             </geoLocations>
         </resource>
+    </xsl:template>
+
+    <xsl:template name="RdrDate2" mode="oai_datacite">
+        <xsl:if test="EmbargoDate">
+            <date>
+                <xsl:attribute name="dataType">Available</xsl:attribute>
+                <xsl:variable name="embargoDate" select="concat(
+                    EmbargoDate/@Year, '-',
+                    format-number(EmbargoDate/@Month,'00'), '-',
+                    format-number(EmbargoDate/@Day,'00')     
+                )" />
+                <xsl:value-of select="$embargoDate" />
+            </date>
+        </xsl:if>
+        <xsl:if test="CreatedAt">
+            <date>
+                <xsl:attribute name="dataType">created</xsl:attribute>
+                <xsl:variable name="createdAt" select="concat(
+                    CreatedAt/@Year, '-',
+                    format-number(CreatedAt/@Month,'00'), '-',
+                    format-number(CreatedAt/@Day,'00')        
+                )" />
+                <xsl:value-of select="$createdAt" />
+            </date>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="Coverage" mode="oai_datacite">
@@ -173,7 +201,7 @@
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>
-     <xsl:template match="TitleAdditional" mode="oai_datacite">
+    <xsl:template match="TitleAdditional" mode="oai_datacite">
         <title>
             <xsl:if test="@Language != ''">
                 <xsl:attribute name="xml:lang">
@@ -191,34 +219,34 @@
 
     <xsl:template match="Subject" mode="oai_datacite">
         <subject>
-     <xsl:if test="@Language != ''">
-        <xsl:attribute name="xml:lang">
-          <xsl:value-of select="@Language" />
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:value-of select="@Value" /> 
-      </subject>
-  </xsl:template>
+            <xsl:if test="@Language != ''">
+                <xsl:attribute name="xml:lang">
+                    <xsl:value-of select="@Language" />
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="@Value" />
+        </subject>
+    </xsl:template>
 
-   <xsl:template match="Reference" mode="oai_datacite">
+    <xsl:template match="Reference" mode="oai_datacite">
         <relatedIdentifier>
-     <xsl:attribute name="relatedIdentifierType">
-        <xsl:value-of select="@Type" />
-    </xsl:attribute>
-      <xsl:attribute name="relationType">
-        <xsl:value-of select="@Relation" />
-    </xsl:attribute>
-      <xsl:value-of select="@Value" /> 
-      </relatedIdentifier>
-  </xsl:template>
+            <xsl:attribute name="relatedIdentifierType">
+                <xsl:value-of select="@Type" />
+            </xsl:attribute>
+            <xsl:attribute name="relationType">
+                <xsl:value-of select="@Relation" />
+            </xsl:attribute>
+            <xsl:value-of select="@Value" />
+        </relatedIdentifier>
+    </xsl:template>
 
     <xsl:template match="PersonContributor" mode="oai_datacite">
         <contributor>
             <contributorName>
                 <xsl:if test="@NameType != ''">
-                <xsl:attribute name="nameType">
-                    <xsl:value-of select="@NameType" />
-                </xsl:attribute>
+                    <xsl:attribute name="nameType">
+                        <xsl:value-of select="@NameType" />
+                    </xsl:attribute>
                 </xsl:if>
                 <xsl:value-of select="@LastName" />
             </contributorName>
