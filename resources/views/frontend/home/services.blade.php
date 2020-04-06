@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h3 class="separator">RDR SERVICES</h3>
+                <h3 class="separator">Tethys SERVICES</h3>
             </div>
         </div>
 
@@ -20,15 +20,19 @@
                     <div class="work-front">
                         <div class="vertical-centered">
                             <i class="fa fa-hdd icon" aria-hidden="true"></i>
-                            <h3>Data Archival</h3>
+                            <h3>Datenarchvierung</h3>
                         </div>
                     </div>
                     <div class="work-detail">
-                        <div class="vertical-centered">                            
-                            <p class="separator orange">Data Archival</p>
-                            <p>
-                                RDR provides format-independent archiving services for data protection.
-                            </p>
+                        <div class="vertical-centered">
+                            <p class="separator orange">Datenarchvierung</p>
+                                <p class="paragraph-justify">
+                                    Tethys RDR publiziert und archiviert nach den FAIR Prinzipien*
+                                    nachhaltig so wie sicher geowissenschaftliche Datensätze in offenen, frei lesbaren
+                                    Formaten.
+                                    * <a href="https://en.wikipedia.org/wiki/FAIR_data" target=_blank>FAIR data</a>
+
+                                </p>
                         </div>
                     </div>
                 </li>
@@ -37,32 +41,35 @@
                     <div class="work-front">
                         <div class="vertical-centered">
                             <i class="fas fa-share-alt  icon"></i>
-                            <h3>Data Publication</h3>
+                            <h3>Datenpublikation</h3>
                         </div>
                     </div>
                     <div class="work-detail">
                         <div class="vertical-centered">
-                            <p class="separator orange">Data Publication</p>
-                            <p>
-                                With RDR you can publish research data,
-                                so that your data is citable and reusable.
+                            <p class="separator orange">Datenpublikation</p>
+                            <p  class="paragraph-justify">
+                                Die Datensätze werden mit standardisierten Metadatenschemen publiziert 
+                                und sind somit nicht nur auffindbar, wiederverwendbar und auch maschinenlesbar, 
+                                sondern können dadurch auch einfach zitiert werden.
                             </p>
                         </div>
                     </div>
                 </li>
                 <li class="four columns isotope-item mobile ui branding">
                     <!-- <img src="images/portfolio/work_3.svg"> -->
-                    <div class="work-front">                        
+                    <div class="work-front">
                         <div class="vertical-centered">
                             <i class="fas fa-user-edit icon"></i>
-                            <h3>Peer Review</h3>
+                            <h3>Begutachtung</h3>
                         </div>
                     </div>
                     <div class="work-detail">
                         <div class="vertical-centered">
-                            <p class="separator orange">Peer Review</p>
-                            <p>
-                                All RDR datasets undergo a full, efficient peer review process.
+                            <p class="separator orange">Begutachtung</p>
+                            <p class="paragraph-justify">
+                                Alle im Tethys RDR publizierten Datensätze werden auf technische sowie inhaltliche Vollständigkeit geprüft 
+                                und werden bei Bedarf auch einer fachlichen Begutachtung unterworfen. 
+                                Ein klassischer Peer Review-Prozess ist in Vorbereitung.
                             </p>
                         </div>
                     </div>

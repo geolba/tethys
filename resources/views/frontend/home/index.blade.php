@@ -8,9 +8,9 @@
         <div class="twelve columns">
             <h1 class="main-heading">Tethys</h1>
             <h2 class="separator">Research Data Repository</h1>
-            <h2>
-                Data Publisher for Geoscience Austria
-            </h2>
+                <h2>
+                    Data Publisher for Geoscience Austria
+                </h2>
         </div>
     </div>
 </section>
@@ -22,17 +22,33 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h3 class="separator">Introduction TETHYS</h3>
-                <h4>
-                    TETHYS offers institutions and researchers a comprehensive archiving
-                    and publishing service with reliable storage options for backing up
-                    and managing research data. With TETHYS you can promote research data
-                    management at your institution and make an important contribution to improve
-                    availability, long-term preservation and independent publication of your research data.
-                </h4>
-                <p>
-                    The use of TETHYS as a data centre for archiving and/or publishing research data is invoiced annually.
-                    The invoice consists of a basic annual contract fee and a usage-related fee.
+                <h3 class="separator">Einleitung</h3>
+                <p class="paragraph-justify">
+                    Tethys RDR ist ein publizierendes Forschungsdatenrepositorium der Geologischen Bundesanstalt (GBA),
+                    das an der GBA generierte geowissenschaftliche Forschungsdaten veröffentlicht.
+                    Zum derzeitigen Stand wird Tethys RDR in deutscher Sprache bereitgestellt.
+                    Die englische Version befindet sich in Vorbereitung und wird sukzessive ebenfalls zur Verfügung
+                    gestellt.
+                    Die Forschungsdatenpublikationen und die dazugehörigen Metadaten können in Deutsch und in Englisch
+                    veröffentlicht werden.
+                    Tethys RDR hat den Anspruch, publizierte Datensätze unverändert, langfristig und nachhaltig
+                    bereitzustellen.
+                    Dadurch ist Tethys ein Forschungsdatenrepositorium, das ein permanentes Referenzieren ermöglicht und
+                    somit die darin publizierten Datensätze zitierfähig macht.
+                </p>
+                <p class="paragraph-justify">
+                    Der Name Tethys kommt ursprünglich aus der griechischen Mythologie und benennt eine Titanin und
+                    Meeresgöttin.
+                    Ende des 19. Jahrhunderts entdeckte Eduard Suess (1831–1914), ein bedeutender österreichischer
+                    Geologe,
+                    den mesozoischen Ozean und benannte ihn nach dieser Tethys.
+                </p>
+                <p class="paragraph-justify">
+                    Die teilweise sehr mächtigen Tethys-Sedimente aus den Schelfregionen wurden teilweise in spätere
+                    Gebirgsbildungen einbezogen
+                    und stellen dadurch leicht zugängliche Archive da,
+                    die auch in Österreich geo- und umweltwissenschaftlich wertvolle Auskunft über die damaligen
+                    Umweltbedingungen geben können.
                 </p>
             </div>
         </div>
@@ -55,15 +71,19 @@
                     <div class="work-front">
                         <div class="vertical-centered">
                             <i class="fa fa-hdd icon" aria-hidden="true"></i>
-                            <h3>Data Archival</h3>
+                            <h3>Datenarchvierung</h3>
                         </div>
                     </div>
                     <div class="work-detail">
                         <div class="vertical-centered">
-                            <p class="separator orange">Data Archival</p>
-                            <p>
-                                TETHYS provides format-independent archiving services for data protection.
-                            </p>
+                            <p class="separator orange">Datenarchvierung</p>
+                                <p class="paragraph-justify">
+                                    Tethys RDR publiziert und archiviert nach den FAIR Prinzipien*
+                                    nachhaltig so wie sicher geowissenschaftliche Datensätze in offenen, frei lesbaren
+                                    Formaten.
+                                    * <a href="https://en.wikipedia.org/wiki/FAIR_data" target=_blank>FAIR data</a>
+
+                                </p>
                         </div>
                     </div>
                 </li>
@@ -72,15 +92,16 @@
                     <div class="work-front">
                         <div class="vertical-centered">
                             <i class="fas fa-share-alt  icon"></i>
-                            <h3>Data Publication</h3>
+                            <h3>Datenpublikation</h3>
                         </div>
                     </div>
                     <div class="work-detail">
                         <div class="vertical-centered">
-                            <p class="separator orange">Data Publication</p>
-                            <p>
-                                With TETHYS you can publish research data,
-                                so that your data is citable and reusable.
+                            <p class="separator orange">Datenpublikation</p>
+                            <p  class="paragraph-justify">
+                                Die Datensätze werden mit standardisierten Metadatenschemen publiziert 
+                                und sind somit nicht nur auffindbar, wiederverwendbar und auch maschinenlesbar, 
+                                sondern können dadurch auch einfach zitiert werden.
                             </p>
                         </div>
                     </div>
@@ -90,14 +111,16 @@
                     <div class="work-front">
                         <div class="vertical-centered">
                             <i class="fas fa-user-edit icon"></i>
-                            <h3>Peer Review</h3>
+                            <h3>Begutachtung</h3>
                         </div>
                     </div>
                     <div class="work-detail">
                         <div class="vertical-centered">
-                            <p class="separator orange">Peer Review</p>
-                            <p>
-                                All TETHYS datasets undergo a full, efficient peer review process.
+                            <p class="separator orange">Begutachtung</p>
+                            <p class="paragraph-justify">
+                                Alle im Tethys RDR publizierten Datensätze werden auf technische sowie inhaltliche Vollständigkeit geprüft 
+                                und werden bei Bedarf auch einer fachlichen Begutachtung unterworfen. 
+                                Ein klassischer Peer Review-Prozess ist in Vorbereitung.
                             </p>
                         </div>
                     </div>

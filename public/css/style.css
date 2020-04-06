@@ -33,6 +33,9 @@ h4 {
 h3 {
   font-size: 26px;
 }
+.paragraph-justify {
+  text-align: justify;
+}
 a {
   color: #3273dc;
   cursor: pointer;
@@ -454,9 +457,9 @@ section.normal {
 
 
 /* Work */
-.work {
-	/* background-color: #F5F5F5; */
-}
+/* .work {
+	background-color: #F5F5F5;
+} */
 
 /* Work Filters */
 
@@ -658,6 +661,16 @@ section.normal {
 }
 .why {
 	background-color: #F5F5F5; 
+}
+
+/* Help */
+.help {
+  list-style: none;
+  margin: 5px 0;
+}
+.help .help-image {
+  height: 80px;
+  margin-bottom: 5px;
 }
 
 
