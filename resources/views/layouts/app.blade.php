@@ -129,11 +129,11 @@
                     <!-- <h5>&copy 2015 Tuts+ Web Design.</h5> -->
                     <div class="block">
                         <h3 class="block-title">About TETHYS</h3>
-                        <ul>                            
+                        <ul>
                             <li class="first"><a href="{{ URL::route('oai') }}" target="_blank"> OAI</a></li>
-                            <li class="last"><a
-                                    href="{!! URL::route('frontend.pages.show', ['page_slug'=>'about']) !!}">About
-                                    Us</a></li>
+                            <li class="last">
+                                <a href="https://www.geologie.ac.at/" target="_blank">About GBA</a>
+                            </li>
                             <li><a href="{{ URL::route('frontend.home.news') }}">News</a></li>
                         </ul>
                     </div>
@@ -176,7 +176,7 @@
 
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  @yield('after-scripts')
+    @yield('after-scripts')
 </body>
 
 </html>

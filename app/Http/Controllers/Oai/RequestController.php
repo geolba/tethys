@@ -72,6 +72,9 @@ class RequestController extends Controller
     {
         // to handle POST and GET Request, take any given parameter
         $oaiRequest = $request->all();
+        if ($oaiRequest == null) {
+            return view('oai.index');
+        }
         $safeRemoveParameters = array('module', 'controller', 'action', 'role');
         foreach ($safeRemoveParameters as $parameter) {
             unset($oaiRequest[$parameter]);

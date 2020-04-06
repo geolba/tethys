@@ -672,6 +672,24 @@ section.normal {
   height: 80px;
   margin-bottom: 5px;
 }
+.help h5 {
+margin-bottom: 10px;
+}
+/* OAI */
+ul.quicklinks {
+	margin-top: 2px;
+	padding: 4px;
+	text-align: left;
+	/* border-bottom: 2px solid #ccc; */
+	/* border-top: 2px solid #ccc; */
+	clear: left;
+}
+ul.quicklinks li {
+	font-size: 90%;
+	display: inline;
+	list-style: none;
+	/* font-family: sans-serif; */
+}
 
 
 /* Services */
