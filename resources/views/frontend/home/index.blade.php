@@ -3,8 +3,9 @@
 @section('hero')
 <!-- Hero -->
 <section id="hero" class="hero u-full-width">
-    <div class="hero-image"></div>
-    <div class="container centered">
+    <div class="hero-image">        
+    </div>
+    <div class="container centered">        
         <div class="twelve columns">
             <h1 class="main-heading">Tethys</h1>
             <h2 class="separator">Research Data Repository</h1>
@@ -77,13 +78,13 @@
                     <div class="work-detail">
                         <div class="vertical-centered">
                             <p class="separator orange">Datenarchvierung</p>
-                                <p class="paragraph-justify">
-                                    Tethys RDR publiziert und archiviert nach den FAIR Prinzipien*
-                                    nachhaltig so wie sicher geowissenschaftliche Datensätze in offenen, frei lesbaren
-                                    Formaten.
-                                    * <a href="https://en.wikipedia.org/wiki/FAIR_data" target=_blank>FAIR data</a>
+                            <p class="paragraph-justify">
+                                Tethys RDR publiziert und archiviert nach den FAIR Prinzipien*
+                                nachhaltig so wie sicher geowissenschaftliche Datensätze in offenen, frei lesbaren
+                                Formaten.
+                                * <a href="https://en.wikipedia.org/wiki/FAIR_data" target=_blank>FAIR data</a>
 
-                                </p>
+                            </p>
                         </div>
                     </div>
                 </li>
@@ -98,9 +99,9 @@
                     <div class="work-detail">
                         <div class="vertical-centered">
                             <p class="separator orange">Datenpublikation</p>
-                            <p  class="paragraph-justify">
-                                Die Datensätze werden mit standardisierten Metadatenschemen publiziert 
-                                und sind somit nicht nur auffindbar, wiederverwendbar und auch maschinenlesbar, 
+                            <p class="paragraph-justify">
+                                Die Datensätze werden mit standardisierten Metadatenschemen publiziert
+                                und sind somit nicht nur auffindbar, wiederverwendbar und auch maschinenlesbar,
                                 sondern können dadurch auch einfach zitiert werden.
                             </p>
                         </div>
@@ -118,8 +119,9 @@
                         <div class="vertical-centered">
                             <p class="separator orange">Begutachtung</p>
                             <p class="paragraph-justify">
-                                Alle im Tethys RDR publizierten Datensätze werden auf technische sowie inhaltliche Vollständigkeit geprüft 
-                                und werden bei Bedarf auch einer fachlichen Begutachtung unterworfen. 
+                                Alle im Tethys RDR publizierten Datensätze werden auf technische sowie inhaltliche
+                                Vollständigkeit geprüft
+                                und werden bei Bedarf auch einer fachlichen Begutachtung unterworfen.
                                 Ein klassischer Peer Review-Prozess ist in Vorbereitung.
                             </p>
                         </div>

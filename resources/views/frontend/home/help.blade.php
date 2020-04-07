@@ -37,7 +37,7 @@
                     <h5>Voraussetzungen für das Publizieren von Daten</h5>
                     
                     <p class="paragraph-justify">GBA-Angehörigkeit oder in Kooperation mit der GBA gemeinsame Publikation der Daten.</p>
-                    <p class="paragraph-justify">Im Besitz eines eigenen Zugangscodes zu sein bzw. um den Zugangscode anzufragen (&#8594; <a href="/contact" target=_blank>Kontakt</a>).</p>
+                    <p class="paragraph-justify">Im Besitz eines eigenen Zugangscodes zu sein bzw. um den Zugangscode anzufragen (<a href="/contact" target=_blank>Kontakt</a>).</p>
                     <p class="paragraph-justify">Die Datenpublikationsrichtlinien gelesen, verstanden und akzeptiert zu haben.</p>
                     <p class="paragraph-justify">Die Datensätze vollständig und fachlich korrekt hochladen.</p>
                     
@@ -50,7 +50,7 @@
                     <p class="paragraph-justify">
                         Wird eine Datenpublikation erwünscht, so kann der Verfasser der Publikation sich direkt bei Tethys RDR einloggen 
                         und den Publikationsablauf starten. Wurde noch kein Account angelegt, steht das Tethys RDR-Team bereit, 
-                        um die weiteren Schritte zu klären (&#8594; <a href="/contact" target=_blank>Kontakt</a>). 
+                        um die weiteren Schritte zu klären (<a href="/contact" target=_blank>Kontakt</a>). 
                     </p>
                 </li>
             </ul>
