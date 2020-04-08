@@ -27,7 +27,8 @@ class CreateDocumentReferencesTable extends Migration
             );
             $table->enum(
                 'relation',
-                ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues", "HasMetadata", "IsMetadataFor","IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy", "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"]
+                ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+                "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"]
             );
             $table->string('value', 255);
             $table->string('label', 50);

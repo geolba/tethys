@@ -61,11 +61,9 @@ class IndexController extends Controller
         $projects = Project::pluck('label', 'id');
         $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn", "url", "urn"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
-
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
-            "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy",
-            "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf",
-            "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+       
+        $relationTypes =  ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+        "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         $titleTypes = ['Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];

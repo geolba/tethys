@@ -64,8 +64,10 @@ class SubmitController extends Controller
         $dataset = Dataset::findOrFail($id);
         $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
-        $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
-        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information',
+        $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative',
+        'Translated' => 'Translated', 'Other' => 'Other'];
+        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods',
+        'Series_information' => 'Series_information',
             'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
         $languages = DB::table('languages')
             ->where('active', true)
@@ -99,10 +101,8 @@ class SubmitController extends Controller
         $referenceTypes = ["rdr-id", "doi", "handle", "isbn", "issn", "url", "urn"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
-            "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy",
-            "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf",
-            "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes =  ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+        "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         return View::make(

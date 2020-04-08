@@ -158,21 +158,21 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h3 class="separator">About us</h3>
-                <h4>
-                    TETHYS focuses on disciplines who do not have a tradition
-                    of data sharing thus ensuring better availability,
-                    sustainable preservation and (independent) publication
-                    capacity of their research data.
-                </h4>
+                <h3 class="separator">Über Tethys RDR</h3>
+                <p class="paragraph-justify">
+                    Tethys RDR ist ein Datenverlag der Geologischen Bundesanstalt (GBA), 
+                    der ausschließlich an der GBA generierte geowissenschaftliche Forschungsdaten publiziert. 
+                    Die Datenpublikationen können sowohl in deutscher, als auch in englischer Sprache publiziert werden. 
+                    Durch die Bereitstellung der Datenpublikation zusammen mit Metadaten nach standardisierten Schemata 
+                    werden die Publikationen auffindbar und zitierbar.
+                </p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Why us -->
-{{-- <section data-sr id="why-us" class="why u-full-width"> --}}
-<section data-sr id="benefits" class="why u-full-width">
+<!-- <section data-sr id="benefits" class="why u-full-width">
     <div class="container">
         <div class="row">
             <div class="twelve columns">
@@ -211,10 +211,10 @@
             </ul>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- Contact -->
-<section data-sr id="contact" class="contact u-full-width">
+<!-- <section data-sr id="contact" class="contact u-full-width">
     <div class="container">
         <div class="row">
             <div class="twelve columns">
@@ -225,7 +225,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- Contact Us -->
 <section data-sr class="container contact-us u-full-width u-max-full-width">

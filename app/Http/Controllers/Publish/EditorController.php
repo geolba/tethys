@@ -138,10 +138,8 @@ class EditorController extends Controller
         $referenceTypes = ["rdr-id", "doi", "handle", "isbn", "issn", "url", "urn"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
-        $relationTypes = ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
-            "HasMetadata", "IsMetadataFor", "IsNewVersionOf", "IsPreviousVersionOf", "IsPartOf", "HasPart", "IsReferencedBy",
-            "References", "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles", "IsVariantFormOf", "IsOriginalFormOf",
-            "IsIdenticalTo", "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf"];
+        $relationTypes =  ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+        "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         return View::make(
