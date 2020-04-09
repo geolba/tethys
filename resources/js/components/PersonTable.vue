@@ -1,6 +1,6 @@
  <template>
   <div>
-    <h3 v-if="heading && personlist.length">{{ heading }}</h3>
+    <h3 v-if="heading && personlist.length && showHeading == true">{{ heading }}</h3>
     <table class="pure-table pure-table-horizontal" v-if="personlist.length">
       <thead class="thead-dark">
         <tr>
@@ -133,6 +133,8 @@ export default class PersonTable extends Vue {
   heading;
   @Prop({ required: true, type: Array })
   messages;
+  @Prop({ default: true, type: Boolean })
+  showHeading;
 
   // props: {
   //   personlist: {

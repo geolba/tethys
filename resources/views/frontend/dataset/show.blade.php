@@ -47,14 +47,24 @@
                       Zusätzliche Titel:
                       <ul>
                         @foreach ($dataset->additionalTitles as $title)
-                        <li>{{ $title->type }}: {{ $title->value }}</li>
-                        <br />
+                        <li>{{ $title->type }}: {{ $title->value }}</li>                        
                         @endforeach
                       </ul>
                     </p>
                     @endif
 
                     <p class="dataset__abstract">{{ $dataset->mainAbstract()->value }}</p>
+
+                    @if($dataset->additionalAbstracts()->exists())
+                    <p class="dataset__abstract">
+                      Zusätzliche Beschreibungen:
+                      <ul>
+                        @foreach ($dataset->additionalAbstracts as $abstract)
+                        <li>{{ $abstract->type }}: {{ $abstract->value }}</li>                       
+                        @endforeach
+                      </ul>
+                    </p>
+                    @endif
 
                     @if($dataset->authors()->exists())
                     <p class="dataset__abstract" v-if="dataset.subject && dataset.subject.length > 0">
@@ -79,8 +89,7 @@
                       Referenzen:
                       <ul>
                         @foreach ($dataset->references as $reference)
-                        <li>{{ $reference->value }}</li>
-                        <br />
+                        <li>{{ $reference->type . ': ' . $reference->value . ' (' . $reference->relation . ')' }}</li>                       
                         @endforeach
                       </ul>
                     </p>
@@ -192,6 +201,7 @@
   .tab-nav {
     z-index: 2;
   }
+
   .tab-content .tab-pane {
     display: none;
     /* visibility: hidden; */
@@ -262,10 +272,6 @@
     position: relative;
   }
 
-  .dataset {
-    /* // max-width: 500px; */
-  }
-
   .dataset__title {
     position: relative;
     text-transform: uppercase;
@@ -286,7 +292,7 @@
     right: -20px;
     line-height: 1;
     font-weight: 900;
-    z-index: -1;    
+    z-index: -1;
   }
 
   .dataset__blog-meta {
@@ -301,26 +307,26 @@
 
 @section('after-scripts')
 <script type="text/javascript">
-  (function() {
+  (function () {
     function main() {
-        var tabButtons = [].slice.call(document.querySelectorAll('ul.tab-nav li span.button'));
+      var tabButtons = [].slice.call(document.querySelectorAll('ul.tab-nav li span.button'));
 
-        tabButtons.map(function(button) {
-            button.addEventListener('click', function() {
-                document.querySelector('li span.active.button').classList.remove('active');
-                button.classList.add('active');
+      tabButtons.map(function (button) {
+        button.addEventListener('click', function () {
+          document.querySelector('li span.active.button').classList.remove('active');
+          button.classList.add('active');
 
-                document.querySelector('.tab-pane.active').classList.remove('active');
-                document.querySelector(button.getAttribute('name')).classList.add('active');
-            })
+          document.querySelector('.tab-pane.active').classList.remove('active');
+          document.querySelector(button.getAttribute('name')).classList.add('active');
         })
+      })
     }
 
     if (document.readyState !== 'loading') {
-        main();
+      main();
     } else {
-        document.addEventListener('DOMContentLoaded', main);
+      document.addEventListener('DOMContentLoaded', main);
     }
-})();
+  })();
 </script>
 @stop

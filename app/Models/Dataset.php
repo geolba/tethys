@@ -213,7 +213,10 @@ class Dataset extends Model
     {
         return $this->hasMany(Description::class, 'document_id', 'id');
     }
-
+    public function additionalAbstracts()
+    {
+        return $this->hasMany(Description::class, 'document_id', 'id')->where('type', '!=', 'Abstract');
+    }
     public function mainAbstract()
     {
         return $this->hasMany(Description::class, 'document_id', 'id')->where('type', 'Abstract')->first();

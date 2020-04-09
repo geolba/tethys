@@ -63,38 +63,38 @@
 </section> --}}
 <!-- Contact Us -->
 <section data-sr class="contact-us u-full-width">
-        <div class="container">
-    <div class="row">      
-       
-        <h4>
-            Want to keep updated or need further information?
-        </h4>
-       
-           
-    </div>
-    <div class="row">
-        <div class="four columns contact-us-details">
-            <h3>Our Location</h3>
-            <h5>
-                Neulinggasse 38 <br />
-                1030 Wien <br />
-                +43-1-7125674 <br />
-            </h5>
-            <ul class="social-links">
-                <li>
-                    <a href="https://twitter.com/GeologischeBA" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.facebook.com/geologie.ac.at" target="_blank">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                </li>
+    <div class="container">
+        <div class="row">
 
-            </ul>
+            <h4>
+                Want to keep updated or need further information?
+            </h4>
+
+
         </div>
-        <div class="eight columns contact-us-form">
+        <div class="row">
+            <div class="twelve columns contact-us-details">
+                <h3>Our Location</h3>
+                <h5>
+                    Neulinggasse 38 <br />
+                    1030 Wien <br />
+                    +43-1-7125674 <br />
+                </h5>
+                <ul class="social-links">
+                    <li>
+                        <a href="https://twitter.com/GeologischeBA" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/geologie.ac.at" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- <div class="eight columns contact-us-form">
             <form>
                 <div class="row">
                     <div class="six columns">
@@ -108,9 +108,9 @@
                 <input class="button u-pull-right" type="submit" value="Send">
             </form>
 
+        </div> -->
         </div>
     </div>
-        </div>
 </section>
 
 @endsection

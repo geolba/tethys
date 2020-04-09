@@ -61,9 +61,9 @@ class IndexController extends Controller
         $projects = Project::pluck('label', 'id');
         $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn", "url", "urn"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
-       
-        $relationTypes =  ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
-        "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"];
+
+        $relationTypes = ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+            "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         $titleTypes = ['Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
@@ -78,7 +78,18 @@ class IndexController extends Controller
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
         return view(
             'publish.create-step1',
-            compact('licenses', 'languages', 'messages', 'projects', 'relatedIdentifierTypes', 'relationTypes', 'titleTypes', 'keywordTypes', 'descriptionTypes', 'page')
+            compact(
+                'licenses',
+                'languages',
+                'messages',
+                'projects',
+                'relatedIdentifierTypes',
+                'relationTypes',
+                'titleTypes',
+                'keywordTypes',
+                'descriptionTypes',
+                'page'
+            )
         );
     }
 
