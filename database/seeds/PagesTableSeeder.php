@@ -77,8 +77,106 @@ class PagesTableSeeder extends Seeder
             [
                 'page_id' => 1, //terms and conditions
                 'locale' => 'de',
-                'title' => 'Geschäftsbedingungen',
-                'description' => '<h2>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Open Access und FAIR Erklärung</h2><p>iwas große Fokus liegt bei TETHYS beim Erlangen eines hohen Grades an die Zugänglichkeit und nachhaltige Verfügbarkeit für alle interessierten Nutzer. Dadurch soll eine <strong>verantwortungsvolle </strong>Weiterverwertung sowie Weiterentwicklung der Daten ermöglicht werden. Ebenfalls wird von Seitens des GBA-RDRs großen Wert auf das Ermöglichen von der Weiterverwendung von den publizierten Forschungsdaten gelegt. Dies wird durch das Einhalten der Prinzipien von Open Access und FAIR erlangt.</p><p>Unter Open Access wird der kostenfreie sowie öffentliche Zugang zu den im TETHYS archivierten Datenpublikationen verstanden.</p><p>Das Prinzip FAIR<a href="#_ftn1">[1]</a>, welches ein Akronym für <i>Findability</i> (Auffindbarkeit), <i>Accessibility</i> (Zugänglichkeit), <i>Interoperability</i> (Kompatibilität), und <i>Reusability</i> (Wiederverwendbarkeit) ist, unterstützt eine nachhaltige wissenschaftliche Datenpflege sowie –verwaltung. Erst durch die garantierte Auffindbarkeit, volle Zugänglichkeit zu den Daten, gewährleistete Kompatibilität mit anderen Datenbeständen so wie die wissenschaftliche Wiederverwendbarkeit, erhält die Datenpublikation einen großen Wert.</p><p>Das GBA-RDR behält sich vor, bei Einzelfällen und begründet Datenpublikationen nur eingeschränkt zur Verfügung zu stellen oder/und mit einem Embargo zu belegen. Grundsätzlich sollen die Nutzer die publizierten Daten uneingeschränkt lesen, kopieren, drucken und je nach vergebener Lizenz verarbeiten sowie verteilen können. Dabei verpflichtet sich der Nutzer ausnahmslos die Daten zu zitieren. Die Urheberrechte der Autorenschaft werden dabei nicht berührt.</p><p>&nbsp;</p><h2>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Leitlinie</h2><ul><li>Ziele</li><li>Anforderungen an die elektronische Publikation</li><li>Urheber- und Nutzungsrechte</li><li>Sacherschließung auf dem Publikationsserver</li><li>Archivierung von Publikationen</li><li>Technische Eigenschaften des Publikationsservers</li><li>Organisatorische Regelungen</li></ul><p>&nbsp;</p><h2>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rechte und Pflichten</h2><p>Die im TETHYS veröffentlichten Informationen und Metadaten unterliegen grundsätzlich den Open-Access-Bedingungen, wenn nicht anders angegeben. Die publizierten Datensets unterliegen einem definierten Zugriffs- sowie Nutzungsrecht welche in den Metadaten eindeutig beschrieben sind.</p><p>&nbsp;</p><p>Zugriffsrecht</p><p>Es wird zwischen uneingeschränkten und eingeschränkten Zugriffsrecht unterschieden. Während bei dem uneingeschränkten Zugriffsrecht voller Zugriff auf die Daten und den dazugehörigen Informationen besteht, so kann ein eingeschränktes Zugriffsrecht auf bestimmte oder unbestimmte Zeit sowie auf alle oder nur auf Teile der Daten bestehen. Die detaillierte Zugriffsrechtsbestimmung sowie die Dauer einer Zugriffsbeschränkung sind in den Metadaten vermerkt. Grundsätzlich wird ein uneingeschränktes Zugriffsrecht vergeben. Unter bestimmten Voraussetzungen jedoch kann diese eingeschränkt sein.</p><p><br>&nbsp;</p><p>Nutzungsrecht</p><p>Durch die Vergabe von Creative Commons Lizenzen werden jeder Datenpublikation mit definierten Nutzungsrechte ausgestattet. Die dabei verwendete Lizenz wird verpflichtend mit den zur Datenpublikation gehörenden Metadaten bereitgestellt.</p><p>&nbsp;</p><p><br>Urheberrecht</p><p>Die Urheberrechte der auf dem GBA-RDR Server veröffentlichten Dokumenten liegen ausnahmslos bei den jeweiligen Autoren.</p><p>Der Urheber räumt jedoch durch die Publikation der Daten ein grundsätzliches Zugriffs- sowie Nutzungsrecht ein, welches mit der Datenpublikation geklärt und in den Metadaten verankert ist. Zusätzlich stimmt der Urheber zu, dass die Metadaten des Dokuments unentgeltlich anderen öffentlich einsehbaren Datenbanken zur Verfügung gestellt werden und somit an der Forschungsdateninfrastruktur teilnimmt.</p><p>Mit der Publikation sowie der Archivierung der Daten und allen dazugehörigen Dokumenten im GBA-RDR erklärt der Urheber keine Rechte Dritter verletzt zu haben. Der Urheber verpflichtet sich vor dem Einreichen der Daten und allen dazugehörigen Dokumenten, alle darin involvierten Miturheber, Co-Autoren und Drittmittelgeber in Kenntnis zu setzen. Wenn die zu veröffentlichenden Daten auf Fremddaten aufbauen oder diese ergänzen, so ist der Urheber der aktuellen Daten und den dazugehörigen Dokumenten verpflichtet die Rec</p>',
+                'title' => 'Terms and Conditions',
+                'description' => '<p>Die Domain-Inhaberin (die GBA), explizit aber die Autoren der Website 
+                Tethys RDR (www.tethys.at), übernehmen keine Gewähr für die Aktualität, Richtigkeit 
+                und Vollständigkeit der bereitgestellten Informationen. Haftungsansprüche gegen die Autoren, 
+                die sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder 
+                Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und 
+                unvollständiger Informationen verursacht wurden, werden ausdrücklich ausgeschlossen, 
+                soweit nicht Vorsatz oder grobe Fahrlässigkeit der Autoren vorliegt. 
+                Die Autoren behalten es sich ausdrücklich vor, Teile der Seiten oder das gesamte 
+                Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die 
+                Veröffentlichung zeitweise oder endgültig einzustellen.</p>
+                
+                <h5>Für den Inhalt verantwortlich</h5>
+                <p>Bei direkten oder indirekten Verweisen auf fremde Internetseiten (Links), 
+                die außerhalb des Verantwortungsbereichs der Autoren liegen, wird eine Haftung 
+                nur dann übernommen, wenn die Autoren von den Inhalten Kenntnis haben, 
+                dies zumutbar ist und diese über die technischen Mittel verfügen, 
+                um deren Verwendung bei rechtswidrigen Inhalten zu verhindern. 
+                Die Autoren erklären hiermit ausdrücklich, dass zum Zeitpunkt der Linksetzung 
+                keine illegalen Inhalte auf den zu verlinkenden Seiten erkennbar waren. 
+                Die Autoren haben keinerlei Einfluss auf die aktuelle und zukünftige Gestaltung 
+                und auf die Inhalte der verknüpften Seiten. Deshalb distanzieren sie sich hiermit 
+                ausdrücklich von allen Inhalten aller gelinkten/verknüpften Seiten, die nach der 
+                Linksetzung verändert wurden. Diese Feststellung gilt auch für alle innerhalb 
+                des eigenen Internetangebotes gesetzten Links und Verweise. Für illegale, 
+                fehlerhafte oder unvollständige Inhalte und insbesondere für Schäden, die aus der 
+                Nutzung oder Nichtnutzung solcherart dargebotener Informationen entstehen, 
+                haftet allein der Anbieter der Seite, auf die verwiesen wurde, nicht derjenige, der via 
+                Link auf die betreffende Seite verwiesen wurde.</p>
+
+                <h5>Urheber- und Kennzeichenrecht</h5>
+                <p>Die Autoren sind bestrebt, in allen Publikationen die Urheberrechte aller 
+                verwendeten Grafiken und Texte zu beachten, von ihnen selbst erstellte Grafiken 
+                und Texte zu nutzen oder auf lizenzfreie Grafiken und Texte zurückzugreifen. 
+                Alle innerhalb des Internetangebotes genannten und von Dritten registrierten 
+                Marken- und Warenzeichen unterliegen uneingeschränkt den Bestimmungen des jeweils 
+                gültigen Kennzeichenrechts und den Besitzrechten der jeweiligen eingetragenen Eigentümer. 
+                Allein aufgrund der bloßen Nennung ist nicht der Schluss zu ziehen, dass Markenzeichen 
+                nicht den Rechten Dritter unterliegen. Sofern nicht anders angegeben, wird der Inhalt 
+                dieser Website unter einer Creative Commons Attribution 3.0-Lizenz lizenziert.</p>
+
+                <h5>Datenschutz-Bestimmungen</h5>
+                <p>Mit dieser Datenschutzerklärung möchte unsere gastgebende Einrichtung, 
+                die „Geologische Bundesanstalt“, die Öffentlichkeit über Art, Umfang und Zweck 
+                der von uns erhobenen, verwendeten und verarbeiteten personenbezogenen Daten informieren. 
+                Darüber hinaus werden betroffene Personen mittels dieser Datenschutzerklärung über die 
+                ihnen zustehenden Rechte informiert.</p>
+                <p>Die Nutzung der Internetseiten von Tethys RDR ist ohne Angabe personenbezogener Daten möglich. 
+                Wenn eine betroffene Person jedoch unsere Dienste wie das Übermitteln von Datensätzen nutzen 
+                oder mit uns in Kontakt treten möchte, ist die Verarbeitung personenbezogener Daten erforderlich. 
+                Wenn die Verarbeitung personenbezogener Daten notwendig ist und keine gesetzliche Grundlage für eine 
+                solche Verarbeitung besteht, holen wir in der Regel die Zustimmung der betroffenen Person ein. 
+                Wir erfassen Informationen von Ihnen, wenn Sie sich auf unserer Website anmelden.</p>
+                <p>Die Verarbeitung personenbezogener Daten von datenpublizierenden Autoren, 
+                deren Co-Autoren sowie Beitragende, wie Name, E-Mail-Adresse und optional die ORCID ID 
+                erfolgt stets durch die datenpublizierenden Autoren im Einklang mit der 
+                Allgemeinen Datenschutzgrundverordnung (DSGVO) nach Artikel 6, Absatz 1b. 
+                Diese Informationen werden zum Zwecke der Anmeldung der datenpublizierenden Autoren und zum 
+                Zwecke der Umsetzung der guten wissenschaftlichen Praxis gesammelt. Damit einher geht, 
+                dass nach erfolgreichem Publizieren der Daten keine Löschung oder Veränderung der Daten und 
+                Metadaten inklusive aller personenbezogenen Daten möglich ist.</p>
+                <p>Als für die Verarbeitung Verantwortlicher hat Tethys RDR zahlreiche technische und 
+                organisatorische Maßnahmen getroffen, um den bestmöglichen Schutz der über diese Website 
+                verarbeiteten personenbezogenen Daten sicherzustellen. Internetbasierte Datenübertragungen 
+                können jedoch grundsätzlich Sicherheitslücken aufweisen, so dass ein absoluter Schutz möglicherweise 
+                nicht gewährleistet ist. </p>
+                <p>Sie haben grundsätzlich das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, 
+                Datenübertragbarkeit und Widerspruch. 
+                Dafür wenden Sie sich bitte an die Datenschutzbeauftragte:</p>
+                <span>Dr. Viktoria Haider<span><br/>
+                <span>E-Mail: <a href= "mailto:datenschutz@geologie.ac.at">datenschutz@geologie.ac.at</a></span><br/>
+                <p>Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht 
+                verstößt oder Ihre datenschutzrechtlichen Ansprüche sonst in einer Weise verletzt 
+                worden sind, können Sie bei der dafür zuständigen Aufsichtsbehörde eine Beschwerde einlegen:</p>
+                <span>Österreichische Datenschutzbehörde<span><br/>
+                <span>Barichgasse 40–42, 1030 Wien<span><br/> 
+                <span>Telefon: +43 1 52 152‐0<span><br/> 
+                <span>E-Mail: <a href= "mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a></span><br/>
+
+                <h5>Erfassung allgemeiner Daten und Informationen</h5>
+                <p>Die Website von Tethys RDR sammelt eine Reihe von allgemeinen Daten und Informationen, 
+                wenn eine betroffene Person oder ein automatisiertes System die Website aufruft. Diese allgemeinen Daten 
+                und Informationen werden in den Server-Protokolldateien gespeichert. 
+                Gesammelt werden (1) die verwendeten Browsertypen und -versionen, (2) das vom zugreifenden 
+                System verwendete Betriebssystem, (3) die Website, von der aus ein zugreifendes System auf unsere Website 
+                gelangt (sogenannte Referrer), (4) die Sub-websites, (5) Datum und Uhrzeit des Zugriffs auf die Internetseite, 
+                (6) eine Internetprotokolladresse (IP-Adresse), (7) der Internetdienstanbieter des zugreifenden Systems 
+                und (8) alle anderen ähnlichen Daten und Informationen, die im Falle von Angriffen auf unsere 
+                Informationstechnologiesysteme verwendet werden können.</p>
+                <p>Bei Verwendung dieser allgemeinen Daten und Informationen kann Tethys RDR keine Rückschlüsse 
+                auf die betroffene Person ziehen. Diese Informationen werden vielmehr benötigt, um (1) den Inhalt 
+                unserer Website korrekt bereitzustellen, (2) den Inhalt unserer Website sowie deren Werbung zu optimieren, 
+                (3) die langfristige Überlebensfähigkeit unserer Informationstechnologiesysteme und der Website-Technologie 
+                sicherzustellen und (4) den Strafverfolgungsbehörden, welche für die strafrechtliche Verfolgung im Falle eines 
+                Cyberangriffs erforderlichen Informationen zur Verfügung stellen. Daher analysiert Tethys RDR anonym erhobene 
+                Daten und Informationen statistisch mit dem Ziel, den Datenschutz und die Datensicherheit unserer Institution 
+                zu erhöhen und ein optimales Schutzniveau für die von uns verarbeiteten personenbezogenen Daten zu gewährleisten. 
+                Die anonymen Daten der Server-Logfiles werden getrennt von allen personenbezogenen Daten einer 
+                betroffenen Person gespeichert.</p>
+                ',
             ],
             [
                 'page_id' => 1, //terms and conditions
@@ -90,22 +188,25 @@ class PagesTableSeeder extends Seeder
                 'page_id' => 2, //imprint
                 'locale' => 'de',
                 'title' => 'Impressum',
-                'description' => '<p><strong>Für den Inhalt verantwortlich:</strong></p>
-                <p>Geologische Bundesanstalt</p><p>Neulinggasse 38, 1030 Wien</p>
-                <p>email: office@geologie.ac.at</p>              
-                <p>Telefon: +43-1-7125674</p>
-                <p>Fax: +43-1-7125674-56</p>
-                <p>&nbsp;</p>
-                <p>Technische Umsetzung und Betreuung</p>
-                <p>Geologische Bundesanstalt</p>
-                <p>Abteilung Geoinformation und Abteilung IT &amp; GIS</p>
-                <p>Neulinggasse 38, 1030 Wien</p>
-                <p>email: repository@geologie.ac.at</p>
-                <p>&nbsp;</p>
-                <p>Bei technischen Problemen steht Ihnen das RDR-Team, erreichbar unter repository@geologie.ac.at, zur Seite.</p>
-                <p>&nbsp;</p><p>Hinweise und Haftungsausschluss</p>
-                <p>Eine Haftung oder Garantie für Aktualität, Richtigkeit und Vollständigkeit der zur Verfügung gestellten Informationen und Daten ist ausgeschlossen.</p>
-                <p>Dieser Hinweis gilt auch für alle anderen Website, auf die durch Hyperlinks verwiesen wird. Die Geologische Bundesanstalt ist für den Inhalt von Websites, die mittels einer solchen Verbindung erreicht werden, nicht verantwortlich.</p>',
+                'description' => '<h5>Für den Inhalt verantwortlich</h5>
+                <span>Geologische Bundesanstalt</span><br/>
+                <span>Neulinggasse 38, 1030 Wien<span><br/>
+                <span>office@geologie.ac.at<span><br/>              
+                <span>Telefon: +43-1-7125674<span><br/>
+                <span>Fax: +43-1-7125674-56<span><br/>              
+                <h5>Technische Umsetzung und Betreuung</h5>
+                <span>Geologische Bundesanstalt<span><br/>
+                <span>Hauptabteilung Informationsdienste<span><br/>
+                <span>Neulinggasse 38, 1030 Wien<span><br/>
+                <span>repository@geologie.ac.at<span><br/>                
+                <p>Bei technischen Problemen steht Ihnen das RDR-Team, erreichbar unter repository@geologie.ac.at, 
+                gerne zur Seite.</p>               
+                <h5>Hinweise und Haftungsausschluss</h5>
+                <p>Eine Haftung oder Garantie für Aktualität, Richtigkeit und 
+                Vollständigkeit der zur Verfügung gestellten Daten ist ausgeschlossen.</p>
+                <p>Dieser Hinweis gilt auch für alle anderen Webseiten, auf die durch Hyperlinks verwiesen wird. 
+                Die Geologische Bundesanstalt ist für den Inhalt von Webseiten, 
+                die mittels einer solchen Verbindung erreicht werden, nicht verantwortlich.</p>',
             ],
             [
                 'page_id' => 2, //imprint
