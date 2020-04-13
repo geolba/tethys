@@ -76,7 +76,7 @@ a {
 
   .separator {
     position: relative;
-    margin-bottom: 1.7em;
+    /* margin-bottom: 1.7em; */
     padding-bottom: 1.7em;
     text-align: center;
     font-weight: bold;

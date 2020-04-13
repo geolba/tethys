@@ -176,6 +176,107 @@ class PagesTableSeeder extends Seeder
                 zu erhöhen und ein optimales Schutzniveau für die von uns verarbeiteten personenbezogenen Daten zu gewährleisten. 
                 Die anonymen Daten der Server-Logfiles werden getrennt von allen personenbezogenen Daten einer 
                 betroffenen Person gespeichert.</p>
+
+                <h5>Anmeldung/Registrierung auf unserer Website</h5>
+                <p>Die betroffene Person hat die Möglichkeit, sich auf der Website des für die Verarbeitung Verantwortlichen 
+                unter Angabe personenbezogener Daten anzumelden (zu registrieren). Welche personenbezogenen Daten an die 
+                Steuerung übermittelt werden, bestimmt die jeweilige Eingabemaske des Anmeldeformulars. Die von der betroffenen 
+                Person eingegebenen personenbezogenen Daten werden ausschließlich für den internen Gebrauch durch den für die 
+                Verarbeitung Verantwortlichen und für eigene Zwecke erhoben und gespeichert. Der Controller kann die 
+                Übertragung an einen oder mehrere Prozessoren (z.B. einen wissenschaftlichen Herausgeber) anfordern, 
+                die personenbezogene Daten auch für einen internen Zweck verwenden, der dem Controller zuzuordnen ist.</p>
+                <p>Durch die Registrierung auf der Website des Controllers werden auch die vom Internet Service Provider (ISP) 
+                zugewiesene und vom Betroffenen verwendete IP-Adresse – Datum und Uhrzeit der Registrierung – gespeichert. 
+                Die Speicherung dieser Daten erfolgt vor dem Hintergrund, dass nur so ein Missbrauch unserer Dienste verhindert 
+                und gegebenenfalls eine Aufklärung der begangenen Verstöße ermöglicht wird. Insofern ist die Speicherung dieser 
+                Daten erforderlich, um die Steuerung abzusichern. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht 
+                an Dritte weitergegeben, es sei denn, es besteht eine gesetzliche Verpflichtung zur Weitergabe der Daten oder 
+                die Übermittlung dient der strafrechtlichen Verfolgung.</p>
+                <p>Die Registrierung der betroffenen Person mit der freiwilligen Angabe personenbezogener Daten soll es dem für 
+                die Verarbeitung Verantwortlichen ermöglichen, die betroffenen Inhalte oder Dienste anzubieten, die aufgrund 
+                der Art der betreffenden Angelegenheit nur registrierten Nutzern angeboten werden dürfen. Registrierte Personen 
+                können die bei der Registrierung angegebenen personenbezogenen Daten jederzeit ändern oder vollständig aus dem 
+                Datenbestand des Verantwortlichen löschen lassen.</p>
+                <p>Der für die Verarbeitung Verantwortliche teilt jeder betroffenen Person auf Anfrage jederzeit mit, welche 
+                personenbezogenen Daten über die betroffene Person gespeichert sind. Darüber hinaus berichtigt oder löscht 
+                der für die Datenverarbeitung Verantwortliche personenbezogene Daten auf Verlangen oder unter 
+                Angabe der betroffenen Person, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Ein in 
+                dieser Datenschutzerklärung ausdrücklich benannter Datenschutzbeauftragter sowie die gesamten 
+                Mitarbeiter des für die Verarbeitung Verantwortlichen stehen der betroffenen Person als Ansprechpartner 
+                zur Verfügung.</p>
+
+                <h5>Kontaktmöglichkeit über die Website</h5>
+                <p>Die Website von Tethys RDR enthält Informationen, die einen schnellen elektronischen Kontakt zu unserer 
+                Einrichtung sowie eine direkte Kommunikation mit uns ermöglichen. Dazu gehört auch eine allgemeine 
+                Adresse der sogenannten elektronischen Post (E-Mail-Adresse). Wenn eine betroffene Person den für 
+                die Verarbeitung Verantwortlichen per E-Mail über das Kontaktformular kontaktiert, werden die von 
+                der betroffenen Person übermittelten personenbezogenen Daten automatisch gespeichert. Diese von einer 
+                betroffenen Person freiwillig übermittelten personenbezogenen Daten werden zum Zwecke der Verarbeitung 
+                oder Kontaktaufnahme mit der betroffenen Person gespeichert. Bei Nutzung des Kontaktformulars erfolgt 
+                keine Weitergabe dieser personenbezogenen Daten an Dritte.</p>
+
+                <h5>Übermittlung wissenschaftlicher Daten über die Website</h5>
+                <p>Die Website von Tethys RDR enthält eine Webanwendung zum Einreichen von wissenschaftlichen Datensätzen, 
+                die in der Tethys -Datenbank gespeichert werden, um sie zu veröffentlichen. Wenn eine betroffene Person 
+                mit dem Antrag auf Einreichung wissenschaftlicher Daten Kontakt zum für die Verarbeitung Verantwortlichen 
+                aufnimmt, werden die von der betroffenen Person übermittelten personenbezogenen Daten automatisch gespeichert. 
+                Diese von einer betroffenen Person freiwillig übermittelten personenbezogenen Daten werden zum Zwecke der 
+                Verarbeitung oder Kontaktaufnahme mit der betroffenen Person gespeichert.</p>
+                <p>Um wissenschaftliche Datensätze erfolgreich bei Tethys RDR einzureichen, muss die betroffene Person einige 
+                zusätzliche personenbezogene Daten (z.B. Name der Autoren, der Mitautoren und Beitragende) bereitstellen, 
+                damit diese Datensätze in der wissenschaftlichen Gemeinschaft korrekt zitiert werden können. 
+                Diese Informationen werden der Öffentlichkeit nach dem Einreichungsprozess über Datensatz-Metadaten 
+                (im XML- oder JSON-Format und über die Tethys-Website) zur Verfügung gestellt. Dies ist eine Voraussetzung 
+                für das wissenschaftliche Publizieren. Veröffentlichungen zu wissenschaftlichen Daten, einschließlich der oben 
+                genannten personenbezogenen Daten, können von Dritten (z.B. Bibliotheken, Datenportalen) unter Verwendung der 
+                Metadaten und Datendienste von Tethys RDR verwendet werden.</p>
+
+                <h5>Nutzung von Content Delivery Networks (CDN)</h5>
+                <p>Auf dieser Website hat der Controller Javascript, Schriftarten und Bilder integriert, die von 
+                Content Delivery Networks bereitgestellt werden. Ein Content Delivery Network (CDN) ist ein geografisch 
+                verteiltes Netzwerk von Proxy-Servern und deren Rechenzentren. Ziel ist es, den Service räumlich auf die 
+                Endbenutzer zu verteilen, um eine hohe Verfügbarkeit und Leistung zu gewährleisten. Während dieses technischen 
+                Verfahrens können Dritte Kenntnis von personenbezogenen Daten, wie der IP-Adresse der betroffenen 
+                Person, erlangen. Die bei Tethys verwendeten CDN-Dienste wurden vom Controller auf DSGVO-Konformität geprüft.
+                </p>
+
+                <h5>Routinemäßige Löschung und Sperrung personenbezogener Daten</h5>
+                <p>Der für die Verarbeitung Verantwortliche verarbeitet und speichert die personenbezogenen Daten der betroffenen 
+                Person nur für den Zeitraum, der zur Erreichung des Zwecks der Speicherung erforderlich ist, oder, soweit dies 
+                vom europäischen Gesetzgeber oder anderen Gesetzgebern in Gesetzen oder Verordnungen, denen der für die 
+                Verarbeitung Verantwortliche unterliegt, gewährt wird.</p>
+                <p>Ist der Speicherzweck nicht anwendbar oder läuft eine vom europäischen Gesetzgeber oder einem anderen 
+                zuständigen Gesetzgeber festgelegte Speicherfrist ab, werden die personenbezogenen Daten gemäß den gesetzlichen 
+                Bestimmungen routinemäßig gesperrt oder gelöscht.</p>
+                <p>Bitte beachten Sie auch unsere rechtlichen Hinweise zu Nutzung, Haftungsausschluss und 
+                Haftungsbeschränkungen für die Nutzung unserer Website.</p>
+
+                <h5>Uns kontaktieren</h5>
+                <p>Bei Fragen zu dieser Datenschutzrichtlinie können Sie sich an uns wenden 
+                (<a href="/contact" target=_blank>Kontakt</a>).</p>
+
+                <h5>Änderungen unserer Datenschutzerklärung</h5>
+                <p>Wenn wir uns entscheiden, unsere Datenschutzrichtlinie zu ändern, werden wir diese Änderungen auf dieser 
+                Seite veröffentlichen. Diese Richtlinie wurde zuletzt am 25.03.2020 geändert.</p>
+
+                <h5>OpenStreetMap</h5>
+                <p>Diese Seite nutzt über eine Programmierschnittstelle (Application Programming Interface, API) das 
+                Open Source-Mapping-Werkzeug „OpenStreetMap“ (OSM). Anbieter ist die OpenStreetMap Foundation. 
+                Zur Nutzung der Funktionen von OpenStreetMap ist es notwendig, Ihre IP-Adresse zu speichern. 
+                Diese Informationen werden in der Regel an einen Server von OpenStreetMap übertragen und dort gespeichert. 
+                Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung. Die Nutzung von OpenStreetMap 
+                erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote und an einer leichten 
+                Auffindbarkeit der von uns auf der Website angegebenen Orte. Dies stellt ein berechtigtes Interesse 
+                im Sinne von Artikel 6, Absatz 1 lit. f DSGVO dar. Mehr Informationen zum Umgang mit Nutzerdaten finden 
+                Sie in der Datenschutzseite von OpenStreetMap und auf 
+                <a href="http://wiki.openstreetmap.org/wiki/Legal_FAQ" target=_blank>/wiki.openstreetmap.org/wiki/Legal_FAQ</a>.
+                </p>
+
+                <h5>Rechtswirksamkeit dieses Haftungsausschlusses</h5>
+                <p>Dieser Haftungsausschluss ist als Teil des Internetangebotes zu betrachten, von dem aus auf diese Seite 
+                verwiesen wurde. Sollten Teile des Textes oder eines Wortlautes nicht, nicht vollständig oder 
+                nicht mehr dem geltenden Recht entsprechen, so wird hierdurch die Gültigkeit oder der Inhalt 
+                der übrigen Teile des Dokumentes nicht berührt.</p>
                 ',
             ],
             [
