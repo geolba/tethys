@@ -20,7 +20,7 @@ class RequestController extends Controller
      * @var array
      */
     private $deliveringDocumentStates = array('published', 'deleted'); // maybe deleted documents too
-    private $xMetaDissRestriction = array('doctoralthesis', 'habilitation');
+    //private $xMetaDissRestriction = array('doctoralthesis', 'habilitation');
     const SET_SPEC_PATTERN = '[A-Za-z0-9\-_\.!~\*\'\(\)]+';
 
     /**
@@ -169,6 +169,8 @@ class RequestController extends Controller
      */
     private function handleGetRecord(array &$oaiRequest)
     {
+        $repIdentifier = "tethys.at";
+        $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
         // Identifier references metadata Urn, not plain Id!
         // Currently implemented as 'oai:foo.bar.de:{docId}' or 'urn:nbn...-123'
         $dataId = $this->getDocumentIdByIdentifier($oaiRequest['identifier']);
@@ -194,7 +196,8 @@ class RequestController extends Controller
         if (is_null($dataset)
             //or (false === in_array($dataset->getServerState(), $this->_deliveringDocumentStates))
              or (false === $dataset->whereIn('server_state', $this->deliveringDocumentStates))
-            or (false === $dataset->hasEmbargoPassed())) {
+            //or (false === $dataset->hasEmbargoPassed())
+            ) {
             throw new OaiModelException('Document is not available for OAI export!', OaiModelError::NORECORDSMATCH);
         }
 
@@ -280,7 +283,7 @@ class RequestController extends Controller
      */
     private function handleListSets()
     {
-        $repIdentifier = "tethys.geologie.ac.at";
+        $repIdentifier = "tethys.at";
         $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
         $this->xml->appendChild($this->xml->createElement('Datasets'));
 
@@ -329,7 +332,7 @@ class RequestController extends Controller
             $maxRecords = 100;
         }
 
-        $repIdentifier = "tethys.geologie.ac.at";
+        $repIdentifier = "tethys.at";
         $tokenTempPath = storage_path('app/resumption'); //$this->_configuration->getResumptionTokenPath();
 
         $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
