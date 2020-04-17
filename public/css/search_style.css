@@ -17,14 +17,87 @@ section.search {
 }
 
 
+/* zenodo */
+.label-success {
+    background-color: #5cb85c;
+}
+.label-default {
+    background-color: #777;
+}
+.label-info {
+    background-color: #6aa3d5;
+}
+.label {
+    display: inline-block;
+    padding: .2em .12em .3em;
+    font-size: 75%;
+    color: #fff;
+    border-radius: .25em;
+    margin-right:1.25em;
+    /* margin-left: 10px; */
+}
+/* .record-elem .h4, record-elem h4 {
+    font-size: 18px;
+} */
+.record-elem p a {
+    color: #000;
+}
+/* .record-elem h4 a {
+    color: #000;
+} */
+a.ng-binding {
+    cursor: pointer;
+}
+.record-elem h4 a {
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    /* margin-left: 10px; */
+    font-size: 16px;
+  }
+  .record-elem h4 a:hover {
+    color: #777;
+    text-decoration: none;
+}
+  /* .search-detail a:hover {
+    color: rgb(0, 128, 0);
+} */
+.record-elem .h4, .record-elem h4 {
+    font-size: 16px;
+    letter-spacing: .05em;
+  }
+  .record-detail h1, .record-detail p, 
+  .record-elem h4, 
+  .record-elem p, .well {
+    word-wrap: break-word;
+}
+.record-elem p span {
+    color: #000;
+    font-size: 14px; 
+}
+
+.post {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+    box-sizing: border-box;
+    margin-bottom:10px; 
+    margin-top: 15px;
+    
+}
+.record-elem{
+   
+    border-top: 1px solid rgb(238, 238, 238);
+}
 
 
-/* Seasrch items */
 
 
-
-
-.search-items {
+/* Search items */
+/* .search-items {
     list-style: none;
     width: 100%;
     display: inline-block;
@@ -33,8 +106,6 @@ section.search {
     position: relative;
     overflow: hidden;
     height: 360px;
-  
-    /* important because we need to overwrite the default skeleton */
     margin: 0!important;
     width: 50%;
     border: 10px solid white;
@@ -49,52 +120,24 @@ section.search {
   .search-items li img{
     width: auto;
     height: 100%;
-    display: block;
-   
-  }
+    display: block;   
+  } */
 
   /* Work detail */
-.search-detail {
+/* .search-detail {
     position: absolute;
     top: 0; bottom: 0; left: 0; right: 0;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
-  
-    align-items: center;
-    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
-    /* box-shadow: 3px 3px red, -1em 0 0.4em olive; */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;  
+    align-items: center;  
     box-shadow: inset rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; 
     opacity: 1;
     border: 1px solid rgb(238, 238, 238);
     box-sizing: border-box;
-    min-height: 300px;
-    /* background: rgba(0,0,0,.75); */
-    /* color: white; */
+    min-height: 300px;  
     font-size: 16px;
+    padding:20px; 
+  } */
 
-    padding:20px;  
-    
-  }
-  .search-detail a {
-    cursor: pointer;
-    color: mediumseagreen;
-    text-decoration: none;
-    font-weight: bold;
-    margin-left: 20px;
-    font-size: 16px;
-  }
-  .search-detail a:hover {
-    color: rgb(0, 128, 0);
-}
-  .search-detail h3 {
-    font-size: 16px;
-    letter-spacing: .05em;
-  }
-  .search-detail p {
-    font-size: 15px;
-    /* text-transform: capitalize; */
-    /* padding-left: 20px;
-    padding-right: 20px; */
-  }
   
 
   /* Larger than mobile */

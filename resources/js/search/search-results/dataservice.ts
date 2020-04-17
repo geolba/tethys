@@ -3,7 +3,7 @@ import axios from "axios";
 var SOLR_CONFIG = {
   "server": "https://arcticdata.io/metacat/d1/mn/v2/query/solr?",  // Solr server
   "filter": "knb-lter-bnz",  // Filter results for an organization or user
-  "limit": 4,  // Max number of results to retrieve per page
+  "limit": 10,  // Max number of results to retrieve per page
   "resultsElementId": "searchResults",  // Element to contain results
   "urlElementId": "searchUrl",  // Element to display search URL
   "countElementId": "resultCount",  // Element showing number of results
@@ -28,7 +28,7 @@ export default {
       "title_output",
       "title_additional",
       "author",
-      "subject"].toString();
+      "subject", "doctype"].toString();
     var limit = "&rows=" + SOLR_CONFIG["limit"];  
     // var limit = solrConfig.limit;
 
@@ -86,7 +86,7 @@ export default {
       "title_output",
       "title_additional",
       "author",
-      "subject"].toString();
+      "subject", "doctype"].toString();
    
 
     //var dismaxFields = "title^3 abstract^2 subject^1";

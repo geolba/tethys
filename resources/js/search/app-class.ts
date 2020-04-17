@@ -184,7 +184,7 @@ export default class App extends Vue {
     this.loaded = true;
   }
 
-  getParameterByName(name: string, url?: string) {
+  private getParameterByName(name: string, url?: string) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),

@@ -17,25 +17,34 @@
       </div>
     </div> -->
 
-    <section class="result-list-container">
-      <div class="row">
-        <ul class="search-items isotope js-isotope u-cf">
-          <li v-for="document in results" :key="document.id" class="six columns post">
-            <div class="search-detail">
-              <div>
-                <a
-                  v-bind:href="'dataset/' + document.id"
-                >{{ document.title_output }}</a>
-              </div>
+    <section class="normal result-list-container">
+      
+      <div v-for="document in results" :key="document.id" class="row record-elem">
+        <div  class="twelve columns post">
+         
+            <span class="label label-info" data-container="div" data-title="Publication date">
               {{ convert(document.server_date_published) }}
+            </span>
+            <span class="label label-default ng-binding">{{ document.doctype }}</span>
+            <span class="label label-success titlecase">Open Access</span>
 
-              <p v-if="document.title_additional && document.title_additional.length > 0">
-                <em>Additional Title:{{ document.title_additional.join(', ') }}</em>
-              </p>
 
-              <div v-if="document.author && document.author.length > 0">
-                <em>Author: {{ document.author.join(', ') }}</em>
-              </div>
+            <h4>
+              <a target="_self" v-bind:href="'dataset/' + document.id" class="ng-binding">
+                {{ document.title_output }}
+              </a>
+            </h4>
+
+            <p>
+              <span v-if="document.author && document.author.length > 0" v-for="author in document.author">
+                <!-- <span>Author: {{ document.author.join(', ') }}</span> -->
+                <span>{{ author }}; </span>
+              </span>
+
+
+              <!-- <p v-if="document.title_additional && document.title_additional.length > 0">
+                <span>Additional Title:{{ document.title_additional.join(', ') }}</span>
+              </p> -->
 
               <p class="clamped clamped-2">
                 <span class="text">
@@ -44,20 +53,24 @@
                   <span class="fill"></span>
                 </span>
               </p>
-              <div class="css-subject" v-if="document.subject && document.subject.length > 0">
-                <div v-for="(item, index) in document.subject" :key="index" class="css-keyword">#{{ item }}</div>
-                <!-- <div class="css-keyword">#graphql</div> -->
-              </div>
-            </div>
-          </li>
-        </ul>
+
+              <!-- <div class="css-subject" v-if="document.subject && document.subject.length > 0"> -->
+              <span class="label label-success titlecase" v-for="(item, index) in document.subject" :key="index">
+                #{{ item }}
+              </span>
+              <!-- <p>
+                <small class="text-muted hidden-xs ng-binding">
+                  Uploaded on March 15, 2019
+                </small>
+              </p>           -->
+
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script lang="ts">
-import VgResults from "./vs-results-class";
-export default VgResults;
+  import VgResults from "./vs-results-class";
+  export default VgResults;
 </script>
-

@@ -40,7 +40,7 @@
               <span v-if="value && value.length > 0">{{ value.join(', ') }}</span>
             </a>
           </div> -->
-            <div class="twelve columns">
+            <div class="twelve columns resultheader">
               <span class="active-filter-items" v-for="(values, key, index) in activeFilterCategories" :key="index">    
                   <active-facet-category :data="values" :categoryName="key" @clearFacetCategory="onClearFacetCategory"></active-facet-category>              
               </span>
@@ -84,6 +84,9 @@ export default App;
 </script>
 
 <style lang="scss">
+.resultheader {
+  padding-left: 4%;
+}
 #app {
   color: #56b983;
 }

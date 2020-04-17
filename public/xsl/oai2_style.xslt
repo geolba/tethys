@@ -162,6 +162,14 @@ p.intro {
   <head>
     <title>TETHYS OAI 2.0 Request Results</title>
     <style><xsl:call-template name="style"/></style>
+     <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->  
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"/>   
+    <link rel="manifest" href="/images/favicon/site.webmanifest"/>
+    <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#5bbad5"/>
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico"/>
   </head>
   <body>
     <h1>TETHYS OAI 2.0 Request Results</h1>
@@ -219,7 +227,6 @@ p.intro {
 
 
 <!-- ERROR -->
-
 <xsl:template match="/oai:OAI-PMH/oai:error">
   <table class="values">
     <tr><td class="key">Error Code</td>
@@ -229,7 +236,6 @@ p.intro {
 </xsl:template>
 
 <!-- IDENTIFY -->
-
 <xsl:template match="/oai:OAI-PMH/oai:Identify">
   <table class="values">
     <tr><td class="key">Repository Name</td>
@@ -258,7 +264,6 @@ p.intro {
 <!--
    Identify / Unsupported Description
 -->
-
 <xsl:template match="oai:description/*" priority="-100">
   <h2>Unsupported Description Type</h2>
   <p>The XSL currently does not support this type of description.</p>
@@ -271,7 +276,6 @@ p.intro {
 <!--
    Identify / OAI-Identifier
 -->
-
 <xsl:template match="id:oai-identifier" xmlns:id="http://www.openarchives.org/OAI/2.0/oai-identifier">
   <h2>OAI-Identifier</h2>
   <table class="values">
@@ -290,7 +294,6 @@ p.intro {
 <!--
    Identify / EPrints
 -->
-
 <xsl:template match="ep:eprints" xmlns:ep="http://www.openarchives.org/OAI/1.1/eprints">
   <h2>EPrints Description</h2>
   <h3>Content</h3>
@@ -328,7 +331,6 @@ p.intro {
 <!--
    Identify / Friends
 -->
-
 <xsl:template match="fr:friends" xmlns:fr="http://www.openarchives.org/OAI/2.0/friends/">
   <h2>Friends</h2>
   <ul>
@@ -346,7 +348,6 @@ p.intro {
 <!--
    Identify / Branding
 -->
-
 <xsl:template match="br:branding" xmlns:br="http://www.openarchives.org/OAI/2.0/branding/">
   <h2>Branding</h2>
   <xsl:apply-templates select="br:collectionIcon"/>
@@ -382,7 +383,6 @@ p.intro {
 <!--
    Identify / Gateway
 -->
-
 <xsl:template match="gw:gateway" xmlns:gw="http://www.openarchives.org/OAI/2.0/gateway/x">
   <h2>Gateway Information</h2>
   <table class="values">
@@ -409,27 +409,23 @@ p.intro {
 
 
 <!-- GetRecord -->
-
 <xsl:template match="oai:GetRecord">
   <xsl:apply-templates select="oai:record" />
 </xsl:template>
 
 <!-- ListRecords -->
-
 <xsl:template match="oai:ListRecords">
   <xsl:apply-templates select="oai:record" />
   <xsl:apply-templates select="oai:resumptionToken" />
 </xsl:template>
 
 <!-- ListIdentifiers -->
-
 <xsl:template match="oai:ListIdentifiers">
   <xsl:apply-templates select="oai:header" />
   <xsl:apply-templates select="oai:resumptionToken" />
 </xsl:template>
 
 <!-- ListSets -->
-
 <xsl:template match="oai:ListSets">
   <xsl:apply-templates select="oai:set" />
   <xsl:apply-templates select="oai:resumptionToken" />
@@ -445,7 +441,6 @@ p.intro {
 </xsl:template>
 
 <!-- ListMetadataFormats -->
-
 <xsl:template match="oai:ListMetadataFormats">
   <xsl:choose>
     <xsl:when test="$identifier">
@@ -484,7 +479,6 @@ p.intro {
 </xsl:template>
 
 <!-- record object -->
-
 <xsl:template match="oai:record">
   <h2 class="oaiRecordTitle">OAI Record: <xsl:value-of select="oai:header/oai:identifier"/></h2>
   <div class="oaiRecord">
@@ -512,7 +506,6 @@ p.intro {
   </xsl:if>
 </xsl:template>
 
-
 <xsl:template match="oai:about">
   <p>"about" part of record container not supported by the XSL</p>
 </xsl:template>
@@ -524,11 +517,7 @@ p.intro {
   </div>
 </xsl:template>
 
-
-
-
 <!-- oai setSpec object -->
-
 <xsl:template match="oai:setSpec">
   <tr><td class="key">setSpec</td>
   <td class="value"><xsl:value-of select="."/>
@@ -537,10 +526,7 @@ p.intro {
   </td></tr>
 </xsl:template>
 
-
-
 <!-- oai resumptionToken -->
-
 <xsl:template match="oai:resumptionToken">
    <p>There are more results.</p>
    <table class="values">
@@ -552,7 +538,6 @@ p.intro {
 </xsl:template>
 
 <!-- unknown metadata format -->
-
 <xsl:template match="oai:metadata/*" priority='-100'>
   <h3>Unknown Metadata Format</h3>
   <div class="xmlSource">
@@ -561,7 +546,6 @@ p.intro {
 </xsl:template>
 
 <!-- oai_dc record -->
-
 <xsl:template match="oai_dc:dc"  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" >
   <div class="dcdata">
     <h3>Dublin Core Metadata (oai_dc)</h3>
@@ -634,7 +618,6 @@ p.intro {
 <tr><td class="key">Rights Management</td><td class="value"><xsl:value-of select="."/></td></tr></xsl:template>
 
 <!-- XML Pretty Maker -->
-
 <xsl:template match="node()" mode='xmlMarkup'>
   <div class="xmlBlock">
     &lt;<span class="xmlTagName"><xsl:value-of select='name(.)' /></span><xsl:apply-templates select="@*" mode='xmlMarkup'/>&gt;<xsl:apply-templates select="node()" mode='xmlMarkup' />&lt;/<span class="xmlTagName"><xsl:value-of select='name(.)' /></span>&gt;
@@ -670,4 +653,3 @@ p.intro {
 </xsl:template>
 
 </xsl:stylesheet>
-
