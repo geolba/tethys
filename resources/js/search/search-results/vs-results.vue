@@ -35,11 +35,11 @@
               </a>
             </h4>
 
-            <p>
-              <span v-if="document.author && document.author.length > 0" v-for="author in document.author">
+            
+              <p v-if="document.author && document.author.length > 0">
                 <!-- <span>Author: {{ document.author.join(', ') }}</span> -->
-                <span>{{ author }}; </span>
-              </span>
+                <span v-for="(author,index) in document.author" :key="index">{{ author }}; </span>
+              </p>
 
 
               <!-- <p v-if="document.title_additional && document.title_additional.length > 0">

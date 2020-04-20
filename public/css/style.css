@@ -274,6 +274,11 @@ section.normal {
   color: #222;
   background-color: transparent;
 }
+.navigation.transparent {
+  background-color: #fff;
+  border-bottom: 1px solid #dcdcdc;
+}
+
 
 .navigation.active {
   /* make visible visible */
@@ -303,18 +308,18 @@ section.normal {
   -ms-transition: all .5s ease-in-out;
   -o-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
-  background-color: #fff;
-  border-bottom: 1px solid #dcdcdc;
+  background:#3ad29f;
+  /* border-bottom: 1px solid #dcdcdc; */
 }
 
 .navigation ul {
-  list-style: none;
-  /* position: absolute;
-  top: 0;
-  left: 0; 
-  right: 0; */
+  /* display:none; */
+    width:100%;
+    list-style:none;
   margin: 0;
-  background-color: #fff;
+  padding:0;
+  
+  /* background-color: #fff; */
 }
 .header ul li {
   display: block;
@@ -322,22 +327,38 @@ section.normal {
   text-align: center;
   margin: 0; 
 }
-.navigation ul li a {
-  display: inline-block;
-	padding: 14px 16px;
-  height: 100%;  
-  text-transform: uppercase;
+
+.navigation.transparent ul li a {
   color: #757575;
-	font-size: 1.7rem;
-	text-decoration: none;	
-	transition: 0.2s;
+  background-color: white;
 }
 
-.navigation ul li a.current,
-.navigation ul li a:hover {
+.navigation ul li a {
+  display: block;
+  padding:1em;
+ background:#3ad29f;  /* green */
+ color: white;
+  /* font-size: 1.7rem; */
+	text-decoration: none;	
+  /* border-right: 1px solid #28b183; */
+}
+
+#nav.transparent ul li a.current,
+#nav.transparent ul li a:hover {
   background-color: #eee; 
 	color: #757575;
 }
+
+#nav ul li a.current,
+#nav ul li a:hover {
+  background: #2dc592;
+}
+
+.navigation ul li a.current,
+/* .navigation ul li a:hover {
+  background-color: #eee; 
+	color: #757575;
+} */
 
 /* Float right the list item that should be right aligned */
 .navigation ul li.right { float: right; }

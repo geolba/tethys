@@ -5,9 +5,7 @@
     color: rgb(66, 66, 66);
     box-sizing: border-box;
 }
-.results {
-    padding-left: 4%;
-}
+
 .columns.right-bar {
     margin-left: 0% !important;
 }
@@ -45,9 +43,7 @@ section.search {
 /* .record-elem h4 a {
     color: #000;
 } */
-a.ng-binding {
-    cursor: pointer;
-}
+
 .record-elem h4 a {
     cursor: pointer;
     color: #000;
@@ -94,49 +90,52 @@ a.ng-binding {
 }
 
 
+/* zenodo left side: */
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.panel-default {
+    border-color: #ddd;
+}
 
-
-/* Search items */
-/* .search-items {
-    list-style: none;
-    width: 100%;
-    display: inline-block;
-  }
-  .search-items li {
-    position: relative;
-    overflow: hidden;
-    height: 360px;
-    margin: 0!important;
-    width: 50%;
-    border: 10px solid white;
-  
-    position: relative;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  .search-items li:nth-child(3n) {
-    margin-left: 0;
-  }
-  .search-items li img{
-    width: auto;
-    height: 100%;
-    display: block;   
-  } */
-
-  /* Work detail */
-/* .search-detail {
-    position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;  
-    align-items: center;  
-    box-shadow: inset rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; 
-    opacity: 1;
-    border: 1px solid rgb(238, 238, 238);
-    box-sizing: border-box;
-    min-height: 300px;  
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.panel-title {
+    margin-top: 0;
     font-size: 16px;
-    padding:20px; 
-  } */
+    margin-bottom: 0;
+    color: inherit;
+}
+
+
+.panel-body {
+    padding: 15px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #333;
+}
+.list-inline, .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+#left-bar .titlecase {
+    text-transform: capitalize;
+}
+
 
   
 
@@ -149,17 +148,6 @@ a.ng-binding {
 }
    
 
-
-/* filter items in the left bar */
-/*-------------------------------------------------- */
-.left-bar .panel-title {
-    text-transform: capitalize;
-    margin-top: 8px;
-    margin-bottom: 2px;
-    color: white;
-    display: block;
-    font-weight: bold;
-}
 
 .overflowing {
     color: #444444;
@@ -174,44 +162,27 @@ a.ng-binding {
     cursor: pointer;
 }
 
-ul.filter-items li {
+/* ul.filter-items li {
     min-height: 15px;
     color: #444;
     font-size: 12px;
-
     list-style-type: none;
-    /*list-style-position:inside;*/
-    /*
- * We want the bullets outside of the list,
- * so the text is aligned. Now the actual bullet
- * is outside of the list’s container
- */
     list-style-position: outside;
-    /*
- * Because the bullet is outside of the list’s
- * container, indent the list entirely
- */
     margin-left: 1em;
-}
+} */
 
 .filter-items.limited li:nth-of-type(1n+3) {
     display: none;
 }
 
-/* ul.filter-items .active {
-    background-color: lightgray;
-} */
-ul.filter-items li a {
+ul.filter-items li span {
 cursor: pointer;
-color:#ffffff;
+/* color:#ffffff;
 text-decoration: none;
 font-weight: bold;
-font-size: 16px;
+font-size: 16px; */
 }
-/* ul.filter-items li a:hover {
-    color: #0099cc;
-    cursor: pointer;
-} */
+
 
 /* Relativer Tooltip */
 .tooltip {
@@ -237,19 +208,16 @@ font-size: 16px;
 .sidebar.left-bar {  
     float: left;
     border-left: none;
-    /* width: 250px; */
     width: 100%;
     height: 100%;
-    padding: 1rem;
-/* height: 100vh; */
+    padding: 25px;
     overflow-y: auto;
-    background-color: #3abac4; 
-    opacity: .9;
-  color: white;
-  position: relative;
-
-  
+    /* background-color: #3abac4;  */
+    /* opacity: .9; */
+  /* color: white; */
+  position: relative;  
 }
+/* 
 .left-bar .sidebar-image {
     background: url("../images/csm_kabel.png") no-repeat;
     background-size: cover;
@@ -272,26 +240,25 @@ font-size: 16px;
 
 .card {
     z-index: 1;
-    position: relative;
-    
-}
+    position: relative;    
+} */
 
 .sidebar.right-bar {
     border: none;
+    padding: 25px;
     /* margin-left: 250px; */
     /* background-color: lightblue; */
 }
 
 
 
-.left-bar .indexheader {    
+/* .left-bar .indexheader {    
     font-weight: bold;
     display: block;
     color: white;
-    font-family: Monoton, cursive;
-    /* font-size: 2rem; */
+    font-family: Monoton, cursive;  
     text-align: center;
-}
+} */
 
 
 
@@ -304,23 +271,26 @@ font-size: 16px;
     white-space: nowrap;
 }
 .search-input {
+    
     height: 50px !important;
-    border-color: currentcolor currentcolor rgb(204, 204, 204) !important;
-    border-style: none none solid !important;
-    border-width: medium medium 1px !important;
-    border-image: none 100% / 1 / 0 stretch !important;
+    /* border-color: currentcolor currentcolor rgb(204, 204, 204) !important; */
+    /* border-style: none none solid !important; */
+    /* border-width: medium medium 1px !important; */
+    /* border-image: none 100% / 1 / 0 stretch !important; */
     /* background: rgb(250, 250, 250) none repeat scroll 0% 0%; */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+    /* transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s; */
     background-color: rgb(250, 250, 250) !important;
     width: 100%;
 
   
   
-    outline: currentcolor none medium;
-    border-radius: 0px !important;
+    /* outline: currentcolor none medium; */
+    /* border-radius: 0px !important; */
+    border: 1px solid;
+    border-radius: 4px;
 
 }
-.css-1gklxk5 {
+.search-button {
     position: absolute;
     top: 8px;
     cursor: pointer;
@@ -329,7 +299,7 @@ font-size: 16px;
     left: 0.25em;    
     border: none;   
 }
-.css-1gklxk5 svg.search-icon {
+.search-button svg.search-icon {
     fill: rgb(0, 128, 0);
 } 
 .sidebar-simplesearch input[type=text] {
@@ -389,22 +359,6 @@ font-size: 16px;
 
 
 
-.filter-items {
-    list-style: outside none none;
-    padding: 0px 0px 12px;
-    margin: 0px;
-    /* max-height: 240px; */
-    position: relative;
-    overflow-y: auto;
-}
-.filter-items li {
-    min-height: 30px;
-    display: flex;
-    flex-direction: row;
-    -moz-box-align: center;
-    align-items: center;
-    padding-left: 2px;
-}
 .css-w1gpbi {
     border: 0px none;
     clip: rect(1px, 1px, 1px, 1px);

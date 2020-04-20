@@ -2,7 +2,7 @@
   <div class="search-container row">
     <div class="four columns left-bar">
       <div id="left-bar" class="sidebar left-bar">
-        <div class="sidebar-image"></div>
+        <!-- <div class="sidebar-image"></div> -->
         <!-- <h2 class="indexheader">DataXplore</h2> -->
 
         <!-- <div class="card" v-for="item in facets.language" :key="item.id">
@@ -21,7 +21,7 @@
       <div id="right-bar" class="sidebar right-bar">
         <!-- Search input section -->
         <div class="row">
-          <div class="twelve columns">
+          <div class="ten columns">
             <vs-input @search="onSearch"  title="searching solr datasets"    placeholder="Enter your search term..."></vs-input>
           </div>
         </div>
@@ -84,9 +84,6 @@ export default App;
 </script>
 
 <style lang="scss">
-.resultheader {
-  padding-left: 4%;
-}
 #app {
   color: #56b983;
 }

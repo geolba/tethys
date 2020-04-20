@@ -16,7 +16,7 @@
       />
 
       <!-- <button @click="search()" class="css-1gklxk5 ekqohx90"> -->
-      <button class="css-1gklxk5 ekqohx90">
+      <button class="search-button ekqohx90">
         <svg
           alt="Search"
           @click="search()"

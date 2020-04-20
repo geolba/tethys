@@ -57,7 +57,7 @@
 
     <!-- Menu -->
     <header class="header">
-        <nav class="navigation">
+        <nav class="navigation" id="nav">
             <a href="#" class="menu-icon {{ Route::currentRouteName() != 'frontend.home.index' ? 'active' : '' }}"">
                 <i class=" fa fa-bars"></i>
             </a>

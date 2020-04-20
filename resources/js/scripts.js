@@ -45,14 +45,17 @@ $(document).ready(function () {
     $navigationLink = $('.menu a');
 
   if (location.pathname == "/") {
+    $navigation.addClass('transparent');
     $(window).scroll(function () {
-      if (window.scrollY > window.outerHeight) {
+      if (window.scrollY >= (window.innerHeight + $navigation.height())) {
         $menuIcon.addClass('active');
+        $navigation.removeClass('transparent');
       } else {
         $menuIcon.removeClass('active');
+        $navigation.addClass('transparent');
       }
     });
-  }
+  } 
 
   $menuIcon.click(function (e) {
     e.preventDefault();
