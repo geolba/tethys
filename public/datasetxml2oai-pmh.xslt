@@ -162,8 +162,12 @@
         <metadataPrefix>
           <xsl:text>oai_datacite</xsl:text>
         </metadataPrefix>
-        <schema>http://schema.datacite.org/meta/kernel-4.1/metadata.xsd</schema>
-        <metadataNamespace>http://datacite.org/schema/kernel-4</metadataNamespace>
+        <schema>
+        <xsl:text>http://schema.datacite.org/meta/kernel-4.1/metadata.xsd</xsl:text>
+        </schema>
+        <metadataNamespace>
+        <xsl:text>http://datacite.org/schema/kernel-4</xsl:text>
+        </metadataNamespace>
       </metadataFormat>
     </ListMetadataFormats>
   </xsl:template>

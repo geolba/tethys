@@ -195,9 +195,10 @@
                 <td>
                     <input v-bind:name="'abstracts[' +  index +'][id]'" readonly class="form-control" v-model="abstract.id" hidden />
 
-                    <input type="text" :id="'abstracts['+ index +'][value]'"
+                    <textarea rows="4" cols="40" :id="'abstracts['+ index +'][value]'"
                         :name="'abstracts['+index+'][value]'" v-validate="'required|min:4|max:2500'" v-model="abstract.value"
-                        class="form-control">
+                        class="form-control"></textarea>
+                       
                 </td>
                 <td>
                     <template v-if="abstract.type == 'Abstract'">
