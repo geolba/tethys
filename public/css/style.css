@@ -354,12 +354,6 @@ section.normal {
   background: #2dc592;
 }
 
-.navigation ul li a.current,
-/* .navigation ul li a:hover {
-  background-color: #eee; 
-	color: #757575;
-} */
-
 /* Float right the list item that should be right aligned */
 .navigation ul li.right { float: right; }
 
