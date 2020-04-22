@@ -78,10 +78,10 @@
                             <h3>Datenarchvierung</h3>
                         </div>
                     </div>
-                    <div class="work-detail">
+                    <div class="work-back">
                         <div class="vertical-centered">
-                            <p class="separator orange">Datenarchvierung</p>
-                            <p class="paragraph-justify">
+                            {{-- <p class="separator orange">Datenarchvierung</p> --}}
+                            <p>
                                 Tethys RDR publiziert und archiviert nach den FAIR Prinzipien*
                                 nachhaltig so wie sicher geowissenschaftliche Datensätze in offenen, frei lesbaren
                                 Formaten.
@@ -99,10 +99,10 @@
                             <h3>Datenpublikation</h3>
                         </div>
                     </div>
-                    <div class="work-detail">
+                    <div class="work-back">
                         <div class="vertical-centered">
-                            <p class="separator orange">Datenpublikation</p>
-                            <p class="paragraph-justify">
+                            {{-- <p class="separator orange">Datenpublikation</p> --}}
+                            <p>
                                 Die Datensätze werden mit standardisierten Metadatenschemen publiziert
                                 und sind somit nicht nur auffindbar, wiederverwendbar und auch maschinenlesbar,
                                 sondern können dadurch auch einfach zitiert werden.
@@ -118,10 +118,10 @@
                             <h3>Begutachtung</h3>
                         </div>
                     </div>
-                    <div class="work-detail">
+                    <div class="work-back">
                         <div class="vertical-centered">
-                            <p class="separator orange">Begutachtung</p>
-                            <p class="paragraph-justify">
+                            {{-- <p class="separator orange">Begutachtung</p> --}}
+                            <p>
                                 Alle im Tethys RDR publizierten Datensätze werden auf technische sowie inhaltliche
                                 Vollständigkeit geprüft
                                 und werden bei Bedarf auch einer fachlichen Begutachtung unterworfen.
