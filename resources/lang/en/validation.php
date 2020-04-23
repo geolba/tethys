@@ -133,7 +133,7 @@ return [
                 // 'old_password'              => 'Old Password',
                 // 'new_password'              => 'New Password',
                 // 'new_password_confirmation' => 'New Password Confirmation',
-                'terms_and_conditions'      => 'terms and conditions',
+                'terms_and_conditions'      => 'Einverständniserklärung',
             ],
             'pages' => [
                 'title'           => 'Title',

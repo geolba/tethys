@@ -351,12 +351,18 @@
     <i class="fas fa-info-circle" @click="showModal" style="font-size:24px"></i>
     <Modal v-if="isModalVisible" @close="closeModal">
         <template slot="header">
-            {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').'*' !!}
+            {!! trans('validation.attributes.backend.create-dataset.terms_and_conditions').' *' !!}
         </template>
         <template slot="body">
-            Die im GBA-RDR veröffentlichten Informationen und Metadaten unterliegen grundsätzlich den
-            Open-Access-Bedingungen, wenn nicht anders angegeben. Die publizierten Datensets unterliegen einem
-            definierten Zugriffs- sowie Nutzungsrecht welche in den Metadaten eindeutig beschrieben sind.
+            Mit dem Setzen des Hakens bestätige ich hiermit
+            <ol type="1">
+                <li>
+                die Data Policy von Tethys RDR sowie die Terms & Conditions von Tethys 
+                gelesen und verstanden zu haben (<a href="/pages/terms-and-conditions" target=_blank>siehe hier</a>)
+                </li>
+                <li>das Einverständnis aller Co-Autoren über die bevorstehende Datenpublikation schriftlich eingeholt zu haben</li>
+                <li>sowohl mit der Data Policy als auch mit den Terms & Conditions einverstanden zu sein</li>
+            </ol> 
         </template>
     </Modal>
 
