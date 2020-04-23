@@ -274,6 +274,19 @@ section.normal {
   color: #222;
   background-color: transparent;
 }
+
+.header .logo {  
+  line-height: 1em;
+  position: absolute;  
+  padding: 15px;
+  -webkit-transition: all .15s ease-in-out;
+  -moz-transition: all .15s ease-in-out;
+  -ms-transition: all .15s ease-in-out;
+  -o-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  user-select: none;
+}
+
 .navigation.transparent {
   background-color: #fff;
   border-bottom: 1px solid #dcdcdc;
@@ -325,7 +338,7 @@ section.normal {
   display: block;
   float: left;
   text-align: center;
-  margin: 0; 
+  margin: 0;
 }
 
 .navigation.transparent ul li a {
@@ -339,7 +352,8 @@ section.normal {
  background:#3ad29f;  /* green */
  color: white;
   /* font-size: 1.7rem; */
-	text-decoration: none;	
+  text-decoration: none;	
+  /* padding:0 1em; */
   /* border-right: 1px solid #28b183; */
 }
 
@@ -824,7 +838,10 @@ there.
     display: block;
 		text-align: left;
   }
- 
+  .header .logo { 
+    display: inline; 
+    position: unset;
+  }
   .navigation a.menu-icon {
     display: inline;
   }

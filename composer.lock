@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
-            "version": "v11.8.0",
+            "version": "v11.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Astrotomic/laravel-translatable.git",
-                "reference": "8bd84a30381dfd9e2e1f24252b54279899959a7b"
+                "reference": "2b7cfd6c48c5340b2d06d8edc8b6995580e64f65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/8bd84a30381dfd9e2e1f24252b54279899959a7b",
-                "reference": "8bd84a30381dfd9e2e1f24252b54279899959a7b",
+                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/2b7cfd6c48c5340b2d06d8edc8b6995580e64f65",
+                "reference": "2b7cfd6c48c5340b2d06d8edc8b6995580e64f65",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,25 @@
                 "laravel",
                 "translation"
             ],
-            "time": "2020-03-03T10:43:26+00:00"
+            "funding": [
+                {
+                    "url": "https://plant.treeware.earth/Astrotomic/laravel-translatable",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Gummibeer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://issuehunt.io/r/astrotomic",
+                    "type": "issuehunt"
+                },
+                {
+                    "url": "https://opencollective.com/astrotomic",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2020-04-23T08:57:35+00:00"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -3648,16 +3666,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v9.9.0",
+            "version": "v9.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "976e70a2f0b831725da335cd434a11ff73d3c854"
+                "reference": "b0b9e2c37b5a17ca35bb2c6d3927bf6176393229"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/976e70a2f0b831725da335cd434a11ff73d3c854",
-                "reference": "976e70a2f0b831725da335cd434a11ff73d3c854",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b0b9e2c37b5a17ca35bb2c6d3927bf6176393229",
+                "reference": "b0b9e2c37b5a17ca35bb2c6d3927bf6176393229",
                 "shasum": ""
             },
             "require": {
@@ -3715,7 +3733,7 @@
                 "jquery",
                 "laravel"
             ],
-            "time": "2020-03-03T16:29:31+00:00"
+            "time": "2020-04-23T01:21:11+00:00"
         },
         {
             "name": "zizaco/entrust",

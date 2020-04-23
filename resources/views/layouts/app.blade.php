@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="/css/style.css">
 
     <!-- Favicon
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->  
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -60,6 +60,9 @@
         <nav class="navigation" id="nav">
             <a href="#" class="menu-icon {{ Route::currentRouteName() != 'frontend.home.index' ? 'active' : '' }}"">
                 <i class=" fa fa-bars"></i>
+            </a>
+            <a href="https://www.geologie.ac.at/" target="_blank" class="logo">
+                <img src="/images/gba_logo.png" alt="Logo white" width="60" height="30">               
             </a>
             <div class="container">
                 <ul class="menu">

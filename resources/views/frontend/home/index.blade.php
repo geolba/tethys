@@ -53,7 +53,7 @@
                     und stellen dadurch leicht zugängliche Archive da,
                     die auch in Österreich geo- und umweltwissenschaftlich wertvolle Auskunft über die damaligen
                     Umweltbedingungen geben können.
-                </p>               
+                </p>
             </div>
         </div>
     </div>
@@ -160,7 +160,7 @@
 <section data-sr id="about" class="about u-full-width">
     <div class="container">
         <div class="row">
-            <div class="twelve columns">              
+            <div class="twelve columns">
                 <h3 class="separator">Über Tethys RDR</h3>
                 <p class="paragraph-justify">
                     Tethys RDR ist ein Datenverlag der Geologischen Bundesanstalt (GBA),
@@ -233,12 +233,15 @@
 <!-- Contact Us -->
 <section data-sr class="container contact-us u-full-width u-max-full-width">
     <div class="row">
-        <div class="four columns contact-us-details">
+        <div class="six columns contact-us-details">
             <h3>Our Location</h3>
             <h5>
+                Geologische Bundesanstalt <br />
                 Neulinggasse 38 <br />
                 1030 Wien <br />
-                +43-1-7125674 <br />
+                <i class="fas fa-mobile-alt"></i> +43-1-7125674 <br />
+                <i class="fas fa-envelope-open-text"></i>
+                <a href="mailto:repository@geologie.ac.at"> repository[et]geologie.ac.at</a><br />
             </h5>
             <ul class="social-links">
                 <li>

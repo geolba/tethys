@@ -76,9 +76,12 @@
             <div class="twelve columns contact-us-details">
                 <h3>Our Location</h3>
                 <h5>
+                    Geologische Bundesanstalt <br />
                     Neulinggasse 38 <br />
                     1030 Wien <br />
-                    +43-1-7125674 <br />
+                    <i class="fas fa-mobile-alt"></i> +43-1-7125674 <br />
+                    <i class="fas fa-envelope-open-text"></i>
+                    <a href="mailto:repository@geologie.ac.at"> repository[et]geologie.ac.at</a><br />
                 </h5>
                 <ul class="social-links">
                     <li>
