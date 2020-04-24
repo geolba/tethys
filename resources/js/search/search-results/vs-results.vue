@@ -55,7 +55,7 @@
               </p>
 
               <!-- <div class="css-subject" v-if="document.subject && document.subject.length > 0"> -->
-              <span class="label label-success titlecase" v-for="(item, index) in document.subject" :key="index">
+              <span class="label label-keyword titlecase" v-for="(item, index) in document.subject" :key="index">
                 #{{ item }}
               </span>
               <!-- <p>

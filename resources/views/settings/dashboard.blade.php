@@ -96,6 +96,9 @@
         border: 0;
         height: 1px;
     }
+    .box-content a {
+        text-decoration:underline;
+    }
 </style>
 @endsection
 
@@ -107,10 +110,9 @@
 </div>
 <div class="pure-g box-content">
     <div class="pure-u-1 pure-u-md-1">
-
-
-        <embed src="{{ url('/docs/HandbuchTethys.pdf') }}" style="width:100%; height:800px;" frameborder="0">
-
+        <a href="{{ url('/docs/HandbuchTethys.pdf') }}" target=_blank>
+            Datenpublikationsrichtlinien, Terms & Conditions, Anleitung
+        </a>
 
         <div class="php-info">
             {{-- @php
@@ -126,4 +128,3 @@
 </div>
 
 @endsection
-

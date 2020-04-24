@@ -25,6 +25,9 @@ section.search {
 .label-info {
     background-color: #6aa3d5;
 }
+.label-keyword {
+    background-color: #7E7E7E;
+}
 .label {
     display: inline-block;
     padding: .2em .12em .3em;
@@ -310,7 +313,7 @@ font-size: 16px; */
 
 
 
-.css-subject {
+/* .css-subject {
     display: flex;
     -moz-box-pack: center;
     justify-content: center;
@@ -318,6 +321,7 @@ font-size: 16px; */
 }
 .css-keyword {
     background: mediumseagreen none repeat scroll 0% 0%;
+    background: #eee none repeat scroll 0% 0%;
     margin: 3px;
     padding: 4px;
     color: white;
@@ -325,7 +329,7 @@ font-size: 16px; */
     cursor: pointer;
     border-radius: 4px;
     font-size: 14px;
-}
+} */
 .abstract {
     overflow: hidden;
     /* white-space: nowrap; */
