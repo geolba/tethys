@@ -43,9 +43,9 @@
                
                 
                 <li class="pure-menu-item {{ Route::is('settings.dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('settings.dashboard') }}">
+                    <a class="pure-menu-link" href="{{ route('settings.dashboard') }}">
                         <i class="fa fa-tachometer-alt"></i>
-                        <span>Reports</span>
+                        <span>Manual</span>
                     </a>
                 </li>
 

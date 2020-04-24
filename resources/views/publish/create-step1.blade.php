@@ -358,7 +358,7 @@
             <ol type="1">
                 <li>
                 die Data Policy von Tethys RDR sowie die Terms & Conditions von Tethys 
-                gelesen und verstanden zu haben (<a href="/pages/terms-and-conditions" target=_blank>siehe hier</a>)
+                gelesen und verstanden zu haben (<a href="{{ url('/docs/HandbuchTethys.pdf') }}" target=_blank>siehe hier</a>)
                 </li>
                 <li>das Einverständnis aller Co-Autoren über die bevorstehende Datenpublikation schriftlich eingeholt zu haben</li>
                 <li>sowohl mit der Data Policy als auch mit den Terms & Conditions einverstanden zu sein</li>
