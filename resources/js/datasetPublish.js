@@ -93,6 +93,7 @@ const app = new Vue({
             editLink: null,
             releaseLink: null,
             deleteLink: null,
+            contributorTypes : [],
 
             isModalVisible: false,
 
@@ -153,7 +154,9 @@ const app = new Vue({
         this.reset();
     },
     beforeMount() {       
-        this.messages = window.Laravel.messages;   
+        this.messages = window.Laravel.messages;        
+        this.contributorTypes = window.Laravel.contributorTypes;
+        console.log(this.contributorTypes);
     },
     computed: {
         keywords_length() {
@@ -331,6 +334,7 @@ const app = new Vue({
                 formData.append('contributors[' + i + '][email]', contributor.email);
                 formData.append('contributors[' + i + '][identifier_orcid]', contributor.identifier_orcid);
                 formData.append('contributors[' + i + '][status]', contributor.status);
+                formData.append('contributors[' + i + '][contributor_type]', contributor.contributor_type);
                 if (contributor.id !== undefined) {
                     formData.append('contributors[' + i + '][id]', contributor.id);
                 }

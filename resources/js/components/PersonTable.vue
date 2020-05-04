@@ -1,4 +1,4 @@
- <template>
+<template>
   <div>
     <h3 v-if="heading && personlist.length && showHeading == true">{{ heading }}</h3>
     <table class="pure-table pure-table-horizontal" v-if="personlist.length">
@@ -12,86 +12,56 @@
           <th scope="col">
             <label for="language">
               <span>
-                ORCID <i
-                  v-tooltip="{ content: messages.orcid, class: 'tooltip-custom tooltip-other-custom' }"
-                  class="far fa-lg fa-question-circle"
-                ></i>
+                ORCID <i v-tooltip="{ content: messages.orcid, class: 'tooltip-custom tooltip-other-custom' }"
+                  class="far fa-lg fa-question-circle"></i>
               </span>
             </label>
+          </th>
+          <th scope="col" v-if="Object.keys(contributortypes).length">
+            <span>Type</span>
           </th>
           <th></th>
         </tr>
       </thead>
-      <draggable
-        v-bind:list="personlist"
-        tag="tbody"
-        v-on:start="isDragging=true"
-        v-on:end="isDragging=false"
-      >
-        <tr
-          v-for="(item, index) in personlist"
-          v-bind:key="item.id"
-          v-bind:class="[item.status==true ? 'activeClass' : 'inactiveClass']"
-        >
+      <draggable v-bind:list="personlist" tag="tbody" v-on:start="isDragging=true" v-on:end="isDragging=false">
+        <tr v-for="(item, index) in personlist" v-bind:key="item.id"
+          v-bind:class="[item.status==true ? 'activeClass' : 'inactiveClass']">
           <td scope="row">{{ index + 1 }}</td>
           <td>
-            <input
-              v-bind:name="heading+'['+index+'][id]'"
-              class="form-control"
-              v-model="item.id"
-              readonly
-              data-vv-scope="step-1"
-            />
+            <input style="width:30px;" v-bind:name="heading+'['+index+'][id]'" class="form-control" v-model="item.id"
+              readonly data-vv-scope="step-1" />
           </td>
           <td>
-            <input
-              v-bind:name="heading+'['+index+'][first_name]'"
-              class="form-control"
-              placeholder="[FIRST NAME]"
-              v-model="item.first_name"
-              v-bind:readonly="item.status==1"
-              v-validate="'required'"
-              data-vv-scope="step-1"
-            />
+            <input v-bind:name="heading+'['+index+'][first_name]'" class="form-control" placeholder="[FIRST NAME]"
+              v-model="item.first_name" v-bind:readonly="item.status==1" v-validate="'required'"
+              data-vv-scope="step-1" />
           </td>
           <td>
-            <input
-              v-bind:name="heading+'['+index+'][last_name]'"
-              class="form-control"
-              placeholder="[LAST NAME]"
-              v-model="item.last_name"
-              v-bind:readonly="item.status==1"
-              v-validate="'required'"
-              data-vv-scope="step-1"
-            />
+            <input v-bind:name="heading+'['+index+'][last_name]'" class="form-control" placeholder="[LAST NAME]"
+              v-model="item.last_name" v-bind:readonly="item.status==1" v-validate="'required'"
+              data-vv-scope="step-1" />
           </td>
           <td>
             <!-- v-validate="'required|email'" -->
-            <input
-              v-bind:name="heading+'['+index+'][email]'"
-              class="form-control"
-              placeholder="[EMAIL]"
-              v-model="item.email"
-              v-validate="{required: true, email: true, unique: [personlist, index, 'email']}"
-              v-bind:readonly="item.status==1"
-              data-vv-scope="step-1"
-            />
+            <input v-bind:name="heading+'['+index+'][email]'" class="form-control" placeholder="[EMAIL]"
+              v-model="item.email" v-validate="{required: true, email: true, unique: [personlist, index, 'email']}"
+              v-bind:readonly="item.status==1" data-vv-scope="step-1" />
           </td>
           <td>
-            <input
-              v-bind:name="heading+'['+index+'][identifier_orcid]'"
-              class="form-control"
-              placeholder="[ORCID optional]"
-              v-model="item.identifier_orcid"
-              v-bind:readonly="item.status==1"
-              data-vv-scope="step-1"
-            />
+            <input style="width:70px;" v-bind:name="heading+'['+index+'][identifier_orcid]'" class="form-control"
+              placeholder="[ORCID]" v-model="item.identifier_orcid" v-bind:readonly="item.status==1"
+              data-vv-scope="step-1" />
+          </td>
+          <td v-if="Object.keys(contributortypes).length">
+            <select type="text" v-bind:name="heading+'['+index+'][contributor_type]'" v-validate="{required: true}"
+              data-vv-scope="step-1" v-model="item.contributor_type">
+              <option v-for="(option, i) in contributortypes" :value="option" :key="i">
+                {{ option }}
+              </option>
+            </select>
           </td>
           <td>
-            <button
-              class="pure-button button-small is-warning"
-              @click.prevent="removeAuthor(index)"
-            >
+            <button class="pure-button button-small is-warning" @click.prevent="removeAuthor(index)">
               <i class="fa fa-trash"></i>
             </button>
           </td>
@@ -102,78 +72,83 @@
 </template>
 
 <script lang="ts">
-import draggable from "vuedraggable";
-import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
-import Tooltip from 'vue-directive-tooltip';
-import 'vue-directive-tooltip/dist/vueDirectiveTooltip.css';
-Vue.use(Tooltip);
+  import draggable from "vuedraggable";
+  import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
+  import Tooltip from 'vue-directive-tooltip';
+  import 'vue-directive-tooltip/dist/vueDirectiveTooltip.css';
+  Vue.use(Tooltip);
 
-@Component({
-  components: { draggable }
-})
-export default class PersonTable extends Vue {
-  @Inject("$validator") readonly $validator;
-  // inject: {
-  //   $validator: "$validator"
-  // },
-  name: "person-table";
-  // components: {
-  //   draggable
-  // },
+  @Component({
+    components: { draggable }
+  })
+  export default class PersonTable extends Vue {
+    @Inject("$validator") readonly $validator;
+    // inject: {
+    //   $validator: "$validator"
+    // },
+    name: "person-table";
+    // components: {
+    //   draggable
+    // },
 
-  editable = true;
-  isDragging = false;
-  delayedDragging = false;
+    editable = true;
+    isDragging = false;
+    delayedDragging = false;
 
-  @Prop({ default: true, type: Array })
-  personlist;
-  @Prop(Number)
-  rowIndex;
-  @Prop(String)
-  heading;
-  @Prop({ required: true, type: Array })
-  messages;
-  @Prop({ default: true, type: Boolean })
-  showHeading;
+    @Prop({ required: true, type: Array })
+    personlist;
+    @Prop({ default: {}, type: Object })
+    contributortypes;
+    @Prop(Number)
+    rowIndex;
+    @Prop(String)
+    heading;
+    @Prop({ required: true, type: Array })
+    messages;
+    @Prop({ default: true, type: Boolean })
+    showHeading;
 
-  // props: {
-  //   personlist: {
-  //     type: Array,
-  //     required: true
-  //   },
-  //   rowIndex: {
-  //     type: Number
-  //   },
-  //   heading: String
-  // },
+    // props: {
+    //   personlist: {
+    //     type: Array,
+    //     required: true
+    //   },
+    //   rowIndex: {
+    //     type: Number
+    //   },
+    //   heading: String
+    // },
 
-  itemAction(action, data, index) {
-    console.log("custom-actions: " + action, data.full_name, index);
+    itemAction(action, data, index) {
+      console.log("custom-actions: " + action, data.full_name, index);
+    }
+
+    removeAuthor(key) {
+      this.personlist.splice(key, 1);
+    }
+
+    onMove({ relatedContext, draggedContext }) {
+      const relatedElement = relatedContext.element;
+      const draggedElement = draggedContext.element;
+      return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed;
+    }
   }
-
-  removeAuthor(key) {
-    this.personlist.splice(key, 1);
-  }
-
-  onMove({ relatedContext, draggedContext }) {
-    const relatedElement = relatedContext.element;
-    const draggedElement = draggedContext.element;
-    return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed;
-  }
-}
 </script>
 
 <style>
-.custom-actions button.ui.button {
-  padding: 8px 8px;
-}
-.custom-actions button.ui.button > i.icon {
-  margin: auto !important;
-}
-.activeClass {
-  background-color: aquamarine;
-}
-.inactiveClass {
-  background-color: orange;
-}
+  .custom-actions button.ui.button {
+    padding: 8px 8px;
+  }
+
+  .custom-actions button.ui.button>i.icon {
+    margin: auto !important;
+  }
+
+  .activeClass {
+    background-color: aquamarine;
+  }
+
+  .inactiveClass {
+    background-color: orange;
+  }
 </style>

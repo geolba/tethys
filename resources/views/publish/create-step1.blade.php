@@ -320,7 +320,7 @@
         <button class="pure-button button-small" @click.prevent="addNewContributor()">+</button>
     </div>
     {{-- <h3>contributor table</h3> --}}
-    <person-table name="contributors" v-bind:messages="messages" v-bind:heading="'contributor table'"
+    <person-table name="contributors" v-bind:messages="messages" v-bind:contributortypes="contributorTypes" v-bind:heading="'contributor table'"
         v-bind:personlist="dataset.contributors"></person-table>
 </fieldset>
 
@@ -954,7 +954,8 @@
 <script>
     window.Laravel = <?php echo json_encode([            
             'languages' => $languages,
-            'messages' => $messages,            
+            'messages' => $messages,   
+            'contributorTypes' => $contributorTypes 
         ]); ?>        
 </script>
 <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>

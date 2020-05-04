@@ -38,8 +38,8 @@
     <xsl:output method="xml" indent="yes" />
 
     <xsl:template match="Rdr_Dataset" mode="oai_datacite">
-        <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" 
-            xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
+        <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
             <!-- <isReferenceQuality>true</isReferenceQuality>
       <schemaVersion>4.1</schemaVersion>
       <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
@@ -70,9 +70,11 @@
             <language>
                 <xsl:value-of select="@Language" />
             </language>
-            <contributors>
-                <xsl:apply-templates select="PersonContributor" mode="oai_datacite" />
-            </contributors>
+            <xsl:if test="PersonContributor">
+                <contributors>
+                    <xsl:apply-templates select="PersonContributor" mode="oai_datacite" />
+                </contributors>
+            </xsl:if>
             <dates>
                 <xsl:call-template name="RdrDate2" mode="oai_datacite" />
             </dates>
@@ -115,7 +117,8 @@
         </resource>
     </xsl:template>
 
-    <xsl:template name="RdrDate2" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template name="RdrDate2" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <xsl:if test="EmbargoDate">
             <date>
                 <xsl:attribute name="dataType">Available</xsl:attribute>
@@ -140,7 +143,8 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="Coverage" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="Coverage" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <geoLocation>
             <geoLocationBox>
                 <westBoundLongitude>
@@ -159,7 +163,8 @@
         </geoLocation>
     </xsl:template>
 
-    <xsl:template match="TitleAbstract" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="TitleAbstract" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <description>
             <xsl:attribute name="xml:lang">
                 <xsl:value-of select="@Language" />
@@ -172,7 +177,8 @@
             <xsl:value-of select="@Value" />
         </description>
     </xsl:template>
-    <xsl:template match="TitleAbstractAdditional" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="TitleAbstractAdditional" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <description>
             <xsl:attribute name="xml:lang">
                 <xsl:value-of select="@Language" />
@@ -186,7 +192,8 @@
         </description>
     </xsl:template>
 
-    <xsl:template match="TitleMain" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="TitleMain" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <title>
             <xsl:if test="@Language != ''">
                 <xsl:attribute name="xml:lang">
@@ -201,7 +208,8 @@
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>
-    <xsl:template match="TitleAdditional" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="TitleAdditional" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <title>
             <xsl:if test="@Language != ''">
                 <xsl:attribute name="xml:lang">
@@ -217,7 +225,8 @@
         </title>
     </xsl:template>
 
-    <xsl:template match="Subject" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="Subject" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <subject>
             <xsl:if test="@Language != ''">
                 <xsl:attribute name="xml:lang">
@@ -228,7 +237,8 @@
         </subject>
     </xsl:template>
 
-    <xsl:template match="Reference" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="Reference" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <relatedIdentifier>
             <xsl:attribute name="relatedIdentifierType">
                 <xsl:value-of select="@Type" />
@@ -240,7 +250,8 @@
         </relatedIdentifier>
     </xsl:template>
 
-    <xsl:template match="PersonContributor" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="PersonContributor" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <contributor>
             <contributorName>
                 <xsl:if test="@NameType != ''">
@@ -254,7 +265,8 @@
     </xsl:template>
 
 
-    <xsl:template match="PersonAuthor" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">    
+    <xsl:template match="PersonAuthor" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <creator>
             <creatorName>
                 <xsl:if test="@NameType != ''">
@@ -291,13 +303,15 @@
         </creator>
     </xsl:template>
 
-    <xsl:template match="File/@MimeType" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="File/@MimeType" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <format>
             <xsl:value-of select="." />
         </format>
     </xsl:template>
 
-    <xsl:template match="Licence" mode="oai_datacite" xmlns="http://datacite.org/schema/kernel-4">
+    <xsl:template match="Licence" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
         <rights>
             <xsl:if test="@LinkLicence != ''">
                 <xsl:attribute name="rightsURI">

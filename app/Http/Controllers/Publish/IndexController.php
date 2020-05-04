@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
 
 class IndexController extends Controller
 {
@@ -75,6 +76,8 @@ class IndexController extends Controller
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 
+        $contributorTypes = Config::get('enums.contributor_types');
+
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
         return view(
             'publish.create-step1',
@@ -88,6 +91,7 @@ class IndexController extends Controller
                 'titleTypes',
                 'keywordTypes',
                 'descriptionTypes',
+                'contributorTypes',
                 'page'
             )
         );
@@ -394,7 +398,11 @@ class IndexController extends Controller
                 if (isset($data['contributors'])) {
                     //$data_to_sync = [];
                     foreach ($request->get('contributors') as $key => $contributor) {
-                        $pivot_data = ['role' => 'contributor', 'sort_order' => $key + 1];
+                        $pivot_data = [
+                            'role' => 'contributor',
+                            'sort_order' => $key + 1,
+                            'contributor_type' => $contributor['contributor_type']
+                        ];
                         if (isset($contributor['id'])) {
                             //$data_to_sync[$person['id']] = $pivot_data;
                             $dataset->persons()->attach($contributor['id'], $pivot_data);

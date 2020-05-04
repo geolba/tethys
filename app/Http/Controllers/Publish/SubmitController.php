@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Config;
 
 class SubmitController extends Controller
 {
@@ -61,8 +62,11 @@ class SubmitController extends Controller
      */
     public function edit($id): \Illuminate\Contracts\View\View
     {
-        $dataset = Dataset::findOrFail($id);
-        $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
+        // $dataset = Dataset::findOrFail($id);
+        $dataset = Dataset::where('id', $id)
+        ->with('contributors')->first();
+
+        $dataset->load('licenses', 'authors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative',
         'Translated' => 'Translated', 'Other' => 'Other'];
@@ -72,6 +76,8 @@ class SubmitController extends Controller
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
+        
+        $contributorTypes = Config::get('enums.contributor_types');
 
         $messages = DB::table('messages')
             ->pluck('help_text', 'metadata_element');
@@ -111,6 +117,7 @@ class SubmitController extends Controller
                 'dataset',
                 'titleTypes',
                 'descriptionTypes',
+                'contributorTypes',
                 'languages',
                 'messages',
                 'projects',

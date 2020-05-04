@@ -139,7 +139,7 @@ class Dataset extends Model
     {
         return $this
             ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
-            ->withPivot('role', 'sort_order', 'allow_email_contact');
+            ->withPivot('role', 'sort_order', 'allow_email_contact', 'contributor_type');
     }
 
     /**

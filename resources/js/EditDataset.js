@@ -112,15 +112,14 @@ export default class EditDataset extends Vue {
         this.realMerge(this.form, window.Laravel.form);
         this.titleTypes = window.Laravel.titleTypes;
         this.descriptionTypes = window.Laravel.descriptionTypes;
+        this.contributorTypes = window.Laravel.contributorTypes;
         this.languages = window.Laravel.languages;
         this.messages = window.Laravel.messages;
         this.projects = window.Laravel.projects;
         this.licenses = window.Laravel.licenses;
         this.checkeds = window.Laravel.checkeds;
         this.referenceTypes = window.Laravel.referenceTypes;
-        this.relationTypes = window.Laravel.relationTypes;
-
-
+        this.relationTypes = window.Laravel.relationTypes;       
     }
 
     created() {
