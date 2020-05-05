@@ -233,6 +233,7 @@ class SubmitController extends Controller
                 $index = 0;
                 foreach ($request->get('contributors') as $key => $person) {
                     $pivot_data = ['role' => 'contributor', 'sort_order' => $index + 1, 'allow_email_contact' => false];
+                    $pivot_data = array_merge($pivot_data, $person['pivot']);
                     // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
                     if (isset($person['id'])) {
                         // $data_to_sync[$person['id']] = $pivot_data;

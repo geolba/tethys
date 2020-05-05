@@ -59,7 +59,7 @@ trait DatasetExtension
         'PersonContributor' => array(
             'model' => Person::class,
             'through' => 'link_documents_persons',
-            'pivot' => array('role' => 'contributor'),
+            'pivot' => array('role' => 'contributor', 'contributor_type' => 'contributor_type'),
             //                'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
             'relation' => 'persons',
@@ -290,6 +290,7 @@ trait DatasetExtension
                 $pivotValue = $pivArray['role'];
                 //$through = $this->externalFields[$fieldname]['through'];
                 $rows = $this->{$relation}()->wherePivot('role', $pivotValue)->get();
+                //$rows = $this->{$relation}()->get();
                 //$rows = $this->belongsToMany($modelclass, $through, 'document_id')->wherePivot('role', $pivotValue)->get();
             }
         } else {
@@ -303,11 +304,23 @@ trait DatasetExtension
             // $result[] = $row;//->value;
 
             $attributes = array_keys($row->getAttributes());
+            if (isset($this->externalFields[$fieldname]['pivot'])) {
+                $pivotArray = $this->externalFields[$fieldname]['pivot'];
+                $arrayKeys = array_keys($pivotArray);
+                $extendedArrayKeys = array_map(function ($pivotAttribute) {
+                    return "pivot_" . $pivotAttribute;
+                }, $arrayKeys);
+                $attributes = array_merge($attributes, $extendedArrayKeys);
+            }
             $objArray = [];
             foreach ($attributes as $property_name) {
                 $fieldName = self::convertColumnToFieldname($property_name);
                 $fieldval = "";
-                if ($fieldName == "Type") {
+                if (substr($property_name, 0, 6) === "pivot_") {
+                    $str = ltrim($property_name, 'pivot_');
+                    $fieldName = self::convertColumnToFieldname($str);
+                    $fieldval = $row->pivot->{$str};
+                } elseif ($fieldName == "Type") {
                     $fieldval = ucfirst($row->{$property_name});
                 } else {
                     // $field =new Field($fieldName);

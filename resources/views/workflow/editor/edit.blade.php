@@ -54,6 +54,7 @@
             'form' => $dataset,
             'titleTypes' => $titleTypes,
             'descriptionTypes' => $descriptionTypes,
+            'contributorTypes'=> $contributorTypes,
             'languages' => $languages,
             'messages' => $messages,
             'projects' => $projects,

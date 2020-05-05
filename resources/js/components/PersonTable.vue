@@ -53,8 +53,8 @@
               data-vv-scope="step-1" />
           </td>
           <td v-if="Object.keys(contributortypes).length">
-            <select type="text" v-bind:name="heading+'['+index+'][contributor_type]'" v-validate="{required: true}"
-              data-vv-scope="step-1" v-model="item.contributor_type">
+            <select type="text" v-bind:name="heading+'['+index+'][pivot][contributor_type]'" v-validate="{required: true}"
+              data-vv-scope="step-1" v-model="item.pivot.contributor_type">
               <option v-for="(option, i) in contributortypes" :value="option" :key="i">
                 {{ option }}
               </option>

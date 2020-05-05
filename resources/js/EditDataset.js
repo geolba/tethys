@@ -119,7 +119,8 @@ export default class EditDataset extends Vue {
         this.licenses = window.Laravel.licenses;
         this.checkeds = window.Laravel.checkeds;
         this.referenceTypes = window.Laravel.referenceTypes;
-        this.relationTypes = window.Laravel.relationTypes;       
+        this.relationTypes = window.Laravel.relationTypes;    
+        console.log(this.form);   
     }
 
     created() {

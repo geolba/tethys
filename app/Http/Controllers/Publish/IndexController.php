@@ -400,9 +400,9 @@ class IndexController extends Controller
                     foreach ($request->get('contributors') as $key => $contributor) {
                         $pivot_data = [
                             'role' => 'contributor',
-                            'sort_order' => $key + 1,
-                            'contributor_type' => $contributor['contributor_type']
+                            'sort_order' => $key + 1
                         ];
+                        $pivot_data = array_merge($pivot_data, $contributor['pivot']);
                         if (isset($contributor['id'])) {
                             //$data_to_sync[$person['id']] = $pivot_data;
                             $dataset->persons()->attach($contributor['id'], $pivot_data);

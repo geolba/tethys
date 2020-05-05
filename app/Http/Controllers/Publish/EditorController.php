@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use \Exception;
+use Illuminate\Support\Facades\Config;
 
 class EditorController extends Controller
 {
@@ -125,6 +126,8 @@ class EditorController extends Controller
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
+        
+        $contributorTypes = Config::get('enums.contributor_types');
 
         // $options = License::all('id', 'name_long');
         $licenses = License::select('id', 'name_long', 'link_licence')
@@ -148,6 +151,7 @@ class EditorController extends Controller
                 'dataset',
                 'titleTypes',
                 'descriptionTypes',
+                'contributorTypes',
                 'languages',
                 'messages',
                 'projects',
@@ -263,6 +267,7 @@ class EditorController extends Controller
                 $index = 0;
                 foreach ($request->get('contributors') as $key => $person) {
                     $pivot_data = ['role' => 'contributor', 'sort_order' => $index + 1, 'allow_email_contact' => false];
+                    $pivot_data = array_merge($pivot_data, $person['pivot']);
                     // if ($galery_id == $request->get('mainPicture')) $pivot_data = ['main' => 1];
                     if (isset($person['id'])) {
                         // $data_to_sync[$person['id']] = $pivot_data;

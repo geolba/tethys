@@ -155,8 +155,7 @@ const app = new Vue({
     },
     beforeMount() {       
         this.messages = window.Laravel.messages;        
-        this.contributorTypes = window.Laravel.contributorTypes;
-        console.log(this.contributorTypes);
+        this.contributorTypes = window.Laravel.contributorTypes;        
     },
     computed: {
         keywords_length() {
@@ -334,7 +333,7 @@ const app = new Vue({
                 formData.append('contributors[' + i + '][email]', contributor.email);
                 formData.append('contributors[' + i + '][identifier_orcid]', contributor.identifier_orcid);
                 formData.append('contributors[' + i + '][status]', contributor.status);
-                formData.append('contributors[' + i + '][contributor_type]', contributor.contributor_type);
+                formData.append('contributors[' + i + '][pivot][contributor_type]', contributor.pivot.contributor_type);
                 if (contributor.id !== undefined) {
                     formData.append('contributors[' + i + '][id]', contributor.id);
                 }
@@ -539,7 +538,7 @@ const app = new Vue({
             }
         },
         addNewContributor() {
-            let newContributor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '' };
+            let newContributor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '', pivot: { contributor_type: ''} };
             this.dataset.contributors.push(newContributor);
         },
         onAddContributor(person) {
@@ -550,6 +549,7 @@ const app = new Vue({
             } else if (this.dataset.persons.filter(e => e.id === person.id).length > 0) {
                 this.$toast.error("person is already defined as author");
             } else {
+                person.pivot = { contributor_type: '' };
                 this.dataset.contributors.push(person);
                 this.dataset.checkedContributors.push(person.id);
                 this.$toast.success("person has been successfully added as contributor");

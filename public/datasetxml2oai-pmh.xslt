@@ -122,7 +122,7 @@
         <xsl:text>persistent</xsl:text>
       </deletedRecord>
       <granularity>
-        <xsl:text>YYYY-MM-DD</xsl:text>
+        <xsl:text>YYYY-MM-DDThh:mm:ssZ</xsl:text>
       </granularity>
       <description>
         <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">

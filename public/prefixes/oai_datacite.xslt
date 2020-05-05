@@ -253,13 +253,18 @@
     <xsl:template match="PersonContributor" mode="oai_datacite" 
         xmlns="http://datacite.org/schema/kernel-4">
         <contributor>
+            <xsl:if test="@ContributorType != ''">
+                <xsl:attribute name="contributorType">
+                    <xsl:value-of select="@ContributorType" />
+                </xsl:attribute>
+            </xsl:if>
             <contributorName>
-                <xsl:if test="@NameType != ''">
+                <!-- <xsl:if test="@NameType != ''">
                     <xsl:attribute name="nameType">
                         <xsl:value-of select="@NameType" />
                     </xsl:attribute>
-                </xsl:if>
-                <xsl:value-of select="@LastName" />
+                </xsl:if> -->
+                <xsl:value-of select="concat(@FirstName, ' ',@LastName)" />
             </contributorName>
         </contributor>
     </xsl:template>
