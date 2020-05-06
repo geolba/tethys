@@ -378,7 +378,7 @@ class IndexController extends Controller
                         } else {
                             $dataPerson = new Person($person);
                             $dataPerson->status = true;
-                            $dataPerson->name_type = "Organizational";
+                            $dataPerson->name_type = "Personal";
                             $dataset->persons()->save($dataPerson, $pivot_data);
                         }
                     }
@@ -409,7 +409,7 @@ class IndexController extends Controller
                         } else {
                             $dataContributor = new Person($contributor);
                             $dataContributor->status = true;
-                            $dataContributor->name_type = "Organizational";
+                            // $dataContributor->name_type = "Organizational";
                             $dataset->persons()->save($dataContributor, $pivot_data);
                         }
                     }

@@ -39,9 +39,9 @@
 
     <xsl:template match="Rdr_Dataset" mode="oai_datacite">
         <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-            xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
+            xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.3/metadata.xsd">
             <!-- <isReferenceQuality>true</isReferenceQuality>
-      <schemaVersion>4.1</schemaVersion>
+      <schemaVersion>4.3</schemaVersion>
       <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
             <identifier>
                 <xsl:text>oai:</xsl:text>
@@ -121,7 +121,7 @@
         xmlns="http://datacite.org/schema/kernel-4">
         <xsl:if test="EmbargoDate">
             <date>
-                <xsl:attribute name="dataType">Available</xsl:attribute>
+                <xsl:attribute name="dateType">Available</xsl:attribute>
                 <xsl:variable name="embargoDate" select="concat(
                     EmbargoDate/@Year, '-',
                     format-number(EmbargoDate/@Month,'00'), '-',
@@ -132,7 +132,7 @@
         </xsl:if>
         <xsl:if test="CreatedAt">
             <date>
-                <xsl:attribute name="dataType">created</xsl:attribute>
+                <xsl:attribute name="dateType">created</xsl:attribute>
                 <xsl:variable name="createdAt" select="concat(
                     CreatedAt/@Year, '-',
                     format-number(CreatedAt/@Month,'00'), '-',

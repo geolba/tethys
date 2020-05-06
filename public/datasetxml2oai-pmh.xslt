@@ -163,7 +163,7 @@
           <xsl:text>oai_datacite</xsl:text>
         </metadataPrefix>
         <schema>
-        <xsl:text>http://schema.datacite.org/meta/kernel-4.1/metadata.xsd</xsl:text>
+        <xsl:text>http://schema.datacite.org/meta/kernel-4.3/metadata.xsd</xsl:text>
         </schema>
         <metadataNamespace>
         <xsl:text>http://datacite.org/schema/kernel-4</xsl:text>
