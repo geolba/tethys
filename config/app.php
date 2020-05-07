@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'workspacePath' => storage_path() . DIRECTORY_SEPARATOR . "workspace",
+
     'name' => env('APP_NAME', 'App'),
     
      /*

@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Oai;
 use App\Exceptions\OaiModelException;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\Oai\Configuration as OaiModelConfiguration;
 use App\Models\Oai\OaiModelError;
+use App\Models\Oai\ResumptionTokens;
 use App\Models\Oai\ResumptionToken;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use \Exception;
+use Carbon\Carbon;
 
 class RequestController extends Controller
 {
@@ -66,6 +69,8 @@ class RequestController extends Controller
         // Initialize member variables.
         $this->xml = new \DomDocument;
         $this->proc = new \XSLTProcessor;
+
+        $this->configuration = new OaiModelConfiguration();
     }
 
     public function index(Request $request)
@@ -113,6 +118,8 @@ class RequestController extends Controller
         // set OAI base url
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
         $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
+
+        // $resumptionPath = $this->configuration->getResumptionTokenPath();
 
         if (isset($oaiRequest['verb'])) {
             $this->proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
@@ -197,7 +204,7 @@ class RequestController extends Controller
             //or (false === in_array($dataset->getServerState(), $this->_deliveringDocumentStates))
              or (false === $dataset->whereIn('server_state', $this->deliveringDocumentStates))
             //or (false === $dataset->hasEmbargoPassed())
-            ) {
+        ) {
             throw new OaiModelException('Document is not available for OAI export!', OaiModelError::NORECORDSMATCH);
         }
 
@@ -259,7 +266,8 @@ class RequestController extends Controller
      */
     private function handleListRecords($oaiRequest)
     {
-        $maxRecords = 30; //$this->_configuration->getMaxListRecords();
+        //$maxRecords = 30; //$this->_configuration->getMaxListRecords();
+        $maxRecords = $this->configuration->getMaxListRecords();
         $this->handlingOfLists($oaiRequest, $maxRecords);
     }
 
@@ -271,7 +279,8 @@ class RequestController extends Controller
      */
     private function handleListIdentifiers(array &$oaiRequest)
     {
-        $maxIdentifier = 5; //$this->_configuration->getMaxListIdentifiers();
+        //$maxIdentifier = 5; //$this->_configuration->getMaxListIdentifiers();
+        $maxIdentifier = $this->configuration->getMaxListIdentifiers();
         $this->handlingOfLists($oaiRequest, $maxIdentifier);
     }
 
@@ -333,7 +342,7 @@ class RequestController extends Controller
         }
 
         $repIdentifier = "tethys.at";
-        $tokenTempPath = storage_path('app/resumption'); //$this->_configuration->getResumptionTokenPath();
+        $tokenTempPath = storage_path('app' . DIRECTORY_SEPARATOR . 'resumption'); //$this->_configuration->getResumptionTokenPath();
 
         $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
         $this->xml->appendChild($this->xml->createElement('Datasets'));
@@ -348,12 +357,28 @@ class RequestController extends Controller
         if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
             $metadataPrefix = $oaiRequest['metadataPrefix'];
         }
-        $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+        //$this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+
+        $tokenWorker = new ResumptionTokens();
+        $tokenWorker->setResumptionPath($tokenTempPath);
 
         // parameter resumptionToken is given
         if (false === empty($oaiRequest['resumptionToken'])) {
-            $tokenWorker = new ResumptionToken();
-            $resParam = $oaiRequest['resumptionToken'];
+            $resParam = $oaiRequest['resumptionToken']; //e.g. "158886496600000"
+            $token = $tokenWorker->getResumptionToken($resParam);
+
+            if (true === is_null($token)) {
+                throw new OaiModelException("cache is outdated.", OaiModelError::BADRESUMPTIONTOKEN);
+            }
+            $cursor = $token->getStartPosition() - 1;//startet dann bei Index 10
+            $start = $token->getStartPosition() + $maxRecords;
+            $totalIds = $token->getTotalIds();
+            $reldocIds = $token->getDocumentIds();
+            $metadataPrefix = $token->getMetadataPrefix();
+
+            $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+
+            // else no resumptionToken is given
         } else {
             // no resumptionToken is given
             $finder = Dataset::query();
@@ -379,6 +404,45 @@ class RequestController extends Controller
             $dataset = Dataset::findOrFail($dataId);
             $this->createXmlRecord($dataset);
         }
+
+        // no records returned
+        if (true === empty($workIds)) {
+            throw new OaiModelException(
+                "The combination of the given values results in an empty list.",
+                OaiModelError::NORECORDSMATCH
+            );
+        }
+
+        // store the further Ids in a resumption-file
+        $countRestIds = count($restIds);
+        if ($countRestIds > 0) {
+            $token = new ResumptionToken();
+            $token->setStartPosition($start);
+            $token->setTotalIds($totalIds);
+            $token->setDocumentIds($restIds);
+            $token->setMetadataPrefix($metadataPrefix);
+
+            $tokenWorker->storeResumptionToken($token);
+
+            // set parameters for the resumptionToken-node
+            $res = $token->getResumptionId();
+            $this->setParamResumption($res, $cursor, $totalIds);
+        }
+    }
+    /**
+     * Set parameters for resumptionToken-line.
+     *
+     * @param  string  $res value of the resumptionToken
+     * @param  int     $cursor value of the cursor
+     * @param  int     $totalIds value of the total Ids
+     */
+    private function setParamResumption($res, $cursor, $totalIds)
+    {
+        $tomorrow = str_replace('+00:00', 'Z', Carbon::now()->addHour(1)->setTimeZone('UTC'));
+        $this->proc->setParameter('', 'dateDelete', $tomorrow);
+        $this->proc->setParameter('', 'res', $res);
+        $this->proc->setParameter('', 'cursor', $cursor);
+        $this->proc->setParameter('', 'totalIds', $totalIds);
     }
 
     private function createXmlRecord(Dataset $dataset)

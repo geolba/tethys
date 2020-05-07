@@ -7,13 +7,12 @@ namespace App\Models\Oai;
  */
 class ResumptionToken
 {
-
-    /**
-     * Holds dataset ids
+     /**
+     * Holds dcoument ids
      *
      * @var array
      */
-    private $datasetIds = array();
+    private $documentIds = array();
 
     /**
      * Holds metadata prefix information
@@ -34,7 +33,7 @@ class ResumptionToken
      *
      * @var integer
      */
-    private $startPostition = 0;
+    private $startPosition = 0;
 
     /**
      * Holds total amount of document ids
@@ -50,7 +49,7 @@ class ResumptionToken
      */
     public function getDocumentIds()
     {
-        return $this->_documentIds;
+        return $this->documentIds;
     }
 
     /**
@@ -60,17 +59,17 @@ class ResumptionToken
      */
     public function getMetadataPrefix()
     {
-        return $this->_metadataPrefix;
+        return $this->metadataPrefix;
     }
 
      /**
      * Return setted resumption id after successful storing of resumption token.
      *
-     * @return string Returns resumption id
+     * @return string
      */
     public function getResumptionId()
     {
-        return $this->_resumptionId;
+        return $this->resumptionId;
     }
 
     /**
@@ -80,7 +79,7 @@ class ResumptionToken
      */
     public function getStartPosition()
     {
-        return $this->_startPosition;
+        return $this->startPosition;
     }
 
     /**
@@ -90,7 +89,7 @@ class ResumptionToken
      */
     public function getTotalIds()
     {
-        return $this->_totalIds;
+        return $this->totalIds;
     }
 
     /**
@@ -105,7 +104,7 @@ class ResumptionToken
             $idsToStore = array($idsToStore);
         }
 
-        $this->_documentIds = $idsToStore;
+        $this->documentIds = $idsToStore;
     }
 
     /**
@@ -116,7 +115,7 @@ class ResumptionToken
      */
     public function setMetadataPrefix($prefix)
     {
-        $this->_metadataPrefix = $prefix;
+        $this->metadataPrefix = $prefix;
     }
 
     /**
@@ -126,7 +125,7 @@ class ResumptionToken
      */
     public function setResumptionId($resumptionId)
     {
-        $this->_resumptionId = $resumptionId;
+        $this->resumptionId = $resumptionId;
     }
 
     /**
@@ -137,7 +136,7 @@ class ResumptionToken
      */
     public function setStartPosition($startPosition)
     {
-        $this->_startPosition = (int) $startPosition;
+        $this->startPosition = (int) $startPosition;
     }
 
     /**
@@ -147,6 +146,6 @@ class ResumptionToken
      */
     public function setTotalIds($totalIds)
     {
-        $this->_totalIds = (int) $totalIds;
+        $this->totalIds = (int) $totalIds;
     }
 }

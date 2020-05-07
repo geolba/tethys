@@ -193,7 +193,7 @@
     <xsl:if test="count(Rdr_Dataset) > 0">
       <ListIdentifiers>
         <xsl:apply-templates select="Rdr_Dataset" />
-        <!--<xsl:if test="$totalIds > 0">
+        <xsl:if test="$totalIds > 0">
           <resumptionToken>
             <xsl:attribute name="expirationDate">
               <xsl:value-of select="$dateDelete"/>
@@ -206,7 +206,7 @@
             </xsl:attribute>
             <xsl:value-of select="$res"/>
           </resumptionToken>
-        </xsl:if>-->
+        </xsl:if>
       </ListIdentifiers>
     </xsl:if>
   </xsl:template>
