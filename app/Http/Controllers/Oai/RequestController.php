@@ -264,7 +264,7 @@ class RequestController extends Controller
      * @param  array &$oaiRequest Contains full request information
      * @return void
      */
-    private function handleListRecords($oaiRequest)
+    private function handleListRecords(array &$oaiRequest)
     {
         //$maxRecords = 30; //$this->_configuration->getMaxListRecords();
         $maxRecords = $this->configuration->getMaxListRecords();
@@ -342,7 +342,8 @@ class RequestController extends Controller
         }
 
         $repIdentifier = "tethys.at";
-        $tokenTempPath = storage_path('app' . DIRECTORY_SEPARATOR . 'resumption'); //$this->_configuration->getResumptionTokenPath();
+        //$this->_configuration->getResumptionTokenPath();
+        $tokenTempPath = storage_path('app' . DIRECTORY_SEPARATOR . 'resumption');
 
         $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
         $this->xml->appendChild($this->xml->createElement('Datasets'));
@@ -357,7 +358,7 @@ class RequestController extends Controller
         if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
             $metadataPrefix = $oaiRequest['metadataPrefix'];
         }
-        //$this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+        $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 
         $tokenWorker = new ResumptionTokens();
         $tokenWorker->setResumptionPath($tokenTempPath);

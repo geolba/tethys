@@ -686,6 +686,14 @@
         <input type="hidden" v-validate:keywords_length="'min_value:3'" data-vv-scope="step-2" data-vv-as="keyword list"
             name="keywords_list">
         <button class="pure-button button-small" @click.prevent="addKeyword()">Add Keyword</button>
+        <a v-if="dataset.language == 'en'" class="pure-button button-small" target="_blank"
+        href="https://resource.geolba.ac.at/PoolParty/sparql/keyword?query=prefix%20skos:%20%3Chttp://www.w3.org/2004/02/skos/core%23%3E%20%20%0Aselect%20distinct%20(str(%3Fk)%20as%20%3FKeyword)%20(coalesce((group_concat(%3Fc;separator%3D%22;%20%22)),%22%22)%20as%20%3FCategory)%20%3FURI%0Awhere%20%7B%20%20%0A%3FURI%20a%20skos:Concept;%20skos:prefLabel%20%3Fk%0Afilter(lang(%3Fk)%3D%22en%22)%20filter(!regex(%3Fk,%22category%22))%0Aoptional%7B%3FURI%20%3Chttp://dbpedia.org/ontology/category%3E%20%3Fc%7D%20%20%0A%7D%20%20%0Agroup%20by%20%3FURI%20%3Fk%0Aorder%20by%20%3FCategory%20%3FKeyword&format=text/html">
+            Keyword Recommendation
+        </a>
+        <a v-else="dataset.language == 'de'" class="pure-button button-small"  target="_blank"
+        href="https://resource.geolba.ac.at/PoolParty/sparql/keyword?query=prefix%20skos:%20%3Chttp://www.w3.org/2004/02/skos/core%23%3E%20%20%0Aselect%20distinct%20(str(%3Fk)%20as%20%3FSchlagwort)%20(coalesce((group_concat(%3Fc;separator%3D%22;%20%22)),%22%22)%20as%20%3FKategorie)%20%3FURI%0Awhere%20%7B%20%20%0A%3FURI%20a%20skos:Concept;%20skos:prefLabel%20%3Fk%0Afilter(lang(%3Fk)%3D%22de%22)%20%0Aoptional%7B%3FURI%20%3Chttp://dbpedia.org/ontology/category%3E%20%3Fc%7D%20%20%0A%7D%20%20%0Agroup%20by%20%3FURI%20%3Fk%0Aorder%20by%20%3FKategorie%20%3FSchlagwort&format=text/html">
+        Schlüsselwörter Empfehlung
+        </a>
         <table class="table table-hover" v-if="dataset.subjects.length">
             <thead>
                 <tr>
