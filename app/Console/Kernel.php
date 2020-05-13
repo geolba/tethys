@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\Inspire',
         'App\Console\Commands\DatasetState',
         'App\Console\Commands\SolrIndexBuilder',
+        'App\Console\Commands\Log\ClearLogFile'
     ];
 
     /**
@@ -30,12 +31,17 @@ class Kernel extends ConsoleKernel
         //     ->withoutOverlapping()
         //     ->appendOutputTo(storage_path('logs/inspire.log'));
 
-        // $schedule->command('state:dataset');
-        // // ->appendOutputTo(storage_path('logs/inspire.log'));
+        $schedule->command('log:clear')
+        ->daily()
+        ->withoutOverlapping();
+
+        $schedule->command('state:dataset')
+            ->daily()
+            ->withoutOverlapping();
 
         $schedule->command('cache:clear-expired')
-            ->twiceDaily(1, 16)
-            ->appendOutputTo(storage_path('logs/cacheClear.log'));
+            ->twiceDaily(1, 16);
+        //->appendOutputTo(storage_path('logs/cacheClear.log'));
     }
 
     /**
