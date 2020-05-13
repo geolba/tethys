@@ -8,19 +8,19 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"php": "^7.1.3",
+		"php": "^7.2",
 		"arifhp86/laravel-clear-expired-cache-file": "^0.0.4",
 		"astrotomic/laravel-translatable": "^11.1",
 		"davejamesmiller/laravel-breadcrumbs": "5.x",
 		"felixkiss/uniquewith-validator": "^3.1",
 		"fideloper/proxy": "^4.0",
-		"laravel/framework": "^5.8.0",
+		"laravel/framework": "^6.0",
 		"laravel/tinker": "^1.0",
-		"laravelcollective/html": "^5.6",
+		"laravelcollective/html": "^6.1",
 		"mcamara/laravel-localization": "^1.3",
 		"solarium/solarium": "^3.8",
 		"yajra/laravel-datatables-oracle": "^9.0",
-		"zizaco/entrust": "^1.9"
+		"halpdesk/zizaco-entrust-laravel-6.0": "^1.9"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "^1.8",

@@ -93,10 +93,7 @@
                     </li>
                     <!-- <li><a href="#clients">Clients</a></li> -->
                     <!-- <li><a href="#about">About</a></li> -->
-                    <!-- <li>
-                        <a class="{{ Route::currentRouteName() == 'frontend.pages.show' ? 'current' : '' }}"
-                            href="{!! url('/pages/about') !!}">About</a>
-                    </li> -->
+                  
                     <li class="right"><a href="{{ URL::route('oai') }}" target="_blank"> OAI</a></li>
 
                     <!-- <li><a href="#why-us">Why us?</a></li>            
@@ -153,12 +150,13 @@
                         <ul id="secondary-nav" class="nav">
                             <li class="first"><a href="{{ URL::route('frontend.home.contact') }}">Contact</a></li>
                             <li class="last"><a
-                                    href="{!! URL::route('frontend.pages.show', ['page_slug'=>'imprint']) !!}">Impressum</a>
+                                    href="{!! URL::route('frontend.pages.show', ['slug'=>'imprint']) !!}">Impressum</a>
                             </li>
                             <li class="last"><a href="{{ URL::route('frontend.sitelinks.index') }}">Sitelinks</a></li>
                             <li class="last"><a
-                                    href="{!! URL::route('frontend.pages.show', ['page_slug'=>'terms-and-conditions']) !!}">Terms
-                                    and Conditions</a></li>
+                                    href="{!! URL::route('frontend.pages.show', ['slug'=>'terms-and-conditions']) !!}">Terms
+                                    and Conditions</a>
+                            </li>
 
                             <li><a target="_blank" href="https://github.com/geolba"><i class="fab fa-github"></i> rdr
                                     bei GitHub</a></li>

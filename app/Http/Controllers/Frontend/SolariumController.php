@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+// use Illuminate\Support\Facades\Input;
 use Illuminate\View\View;
 
 class SolariumController extends Controller
@@ -21,7 +21,7 @@ class SolariumController extends Controller
      */
     public function index(Request $request): View
     {
-        if (Input::has('q') && Input::get('q') != "") {
+        if ($request->has('q') && $request->input('q') != "") {
             // Create a search query
             $query = $this->client->createSelect();
             
@@ -35,7 +35,7 @@ class SolariumController extends Controller
 
             //Set the query string
             //$query->setQuery(Input::get('q'));
-            $query->setQuery('%P1%', array(Input::get('q')));
+            $query->setQuery('%P1%', array($request->input('q')));
 
 
             // Create a DisMax query
@@ -49,14 +49,14 @@ class SolariumController extends Controller
             $facetSet->createFacetField('datatype')->setField('doctype');
             
             
-            if (Input::has('year')) {
-                $query->createFilterQuery('year')->setQuery(sprintf('year:%s', Input::get('year')));
+            if ($request->has('year')) {
+                $query->createFilterQuery('year')->setQuery(sprintf('year:%s', $request->input('year')));
             }
-            if (Input::has('language')) {
-                $query->createFilterQuery('language')->setQuery(sprintf('language:%s', Input::get('language')));
+            if ($request->has('language')) {
+                $query->createFilterQuery('language')->setQuery(sprintf('language:%s', $request->input('language')));
             }
-            if (Input::has('datatype')) {
-                $query->createFilterQuery('datatype')->setQuery(sprintf('doctype:%s', Input::get('datatype')));
+            if ($request->has('datatype')) {
+                $query->createFilterQuery('datatype')->setQuery(sprintf('doctype:%s', $request->input('datatype')));
             }
 
             // Execute the query and return the result
@@ -64,7 +64,7 @@ class SolariumController extends Controller
 
             // Pass the resultset to the view and return.
             return view('frontend.search.index', array(
-                'q' => Input::get('q'),
+                'q' => $request->input('q'),
                 'resultset' => $resultset,
             ));
         }
@@ -81,8 +81,8 @@ class SolariumController extends Controller
         try {
             $this->client->ping($ping);
             return response()->json('OK');
-        } catch (\Solarium\Exception $e) {
-            return response()->json('ERROR', 500);
+        } catch (\Solarium\Exception\HttpException $e) {
+            return response()->json('ERROR' . $e->getMessage(), 500);
         }
     }
 

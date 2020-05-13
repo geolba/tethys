@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\Inspire',
         'App\Console\Commands\DatasetState',
-        'App\Console\Commands\SolrIndexBuilder'
+        'App\Console\Commands\SolrIndexBuilder',
     ];
 
     /**
@@ -25,19 +25,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('inspire')->hourly();
         // $schedule->command('inspire')
-        //      ->everyMinute()
-        //      ->appendOutputTo(storage_path('logs/inspire.log'));
+        //     ->hourly()
+        //     ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/inspire.log'));
 
-        $schedule->command('state:dataset');
-        //->appendOutputTo(storage_path('logs/inspire.log'));
-        
-        
-        //->everyThirtyMinutes();
+        // $schedule->command('state:dataset');
+        // // ->appendOutputTo(storage_path('logs/inspire.log'));
+
+        $schedule->command('cache:clear-expired')
+            ->twiceDaily(1, 16)
+            ->appendOutputTo(storage_path('logs/cacheClear.log'));
     }
 
-     /**
+    /**
      * Register the Closure based commands for the application.
      *
      * @return void
