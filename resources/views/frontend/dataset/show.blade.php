@@ -95,6 +95,12 @@
                     </p>
                     @endif
 
+                     @if($dataset->project()->exists())
+                    <p class="dataset__abstract">
+                      Projekt: {{ $dataset->project->name }}                     
+                    </p>
+                    @endif
+
                     <p class="dataset__abstract">Erstellungsjahr: {{ $dataset->server_date_published->year }}</p>
                     <p class="dataset__abstract">Sprache: {{ $dataset->language }}</p>
                     <p class="dataset__abstract">Objekttyp: {{ $dataset->type }}</p>

@@ -17,6 +17,7 @@ namespace App\Library\Xml;
 
 use App\Models\XmlCache;
 use Illuminate\Support\Facades\Log;
+use \Exception;
 
 class XmlModel
 {

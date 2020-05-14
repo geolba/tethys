@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'debug'),
+    'env' => env('APP_ENV', 'production'),
     
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', true),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,9 +123,9 @@ return [
     |
     */
 
-    'log' => 'single',
-    //debug, info, notice, warning, error, critical, alert, emergency.
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    // 'log' => 'single',
+    // //debug, info, notice, warning, error, critical, alert, emergency.
+    // 'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -223,7 +223,7 @@ return [
         'Input'     => 'Illuminate\Support\Facades\Input',
         // 'Inspiring' => 'Illuminate\Foundation\Inspiring',
         'Lang'      => 'Illuminate\Support\Facades\Lang',
-        'Log'       => 'Illuminate\Support\Facades\Log',
+        'Log' => Illuminate\Support\Facades\Log::class,
         'Mail'      => 'Illuminate\Support\Facades\Mail',
         'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password'  => 'Illuminate\Support\Facades\Password',
