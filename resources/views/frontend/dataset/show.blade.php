@@ -113,10 +113,10 @@
                     <p class="dataset__abstract">Size: {{ $dataset->files()->count() }} </p>
 
                     @if($dataset->embargo_date != null)
-                    <p class="dataset__abstract">Datum der Freischaltung:
+                    <p class="dataset__abstract">Embargo-Ende:
                       {{ $dataset->embargo_date->toDateString() }}</p>
                     {{-- @else
-                    <p class="dataset__abstract">Datum der Freischaltung: - </p> --}}
+                    <p class="dataset__abstract">Embargo-Ende: - </p> --}}
                     @endif
 
                     @if($dataset->hasEmbargoPassed() == true)

@@ -38,6 +38,7 @@
   <xsl:param name="oai_error_code" />
   <xsl:param name="oai_error_message" />
   <xsl:param name="baseURL" />
+  <xsl:param name="repURL" />
 
 
 
@@ -394,7 +395,7 @@
       )" />
       <xsl:value-of select="$geolocation" />
 
-      <xsl:text>&#xA;</xsl:text>
+      <!-- <xsl:text>&#xA;</xsl:text> -->
       <xsl:if test="@ElevationMin != '' and @ElevationMax != ''">
         <xsl:value-of select="concat(' * ELEVATION MIN: ', @ElevationMin, ' * ELEVATION MAX: ', @ElevationMax)" />
       </xsl:if>
@@ -402,7 +403,7 @@
         <xsl:value-of select="concat(' * ELEVATION ABSOLUT: ', @ElevationAbsolut)" />
       </xsl:if>
 
-      <xsl:text>&#xA;</xsl:text>
+      <!-- <xsl:text>&#xA;</xsl:text> -->
       <xsl:if test="@DepthMin != '' and @DepthMax != ''">
         <xsl:value-of select="concat(' * DEPTH MIN: ', @DepthMin, ' * DEPTH MAX: ', @DepthMax)" />
       </xsl:if>
@@ -410,7 +411,7 @@
         <xsl:value-of select="concat(' * DEPTH ABSOLUT: ', @DepthAbsolut)" />
       </xsl:if>
 
-      <xsl:text>&#xA;</xsl:text>
+      <!-- <xsl:text>&#xA;</xsl:text> -->
       <xsl:if test="@TimeMin != '' and @TimeMax != ''">
         <xsl:value-of select="concat(' * TIME MIN: ', @TimeMin, ' * TIME MAX: ', @TimeMax)" />
       </xsl:if>

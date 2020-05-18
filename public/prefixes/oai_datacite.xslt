@@ -82,6 +82,11 @@
                 <xsl:text>Dataset</xsl:text>
                 <!-- <xsl:value-of select="@Type" /> -->
             </resourceType>
+
+            <alternateIdentifiers>
+                <xsl:call-template name="AlternateIdentifier"/>
+            </alternateIdentifiers>
+
             <xsl:if test="Reference">
                 <relatedIdentifiers>
                     <xsl:apply-templates select="Reference" mode="oai_datacite" />
@@ -237,6 +242,17 @@
         </subject>
     </xsl:template>
 
+    <xsl:template name="AlternateIdentifier" mode="oai_datacite" 
+        xmlns="http://datacite.org/schema/kernel-4">
+        <alternateIdentifier >
+            <xsl:attribute name="alternateIdentifierType">
+                <xsl:text>url</xsl:text>
+            </xsl:attribute>
+            <xsl:variable name="identifier" select="concat($repURL, '/dataset/', @Id)" />
+            <xsl:value-of select="$identifier" />
+        </alternateIdentifier >
+    </xsl:template>
+
     <xsl:template match="Reference" mode="oai_datacite" 
         xmlns="http://datacite.org/schema/kernel-4">
         <relatedIdentifier>
@@ -268,7 +284,6 @@
             </contributorName>
         </contributor>
     </xsl:template>
-
 
     <xsl:template match="PersonAuthor" mode="oai_datacite" 
         xmlns="http://datacite.org/schema/kernel-4">

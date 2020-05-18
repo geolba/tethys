@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Oai;
 use App\Exceptions\OaiModelException;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\Project;
 use App\Models\Oai\Configuration as OaiModelConfiguration;
 use App\Models\Oai\OaiModelError;
 use App\Models\Oai\ResumptionTokens;
@@ -118,6 +119,7 @@ class RequestController extends Controller
         // set OAI base url
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
         $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
+        $this->proc->setParameter('', 'repURL', url('/'));
 
         // $resumptionPath = $this->configuration->getResumptionTokenPath();
 
@@ -298,12 +300,13 @@ class RequestController extends Controller
 
         //$oaiSets = new Oai_Model_Sets();
         $sets = array(
-            'bibliography:true' => 'Set for bibliographic entries',
-            'bibliography:false' => 'Set for non-bibliographic entries',
+            // 'bibliography:true' => 'Set for bibliographic entries',
+            // 'bibliography:false' => 'Set for non-bibliographic entries',
         );
         $sets = array_merge(
             $sets,
-            $this->getSetsForDocumentTypes()
+            $this->getSetsForDocumentTypes(),
+            $this->getSetsForProjects(),
         );
         //$sets = $this->getSetsForDocumentTypes();
 
@@ -387,12 +390,21 @@ class RequestController extends Controller
             $finder->whereIn('server_state', $this->deliveringDocumentStates);
             if (array_key_exists('set', $oaiRequest)) {
                 $setarray = explode(':', $oaiRequest['set']);
+                
                 if ($setarray[0] == 'data-type') {
                     if (count($setarray) === 2 and !empty($setarray[1])) {
                         $finder->where('type', $setarray[1]);
                     }
+                } elseif ($setarray[0] == 'project') {
+                    if (count($setarray) === 2 and !empty($setarray[1])) {
+                        // $finder->where('type', $setarray[1]);
+                        $finder->whereHas('project', function ($q) use ($setarray) {
+                            $q->where('label', $setarray[1]);
+                        });
+                    }
                 }
             }
+            
             $totalIds = $finder->count();
             $reldocIds = $finder->pluck('id')->toArray();
         }
@@ -522,6 +534,31 @@ class RequestController extends Controller
         return $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
     }
 
+     /**
+     * Returns oai sets for projects.
+     * @return array
+     */
+    private function getSetsForProjects()
+    {
+        $setSpecPattern = self::SET_SPEC_PATTERN;
+        $sets = array();
+
+        $projects = Project::pluck('name', 'label')->toArray();
+        foreach ($projects as $doctype => $row) {
+            if (0 == preg_match("/^$setSpecPattern$/", $doctype)) {
+                $msg = "Invalid SetSpec (doctype='" . $doctype . "')."
+                    . " Allowed characters are [$setSpecPattern].";
+                Log::error("OAI-PMH: $msg");
+                continue;
+            }
+
+            $setSpec = 'project:' . $doctype;
+            // $count = $row['count'];
+            $sets[$setSpec] = "Set for project '$doctype'";
+        }
+        return $sets;
+    }
+
     /**
      * Returns oai sets for document types.
      * @return array
@@ -576,7 +613,7 @@ class RequestController extends Controller
 
         $identify = $sxe->addChild('Identify');
         $identify->addChild('repositoryName', "Data Research Repository");
-        $identify->addChild('baseURL', "http://tethys.geologie.ac.at/");
+        $identify->addChild('baseURL', "https://tethys.at/");
         $identify->addChild('protocolVersion', '2.0');
         $identify->addChild('adminEmail', 'repository@geologie.ac.at');
         //$identify->addChild('earliestDatestamp', '2017-04-07');

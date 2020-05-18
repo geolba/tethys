@@ -65,6 +65,7 @@ section.search {
 .record-elem .h4, .record-elem h4 {
     font-size: 16px;
     letter-spacing: .05em;
+    margin-top: 8px;
   }
   .record-detail h1, .record-detail p, 
   .record-elem h4, 
