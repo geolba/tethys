@@ -349,6 +349,14 @@
             </xsl:attribute>
             <xsl:value-of select="@NameLong" />
         </rights>
+        <xsl:if test="@Name = 'CC BY' or @Name = 'CC BY-SA'">
+            <rights>
+                <xsl:attribute name="rightsURI">
+                    <xsl:text>info:eu-repo/semantics/openAccess</xsl:text>
+                </xsl:attribute>
+                <xsl:text>Open Access</xsl:text>
+            </rights>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>

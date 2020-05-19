@@ -164,10 +164,10 @@
           <xsl:text>oai_datacite</xsl:text>
         </metadataPrefix>
         <schema>
-        <xsl:text>http://schema.datacite.org/meta/kernel-4.3/metadata.xsd</xsl:text>
+          <xsl:text>http://schema.datacite.org/meta/kernel-4.3/metadata.xsd</xsl:text>
         </schema>
         <metadataNamespace>
-        <xsl:text>http://datacite.org/schema/kernel-4</xsl:text>
+          <xsl:text>http://datacite.org/schema/kernel-4</xsl:text>
         </metadataNamespace>
       </metadataFormat>
     </ListMetadataFormats>
@@ -571,7 +571,12 @@
   <xsl:template match="Licence" mode="oai_dc">
     <dc:rights>
       <xsl:value-of select="@NameLong" />
-    </dc:rights>
+    </dc:rights>    
+    <xsl:if test="@Name = 'CC BY' or @Name = 'CC BY-SA'">
+      <dc:rights>
+        <xsl:text>info:eu-repo/semantics/openAccess</xsl:text>
+      </dc:rights>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>

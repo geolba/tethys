@@ -25,6 +25,7 @@ class CreateLicencesTable extends Migration
             $table->string('link_sign', 200)->nullable();
             $table->string('mime_type', 30)->nullable();
             $table->string('name_long', 200);
+            $table->string('name', 50);
             $table->boolean('pod_allowed')->default(false);
             $table->tinyInteger('sort_order');
         });
