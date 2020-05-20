@@ -307,7 +307,7 @@
                         <xsl:attribute name="name">licence</xsl:attribute>
                         <xsl:value-of select="/Opus/Rdr_Dataset/Licence/@Name" />
                     </xsl:element>
-                </xsl:for-each>
+                </xsl:if>
 
                 <!-- series ids and series number per id (modeled as dynamic field) -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/Series">
