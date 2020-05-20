@@ -305,7 +305,7 @@
                 <xsl:if test="/Opus/Rdr_Dataset/Licence">
                     <xsl:element name="field">
                         <xsl:attribute name="name">licence</xsl:attribute>
-                        <xsl:value-of select="@Name" />
+                        <xsl:value-of select="/Opus/Rdr_Dataset/Licence/@Name" />
                     </xsl:element>
                 </xsl:for-each>
 

@@ -3,6 +3,8 @@ import { Component, Vue, Prop, Provide } from 'vue-property-decorator';
 @Component
 export default class VsResults extends Vue {
 
+    openAccessLicences: Array<string> = ['CC BY', 'CC BY-SA'];
+
     @Prop()
     data;
 

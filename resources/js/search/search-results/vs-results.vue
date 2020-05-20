@@ -26,11 +26,11 @@
               {{ convert(document.server_date_published) }}
             </span>
             <span class="label label-default ng-binding">{{ document.doctype }}</span>
-            <span class="label label-success titlecase">Open Access</span>
+            <span v-if="openAccessLicences.includes(document.licence)" class="label label-success titlecase">Open Access</span>
 
 
             <h4>
-              <a target="_self" v-bind:href="'dataset/' + document.id" class="ng-binding">
+              <a target="_self" v-bind:href="'dataset/' + document.id" class="ng-binding">               
                 {{ document.title_output }}
               </a>
             </h4>
@@ -54,10 +54,15 @@
                 </span>
               </p>
 
+              <p>
+                <span>Licence: {{ document.licence }}</span>
+              </p>
+
               <!-- <div class="css-subject" v-if="document.subject && document.subject.length > 0"> -->
               <span class="label label-keyword titlecase" v-for="(item, index) in document.subject" :key="index">
                 #{{ item }}
               </span>
+              
               <!-- <p>
                 <small class="text-muted hidden-xs ng-binding">
                   Uploaded on March 15, 2019

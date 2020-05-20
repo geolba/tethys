@@ -22,7 +22,7 @@ export default {
     var base = host + path;
 
     //const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
-    var fields = ["id",
+    var fields = ["id", "licence",
       "server_date_published",
       "abstract_output",
       "title_output",
@@ -80,7 +80,7 @@ export default {
     var base = host + path;
 
     //const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
-    var fields = ["id",
+    var fields = ["id", "licence",
       "server_date_published",
       "abstract_output",
       "title_output",
