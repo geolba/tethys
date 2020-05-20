@@ -38,7 +38,8 @@
 
 <xsl:stylesheet version="1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:php="http://php.net/xsl">
 
     <xsl:output method="xml" indent="yes" />
 
@@ -300,6 +301,14 @@
                     </xsl:element>
                 </xsl:for-each>
 
+                <!-- licences -->
+                <xsl:if test="/Opus/Rdr_Dataset/Licence">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">licence</xsl:attribute>
+                        <xsl:value-of select="@Name" />
+                    </xsl:element>
+                </xsl:for-each>
+
                 <!-- series ids and series number per id (modeled as dynamic field) -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/Series">
                     <xsl:element name="field">
@@ -405,8 +414,7 @@
                 <xsl:for-each select="/Opus/Rdr_Dataset/Reference">
                     <xsl:element name="field">
                         <xsl:attribute name="name">reference</xsl:attribute>
-                         <xsl:value-of select="json-to-xml(/Opus/Rdr_Dataset/Reference)"/>
-                        <!-- <xsl:value-of select="@Value"/> -->
+                        <xsl:value-of select="@Value"/>
                     </xsl:element>
                 </xsl:for-each>
 

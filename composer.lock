@@ -821,16 +821,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.14",
+            "version": "v6.18.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "503d1511d6792b0b8d0a4bfed47f7c2f29634e1c"
+                "reference": "a1fa3ddc0bb5285cafa6844b443633f7627d75dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/503d1511d6792b0b8d0a4bfed47f7c2f29634e1c",
-                "reference": "503d1511d6792b0b8d0a4bfed47f7c2f29634e1c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a1fa3ddc0bb5285cafa6844b443633f7627d75dc",
+                "reference": "a1fa3ddc0bb5285cafa6844b443633f7627d75dc",
                 "shasum": ""
             },
             "require": {
@@ -855,6 +855,7 @@
                 "symfony/finder": "^4.3.4",
                 "symfony/http-foundation": "^4.3.4",
                 "symfony/http-kernel": "^4.3.4",
+                "symfony/polyfill-php73": "^1.17",
                 "symfony/process": "^4.3.4",
                 "symfony/routing": "^4.3.4",
                 "symfony/var-dumper": "^4.3.4",
@@ -963,7 +964,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-05-12T14:41:15+00:00"
+            "time": "2020-05-19T17:03:02+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1030,16 +1031,16 @@
         },
         {
             "name": "laravelcollective/html",
-            "version": "v6.1.1",
+            "version": "v6.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "895115187e6fca81350a0b1152b5804f52a8ac28"
+                "reference": "5ef9a3c9ae2423fe5618996f3cde375d461a3fc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/895115187e6fca81350a0b1152b5804f52a8ac28",
-                "reference": "895115187e6fca81350a0b1152b5804f52a8ac28",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/5ef9a3c9ae2423fe5618996f3cde375d461a3fc6",
+                "reference": "5ef9a3c9ae2423fe5618996f3cde375d461a3fc6",
                 "shasum": ""
             },
             "require": {
@@ -1094,7 +1095,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "https://laravelcollective.com",
-            "time": "2020-05-17T20:19:55+00:00"
+            "time": "2020-05-19T18:02:16+00:00"
         },
         {
             "name": "league/commonmark",
@@ -1431,16 +1432,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.34.0",
+            "version": "2.34.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "52ea68aebbad8a3b27b5d24e4c66ebe1933f8399"
+                "reference": "3e87404329b8072295ea11d548b47a1eefe5a162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/52ea68aebbad8a3b27b5d24e4c66ebe1933f8399",
-                "reference": "52ea68aebbad8a3b27b5d24e4c66ebe1933f8399",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/3e87404329b8072295ea11d548b47a1eefe5a162",
+                "reference": "3e87404329b8072295ea11d548b47a1eefe5a162",
                 "shasum": ""
             },
             "require": {
@@ -1510,7 +1511,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-12T19:53:34+00:00"
+            "time": "2020-05-19T22:14:16+00:00"
         },
         {
             "name": "nikic/php-parser",

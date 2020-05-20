@@ -21,15 +21,15 @@ class SolrDocumentXslt
 
             $this->processor = new \XSLTProcessor;
             $this->processor->importStyleSheet($xslt);
-        } catch (Exception $e) {
-            throw new Exception('invalid XSLT file for deriving Solr documents', 0, $e);
+        } catch (\Exception $e) {
+            throw new \Exception('invalid XSLT file for deriving Solr documents', 0, $e);
         }
     }
 
     public function toSolrDocument(Dataset $rdrDataset, \DOMDocument $solrDoc)
     {
         if (!($solrDoc instanceof \DOMDocument)) {
-            throw new Exception('provided Solr document must be instance of DOMDocument');
+            throw new \Exception('provided Solr document must be instance of DOMDocument');
         }
 
         $modelXml = $this->getModelXml($rdrDataset);//->saveXML();

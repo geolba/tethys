@@ -301,6 +301,14 @@
                     </xsl:element>
                 </xsl:for-each>
 
+                <!-- licences -->
+                <xsl:if test="/Opus/Rdr_Dataset/Licence">
+                    <xsl:element name="field">
+                        <xsl:attribute name="name">licence</xsl:attribute>
+                        <xsl:value-of select="@Name" />
+                    </xsl:element>
+                </xsl:for-each>
+
                 <!-- series ids and series number per id (modeled as dynamic field) -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/Series">
                     <xsl:element name="field">
