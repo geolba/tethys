@@ -47,7 +47,7 @@
                 <xsl:text>oai:</xsl:text>
                 <xsl:value-of select="$repIdentifier" />
                 <xsl:text>:</xsl:text>
-                <xsl:value-of select="@Id" />
+                <xsl:value-of select="@PublishId" />
             </identifier>
             <!--<datacite:creator>-->
             <creators>
@@ -248,8 +248,8 @@
             <xsl:attribute name="alternateIdentifierType">
                 <xsl:text>url</xsl:text>
             </xsl:attribute>
-            <xsl:variable name="identifier" select="concat($repURL, '/dataset/', @Id)" />
-            <xsl:value-of select="$identifier" />
+            <!-- <xsl:variable name="identifier" select="concat($repURL, '/dataset/', @Id)" /> -->
+           <xsl:value-of select="@landingpage"/>
         </alternateIdentifier >
     </xsl:template>
 

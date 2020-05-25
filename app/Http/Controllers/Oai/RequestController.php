@@ -187,7 +187,8 @@ class RequestController extends Controller
         $dataset = null;
         try {
             //$dataset = new Opus_Document($docId);
-            $dataset = Dataset::findOrFail($dataId);
+            //$dataset = Dataset::findOrFail($publishId);
+            $dataset = Dataset::where('publish_id', '=', $dataId)->firstOrFail();
         } catch (ModelNotFoundException $ex) {
             throw new OaiModelException(
                 'The value of the identifier argument is unknown or illegal in this repository.',
@@ -406,7 +407,7 @@ class RequestController extends Controller
             }
             
             $totalIds = $finder->count();
-            $reldocIds = $finder->pluck('id')->toArray();
+            $reldocIds = $finder->orderBy('publish_id')->pluck('publish_id')->toArray();
         }
 
         // handling of document ids
@@ -414,7 +415,8 @@ class RequestController extends Controller
         $workIds = array_splice($restIds, 0, $maxRecords);
         //foreach ($datasets as $dataset)
         foreach ($workIds as $dataId) {
-            $dataset = Dataset::findOrFail($dataId);
+            //$dataset = Dataset::findOrFail($dataId);
+            $dataset = Dataset::where('publish_id', '=', $dataId)->firstOrFail();
             $this->createXmlRecord($dataset);
         }
 
@@ -463,7 +465,7 @@ class RequestController extends Controller
         //$node = $this->xml->createElement('Rdr_Dataset');
         $domNode = $this->getDatasetXmlDomNode($dataset);
         // add frontdoor url
-        $this->addLandingPageAttribute($domNode, $dataset->id);
+        $this->addLandingPageAttribute($domNode, $dataset->publish_id);
 
         // add access rights to element
         //$this->_addAccessRights($domNode, $dataset);

@@ -151,7 +151,7 @@
 
                   <div class="tab-pane content-technical-metadata" id="three">
                     <p class="dataset__abstract">Persistenter Identifikator:
-                      {{ "https://www.tethys.at/dataset/" . $dataset->id }}</p>
+                      {{ "https://www.tethys.at/dataset/" . $dataset->publish_id }}</p>
                     <p class="dataset__abstract">Status: {{ $dataset->server_state }}</p>
                     <p class="dataset__abstract">Eingestellt von: {{ $dataset->user->login }}</p>
                     <p class="dataset__abstract">Erstellt am: {{ $dataset->created_at->toDateString() }}</p>

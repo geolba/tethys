@@ -23,7 +23,7 @@
                             <div class="post">
                                 <header class="post-header">
                                     <h2 class="post-title">
-                                        <a href="{{ URL::route('frontend.dataset.show',['id' =>$document->id]) }}"><?= $document->type;  $document->id; ?>
+                                        <a href="{{ URL::route('frontend.dataset.show',['id' =>$document->publish_id]) }}"><?= $document->type;  $document->publish_id; ?>
                                         </a>
                                     </h2>
                                 </header>

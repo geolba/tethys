@@ -264,7 +264,7 @@
         <xsl:text>oai:</xsl:text>
         <xsl:value-of select="$repIdentifier" />
         <xsl:text>:</xsl:text>
-        <xsl:value-of select="@Id" />
+        <xsl:value-of select="@PublishId" />
       </identifier>
       <datestamp>
         <xsl:choose>
