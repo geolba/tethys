@@ -53,7 +53,7 @@
                 <!-- id -->
                 <xsl:element name="field">
                     <xsl:attribute name="name">id</xsl:attribute>
-                    <xsl:value-of select="/Opus/Rdr_Dataset/@Id" />
+                    <xsl:value-of select="/Opus/Rdr_Dataset/@PublishId" />
                 </xsl:element>
 
                 <!-- year -->

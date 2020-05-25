@@ -28,7 +28,8 @@ class PagesController extends Controller
      */
     public function show($id): View
     {
-        $dataset = Dataset::findOrFail($id);
+        //$dataset = Dataset::findOrFail($id);
+        $dataset = Dataset::where('publish_id', '=', $id)->firstOrFail();
         $dataset->load('titles');
         $dataset->load('abstracts');
 

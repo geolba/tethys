@@ -14,7 +14,7 @@
             </div>
             <h1 class="dataset__title">{{ $dataset->mainTitle()->value }}</h1>
 
-            <p class="dataset__id">{{ $dataset->id }}</p>
+            <p class="dataset__id">{{ $dataset->publish_id }}</p>
           </div>
           <div class="dataset">
 
