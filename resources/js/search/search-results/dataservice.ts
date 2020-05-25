@@ -58,7 +58,7 @@ export default {
       });
 
     });
-    var query = "&q=" + term;
+    var query ="&sort=server_date_published desc" + "&q=" + term;
 
 
     // $dismax->setQueryFields('title^3 abstract^2 subject^1');
@@ -72,6 +72,7 @@ export default {
     return res.data;//.response;//.docs;
   },
 
+  // for the autocomplete search      
   async searchTerm(term: string): Promise<any> {
     // solr endpoint
     // const host = 'http://voyagerdemo.com/';
