@@ -157,7 +157,7 @@ class RequestController extends Controller
         $email = "repository@geologie.ac.at";
         $repositoryName = "Tethys RDR";
         $repIdentifier = "tethys.at";
-        $sampleIdentifier = "oai:" . $repIdentifier . ":27"; //$this->_configuration->getSampleIdentifier();
+        $sampleIdentifier = "oai:" . $repIdentifier . ":1"; //$this->_configuration->getSampleIdentifier();
         $earliestDateFromDb = Dataset::earliestPublicationDate() != null ?
         Dataset::earliestPublicationDate()->server_date_published->format('Y-m-d\TH:i:s\Z') : null;
 
