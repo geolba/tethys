@@ -14,7 +14,7 @@ class LicencesTableSeeder extends Seeder
         // 'email' => 'foo@gmail.com',
         // 'password' => bcrypt('secret')
         // ]);
-        DB::table('document_licences')->insert([           
+        DB::table('document_licences')->insert([
             [
                 'active' => true,
                 'comment_internal' => "Lediglich die Namensnennung ist zwingend.",
@@ -25,6 +25,7 @@ class LicencesTableSeeder extends Seeder
                 'link_logo' => 'https://i.creativecommons.org/l/by/3.0/de/88x31.png',
                 'mime_type' => 'text/html',
                 'name_long' => 'Creative Commons - Namensnennung (CC BY)',
+                'name' => 'CC BY',
                 'pod_allowed' => true,
                 'sort_order' => 1,
             ],
@@ -39,6 +40,7 @@ class LicencesTableSeeder extends Seeder
                 'link_logo' => 'https://i.creativecommons.org/l/by-sa/3.0/de/88x31.png',
                 'mime_type' => 'text/html',
                 'name_long' => 'Creative Commons - Namensnennung - Weitergabe unter gleichen Bedingungen (CC BY-SA)',
+                'name' => 'CC BY-SA',
                 'pod_allowed' => true,
                 'sort_order' => 2,
             ],
@@ -52,6 +54,7 @@ class LicencesTableSeeder extends Seeder
                 'link_logo' => 'https://i.creativecommons.org/l/by-nc-sa/3.0/de/88x31.png',
                 'mime_type' => 'text/html',
                 'name_long' => 'Creative Commons - Namensnennung - Keine kommerzielle Nutzung - Weitergabe unter gleichen Bedingungen (CC BY-NC-SA)',
+                'name' => 'CC BY-NC-SA',
                 'pod_allowed' => true,
                 'sort_order' => 3,
             ],
@@ -65,6 +68,7 @@ class LicencesTableSeeder extends Seeder
                 'link_logo' => 'https://i.creativecommons.org/l/by-nc/3.0/de/88x31.png',
                 'mime_type' => 'text/html',
                 'name_long' => 'Creative Commons - Namensnennung - Nicht kommerziell (CC BY-NC)',
+                'name' => 'CC BY-NC',
                 'pod_allowed' => true,
                 'sort_order' => 4,
             ],
@@ -78,6 +82,7 @@ class LicencesTableSeeder extends Seeder
                 'link_logo' => 'https://i.creativecommons.org/l/by-nd/3.0/de/88x31.png',
                 'mime_type' => 'text/html',
                 'name_long' => 'Creative Commons - Namensnennung - Keine Bearbeitung (CC BY-ND)',
+                'name' => 'CC BY-ND',
                 'pod_allowed' => true,
                 'sort_order' => 5,
             ],
@@ -91,6 +96,7 @@ class LicencesTableSeeder extends Seeder
                 'link_logo' => 'https://i.creativecommons.org/l/by-nc-nd/3.0/de/88x31.png',
                 'mime_type' => 'text/html',
                 'name_long' => 'Creative Commons - Namensnennung - Nicht kommerziell - Keine Bearbeitung (CC BY-NC-ND)',
+                'name' => 'CC BY-NC-ND',
                 'pod_allowed' => true,
                 'sort_order' => 6,
             ],
