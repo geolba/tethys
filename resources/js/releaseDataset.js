@@ -15,7 +15,7 @@ const app = new Vue({
             // },
             dataset: window.Laravel.dataset,
             submitted: false,
-            preferation: "yes_preferation",
+            preferation: "no_preferation",
         }
     },
     computed: {

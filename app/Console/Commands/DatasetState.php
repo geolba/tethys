@@ -47,7 +47,7 @@ class DatasetState extends Command
         $datasets = DB::table('documents')
         ->select('id', 'account_id')
         ->where('server_state', 'approved')
-        ->whereRaw('server_date_modified < DATEADD(day,-14,GETDATE())')
+        ->whereRaw("server_date_modified <  CURRENT_DATE + INTERVAL '14 day'")
         ->get();
 
         // update statistics table
