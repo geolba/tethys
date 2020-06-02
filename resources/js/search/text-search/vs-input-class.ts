@@ -3,7 +3,11 @@ import { Component, Prop } from 'vue-property-decorator';
 import debounce from 'lodash/debounce';
 import rdrApi from '../search-results/dataservice';
 
-
+interface SolrSettings {
+  core: string;
+  host: string;
+}
+declare var SOLR: SolrSettings;
 
 @Component({})
 export default class VsInput extends Vue {
@@ -27,6 +31,8 @@ export default class VsInput extends Vue {
   selectedIndex: number = null;
   selectedDisplay = null;
   isFocussed: boolean = false;
+  solrCore: string = SOLR.core;
+  solrHost: string = SOLR.host;
 
   // get results() {
   //   return this.items;
@@ -127,7 +133,7 @@ export default class VsInput extends Vue {
 
   async request() {
     try {
-      var res = await rdrApi.searchTerm(this.display);
+      var res = await rdrApi.searchTerm(this.display, this.solrCore, this.solrHost);
       this.error = null
       this.results = res.response.docs;
       this.loading = false;

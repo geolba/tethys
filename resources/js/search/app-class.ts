@@ -7,6 +7,13 @@ import VsPagination from './search-results/vs-pagination.vue';
 import rdrApi from './search-results/dataservice';
 import FilterItem from './models/filter-item';
 
+interface SolrSettings {
+  core: string;
+  host: string;
+}
+// declare var solrCore: string;
+declare var SOLR: SolrSettings;
+
 @Component({
   components: {
     VsInput,
@@ -31,10 +38,12 @@ export default class App extends Vue {
   };
   loaded = false;
   numFound: number;
+  solrCore: string = SOLR.core; 
+  solrHost: string = SOLR.host;
 
   async onPaginate(start: number): Promise<void> {
     // console.log(start);
-    var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories, start.toString());
+    var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories, this.solrCore, this.solrHost, start.toString());
     this.results = res.response.docs;
   }
 
@@ -42,7 +51,7 @@ export default class App extends Vue {
     // alert(categoryName);
     delete this.activeFilterCategories[categoryName];
 
-    var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories);
+    var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories, this.solrCore, this.solrHost);
     this.results = res.response.docs;
     this.numFound = res.response.numFound;
 
@@ -96,7 +105,7 @@ export default class App extends Vue {
     if (!this.activeFilterCategories[filter.Category].some(e => e === filter.value)) {
       this.activeFilterCategories[filter.Category].push(filter.value);
       // alert(this.activeFilterCategories[filter.Category]);
-      var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories);
+      var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories, this.solrCore, this.solrHost);
       this.results = res.response.docs;
       this.numFound = res.response.numFound;
 
@@ -148,7 +157,7 @@ export default class App extends Vue {
     // }
     this.facets = {};
     this.searchTerm = term;
-    var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories);
+    var res = await rdrApi.search(this.searchTerm, this.activeFilterCategories, this.solrCore, this.solrHost);
     this.results = res.response.docs;
     this.numFound = res.response.numFound;
 
@@ -177,7 +186,7 @@ export default class App extends Vue {
   }
 
   // When the window loads, read query parameters and perform search
-  async mounted() {
+  async mounted() {   
     var query = this.getParameterByName("q");
     if (query) query = query.trim();
     await this.onSearch("*%3A*");

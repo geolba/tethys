@@ -161,6 +161,12 @@
 @endsection
 
 @section('after-scripts')
-{{-- <script type="text/javascript" src="{{  asset('js/search/main.js') }}"></script> --}}
+<script>
+    const SOLR = <?php echo json_encode([        
+            'core' => config('solarium.endpoint.repository.core'),
+            'host' => config('solarium.endpoint.repository.host'),           
+    ]); ?>        
+</script>
+
 <script type="text/javascript" src="{{  asset('js/search/main.js') }}"></script>
 @stop

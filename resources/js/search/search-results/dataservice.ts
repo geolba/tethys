@@ -14,11 +14,12 @@ var SOLR_CONFIG = {
 export default {
 
  
-  async search(term: string, filterItems: Object, start?: string): Promise<any> {
+  async search(term: string, filterItems: Object, solrCore: string, solrHost: string, start?: string): Promise<any> {
     // solr endpoint
     // const host = 'http://voyagerdemo.com/';
-    const host = 'https://repository.geologie.ac.at/';
-    const path = 'solr/rdr_data/select?';
+    //const host = 'https://www.tethys.at/';
+    const host = 'https://' + solrHost;
+    const path = '/solr/' + solrCore + '/select?';
     var base = host + path;
 
     //const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
@@ -73,11 +74,12 @@ export default {
   },
 
   // for the autocomplete search      
-  async searchTerm(term: string): Promise<any> {
+  async searchTerm(term: string, solrCore: string, solrHost: string): Promise<any> {
     // solr endpoint
     // const host = 'http://voyagerdemo.com/';
-    const host = 'https://repository.geologie.ac.at/';
-    const path = 'solr/rdr_data/select?';
+    // const host = 'https://www.tethys.at/';''
+    const host = 'https://' + solrHost;
+    const path = '/solr/' + solrCore + '/select?';
     var base = host + path;
 
     //const fields = 'id,server_date_published,abstract_output,title_output,title_additional,author,subject'; // fields we want returned
