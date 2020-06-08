@@ -17,6 +17,7 @@
   <xsl:output method="xml" indent="yes" encoding="utf-8" />
 
   <xsl:param name="responseDate" />
+   <xsl:param name="unixTimestamp" />
   <xsl:param name="email" />
   <xsl:param name="earliestDatestamp" />
   <xsl:param name="setPubType" />
@@ -379,7 +380,7 @@
       <xsl:apply-templates select="Coverage" mode="oai_dc" />
       <!-- dc:rights -->
       <xsl:apply-templates select="Licence" mode="oai_dc" />
-      <xsl:if test="EmbargoDate">
+      <xsl:if test="EmbargoDate and ($unixTimestamp &lt; EmbargoDate/@UnixTimestamp)">
         <dc:rights>embargo</dc:rights>
       </xsl:if>
     </oai_dc:dc>
@@ -524,12 +525,14 @@
   </xsl:template>
 
   <xsl:template match="EmbargoDate" mode="oai_dc">
+  <xsl:if test="$unixTimestamp &lt; ./@UnixTimestamp" >
     <dc:date>
       <xsl:text>info:eu-repo/date/embargoEnd/</xsl:text>
       <xsl:value-of select="./@Year"/>
 -      <xsl:value-of select="format-number(./@Month,'00')"/>
 -      <xsl:value-of select="format-number(./@Day,'00')"/>
     </dc:date>
+  </xsl:if>
   </xsl:template>
 
 

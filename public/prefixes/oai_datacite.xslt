@@ -124,7 +124,7 @@
 
     <xsl:template name="RdrDate2" mode="oai_datacite" 
         xmlns="http://datacite.org/schema/kernel-4">
-        <xsl:if test="EmbargoDate">
+        <xsl:if test="EmbargoDate and ($unixTimestamp &lt; EmbargoDate/@UnixTimestamp)">
             <date>
                 <xsl:attribute name="dateType">Available</xsl:attribute>
                 <xsl:variable name="embargoDate" select="concat(

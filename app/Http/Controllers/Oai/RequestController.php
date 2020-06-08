@@ -68,8 +68,8 @@ class RequestController extends Controller
     {
         //$this->middleware('auth');
         // Initialize member variables.
-        $this->xml = new \DomDocument;
-        $this->proc = new \XSLTProcessor;
+        $this->xml = new \DomDocument();
+        $this->proc = new \XSLTProcessor();
 
         $this->configuration = new OaiModelConfiguration();
     }
@@ -115,6 +115,10 @@ class RequestController extends Controller
 
         // Set response time
         $this->proc->setParameter('', 'responseDate', date("Y-m-d\TH:i:s\Z"));
+        // set timestamp
+        $date = new \DateTime();
+        $unixTimestamp = $date->getTimestamp();
+        $this->proc->setParameter('', 'unixTimestamp', $unixTimestamp);
 
         // set OAI base url
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
