@@ -125,6 +125,13 @@
             @endphp --}}
         </div>
     </div>
+
+    <div class="pure-u-1 pure-u-md-1">
+        <a href="{{ url('/docs/geopackage_v01.pdf') }}" target=_blank>
+            Hilfe zu GeoPackage (GPKG)
+        </a>      
+    </div>
+
 </div>
 
 @endsection

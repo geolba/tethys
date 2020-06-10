@@ -11,25 +11,15 @@
                 <h3 class="separator">
                     @lang('resources.home_news_pagetitle')
                 </h3>
-                <h4>Published: 27.07.2019</h4>
+                <h4>Tethys geht online!</h4>
                 <p>
-                    re3data.org is a global registry of research data repositories. The registry covers research data
-                    repositories from
-                    different academic disciplines. re3data.org presents repositories for the permanent storage and
-                    access to datasets
-                    for researchers, funding bodies, publishers and academic institutions. re3data.org aims to promote a
-                    culture of
-                    sharing and increased access to research data.
-                </p>
-                <p>
-                    re3data.org helps researchers to find appropriate repositories for the storage and access of
-                    research data.
-                    Further, it can be used by funding organisations to promote permanent access to research data from
-                    their research projects.
-                    In addition re3data.org offers publishers and academic institutions a tool for the identification of
-                    research data repositories
-                    where scientists can deposit their data.
-                </p>
+                    Ab 15. Juni 2020 steht das Forschungsdatenrepositorium Tethys für die Publikation von geowissenschaftlichen Forschungsdaten bereit.
+                    Noch wurden keine Forschungsdaten publiziert und der Publikationszähler steht daher auch noch auf Null. 
+                    Sind dann die ersten Forschungsdaten und ihre dazugehörigen Metadaten erfolgreich publiziert worden, können diese Daten angesehen,
+                    heruntergeladen und lizenzkonform verwertet werden. Sobald sich mehrere Datenpublikationen auf Tethys befinden, 
+                    können diese problemlos gesucht bzw. nach verschiedenen Kriterien gefiltert werden. 
+                    Noch ist Tethys leer, aber nicht mehr lange!
+                </p>                
             </div>
         </div>
 

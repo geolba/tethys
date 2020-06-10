@@ -81,7 +81,7 @@
                     1030 Wien <br />
                     <i class="fas fa-mobile-alt"></i> +43-1-7125674 <br />
                     <i class="fas fa-envelope-open-text"></i>
-                    <a href="mailto:repository@geologie.ac.at"> repository[et]geologie.ac.at</a><br />
+                    <a href="mailto:repository@geologie.ac.at"> repository@geologie.ac.at</a><br />
                 </h5>
                 <ul class="social-links">
                     <li>

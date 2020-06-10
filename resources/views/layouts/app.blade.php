@@ -66,9 +66,9 @@
 </head>
 
 <body class="layout-home-html">
-    <div id="trynewsite">
+    {{-- <div id="trynewsite">
         <span>TETHYS Testphase</span>
-    </div>
+    </div> --}}
 
     <!-- Menu -->
     <header class="header">
