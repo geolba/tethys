@@ -146,11 +146,11 @@
 <section data-sr id="clients" class="clients u-full-width">
     <div class="container">
         <div class="row">
-            <h3 class="separator">Cooperation Partners</h3>
+            <h3 class="separator">Publisher</h3>
         </div>
         <ul class="clients u-full-width u-cf">
             <li>
-                <img src="images/clients/logo_zamg.png" alt="Zamg Client">
+                <img src="images/clients/logo_gba.png" alt="GBA Client">
             </li>
         </ul>
     </div>

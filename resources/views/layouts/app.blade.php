@@ -76,8 +76,11 @@
             <a href="#" class="menu-icon {{ Route::currentRouteName() != 'frontend.home.index' ? 'active' : '' }}"">
                 <i class=" fa fa-bars"></i>
             </a>
-            <a href="https://www.geologie.ac.at/" target="_blank" class="logo">
+            {{-- <a href="https://www.geologie.ac.at/" target="_blank" class="logo">
                 <img src="/images/gba_logo.png" alt="Logo white" width="60" height="30">               
+            </a> --}}
+            <a href="/" class="logo">
+                TETHYS             
             </a>
             <div class="container">
                 <ul class="menu">

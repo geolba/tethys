@@ -278,7 +278,8 @@ section.normal {
 .header .logo {  
   line-height: 1em;
   position: absolute;  
-  padding: 15px;
+  padding: 22px;
+  color: black;
   -webkit-transition: all .15s ease-in-out;
   -moz-transition: all .15s ease-in-out;
   -ms-transition: all .15s ease-in-out;
