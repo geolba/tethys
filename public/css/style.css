@@ -615,8 +615,9 @@ section.normal {
   margin-right: 0;
 }
 .clients li img {
-  max-width: 100%;
-  height: auto;
+  /* max-width: 100%; */
+  width:330px ;
+  height: auto; 
   display: block;
   -webkit-filter: greyscale(100%);
   -moz-filter: greyscale(100%);
