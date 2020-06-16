@@ -37,7 +37,7 @@ Run the database migrations (**Set the database connection in .env before migrat
 
     php artisan migrate
 
-Grant folder permissions (**Set the database connection in .env before migrating**)
+Grant folder permissions for webserver user
 
     sudo chgrp -R www-data storage bootstrap/cache
     sudo chmod -R ug+rwx storage bootstrap/cache
@@ -49,7 +49,7 @@ Start the local development server
 
 ## Environment variables
 
-- .env - Environment variables can be set in this file
+- `.env` - Environment variables can be set in this file
 
 ***Note*** : You can quickly set the database information, the solr connection string and other variables in this file and have the application fully working.
 
