@@ -145,9 +145,10 @@ class RequestController extends Controller
                 $this->handleIllegalVerb();
             }
         } else {
-            $oaiRequest['verb'] = 'Identify';
-            $this->proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
-            $this->doc = $this->handleIdentify();
+            // $oaiRequest['verb'] = 'Identify';
+            // $this->proc->setParameter('', 'oai_verb', $oaiRequest['verb']);
+            // $this->doc = $this->handleIdentify();
+            throw new OaiModelException('The verb provided in the request is illegal.', OaiModelError::BADVERB);
         }
     }
 
@@ -184,8 +185,17 @@ class RequestController extends Controller
     {
         $repIdentifier = "tethys.at";
         $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
+
+
+
         // Identifier references metadata Urn, not plain Id!
         // Currently implemented as 'oai:foo.bar.de:{docId}' or 'urn:nbn...-123'
+        if (!array_key_exists('identifier', $oaiRequest)) {
+            throw new OaiModelException(
+                'The prefix of the identifier argument is unknown.',
+                OaiModelError::BADARGUMENT
+            );
+        }
         $dataId = $this->getDocumentIdByIdentifier($oaiRequest['identifier']);
 
         $dataset = null;
@@ -203,6 +213,11 @@ class RequestController extends Controller
         $metadataPrefix = null;
         if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
             $metadataPrefix = $oaiRequest['metadataPrefix'];
+        } else {
+            throw new OaiModelException(
+                'The prefix of the metadata argument is unknown.',
+                OaiModelError::BADARGUMENT
+            );
         }
         $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 

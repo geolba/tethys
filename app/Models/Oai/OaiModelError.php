@@ -2,6 +2,8 @@
 
 namespace App\Models\Oai;
 
+use App\Exceptions\OaiModelException;
+
 class OaiModelError
 {
 /**
@@ -35,7 +37,7 @@ class OaiModelError
     public static function mapCode($code)
     {
         if (false === array_key_exists($code, self::$oaiErrorCodes)) {
-            throw new Oai_Model_Exception("Unknown oai error code $code");
+            throw new OaiModelException("Unknown oai error code $code");
         }
         return self::$oaiErrorCodes[$code];
     }

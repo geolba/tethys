@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 //Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
+Route::match(array('GET','POST'), '/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
 
 //Route::get('/', 'LocalizationController@index');
 Route::get(
