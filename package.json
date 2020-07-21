@@ -32,7 +32,7 @@
     "jquery": "^3.5.1",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "single-page-nav": "^1.0.0",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.10",
