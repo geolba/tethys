@@ -350,18 +350,6 @@ class RequestController extends Controller
         $this->proc->setParameter('', 'oai_error_message', 'The verb provided in the request is illegal.');
     }
 
-    private function checkmydate($date)
-    {
-        $tempDate = explode('-', $date);
-        return checkdate($tempDate[1], $tempDate[2], $tempDate[0]);
-    }
-
-    private function validateDate($date, $format = 'Y-m-d H:i:s')
-    {
-        $d = \DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) == $date;
-    }
-      
     /**
      * Helper method for handling lists.
      *
@@ -437,47 +425,52 @@ class RequestController extends Controller
                 }
             }
 
-            // if (array_key_exists('from', $oaiRequest) && array_key_exists('until', $oaiRequest)) {
-            //     $from = $oaiRequest['from'];
-            //     $fromDate = \Illuminate\Support\Carbon::parse($from);
-            //     $until = $oaiRequest['until'];
-            // }
+            if (array_key_exists('from', $oaiRequest) && array_key_exists('until', $oaiRequest)) {
+                $from = $oaiRequest['from'];
+                $until = $oaiRequest['until'];
+                
+                if (strlen($from) != strlen($until)) {
+                    throw new OaiModelException(
+                        'The request has different granularities for the from and until parameters.',
+                        OaiModelError::BADARGUMENT
+                    );
+                }
+            }
 
             if (array_key_exists('until', $oaiRequest)) {
                 $until = $oaiRequest['until'];
                 try {
-                $untilDate = \Illuminate\Support\Carbon::parse($until);
-                // if (strtotime($untilDate) > 0) {
-                    $earliestPublicationDate = Dataset::earliestPublicationDate()->server_date_published;//->format('Y-m-d\TH:i:s\Z');                   
+                    $untilDate = \Illuminate\Support\Carbon::parse($until);
+                    // if (strtotime($untilDate) > 0) {
+                    $earliestPublicationDate = Dataset::earliestPublicationDate()->server_date_published;
                     if ($earliestPublicationDate->gt($untilDate)) {
                         throw new OaiModelException(
                             "earliestDatestamp is greater than given until date. The given values results in an empty list.",
                             OaiModelError::NORECORDSMATCH
-                        );                 
+                        );
                     } else {
                         $finder->where('server_date_published', '<=', $untilDate);
                         $test = $finder->toSql();
                     }
-                }
-                catch (OaiModelException $e) {
+                } catch (OaiModelException $e) {
                     throw new OaiModelException(
                         "earliestDatestamp is greater than given until date. The given values results in an empty list.",
                         OaiModelError::NORECORDSMATCH
-                    ); 
-                }              
-               catch (\Exception $e) {
+                    );
+                } catch (\Exception $e) {
                     throw new OaiModelException(
                         'The until date argument is not valid.',
                         OaiModelError::BADARGUMENT
                     );
                 }
             }
+
             if (array_key_exists('from', $oaiRequest)) {
                 $from = $oaiRequest['from'];
                 try {
-                $fromDate = \Illuminate\Support\Carbon::parse($from);
-                // if (strtotime($fromDate) > 0) {
-                    $now = new Carbon();                   
+                    $fromDate = \Illuminate\Support\Carbon::parse($from);
+                    // if (strtotime($fromDate) > 0) {
+                    $now = new Carbon();
                     if ($fromDate->gt($now)) {
                         throw new OaiModelException(
                             "Given from date is greater than now. The given values results in an empty list.",
@@ -486,20 +479,19 @@ class RequestController extends Controller
                     } else {
                         $finder->where('server_date_published', '>=', $fromDate);
                     }
-                 }
-                 catch (OaiModelException $e) {
+                } catch (OaiModelException $e) {
                     throw new OaiModelException(
                         "Given from date is greater than now. The given values results in an empty list.",
                         OaiModelError::NORECORDSMATCH
-                    ); 
-                }              
-               catch (\Exception $e) {
+                    );
+                } catch (\Exception $e) {
                     throw new OaiModelException(
                         'The from date argument is not valid.',
                         OaiModelError::BADARGUMENT
                     );
                 }
             }
+
             
             $totalIds = $finder->count();
             $reldocIds = $finder->orderBy('publish_id')->pluck('publish_id')->toArray();
@@ -539,6 +531,7 @@ class RequestController extends Controller
             $this->setParamResumption($res, $cursor, $totalIds);
         }
     }
+
     /**
      * Set parameters for resumptionToken-line.
      *
