@@ -355,6 +355,12 @@ class RequestController extends Controller
         $tempDate = explode('-', $date);
         return checkdate($tempDate[1], $tempDate[2], $tempDate[0]);
     }
+
+    private function validateDate($date, $format = 'Y-m-d H:i:s')
+    {
+        $d = \DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
+    }
       
     /**
      * Helper method for handling lists.
@@ -439,32 +445,59 @@ class RequestController extends Controller
 
             if (array_key_exists('until', $oaiRequest)) {
                 $until = $oaiRequest['until'];
-                if ($this->checkmydate($until) == true) {
-                    $earliestPublicationDate = Dataset::earliestPublicationDate()->server_date_published;//->format('Y-m-d\TH:i:s\Z');
-                    $untilDate = \Illuminate\Support\Carbon::parse($until);
+                try {
+                $untilDate = \Illuminate\Support\Carbon::parse($until);
+                // if (strtotime($untilDate) > 0) {
+                    $earliestPublicationDate = Dataset::earliestPublicationDate()->server_date_published;//->format('Y-m-d\TH:i:s\Z');                   
                     if ($earliestPublicationDate->gt($untilDate)) {
                         throw new OaiModelException(
-                            "Given until date is greater than 'earliestDatestamp'. The given values results in an empty list.",
+                            "earliestDatestamp is greater than given until date. The given values results in an empty list.",
                             OaiModelError::NORECORDSMATCH
-                        );
+                        );                 
                     } else {
-                        $finder->whereDate('server_date_published', '<=', date($until));
+                        $finder->where('server_date_published', '<=', $untilDate);
+                        $test = $finder->toSql();
                     }
+                }
+                catch (OaiModelException $e) {
+                    throw new OaiModelException(
+                        "earliestDatestamp is greater than given until date. The given values results in an empty list.",
+                        OaiModelError::NORECORDSMATCH
+                    ); 
+                }              
+               catch (\Exception $e) {
+                    throw new OaiModelException(
+                        'The until date argument is not valid.',
+                        OaiModelError::BADARGUMENT
+                    );
                 }
             }
             if (array_key_exists('from', $oaiRequest)) {
                 $from = $oaiRequest['from'];
-                if ($this->checkmydate($from) == true) {
-                    $now = new Carbon();
-                    $fromDate = \Illuminate\Support\Carbon::parse($from);
+                try {
+                $fromDate = \Illuminate\Support\Carbon::parse($from);
+                // if (strtotime($fromDate) > 0) {
+                    $now = new Carbon();                   
                     if ($fromDate->gt($now)) {
                         throw new OaiModelException(
-                            "Given from date is grater than now. The given values results in an empty list.",
+                            "Given from date is greater than now. The given values results in an empty list.",
                             OaiModelError::NORECORDSMATCH
                         );
                     } else {
-                        $finder->whereDate('server_date_published', '>=', date($from));
+                        $finder->where('server_date_published', '>=', $fromDate);
                     }
+                 }
+                 catch (OaiModelException $e) {
+                    throw new OaiModelException(
+                        "Given from date is greater than now. The given values results in an empty list.",
+                        OaiModelError::NORECORDSMATCH
+                    ); 
+                }              
+               catch (\Exception $e) {
+                    throw new OaiModelException(
+                        'The from date argument is not valid.',
+                        OaiModelError::BADARGUMENT
+                    );
                 }
             }
             
