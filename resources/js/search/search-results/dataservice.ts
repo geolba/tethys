@@ -18,7 +18,8 @@ export default {
     // solr endpoint
     // const host = 'http://voyagerdemo.com/';
     //const host = 'https://www.tethys.at/';
-    const host = 'https://' + solrHost;
+    //const host = 'https://' + solrHost;
+    const host = solrHost;
     const path = '/solr/' + solrCore + '/select?';
     var base = host + path;
 
