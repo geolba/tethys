@@ -378,10 +378,10 @@ class RequestController extends Controller
         $reldocIds = array();
 
         $metadataPrefix = null;
-        if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
-            $metadataPrefix = $oaiRequest['metadataPrefix'];
-        }
-        $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+        // if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
+        //     $metadataPrefix = $oaiRequest['metadataPrefix'];
+        // }
+        // $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
 
         $tokenWorker = new ResumptionTokens();
         $tokenWorker->setResumptionPath($tokenTempPath);
@@ -405,6 +405,16 @@ class RequestController extends Controller
             // else no resumptionToken is given
         } else {
             // no resumptionToken is given
+            if (true === array_key_exists('metadataPrefix', $oaiRequest)) {
+                $metadataPrefix = $oaiRequest['metadataPrefix'];
+            } else {
+                throw new OaiModelException(
+                    'The prefix of the metadata argument is unknown.',
+                    OaiModelError::BADARGUMENT
+                );
+            }
+            $this->proc->setParameter('', 'oai_metadataPrefix', $metadataPrefix);
+
             $finder = Dataset::query();
             // add server state restrictions
             $finder->whereIn('server_state', $this->deliveringDocumentStates);
@@ -491,7 +501,6 @@ class RequestController extends Controller
                     );
                 }
             }
-
             
             $totalIds = $finder->count();
             $reldocIds = $finder->orderBy('publish_id')->pluck('publish_id')->toArray();
