@@ -124,6 +124,7 @@
                       <thead>
                         <tr>
                           <th>Path Name</th>
+                          <th>File Extension</th>
                           <th>File Size</th>
                         </tr>
                       </thead>
@@ -136,6 +137,9 @@
                             @else
                             <span class="alert">missing file: {{ $file->path_name }}</span>
                             @endif
+                          </td>
+                          <td>
+                            <span>{{  pathinfo($file->path_name, PATHINFO_EXTENSION) }}</span>
                           </td>
                           <td>
                             <span>{{ $file->formatSize(2) }}</span>

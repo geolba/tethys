@@ -176,7 +176,7 @@
                                     and Conditions</a>
                             </li>
 
-                            <li><a target="_blank" href="https://github.com/geolba"><i class="fab fa-github"></i> rdr
+                            <li><a target="_blank" href="https://github.com/geolba/tethys"><i class="fab fa-github"></i> rdr
                                     bei GitHub</a></li>
                         </ul>
                     </div>

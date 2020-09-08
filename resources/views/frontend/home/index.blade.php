@@ -146,11 +146,14 @@
 <section data-sr id="clients" class="clients u-full-width">
     <div class="container">
         <div class="row">
-            <h3 class="separator">Publisher</h3>
+            <h3 class="separator">Tethys is certified by</h3>
         </div>
         <ul class="clients u-full-width u-cf">
             <li>
-                <img src="images/clients/logo_gba.png" alt="GBA Client">
+                {{-- <img src="images/clients/logo_gba.png" alt="GBA Client"> --}}
+                <object type="image/svg+xml" data="https://www.re3data.org/public/badges/s/light/100013400.svg">
+                    <img src="https://www.re3data.org/public/badges/s/light/100013400.png" style="max-width:100%">
+                </object>
             </li>
         </ul>
     </div>
