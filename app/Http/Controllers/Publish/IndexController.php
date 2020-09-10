@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class IndexController extends Controller
 {
@@ -340,7 +341,8 @@ class IndexController extends Controller
                         $file = $uploadedFile['file'];
                         $label = urldecode($uploadedFile['label']);
                         $sorting = $uploadedFile['sorting'];
-                        $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
+                        // $fileName = "file-" . time() . '.' . $file->getClientOriginalExtension();
+                        $fileName = "file-" . Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
                         $mimeType = $file->getMimeType();
                         $datasetFolder = 'files/' . $dataset->id;
                         $path = $file->storeAs($datasetFolder, $fileName);
