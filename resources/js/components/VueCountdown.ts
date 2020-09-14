@@ -39,11 +39,11 @@ export default class VueCountdown extends Vue {
     //     };
     // },
 
-    warningSeconds: Number = this.seconds;
+    warningSeconds: Number;// = this.seconds;
     timer: EasyTimer = null;
     time: string = '';
-    label: string = this.message ? this.message : 'Time\'s up!';
-    timerUnits = this.units ? this.units : ['hours', 'minutes', 'seconds'];
+    label: string;// = this.message ? this.message : 'Time\'s up!';
+    timerUnits: string[];// = this.units ? this.units : ['hours', 'minutes', 'seconds'];
     timerOptions = {
         startValues: {},
         // target: {},
@@ -57,6 +57,11 @@ export default class VueCountdown extends Vue {
             return 0;
         }
         return Date.parse(this.date);
+    }
+    mounted() {
+        this.warningSeconds = this.seconds;
+        this.label =  this.message ? this.message : 'Time\'s up!';
+        this.timerUnits = this.units ? this.units : ['hours', 'minutes', 'seconds'];
     }
     
     created() {

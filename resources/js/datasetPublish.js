@@ -40,7 +40,7 @@ import datetime from 'vuejs-datetimepicker';
 // import datetime from 'vuejs-datetimepicker';
 // import { Validator } from 'vee-validate';
 import VueToast from 'vue-toast-notification';
-import 'vue-toast-notification/dist/index.css';
+import 'vue-toast-notification/dist/theme-default.css';
 Vue.use(VueToast);
 
 import Tooltip from 'vue-directive-tooltip';

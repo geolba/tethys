@@ -4,7 +4,8 @@ import DeleteButton from "./DeleteButton";
 import "leaflet-draw";
 import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
 import VueToast from "vue-toast-notification";
-import "vue-toast-notification/dist/index.css";
+// import "vue-toast-notification/dist/index.css";
+import 'vue-toast-notification/dist/theme-default.css';
 Vue.use(VueToast);
 
 // import ToastedPlugin from 'vue-toasted';

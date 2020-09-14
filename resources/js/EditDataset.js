@@ -16,7 +16,8 @@ import Dataset from './components/Dataset';
 import PersonTable from './components/PersonTable.vue';
 import MyAutocomplete from './components/MyAutocomplete.vue';
 import VueToast from 'vue-toast-notification';
-import 'vue-toast-notification/dist/index.css';
+// import 'vue-toast-notification/dist/index.css';
+import 'vue-toast-notification/dist/theme-default.css';
 Vue.use(VueToast);
 
 @Component({
