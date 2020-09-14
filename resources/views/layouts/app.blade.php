@@ -8,8 +8,8 @@
     <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>TETHYS - Geology Geophysics Meteorology</title>
-    <meta name="description" content="An awesome one page website">
+    <title>TETHYS - Research Data Repository</title>
+    <meta name="description" content="Data Publisher for Geoscience Austria">
     <meta name="author" content="Arno Kaimbacher">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
