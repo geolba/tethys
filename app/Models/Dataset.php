@@ -152,7 +152,8 @@ class Dataset extends Model
         return $this
             ->persons()
             //->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
-            ->wherePivot('role', 'author');
+            ->wherePivot('role', 'author')
+            ->orderBy('link_documents_persons.sort_order');
     }
 
     /**
@@ -177,7 +178,8 @@ class Dataset extends Model
         return $this
             ->persons()
             // ->belongsToMany(Person::class, 'link_documents_persons', 'document_id', 'person_id')
-            ->wherePivot('role', 'contributor');
+            ->wherePivot('role', 'contributor')
+            ->orderBy('link_documents_persons.sort_order');
     }
 
     #endregion

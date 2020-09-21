@@ -28,7 +28,7 @@
           v-bind:class="[item.status==true ? 'activeClass' : 'inactiveClass']">
           <td scope="row">{{ index + 1 }}</td>
           <td>
-            <input style="width:30px;" v-bind:name="heading+'['+index+'][id]'" class="form-control" v-model="item.id"
+            <input style="width:40px;" v-bind:name="heading+'['+index+'][id]'" class="form-control" v-model="item.id"
               readonly data-vv-scope="step-1" />
           </td>
           <td>
