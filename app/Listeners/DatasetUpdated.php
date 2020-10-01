@@ -60,7 +60,7 @@ class DatasetUpdated
             $service = new SolariumAdapter("solr", config('solarium'));
             $service->addDatasetsToIndex($dataset);
         } catch (Opus_Search_Exception $e) {
-            Log::debug(__METHOD__ . ': ' . 'Indexing document ' . $documentId . ' failed: ' . $e->getMessage());
+            Log::debug(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
         } catch (InvalidArgumentException $e) {
             Log::warning(__METHOD__ . ': ' . $e->getMessage());
         }

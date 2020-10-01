@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\Inspire',
         'App\Console\Commands\DatasetState',
         'App\Console\Commands\SolrIndexBuilder',
-        'App\Console\Commands\Log\ClearLogFile'
+        'App\Console\Commands\Log\ClearLogFile',
+        'App\Console\Commands\UpdateSolrDataset'
     ];
 
     /**

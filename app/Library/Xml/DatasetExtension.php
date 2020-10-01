@@ -50,7 +50,7 @@ trait DatasetExtension
         'PersonAuthor' => array(
             'model' => Person::class,
             'through' => 'link_documents_persons',
-            'pivot' => array('role' => 'author'),
+            'pivot' => array('role' => 'author', 'sort_order' => 'sort_order'),
                             //'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
             'relation' => 'persons',
@@ -59,7 +59,7 @@ trait DatasetExtension
         'PersonContributor' => array(
             'model' => Person::class,
             'through' => 'link_documents_persons',
-            'pivot' => array('role' => 'contributor', 'contributor_type' => 'contributor_type'),
+            'pivot' => array('role' => 'contributor', 'contributor_type' => 'contributor_type',  'sort_order' => 'sort_order'),
             //                'sort_order' => array('sort_order' => 'ASC'),   // <-- We need a sorted authors list.
             //'sort_field' => 'SortOrder',
             'relation' => 'persons',

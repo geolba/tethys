@@ -95,7 +95,7 @@ class SolariumAdapter
 
         foreach ($documents as $document) {
             if (!($document instanceof Dataset)) {
-                throw new InvalidArgumentException("invalid dataset in provided set");
+                throw new \InvalidArgumentException("invalid dataset in provided set");
             }
         }
 

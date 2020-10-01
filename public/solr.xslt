@@ -136,6 +136,7 @@
 
                 <!-- author -->
                 <xsl:for-each select="/Opus/Rdr_Dataset/PersonAuthor">
+                    <xsl:sort select="@SortOrder"/>
                     <xsl:element name="field">
                         <xsl:attribute name="name">author</xsl:attribute>
                         <xsl:value-of select="@LastName" />
@@ -148,6 +149,7 @@
                 <xsl:element name="field">
                     <xsl:attribute name="name">author_sort</xsl:attribute>
                     <xsl:for-each select="/Opus/Rdr_Dataset/PersonAuthor">
+                        <xsl:sort select="@SortOrder"/>
                         <xsl:value-of select="@LastName" />
                         <xsl:text></xsl:text>
                         <xsl:value-of select="@FirstName" />
