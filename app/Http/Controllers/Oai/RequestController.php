@@ -124,6 +124,7 @@ class RequestController extends Controller
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
         $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
         $this->proc->setParameter('', 'repURL', url('/'));
+        $this->proc->setParameter('', 'downloadLink', url('/') . '/file/download/');
 
         // $resumptionPath = $this->configuration->getResumptionTokenPath();
 
@@ -185,8 +186,6 @@ class RequestController extends Controller
     {
         $repIdentifier = "tethys.at";
         $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
-
-
 
         // Identifier references metadata Urn, not plain Id!
         // Currently implemented as 'oai:foo.bar.de:{docId}' or 'urn:nbn...-123'

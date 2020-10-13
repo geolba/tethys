@@ -23,6 +23,7 @@
   <xsl:param name="setPubType" />
   <xsl:param name="repositoryName" />
   <xsl:param name="repIdentifier" />
+  <xsl:param name="downloadLink" />
   <xsl:param name="sampleIdentifier" />
   <xsl:param name="docId" />
   <xsl:param name="dateDelete" />
@@ -555,7 +556,8 @@
 
   <xsl:template match="File" mode="oai_dc">
     <dc:identifier>
-      <xsl:value-of select="@PathName" />
+      <!-- <xsl:value-of select="@PathName" /> -->      
+      <xsl:value-of select="concat($downloadLink, @Id)" />
     </dc:identifier>
   </xsl:template>
 
