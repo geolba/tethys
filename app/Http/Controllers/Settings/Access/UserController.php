@@ -2,11 +2,13 @@
 namespace App\Http\Controllers\Settings\Access;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewUser;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -81,6 +83,18 @@ class UserController extends Controller
             }
         }
 
+        // inform main admin about new user
+        $adminUser = User::where('email', config('mail.mailadmin'))->first();
+        if ($adminUser) {
+            // Mail::to("receiver@example.com")->send(new DemoEmail($objDemo));
+            $details = [
+                'title' => 'New user ',
+                'admin_name' => $adminUser->login,
+                'email' => $user->email,
+            ];
+            Mail::to($adminUser->email)->send(new NewUser($details));
+        }
+
         return redirect()
             ->route('access.user.index')
             ->with('success', 'User has been created successfully');
@@ -149,7 +163,7 @@ class UserController extends Controller
         $errors = new \Illuminate\Support\MessageBag();
 
         if (array_key_exists('current_password', $input)) {
-        // if user is not admin he must enter old_password if a new password is defined
+            // if user is not admin he must enter old_password if a new password is defined
             if (!Auth::user()->hasRole('Administrator') && $input['current_password'] == null && $input['password'] != null) {
                 //ModelState.AddModelError("OldPassword", Resources.User_Edit_OldPasswordEmpty);
                 //$flash_message = 'Current password should not be empty.';
@@ -158,7 +172,6 @@ class UserController extends Controller
                 $valid = false;
             }
 
-            
             if ($input['current_password'] != null && $this->validateUser($user->id, $input['current_password']) == false) {
                 //$flash_message = 'Password does not match the current password.';
                 $errors->add('your_custom_error', 'Password does not match the current password.');
@@ -166,8 +179,6 @@ class UserController extends Controller
             }
         }
 
-        
-      
         //$input = $request->only(['login', 'email', 'password']); //Retreive the name, email and password fields
         if ($valid == true) {
             $user->login = $input['login'];
@@ -175,7 +186,7 @@ class UserController extends Controller
             if ($input['password']) {
                 $user->password = Hash::make($input['password']);
             }
-           
+
             $user->save();
 
             $roles = $request['roles']; //Retreive all roles
@@ -194,8 +205,8 @@ class UserController extends Controller
             //     ->with('flash_message', 'User successfully edited.');
         }
         return back()
-        ->withInput($input)
-        ->withErrors($errors);
+            ->withInput($input)
+            ->withErrors($errors);
     }
 
     /**
