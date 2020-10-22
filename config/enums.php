@@ -26,6 +26,10 @@ return [
         "png" => "image/png",
         "jpg|jpeg|jpe" => "image/jpeg",
     ],
+    'name_types' => [
+        'personal' => 'Personal',
+        'organizational' => 'Organizational',
+    ],
     'contributor_types' => [
         'contact_person' => 'ContactPerson',
         'data_collector' => 'DataCollector',

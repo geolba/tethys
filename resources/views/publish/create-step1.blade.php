@@ -289,7 +289,7 @@
 </div>
 <input name="persons" v-model="dataset.persons" type="hidden" class="form-check-input" v-validate="'required'"
     data-vv-as="Creator" data-vv-scope="step-1">
-<person-table name="persons" v-bind:messages="messages" v-bind:heading="'creator table'"
+<person-table name="persons" v-bind:messages="messages" v-bind:nametypes="nameTypes" v-bind:heading="'creator table'"
     v-bind:personlist="dataset.persons"></person-table>
 </fieldset>
 
@@ -320,7 +320,7 @@
         <button class="pure-button button-small" @click.prevent="addNewContributor()">+</button>
     </div>
     {{-- <h3>contributor table</h3> --}}
-    <person-table name="contributors" v-bind:messages="messages" v-bind:contributortypes="contributorTypes" v-bind:heading="'contributor table'"
+    <person-table name="contributors" v-bind:messages="messages" v-bind:nametypes="nameTypes" v-bind:contributortypes="contributorTypes" v-bind:heading="'contributor table'"
         v-bind:personlist="dataset.contributors"></person-table>
 </fieldset>
 
@@ -963,7 +963,9 @@
     window.Laravel = <?php echo json_encode([            
             'languages' => $languages,
             'messages' => $messages,   
-            'contributorTypes' => $contributorTypes 
+            'contributorTypes' => $contributorTypes,
+            'nameTypes' => $nameTypes,
+
         ]); ?>        
 </script>
 <script type="text/javascript" src="{{  asset('backend/publish/datasetPublish.js') }}"></script>

@@ -6,6 +6,7 @@ import { Component, Inject, Vue, Prop, Watch } from "vue-property-decorator";
 import VueToast from "vue-toast-notification";
 // import "vue-toast-notification/dist/index.css";
 import 'vue-toast-notification/dist/theme-default.css';
+import { ToastOptions } from "vue-toast-notification";
 Vue.use(VueToast);
 
 // import ToastedPlugin from 'vue-toasted';
@@ -21,10 +22,11 @@ export default class LocationsMap extends Vue {
   map = null;
   drawnItems = null;
   locationErrors: Array<any> = [];
-  options = {
-    theme: "bubble",
+  options: ToastOptions = {
+    // theme: "bubble",
     position: "top-right",
-    duration: 3000
+    duration: 3000,
+    message: ""
   };
 
   created() {   
@@ -52,10 +54,12 @@ export default class LocationsMap extends Vue {
 
       _this.drawnItems.addLayer(boundingBox);
       _this.map.fitBounds(bounds);
+      this.options.message = "valid bounding box";
       this.$toast.success("valid bounding box", this.options);
     } catch (e) {
+      this.options.message = e.message;
       // _this.errors.push(e);
-      this.$toast.error(e, this.options);
+      this.$toast.error(e.message, this.options);
     }
   }
 

@@ -15,6 +15,7 @@
 		"felixkiss/uniquewith-validator": "^3.1",
 		"fideloper/proxy": "^4.0",
 		"laravel/framework": "^6.2",
+		"doctrine/dbal": "v2.4.2",
 		"laravel/tinker": "^2.0",
 		"laravelcollective/html": "^6.1",
 		"mcamara/laravel-localization": "^1.3",

@@ -78,6 +78,7 @@ class SubmitController extends Controller
             ->pluck('part1', 'part1');
         
         $contributorTypes = Config::get('enums.contributor_types');
+        $nameTypes = Config::get('enums.name_types');
 
         $messages = DB::table('messages')
             ->pluck('help_text', 'metadata_element');
@@ -118,6 +119,7 @@ class SubmitController extends Controller
                 'titleTypes',
                 'descriptionTypes',
                 'contributorTypes',
+                'nameTypes',
                 'languages',
                 'messages',
                 'projects',
@@ -218,7 +220,7 @@ class SubmitController extends Controller
                     } else {
                         $dataPerson = new Person($person);
                         $dataPerson->status = true;
-                        $dataPerson->name_type = "Organizational";
+                        // $dataPerson->name_type = "Organizational";
                         $dataset->persons()->save($dataPerson, $pivot_data);
                     }
                     $index++;
@@ -241,7 +243,7 @@ class SubmitController extends Controller
                     } else {
                         $dataPerson = new Person($person);
                         $dataPerson->status = true;
-                        $dataPerson->name_type = "Organizational";
+                        // $dataPerson->name_type = "Organizational";
                         $dataset->persons()->save($dataPerson, $pivot_data);
                     }
                     $index++;

@@ -77,6 +77,7 @@ class IndexController extends Controller
 
         $page = Page::query()->where('page_slug', 'terms-and-conditions')->firstOrFail();
 
+        $nameTypes = Config::get('enums.name_types');
         $contributorTypes = Config::get('enums.contributor_types');
 
         //$relationTypes = array('updates' => 'updates', 'updated-by' => 'updated-by', 'other' => 'other');
@@ -92,6 +93,7 @@ class IndexController extends Controller
                 'titleTypes',
                 'keywordTypes',
                 'descriptionTypes',
+                'nameTypes',
                 'contributorTypes',
                 'page'
             )
@@ -380,7 +382,7 @@ class IndexController extends Controller
                         } else {
                             $dataPerson = new Person($person);
                             $dataPerson->status = true;
-                            $dataPerson->name_type = "Personal";
+                            // $dataPerson->name_type = "Personal";
                             $dataset->persons()->save($dataPerson, $pivot_data);
                         }
                     }

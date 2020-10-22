@@ -128,6 +128,7 @@ class EditorController extends Controller
             ->pluck('part1', 'part1');
         
         $contributorTypes = Config::get('enums.contributor_types');
+        $nameTypes = Config::get('enums.name_types');
 
         // $options = License::all('id', 'name_long');
         $licenses = License::select('id', 'name_long', 'link_licence')
@@ -152,6 +153,7 @@ class EditorController extends Controller
                 'titleTypes',
                 'descriptionTypes',
                 'contributorTypes',
+                'nameTypes',
                 'languages',
                 'messages',
                 'projects',
@@ -252,7 +254,7 @@ class EditorController extends Controller
                     } else {
                         $dataPerson = new Person($person);
                         $dataPerson->status = true;
-                        $dataPerson->name_type = "Organizational";
+                        // $dataPerson->name_type = "Organizational";
                         $dataset->persons()->save($dataPerson, $pivot_data);
                     }
                     $index++;
@@ -275,7 +277,7 @@ class EditorController extends Controller
                     } else {
                         $dataPerson = new Person($person);
                         $dataPerson->status = true;
-                        $dataPerson->name_type = "Organizational";
+                        // $dataPerson->name_type = "Organizational";
                         $dataset->persons()->save($dataPerson, $pivot_data);
                     }
                     $index++;

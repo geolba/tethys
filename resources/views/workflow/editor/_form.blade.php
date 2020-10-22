@@ -77,8 +77,8 @@
     </div>
     <input name="authors" v-model="form.authors" type="hidden" class="form-check-input" v-validate="'required'"
         data-vv-as="Author">
-    <person-table name="authors" v-bind:messages="messages"  v-bind:heading="'authors'" v-bind:personlist="form.authors"></person-table>
-    <person-table name="contributors" v-bind:messages="messages"  v-bind:contributortypes="contributorTypes" v-bind:heading="'contributors'" v-bind:personlist="form.contributors">
+    <person-table name="authors" v-bind:messages="messages"  v-bind:nametypes="nameTypes" v-bind:heading="'authors'" v-bind:personlist="form.authors"></person-table>
+    <person-table name="contributors" v-bind:messages="messages" v-bind:nametypes="nameTypes" v-bind:contributortypes="contributorTypes" v-bind:heading="'contributors'" v-bind:personlist="form.contributors">
     </person-table>
 </fieldset>
 

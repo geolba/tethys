@@ -17,6 +17,9 @@
               </span>
             </label>
           </th>
+           <th scope="col" v-if="Object.keys(nametypes).length">
+            <span>Name Type</span>
+          </th>
           <th scope="col" v-if="Object.keys(contributortypes).length">
             <span>Type</span>
           </th>
@@ -51,6 +54,16 @@
             <input style="width:70px;" v-bind:name="heading+'['+index+'][identifier_orcid]'" class="form-control"
               placeholder="[ORCID]" v-model="item.identifier_orcid" v-bind:readonly="item.status==1"
               data-vv-scope="step-1" />
+          </td>
+          <td v-if="Object.keys(nametypes).length">
+             <input v-if="item.status==1" readonly v-bind:name="heading+'['+index+'][name_type]'" class="form-control"
+              placeholder="[NAME_TYPE]" v-model="item.name_type" data-vv-scope="step-1" />
+            <select v-else type="text" v-bind:name="heading+'['+index+'][name_type]'" v-validate="{required: true}"
+              data-vv-scope="step-1" v-model="item.name_type">
+              <option v-for="(option, i) in nametypes" :value="option" :key="i">
+                {{ option }}
+              </option>
+            </select>
           </td>
           <td v-if="Object.keys(contributortypes).length">
             <select type="text" v-bind:name="heading+'['+index+'][pivot][contributor_type]'" v-validate="{required: true}"
@@ -97,6 +110,8 @@
 
     @Prop({ required: true, type: Array })
     personlist;
+     @Prop({ default: {}, type: Object })
+    nametypes;
     @Prop({ default: {}, type: Object })
     contributortypes;
     @Prop(Number)

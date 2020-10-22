@@ -23,9 +23,9 @@ mix.js('resources/js/datasetPublish.js', 'public/backend/publish')
     .js('resources/js/mainEditDataset.js', 'public/backend/publish')
     .js('resources/js/approveDataset.js', 'public/backend/publish')
     .js('resources/js/ckeditor.js', 'public/backend/')   
-    .sass('resources/sass/app1.scss', 'public/css', { implementation: require('node-sass')})
+    .sass('resources/sass/app1.scss', 'public/css') //, { implementation: require('node-sass')})
     //.sass('node_modules/purecss/build/pure.css', 'public/css', { implementation: require('node-sass') })
-    .sass('resources/sass/font-awesome.scss', 'public/css', { implementation: require('node-sass') })
+    .sass('resources/sass/font-awesome.scss', 'public/css') //, { implementation: require('node-sass') })
     .js('resources/js/scripts.js', 'public/js')   
     .scripts([
         'node_modules/datatables.net/js/jquery.dataTables.js',

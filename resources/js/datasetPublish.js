@@ -93,6 +93,7 @@ const app = new Vue({
             editLink: null,
             releaseLink: null,
             deleteLink: null,
+            nameTypes : [],
             contributorTypes : [],
 
             isModalVisible: false,
@@ -154,7 +155,8 @@ const app = new Vue({
         this.reset();
     },
     beforeMount() {       
-        this.messages = window.Laravel.messages;        
+        this.messages = window.Laravel.messages;     
+        this.nameTypes = window.Laravel.nameTypes;   
         this.contributorTypes = window.Laravel.contributorTypes;        
     },
     computed: {
@@ -318,6 +320,7 @@ const app = new Vue({
                 formData.append('authors[' + i + '][email]', person.email);
                 formData.append('authors[' + i + '][identifier_orcid]', person.identifier_orcid);
                 formData.append('authors[' + i + '][status]', person.status);
+                formData.append('authors[' + i + '][name_type]', person.name_type);
                 if (person.id !== undefined) {
                     formData.append('authors[' + i + '][id]', person.id);
                 }
@@ -334,6 +337,7 @@ const app = new Vue({
                 formData.append('contributors[' + i + '][identifier_orcid]', contributor.identifier_orcid);
                 formData.append('contributors[' + i + '][status]', contributor.status);
                 formData.append('contributors[' + i + '][pivot][contributor_type]', contributor.pivot.contributor_type);
+                formData.append('contributors[' + i + '][name_type]', contributor.name_type);
                 if (contributor.id !== undefined) {
                     formData.append('contributors[' + i + '][id]', contributor.id);
                 }
@@ -517,7 +521,7 @@ const app = new Vue({
 
         },
         addNewAuthor() {
-            let newAuthor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '' };
+            let newAuthor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '', name_type: 'Personal' };
             this.dataset.persons.push(newAuthor);
         },
         removeAuthor(key) {
@@ -531,6 +535,7 @@ const app = new Vue({
             } else if (this.dataset.contributors.filter(e => e.id === person.id).length > 0) {
                 this.$toast.error("person is already defined as contributor");
             } else {
+                // person.pivot = { name_type: '' };
                 //person.sort_order = this.dataset.persons.length;
                 this.dataset.persons.push(person);
                 this.dataset.checkedAuthors.push(person.id);
@@ -538,7 +543,7 @@ const app = new Vue({
             }
         },
         addNewContributor() {
-            let newContributor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '', pivot: { contributor_type: ''} };
+            let newContributor = { status: 0, first_name: '', last_name: '', email: '', academic_title: '', identifier_orcid: '', name_type: 'Personal', pivot: { contributor_type: ''} };
             this.dataset.contributors.push(newContributor);
         },
         onAddContributor(person) {
@@ -550,6 +555,7 @@ const app = new Vue({
                 this.$toast.error("person is already defined as author");
             } else {
                 person.pivot = { contributor_type: '' };
+                // person.pivot = { name_type: '', contributor_type: '' };
                 this.dataset.contributors.push(person);
                 this.dataset.checkedContributors.push(person.id);
                 this.$toast.success("person has been successfully added as contributor");

@@ -66,6 +66,7 @@
             'titleTypes' => $titleTypes,
             'descriptionTypes' => $descriptionTypes,
             'contributorTypes'=> $contributorTypes,
+            'nameTypes' => $nameTypes,
             'languages' => $languages,
             'messages' => $messages,
             'projects' => $projects,
