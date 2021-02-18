@@ -10,18 +10,18 @@
 	"require": {
 		"php": "^7.2",
 		"arifhp86/laravel-clear-expired-cache-file": "^0.0.4",
-		"astrotomic/laravel-translatable": "^11.1",
-		"davejamesmiller/laravel-breadcrumbs": "5.x",
+		"astrotomic/laravel-translatable": "^11.1",	
+		"diglactic/laravel-breadcrumbs": "^6.1",
+		"doctrine/dbal": "v2.4.2",
 		"felixkiss/uniquewith-validator": "^3.1",
 		"fideloper/proxy": "^4.0",
+		"halpdesk/zizaco-entrust-laravel-6.0": "^1.9",
 		"laravel/framework": "^6.2",
-		"doctrine/dbal": "v2.4.2",
 		"laravel/tinker": "^2.0",
 		"laravelcollective/html": "^6.1",
 		"mcamara/laravel-localization": "^1.3",
 		"solarium/solarium": "^3.8",
-		"yajra/laravel-datatables-oracle": "^9.0",
-		"halpdesk/zizaco-entrust-laravel-6.0": "^1.9"
+		"yajra/laravel-datatables-oracle": "^9.0"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "^1.8",
