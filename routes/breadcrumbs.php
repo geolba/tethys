@@ -1,5 +1,6 @@
 <?php
-use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+// use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 
 // Dashboard
 Breadcrumbs::register('settings.dashboard', function ($trail) {

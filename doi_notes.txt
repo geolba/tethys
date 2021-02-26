@@ -1,0 +1,10 @@
+doi_notes:
+
+php artisan make:controller DOIController --resource --model "Models\DatasetIdentifier"
+
+
+
+composer require guzzlehttp/guzzle
+
+
+php artisan make:migration create_dataset_identifiers_table --table="dataset_identifiers"

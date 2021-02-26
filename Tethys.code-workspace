@@ -7,6 +7,12 @@
 	"settings": {
 		// "phpfmt.php_bin": "\"C:\\ProgramData\\scoop\\apps\\php-nts\\current\\php.exe\"",
 		"phpfmt.php_bin": "php",
-		"phpfmt.psr2": true
+		"phpfmt.psr2": true,
+		"phpcs.standard": "PSR2",
+		"phpcs.executablePath": "C:\\Users\\arno\\scoop\\apps\\composer\\current\\home\\vendor\\bin\\phpcs",
+		"phpsab.standard": "PSR2",
+		"phpsab.executablePathCBF": "C:\\Users\\arno\\scoop\\apps\\composer\\current\\home\\vendor\\bin\\phpcbf.bat",
+		"phpsab.executablePathCS":"C:\\Users\\arno\\scoop\\apps\\composer\\current\\home\\vendor\\bin\\phpcs.bat",
+		"phpsab.snifferEnable": true
 	}
 }

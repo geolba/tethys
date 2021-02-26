@@ -45,6 +45,18 @@ return [
     */
 
     'connections' => [
+        'testing' => [
+            'driver'   => 'pgsql',
+            'host'     => env('DB_HOST', 'pgsql'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'charset' => 'utf8',
+            'prefix'   => '',
+            'schema' => env('DB_SCHEMA', 'public'),
+            'sslmode' => 'prefer',
+        ],
 
         'sqlite' => [
             'driver'   => 'sqlite',
@@ -56,9 +68,9 @@ return [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'pgsql'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'repository'),
-            'username' => env('DB_USERNAME', 'opus4admin'),
-            'password' => env('DB_PASSWORD', 'opus4admin007'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix'   => '',
             'schema' => env('DB_SCHEMA', 'public'),
@@ -68,10 +80,10 @@ return [
         
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
-            'host'     => env('DB_HOST', 'zontik\test'),
-            'database' => env('DB_DATABASE', 'opusdb'),
-            'username' => env('DB_USERNAME', 'opus4'),
-            'password' => env('DB_PASSWORD', 'opus4007'),
+            'host'     => env('DB_HOST'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
             'prefix'   => '',
         ],
 
