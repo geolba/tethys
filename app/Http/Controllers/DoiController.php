@@ -78,7 +78,7 @@ class DoiController extends Controller
         $dataId = $request->input('publish_id');
         
         // Setup stylesheet
-        $this->loadStyleSheet(public_path() .'\prefixes\doi_datacite.xslt');
+        $this->loadStyleSheet(public_path() .'/prefixes/doi_datacite.xslt');
 
        // set timestamp
         $date = new \DateTime();
@@ -114,14 +114,14 @@ class DoiController extends Controller
         $appUrl = config('app.url');
         $landingPageUrl = $appUrl . "/dataset/" . $dataset->publish_id;
         $response = $this->doiClient->registerDoi($doiValue, $xmlMeta, $landingPageUrl);
+        // if operation successful
         if ($response->getStatusCode() == 201) {
             $doi = new DatasetIdentifier();
             $doi['value'] = $doiValue;
             $doi['dataset_id'] = $dataset->id;
             $doi['type'] = "doi";
             $doi['status'] = "registered";
-            $doi['registration_ts'] = now();
-            // $doi->save();
+            $doi->save();
         }
     }
 

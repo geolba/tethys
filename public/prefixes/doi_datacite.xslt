@@ -227,11 +227,21 @@
                     <xsl:value-of select="@Language" />
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="@Type != '' and @Type != 'Main'">
-                <xsl:attribute name="titleType">
-                    <xsl:value-of select="@Type" />
-                </xsl:attribute>
-            </xsl:if>
+
+            <xsl:choose>
+                <xsl:when test="@Type != '' and @Type != 'Sub' and @Type != 'Main'">
+                    <xsl:attribute name="titleType">
+                        <xsl:value-of select="@Type" />
+                        <xsl:text>Title</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="@Type = 'Sub'">
+                    <xsl:attribute name="titleType">
+                        <xsl:value-of select="@Type" />
+                        <xsl:text>title</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>

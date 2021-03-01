@@ -19,7 +19,7 @@ class CreateDatasetIdentifiersTable extends Migration
 
             // foreign key to: documents.id
             $table->integer('dataset_id')->unsigned();
-            ;
+            
             $table->foreign('dataset_id')->references('id')->on('documents')
             ->onUpdate('cascade')->onDelete('cascade');
 
@@ -34,8 +34,6 @@ class CreateDatasetIdentifiersTable extends Migration
                 'status',
                 ['draft', 'registered', 'findable']
             )->nullable();
-            // timestamp of DOI registration
-            $table->timestamp('registration_ts');
             $table->timestamps();
         });
     }

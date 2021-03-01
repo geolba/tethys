@@ -33,7 +33,7 @@ class DoiClient implements DoiInterface
     }
 
     /**
-     * Creates a DOI or ARK with the given identifier
+     * Creates a DOI with the given identifier
      *
      * @param string $identifier The desired DOI identifier e.g. '10.5072/tethys.999',
      * @param $xmlMeta
@@ -68,7 +68,6 @@ class DoiClient implements DoiInterface
         }
         // Response Codes
         // 201 Created: operation successful
-        // 400 Bad Request: invalid XML, wrong prefix
         // 401 Unauthorised: no login
         // 403 Forbidden: login problem, quota exceeded
         // 415 Wrong Content Type : Not including content type in the header.
@@ -167,18 +166,74 @@ class DoiClient implements DoiInterface
         return ($statusCode == 200 && $landingPageURL == $body);
     }
 
-    public function getMetadataForDoi($identifier)
+    public function getMetadataForDoi($doiValue)
     {
-        //
+        $response = null;
+        $url = $this->serviceUrl . '/metadata/' . $doiValue;
+        try {
+            $client = new Client([
+                'auth' => [$this->username, $this->password],
+                'base_uri' => $url,
+                'verify' => false,
+            ]);
+            $response = $client->request('GET');
+        } catch (\Exception $e) {
+            $message = 'request to ' . $url . ' failed with ' . $e->getMessage();
+            throw new DoiClientException($message);
+        }
+        // Response Codes
+        // 200 OK: operation successful;
+        // 204 No Content: the DOI is known to DataCite Metadata Store (MDS), but no metadata have been registered;
+        // 401 Unauthorised: no login
+        // 403 Forbidden: permission problem or dataset belongs to another party;
+        // 404 Not Found: DOI does not exist in our database.
+        // 422 Unprocessable Entity Metadata failed validation against the DataCite Schema.
+        if ($response->getStatusCode() != 200) {
+            $message = 'unexpected DataCite MDS response code ' . $response->getStatusCode();
+            // $this->log($message, 'err');
+            throw new DoiClientException($message);
+        }
+        return $response;
     }
 
-    public function updateMetadataForDoi($identifier, $new_meta)
+    public function updateMetadataForDoi($doiValue, $newMeta)
     {
-        //
+        $response = null;
+        $url = $this->serviceUrl . '/metadata/' . $doiValue;
+        try {
+            $client = new Client([
+                'auth' => [$this->username, $this->password],
+                // 'base_uri' => $url,
+                'verify' => false,
+                'headers' => [
+                    'Content-Type' => 'application/xml;charset=UTF-8',
+                ],
+                // 'body' => $xmlMeta,
+            ]);
+            // Provide the body as a string.
+            $response = $client->request('PUT', $url, [
+                'body' => $newMeta,
+            ]);
+        } catch (\Exception $e) {
+            $message = 'request to ' . $url . ' failed with ' . $e->getMessage();
+            // $this->log($message, 'err');
+            throw new DoiClientException($message);
+        }
+        // Response Codes
+        // 201 Created: operation successful
+        // 401 Unauthorised: no login
+        // 403 Forbidden: login problem, quota exceeded
+        // 415 Wrong Content Type : Not including content type in the header.
+        // 422 Unprocessable Entity : invalid XML
+        if ($response->getStatusCode() != 201) {
+            $message = 'unexpected DataCite MDS response code ' . $response->getStatusCode();
+            // $this->log($message, 'err');
+            throw new DoiClientException($message);
+        }
     }
 
     /**
-     * Markiert den Datensatz zur übergebenen DOI als inaktiv.
+     * Markiert den Datensatz zur übergebenen DOI als inaktiv - Status registered (not findable)
      *
      * @param $doiValue
      *

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DatasetIdentifier extends Model
 {
-    protected $table = 'dataset_identifierss';
+    protected $table = 'dataset_identifiers';
     protected $guarded = array();
 
     /**
