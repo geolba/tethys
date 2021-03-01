@@ -13,7 +13,7 @@ class CreateDatasetIdentifiersTable extends Migration
      */
     public function up()
     {
-        Schema::table('dataset_identifiers', function (Blueprint $table) {
+        Schema::create('dataset_identifiers', function (Blueprint $table) {
             // primary key
             $table->increments('id');
 
@@ -45,8 +45,6 @@ class CreateDatasetIdentifiersTable extends Migration
      */
     public function down()
     {
-        Schema::table('dataset_identifiers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('dataset_identifiers');
     }
 }
