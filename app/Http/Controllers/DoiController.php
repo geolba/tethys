@@ -8,7 +8,6 @@ use App\Models\DatasetIdentifier;
 use Illuminate\Http\Request;
 use App\Models\Oai\OaiModelError;
 use App\Exceptions\OaiModelException;
-use Illuminate\Support\Facades\Log;
 
 class DoiController extends Controller
 {
@@ -108,13 +107,13 @@ class DoiController extends Controller
 
         $this->xml->documentElement->appendChild($node);
         $xmlMeta = $this->proc->transformToXML($this->xml);
-        Log::alert($xmlMeta);
+        // Log::alert($xmlMeta);
        //create doiValue and correspunfing landingpage of tehtys
         $doiValue = $prefix . '/tethys.' . $dataset->publish_id;
         $appUrl = config('app.url');
         $landingPageUrl = $appUrl . "/dataset/" . $dataset->publish_id;
         $response = $this->doiClient->registerDoi($doiValue, $xmlMeta, $landingPageUrl);
-        // if operation successful
+        // if operation successful, store dataste identifier
         if ($response->getStatusCode() == 201) {
             $doi = new DatasetIdentifier();
             $doi['value'] = $doiValue;
