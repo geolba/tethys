@@ -20,7 +20,7 @@ class CreateDocumentFilesTable extends Migration
             $table->foreign('document_id')->references('id')->on('documents')
             ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->string('path_name', 50);
+            $table->string('path_name', 100);
             $table->string('label', 50)->nullable();
             $table->string('comment', 255)->nullable();
             $table->string('mime_type', 255)->nullable();
