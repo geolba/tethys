@@ -10,20 +10,24 @@ class DoiClient implements DoiInterface
     private $username;
     private $password;
     private $serviceUrl;
+    private $prefix;
+    private $base_domain;
 
     public function __construct()
     {
-        $datacite_environment = "production"; //config('tethys.datacite_environment');
+        $datacite_environment = config('tethys.datacite_environment');
         if ($datacite_environment == "debug") {
             $this->username = config('tethys.datacite_test_username');
             $this->password = config('tethys.datacite_test_password');
-            $this->serviceUrl = config('tethys.test_datacite_service_url');
-            $this->prefix = config('tethys.datacite_prefix');
+            $this->serviceUrl = config('tethys.datacite_test_service_url');
+            $this->prefix = config('tethys.datacite_test_prefix');
+            $this->base_domain = config('tethys.test_base_domain');
         } elseif ($datacite_environment == "production") {
             $this->username = config('tethys.datacite_username');
             $this->password = config('tethys.datacite_password');
             $this->serviceUrl = config('tethys.datacite_service_url');
             $this->prefix = config('tethys.datacite_prefix');
+            $this->base_domain = config('tethys.base_domain');
         }
         if (is_null($this->username) || is_null($this->password) || is_null($this->serviceUrl)) {
             $message = 'missing configuration settings to properly initialize DOI client';
@@ -45,6 +49,7 @@ class DoiClient implements DoiInterface
     {
        
         // Schritt 1: Metadaten als XML registrieren
+        // state draft
         $response = null;
         $url = $this->serviceUrl . '/metadata/' . $doiValue;
         try {
@@ -79,7 +84,7 @@ class DoiClient implements DoiInterface
         }
 
         // Schritt 2: Register the DOI name
-        // DOI und URL der Frontdoor des zugehörigen Dokuments übergeben
+        // DOI und URL der Frontdoor des zugehörigen Dokuments übergeben: state findable
         $url = $this->serviceUrl . '/doi/' . $doiValue;
         try {
             $client = new Client(
@@ -199,7 +204,7 @@ class DoiClient implements DoiInterface
     public function updateMetadataForDoi($doiValue, $newMeta)
     {
         $response = null;
-        $url = $this->serviceUrl . '/metadata/' . $doiValue;
+        $url = $this->serviceUrl . '/metadata/' . $doiValue;       
         try {
             $client = new Client([
                 'auth' => [$this->username, $this->password],

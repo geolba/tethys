@@ -32,7 +32,9 @@
                     $rowclass = 'reviewed';   
                 }elseif ($dataset->server_state == 'released') {
                     $rowclass = 'released';   
-                }         
+                } elseif ($dataset->server_state == 'published') {
+                    $rowclass = 'released';   
+                }           
                 @endphp
                 <tr class="{{ $rowclass }}">
                     <td>
@@ -80,6 +82,11 @@
                         <a href="{{ URL::route('publish.workflow.editor.publishUpdate', $dataset->id) }}" class="pure-button">
                             <i class="fa fa-edit"></i>
                             <span>Publish</span>
+                        </a>
+                        @elseif ($dataset->server_state == "published" && ! $dataset->identifier()->exists())
+                        <a href="{{ URL::route('publish.workflow.editor.doi', $dataset->id) }}" class="pure-button">
+                            <i class="fa fa-edit"></i>
+                            <span>Make DOI</span>
                         </a>                        
                         @endif
                     </td>

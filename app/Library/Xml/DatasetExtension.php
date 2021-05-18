@@ -7,6 +7,7 @@ use App\Models\License;
 use App\Models\Person;
 use App\Models\File;
 use App\Models\Coverage;
+use App\Models\DatasetIdentifier;
 use App\Models\Subject;
 use App\Models\DatasetReference;
 
@@ -68,6 +69,11 @@ trait DatasetExtension
         'Reference' => array(
             'model' => DatasetReference::class,
             'relation' => 'references',
+            'fetch' => 'eager'
+        ),
+        'Identifier' => array(
+            'model' => DatasetIdentifier::class,
+            'relation' => 'identifier',
             'fetch' => 'eager'
         ),
         'Subject' => array(

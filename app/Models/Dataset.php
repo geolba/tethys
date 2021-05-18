@@ -13,6 +13,7 @@ use App\Models\Project;
 use App\Models\Title;
 use App\Models\User;
 use App\Models\XmlCache;
+use App\Models\DatasetIdentifier;
 use Carbon\Carbon;
 // use App\Models\GeolocationBox;
 use Illuminate\Database\Eloquent\Model;
@@ -94,6 +95,14 @@ class Dataset extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+
+     /**
+     * Get the doi indentifier that owns the dataset.
+     */
+    public function identifier()
+    {
+        return $this->hasOne(DatasetIdentifier::class, 'dataset_id', 'id');
     }
 
     /**

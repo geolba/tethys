@@ -7,7 +7,8 @@
 
 namespace App\Providers;
 
-use App\Tethys\Utils\DoiService;
+use App\Tethys\Utils\DoiClient;
+use App\Interfaces\DoiInterface;
 use Illuminate\Support\ServiceProvider;
 
 class DoiServiceProvider extends ServiceProvider
@@ -33,12 +34,12 @@ class DoiServiceProvider extends ServiceProvider
     {
         //
         $this->app->singleton('App\Interfaces\DoiInterface', function ($app) {
-            return new DoiService();
+            return new DoiClient();
         });
     }
 
     public function provides()
     {
-        return [DoiService::class];
+        return [DoiClient::class];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Publish;
 
 use App\Exceptions\GeneralException;
@@ -28,11 +29,40 @@ use Illuminate\Support\Facades\View;
 use \Exception;
 use Illuminate\Support\Facades\Config;
 
+use App\Models\DatasetIdentifier;
+use App\Models\Oai\OaiModelError;
+use App\Exceptions\OaiModelException;
+use App\Interfaces\DoiInterface;
+
 class EditorController extends Controller
 {
-    public function __construct()
+     /**
+     * Holds xml representation of document information to be processed.
+     *
+     * @var \DomDocument  Defaults to null.
+     */
+    protected $xml = null;
+     /**
+     * Holds the stylesheet for the transformation.
+     *
+     * @var \DomDocument  Defaults to null.
+     */
+    protected $xslt = null;
+
+    /**
+     * Holds the xslt processor.
+     *
+     * @var \XSLTProcessor  Defaults to null.
+     */
+    protected $proc = null;
+
+    public function __construct(DoiInterface $DoiClient)
     {
+        $this->doiClient = $DoiClient;
+
         //$this->middleware('auth');
+        $this->xml = new \DomDocument();
+        $this->proc = new \XSLTProcessor();
     }
 
     /**
@@ -48,11 +78,12 @@ class EditorController extends Controller
         $builder = Dataset::query();
         //"select * from [documents] where [server_state] in (?) or ([server_state] = ? and [editor_id] = ?)"
         $datasets = $builder
+            
             ->where('server_state', 'released')
             // ->whereIn('server_state', ['released'])
             ->orWhere(function ($query) use ($user_id) {
-                $query->whereIn('server_state', ['editor_accepted', 'rejected_reviewer', 'reviewed'])
-                    ->where('editor_id', $user_id);
+                $query->whereIn('server_state', ['editor_accepted', 'rejected_reviewer', 'reviewed', 'published'])
+                    ->where('editor_id', $user_id)->doesntHave('identifier', 'and');
             })
             ->orderBy('server_date_modified', 'desc')
             ->get();
@@ -105,8 +136,10 @@ class EditorController extends Controller
         $dataset->load('licenses', 'authors', 'contributors', 'titles', 'abstracts', 'files', 'coverage', 'subjects', 'references');
 
         $titleTypes = ['Main' => 'Main', 'Sub' => 'Sub', 'Alternative' => 'Alternative', 'Translated' => 'Translated', 'Other' => 'Other'];
-        $descriptionTypes = ['Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information',
-            'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'];
+        $descriptionTypes = [
+            'Abstract' => 'Abstract', 'Methods' => 'Methods', 'Series_information' => 'Series_information',
+            'Technical_info' => 'Technical_info', 'Translated' => 'Translated', 'Other' => 'Other'
+        ];
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
@@ -126,7 +159,7 @@ class EditorController extends Controller
         $languages = DB::table('languages')
             ->where('active', true)
             ->pluck('part1', 'part1');
-        
+
         $contributorTypes = Config::get('enums.contributor_types');
         $nameTypes = Config::get('enums.name_types');
 
@@ -142,8 +175,10 @@ class EditorController extends Controller
         $referenceTypes = ["rdr-id", "doi", "handle", "isbn", "issn", "url", "urn"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
-        $relationTypes =  ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
-        "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"];
+        $relationTypes =  [
+            "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+            "IsNewVersionOf", "IsPartOf", "HasPart", "Compiles", "IsVariantFormOf"
+        ];
         $relationTypes = array_combine($relationTypes, $relationTypes);
 
         return View::make(
@@ -415,7 +450,8 @@ class EditorController extends Controller
                     $formCoverage
                 );
             } elseif (isset($data['coverage']) && $this->containsOnlyNull($data['coverage'])
-                && !is_null($dataset->coverage)) {
+                && !is_null($dataset->coverage)
+            ) {
                 $dataset->coverage()->delete();
             }
 
@@ -591,5 +627,132 @@ class EditorController extends Controller
                 ->with('flash_message', 'You have successfully published the dataset!');
         }
         throw new GeneralException(trans('exceptions.publish.publish.update_error'));
+    }
+
+    /**
+     * Display the specified dataset for publishing.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function doi($id): \Illuminate\Contracts\View\View
+    {
+        $dataset = Dataset::query()
+            ->with([
+                'titles',
+                'persons' => function ($query) {
+                    $query->wherePivot('role', 'author');
+                },
+            ])->findOrFail($id);
+
+        return View::make('workflow.editor.doi', [
+            'dataset' => $dataset,
+        ]);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function doiStore(Request $request, $publish_id)
+    {
+        $dataId = $publish_id; //$request->input('publish_id');
+        // Setup stylesheet
+        $this->loadStyleSheet(public_path() . '/prefixes/doi_datacite.xslt');
+
+        // set timestamp
+        $date = new \DateTime();
+        $unixTimestamp = $date->getTimestamp();
+        $this->proc->setParameter('', 'unixTimestamp', $unixTimestamp);
+
+        $prefix = "";
+        $base_domain = "";
+        $datacite_environment = config('tethys.datacite_environment');
+        if ($datacite_environment == "debug") {
+            $prefix =  config('tethys.datacite_test_prefix');
+           $base_domain = config('tethys.test_base_domain');
+        } elseif ($datacite_environment == "production") {           
+            $prefix = config('tethys.datacite_prefix');
+            $base_domain = config('tethys.base_domain');
+        }
+        // $prefix = config('tethys.datacite_prefix');
+        $this->proc->setParameter('', 'prefix', $prefix);
+
+        $repIdentifier = "tethys";
+        $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
+
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
+        $dataset = Dataset::where('publish_id', '=', $dataId)->firstOrFail();
+        if (is_null($dataset)) {
+            throw new OaiModelException('Dataset is not available for registering DOI!', OaiModelError::NORECORDSMATCH);
+        }
+        $dataset->fetchValues();
+        $xmlModel = new \App\Library\Xml\XmlModel();
+        $xmlModel->setModel($dataset);
+        $xmlModel->excludeEmptyFields();
+        $cache = ($dataset->xmlCache) ? $dataset->xmlCache : new \App\Models\XmlCache();
+        $xmlModel->setXmlCache($cache);
+        $domNode = $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
+        $node = $this->xml->importNode($domNode, true);
+        $this->addSpecInformation($node, 'data-type:' . $dataset->type);
+
+        $this->xml->documentElement->appendChild($node);
+        $xmlMeta = $this->proc->transformToXML($this->xml);
+        // Log::alert($xmlMeta);
+        //create doiValue and correspunfing landingpage of tehtys
+        $doiValue = $prefix . '/tethys.' . $dataset->publish_id;
+        // $appUrl = config('app.url');
+        $landingPageUrl = $base_domain . "/dataset/" . $dataset->publish_id;
+        $response = $this->doiClient->registerDoi($doiValue, $xmlMeta, $landingPageUrl);
+        // if operation successful, store dataste identifier
+        if ($response->getStatusCode() == 201) {
+            $doi = new DatasetIdentifier();
+            $doi['value'] = $doiValue; //$landingPageUrl;
+            $doi['dataset_id'] = $dataset->id;
+            $doi['type'] = "doi";
+            $doi['status'] = "findable";
+            if ($doi->save()) {
+                // update server_date_modified for triggering nex xml cache (doi interface)
+                $time = new \Illuminate\Support\Carbon();
+                $dataset->server_date_modified = $time;
+                $dataset->save();
+                return redirect()
+                    ->route('publish.workflow.editor.index')
+                    ->with('flash_message', 'You have successfully created a DOI for the dataset!');
+            }
+        } else {
+            $message = 'unexpected DataCite MDS response code ' . $response->getStatusCode();
+            // $this->log($message, 'err');
+            throw new GeneralException($message);
+        }
+    }
+
+    /**
+     * Load an xslt stylesheet.
+     *
+     * @return void
+     */
+    private function loadStyleSheet($stylesheet)
+    {
+        $this->xslt = new \DomDocument;
+        $this->xslt->load($stylesheet);
+        $this->proc->importStyleSheet($this->xslt);
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $this->proc->setParameter('', 'host', $_SERVER['HTTP_HOST']);
+        }
+        //$this->proc->setParameter('', 'server', $this->getRequest()->getBaseUrl());
+    }
+
+    private function addSpecInformation(\DOMNode $document, $information)
+    {
+        $setSpecAttribute = $this->xml->createAttribute('Value');
+        $setSpecAttributeValue = $this->xml->createTextNode($information);
+        $setSpecAttribute->appendChild($setSpecAttributeValue);
+
+        $setSpecElement = $this->xml->createElement('SetSpec');
+        //$setSpecElement =new \DOMElement("SetSpec");
+        $setSpecElement->appendChild($setSpecAttribute);
+        $document->appendChild($setSpecElement);
     }
 }

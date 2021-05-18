@@ -28,27 +28,35 @@
  * xml as required by the OAI-PMH protocol.
  */
 -->
-<xsl:stylesheet version="1.0" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" 
-    xmlns:dc="http://purl.org/dc/elements/1.1/" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 
     <xsl:output method="xml" indent="yes" />
 
     <xsl:template match="Rdr_Dataset" mode="oai_datacite">
-        <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.3/metadata.xsd">
             <!-- <isReferenceQuality>true</isReferenceQuality>
       <schemaVersion>4.3</schemaVersion>
       <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
-            <identifier>
-                <xsl:text>oai:</xsl:text>
-                <xsl:value-of select="$repIdentifier" />
-                <xsl:text>:</xsl:text>
-                <xsl:value-of select="@PublishId" />
-            </identifier>
+            <xsl:choose>
+                <xsl:when test="Identifier">
+                   <xsl:apply-templates name="Identifier" mode="oai_datacite" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <identifier>
+                        <xsl:text>oai:</xsl:text>
+                        <xsl:value-of select="$repIdentifier" />
+                        <xsl:text>:</xsl:text>
+                        <xsl:value-of select="@PublishId" />
+                    </identifier>
+                </xsl:otherwise>
+            </xsl:choose>
+
             <!--<datacite:creator>-->
             <creators>
                 <xsl:apply-templates select="PersonAuthor" mode="oai_datacite" />
@@ -122,7 +130,7 @@
         </resource>
     </xsl:template>
 
-    <xsl:template name="RdrDate2" mode="oai_datacite" 
+    <xsl:template name="RdrDate2" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <xsl:if test="EmbargoDate and ($unixTimestamp &lt; EmbargoDate/@UnixTimestamp)">
             <date>
@@ -148,7 +156,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="Coverage" mode="oai_datacite" 
+    <xsl:template match="Coverage" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <geoLocation>
             <geoLocationBox>
@@ -168,7 +176,7 @@
         </geoLocation>
     </xsl:template>
 
-    <xsl:template match="TitleAbstract" mode="oai_datacite" 
+    <xsl:template match="TitleAbstract" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <description>
             <xsl:attribute name="xml:lang">
@@ -182,7 +190,7 @@
             <xsl:value-of select="@Value" />
         </description>
     </xsl:template>
-    <xsl:template match="TitleAbstractAdditional" mode="oai_datacite" 
+    <xsl:template match="TitleAbstractAdditional" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <description>
             <xsl:attribute name="xml:lang">
@@ -195,9 +203,16 @@
             </xsl:if>
             <xsl:value-of select="@Value" />
         </description>
+    </xsl:template>
+    
+    <xsl:template match="Identifier" mode="oai_datacite"
+        xmlns="http://datacite.org/schema/kernel-4">
+        <identifier identifierType="DOI">
+         <xsl:value-of select="@Value" />
+        </identifier>
     </xsl:template>
 
-    <xsl:template match="TitleMain" mode="oai_datacite" 
+    <xsl:template match="TitleMain" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <title>
             <xsl:if test="@Language != ''">
@@ -213,7 +228,7 @@
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>
-    <xsl:template match="TitleAdditional" mode="oai_datacite" 
+    <xsl:template match="TitleAdditional" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <title>
             <xsl:if test="@Language != ''">
@@ -230,7 +245,7 @@
         </title>
     </xsl:template>
 
-    <xsl:template match="Subject" mode="oai_datacite" 
+    <xsl:template match="Subject" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <subject>
             <xsl:if test="@Language != ''">
@@ -242,18 +257,18 @@
         </subject>
     </xsl:template>
 
-    <xsl:template name="AlternateIdentifier" mode="oai_datacite" 
+    <xsl:template name="AlternateIdentifier" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <alternateIdentifier >
             <xsl:attribute name="alternateIdentifierType">
                 <xsl:text>url</xsl:text>
             </xsl:attribute>
             <!-- <xsl:variable name="identifier" select="concat($repURL, '/dataset/', @Id)" /> -->
-           <xsl:value-of select="@landingpage"/>
+            <xsl:value-of select="@landingpage"/>
         </alternateIdentifier >
     </xsl:template>
 
-    <xsl:template match="Reference" mode="oai_datacite" 
+    <xsl:template match="Reference" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <relatedIdentifier>
             <xsl:attribute name="relatedIdentifierType">
@@ -266,7 +281,7 @@
         </relatedIdentifier>
     </xsl:template>
 
-    <xsl:template match="PersonContributor" mode="oai_datacite" 
+    <xsl:template match="PersonContributor" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <contributor>
             <xsl:if test="@ContributorType != ''">
@@ -285,7 +300,7 @@
         </contributor>
     </xsl:template>
 
-    <xsl:template match="PersonAuthor" mode="oai_datacite" 
+    <xsl:template match="PersonAuthor" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <creator>
             <creatorName>
@@ -323,14 +338,14 @@
         </creator>
     </xsl:template>
 
-    <xsl:template match="File/@MimeType" mode="oai_datacite" 
+    <xsl:template match="File/@MimeType" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <format>
             <xsl:value-of select="." />
         </format>
     </xsl:template>
 
-    <xsl:template match="Licence" mode="oai_datacite" 
+    <xsl:template match="Licence" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <rights>
             <xsl:if test="@LinkLicence != ''">

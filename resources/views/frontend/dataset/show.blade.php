@@ -42,6 +42,12 @@
 
                   <div class="tab-pane content-metadata active" id="one">
 
+                    @if($dataset->identifier()->exists())
+                    <p class="dataset__abstract" v-if="dataset.subject && dataset.subject.length > 0">
+                      DOI: {{ $dataset->identifier->value  }}
+                    </p>
+                    @endif
+
                     @if($dataset->additionalTitles()->exists())
                     <p class="dataset__abstract">
                       Zusätzliche Titel:

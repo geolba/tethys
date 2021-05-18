@@ -14,6 +14,6 @@ class DatasetIdentifier extends Model
      */
     public function dataset()
     {
-        return $this->belongsTo(Dataset::class, 'document_id', 'id');
+        return $this->belongsTo(Dataset::class, 'dataset_id', 'id');
     }
 }

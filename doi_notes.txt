@@ -8,3 +8,13 @@ composer require guzzlehttp/guzzle
 
 
 php artisan make:migration create_dataset_identifiers_table --table="dataset_identifiers"
+
+
+make php unit tests:
+php artisan test --testsuite=Feature 
+via composer:
+composer test
+
+
+siehe https://doi.datacite.org/repositories/tuw.tethys/dois (angemeldet)
+e.g. https://doi.org/10.24341/tethys.1
