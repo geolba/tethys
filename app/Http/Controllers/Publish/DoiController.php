@@ -1,26 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Publish;
 
-use App\Interfaces\DOIInterface;
+use App\Http\Controllers\Controller;
+use App\Interfaces\DoiInterface;
 use App\Models\Dataset;
 use App\Models\DatasetIdentifier;
 use Illuminate\Http\Request;
 use App\Models\Oai\OaiModelError;
 use App\Exceptions\OaiModelException;
+use Illuminate\Support\Facades\View;
+use App\Exceptions\GeneralException;
 
 class DoiController extends Controller
 {
     protected $doiService;
     protected $LaudatioUtils;
 
-     /**
+    /**
      * Holds xml representation of document information to be processed.
      *
      * @var \DomDocument  Defaults to null.
      */
     protected $xml = null;
-     /**
+    /**
      * Holds the stylesheet for the transformation.
      *
      * @var \DomDocument  Defaults to null.
@@ -41,7 +44,7 @@ class DoiController extends Controller
     public function __construct(DoiInterface $DoiClient)
     {
         $this->doiClient = $DoiClient;
-       
+
         $this->xml = new \DomDocument();
         $this->proc = new \XSLTProcessor();
     }
@@ -49,11 +52,21 @@ class DoiController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    // public function index()
+    // {
+    //     //
+    // }
+    public function index(): \Illuminate\Contracts\View\View
     {
-        //
+        $datasets = Dataset::query()
+            ->has('identifier')           
+            ->orderBy('server_date_modified', 'desc')
+            ->get();
+        return View::make('workflow.doi.index', [
+            'datasets' => $datasets,
+        ]);
     }
 
     /**
@@ -63,7 +76,7 @@ class DoiController extends Controller
      */
     public function create(Request $request)
     {
-       //
+        //
     }
 
     /**
@@ -75,11 +88,11 @@ class DoiController extends Controller
     public function store(Request $request)
     {
         $dataId = $request->input('publish_id');
-        
-        // Setup stylesheet
-        $this->loadStyleSheet(public_path() .'/prefixes/doi_datacite.xslt');
 
-       // set timestamp
+        // Setup stylesheet
+        $this->loadStyleSheet(public_path() . '/prefixes/doi_datacite.xslt');
+
+        // set timestamp
         $date = new \DateTime();
         $unixTimestamp = $date->getTimestamp();
         $this->proc->setParameter('', 'unixTimestamp', $unixTimestamp);
@@ -108,7 +121,7 @@ class DoiController extends Controller
         $this->xml->documentElement->appendChild($node);
         $xmlMeta = $this->proc->transformToXML($this->xml);
         // Log::alert($xmlMeta);
-       //create doiValue and correspunfing landingpage of tehtys
+        //create doiValue and correspunfing landingpage of tehtys
         $doiValue = $prefix . '/tethys.' . $dataset->publish_id;
         $appUrl = config('app.url');
         $landingPageUrl = $appUrl . "/dataset/" . $dataset->publish_id;
@@ -141,9 +154,19 @@ class DoiController extends Controller
      * @param  \App\Models\DatasetIdentifier  $doi
      * @return \Illuminate\Http\Response
      */
-    public function edit(DatasetIdentifier $doi)
+    public function edit($id)
     {
-        //
+        $dataset = Dataset::query()
+        ->with([
+            'titles',
+            'persons' => function ($query) {
+                $query->wherePivot('role', 'author');
+            },
+        ])->findOrFail($id);
+
+    return View::make('workflow.doi.edit', [
+        'dataset' => $dataset,
+    ]);
     }
 
     /**
@@ -153,9 +176,81 @@ class DoiController extends Controller
      * @param  \App\Models\DatasetIdentifier  $doi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DatasetIdentifier $doi)
+    public function update(Request $request, $publish_id)
     {
-        //
+        $dataId = $publish_id; //$request->input('publish_id');
+        // Setup stylesheet
+        $this->loadStyleSheet(public_path() . '/prefixes/doi_datacite.xslt');
+
+        // set timestamp
+        $date = new \DateTime();
+        $unixTimestamp = $date->getTimestamp();
+        $this->proc->setParameter('', 'unixTimestamp', $unixTimestamp);
+
+        $prefix = "";
+        $base_domain = "";
+        $datacite_environment = config('tethys.datacite_environment');
+        if ($datacite_environment == "debug") {
+            $prefix =  config('tethys.datacite_test_prefix');
+           $base_domain = config('tethys.test_base_domain');
+        } elseif ($datacite_environment == "production") {           
+            $prefix = config('tethys.datacite_prefix');
+            $base_domain = config('tethys.base_domain');
+        }
+        // $prefix = config('tethys.datacite_prefix');
+        $this->proc->setParameter('', 'prefix', $prefix);
+
+        $repIdentifier = "tethys";
+        $this->proc->setParameter('', 'repIdentifier', $repIdentifier);
+
+        $this->xml->appendChild($this->xml->createElement('Datasets'));
+        $dataset = Dataset::where('publish_id', '=', $dataId)->firstOrFail();
+        if (is_null($dataset)) {
+            throw new OaiModelException('Dataset is not available for registering DOI!', OaiModelError::NORECORDSMATCH);
+        }
+        $dataset->fetchValues();
+        $xmlModel = new \App\Library\Xml\XmlModel();
+        $xmlModel->setModel($dataset);
+        $xmlModel->excludeEmptyFields();
+        $cache = ($dataset->xmlCache) ? $dataset->xmlCache : new \App\Models\XmlCache();
+        $xmlModel->setXmlCache($cache);
+        $domNode = $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
+        $node = $this->xml->importNode($domNode, true);
+        $this->addSpecInformation($node, 'data-type:' . $dataset->type);
+
+        $this->xml->documentElement->appendChild($node);
+        $newXmlMeta = $this->proc->transformToXML($this->xml);
+        // Log::alert($xmlMeta);
+        //create doiValue and correspunfing landingpage of tehtys
+        $doiValue = $prefix . '/tethys.' . $dataset->publish_id;
+       
+        $response = $this->doiClient->updateMetadataForDoi($doiValue, $newXmlMeta);
+        // if operation successful, store dataste identifier
+        if ($response->getStatusCode() == 201) {
+            $doi = $dataset->identifier();
+            // $doi['value'] = $doiValue;          
+            // $doi['type'] = "doi";
+            // $doi['status'] = "findable";
+            // $doi->save();
+            $doi->touch();
+            return redirect()
+                    ->route('publish.workflow.doi.index')
+                    ->with('flash_message', 'You have successfully updated a DOI for the dataset!');
+
+            // if ($doi->save()) {
+            //     // update server_date_modified for triggering nex xml cache (doi interface)
+            //     $time = new \Illuminate\Support\Carbon();
+            //     $dataset->server_date_modified = $time;
+            //     $dataset->save();
+            //     return redirect()
+            //         ->route('publish.workflow.editor.index')
+            //         ->with('flash_message', 'You have successfully created a DOI for the dataset!');
+            // }
+        } else {
+            $message = 'unexpected DataCite MDS response code ' . $response->getStatusCode();
+            // $this->log($message, 'err');
+            throw new GeneralException($message);
+        }
     }
 
     /**
@@ -169,9 +264,9 @@ class DoiController extends Controller
         //
     }
 
-   
 
-    
+
+
     /**
      * Load an xslt stylesheet.
      *

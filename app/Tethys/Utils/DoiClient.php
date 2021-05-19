@@ -235,6 +235,7 @@ class DoiClient implements DoiInterface
             // $this->log($message, 'err');
             throw new DoiClientException($message);
         }
+        return $response;
     }
 
     /**

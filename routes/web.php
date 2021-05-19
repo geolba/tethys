@@ -141,11 +141,25 @@ Route::group(
         ]);
         Route::get('workflow/editor/doi/{id}', [
             'middleware' => ['permission:dataset-publish'],
-            'as' => 'workflow.editor.doi', 'uses' => 'EditorController@doi',
+            'as' => 'workflow.editor.doi', 'uses' => 'EditorController@doiCreate',
         ]);
         Route::post('workflow/editor/doi/{publish_id}', [
             'middleware' => ['permission:dataset-publish'],
             'as' => 'workflow.editor.doiStore', 'uses' => 'EditorController@doiStore',
+        ]);
+
+        //doi
+        Route::get('workflow/doi/index', [
+            'middleware' => ['permission:dataset-editor-list'],
+            'as' => 'workflow.doi.index', 'uses' => 'DoiController@index',
+        ]);
+        Route::get('workflow/doi/edit/{id}', [
+            'middleware' => ['permission:dataset-publish'],
+            'as' => 'workflow.doi.edit', 'uses' => 'DoiController@edit',
+        ]);
+        Route::post('workflow/doi/update/{publish_id}', [
+            'middleware' => ['permission:dataset-publish'],
+            'as' => 'workflow.doi.update', 'uses' => 'DoiController@update',
         ]);
 
         //reviewer

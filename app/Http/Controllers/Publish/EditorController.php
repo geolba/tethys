@@ -635,7 +635,7 @@ class EditorController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function doi($id): \Illuminate\Contracts\View\View
+    public function doiCreate($id): \Illuminate\Contracts\View\View
     {
         $dataset = Dataset::query()
             ->with([
@@ -714,9 +714,10 @@ class EditorController extends Controller
             $doi['status'] = "findable";
             if ($doi->save()) {
                 // update server_date_modified for triggering nex xml cache (doi interface)
-                $time = new \Illuminate\Support\Carbon();
-                $dataset->server_date_modified = $time;
-                $dataset->save();
+                // $time = new \Illuminate\Support\Carbon();
+                // $dataset->server_date_modified = $time;
+                // $dataset->save();
+                // dataset gets automatically updated because of touches array
                 return redirect()
                     ->route('publish.workflow.editor.index')
                     ->with('flash_message', 'You have successfully created a DOI for the dataset!');

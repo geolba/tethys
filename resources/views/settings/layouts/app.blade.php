@@ -107,6 +107,9 @@
                         <li class="pure-menu-item {{ Route::is('publish.workflow.editor*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editor.index') }}"><i class="fas fa-list"></i> EDITOR PAGE: Released datasets</a>
                         </li>	
+                        <li class="pure-menu-item {{ Route::is('publish.workflow.doi*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.doi.index') }}"><i class="fas fa-list"></i> DOI UPDATE LIST</a>
+                        </li>	
                         @endpermission
                         @permission('dataset-review-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.review*') ? 'active' : '' }}">
