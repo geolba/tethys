@@ -54,5 +54,6 @@ class SolrIndexBuilder extends Command
             //     Log::debug(__METHOD__ . ': ' . 'Indexing document ' . $datasetId . ' failed: ' . $e->getMessage());
             // }
         }
+        return 0;
     }
 }

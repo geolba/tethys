@@ -61,7 +61,7 @@ class DoiController extends Controller
     public function index(): \Illuminate\Contracts\View\View
     {
         $datasets = Dataset::query()
-            ->has('identifier')           
+            ->has('identifier')
             ->orderBy('server_date_modified', 'desc')
             ->get();
         return View::make('workflow.doi.index', [
@@ -164,9 +164,9 @@ class DoiController extends Controller
             },
         ])->findOrFail($id);
 
-    return View::make('workflow.doi.edit', [
+        return View::make('workflow.doi.edit', [
         'dataset' => $dataset,
-    ]);
+        ]);
     }
 
     /**
@@ -192,8 +192,8 @@ class DoiController extends Controller
         $datacite_environment = config('tethys.datacite_environment');
         if ($datacite_environment == "debug") {
             $prefix =  config('tethys.datacite_test_prefix');
-           $base_domain = config('tethys.test_base_domain');
-        } elseif ($datacite_environment == "production") {           
+            $base_domain = config('tethys.test_base_domain');
+        } elseif ($datacite_environment == "production") {
             $prefix = config('tethys.datacite_prefix');
             $base_domain = config('tethys.base_domain');
         }
@@ -227,8 +227,8 @@ class DoiController extends Controller
         $response = $this->doiClient->updateMetadataForDoi($doiValue, $newXmlMeta);
         // if operation successful, store dataste identifier
         if ($response->getStatusCode() == 201) {
-            $doi = $dataset->identifier();
-            // $doi['value'] = $doiValue;          
+            $doi = $dataset->identifier;
+            // $doi['value'] = $doiValue;
             // $doi['type'] = "doi";
             // $doi['status'] = "findable";
             // $doi->save();

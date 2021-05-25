@@ -671,8 +671,8 @@ class EditorController extends Controller
         $datacite_environment = config('tethys.datacite_environment');
         if ($datacite_environment == "debug") {
             $prefix =  config('tethys.datacite_test_prefix');
-           $base_domain = config('tethys.test_base_domain');
-        } elseif ($datacite_environment == "production") {           
+            $base_domain = config('tethys.test_base_domain');
+        } elseif ($datacite_environment == "production") {
             $prefix = config('tethys.datacite_prefix');
             $base_domain = config('tethys.base_domain');
         }

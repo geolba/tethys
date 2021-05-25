@@ -31,7 +31,10 @@ class SitelinkController extends Controller
         //     }
         // }, $years);
         $this->ids = array();
-        return view('frontend.sitelink.index')->with(['years' => $this->years, 'documents' => $this->ids]);
+        return view(
+            'frontend.sitelink.index',
+            ['years' => $this->years, 'documents' => $this->ids]
+        );
     }
 
     public function listDocs($year)
@@ -63,8 +66,10 @@ class SitelinkController extends Controller
             //$select->select('id');
             //$this->ids = $select->pluck('id');
             //return view('rdr.sitelink.index')->with(['years'=> $this->years,'ids'=> $this->ids]);
-            return view('frontend.sitelink.index')
-                ->with(['years' => $this->years, 'documents' => $documents]);
+            return view(
+                'frontend.sitelink.index',
+                ['years' => $this->years, 'documents' => $documents]
+            );
         }
     }
 }

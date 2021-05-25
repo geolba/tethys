@@ -1,7 +1,10 @@
-<?php namespace App\Exceptions;
+<?php
 
-use Exception;
+namespace App\Exceptions;
+
+// use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -12,7 +15,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        'Symfony\Component\HttpKernel\Exception\HttpException'
+        'password',
+        'password_confirmation',
     ];
 
     /**
@@ -20,22 +24,24 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Throable  $exception
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Throwable $exception)
     {
-        return parent::report($e);
+        return parent::report($exception);
     }
 
-    /**
+      /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
-     * @return \Illuminate\Http\Response
+     * @param  \Throwable  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
      */
-    public function render($request, Exception $ex)
+    public function render($request, Throwable  $ex)
     {
         if ($ex instanceof \Illuminate\Auth\Access\AuthorizationException) {
             // return $this->errorResponse($exception->getMessage(), 403);

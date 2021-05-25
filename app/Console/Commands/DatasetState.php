@@ -63,5 +63,6 @@ class DatasetState extends Command
                 'server_date_modified' => DB::raw('now()')
             ]);
         }
+        return 0;
     }
 }

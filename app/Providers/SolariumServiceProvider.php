@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Solarium\Client;
+use Solarium\Core\Client\Adapter\Curl;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class SolariumServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,9 @@ class SolariumServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(Client::class, function ($app) {
+
+            $adapter = new Curl();
+            $dispatcher = new EventDispatcher();
             // $config = config('solarium');
             $config = array(
                 'endpoint' => array(
@@ -30,7 +35,7 @@ class SolariumServiceProvider extends ServiceProvider
                 )
             );
                 //return new Client($config);
-            return new Client($config);
+            return new Client($adapter, $dispatcher, $config);
                 //return new Client($app['config']['solarium']);
         });
     }

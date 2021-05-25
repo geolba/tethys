@@ -51,5 +51,6 @@ class UpdateSolrDataset extends Command
         } catch (Exception $e) {
             $this->error(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
         }
+        return 0;
     }
 }

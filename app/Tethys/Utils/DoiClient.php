@@ -204,7 +204,7 @@ class DoiClient implements DoiInterface
     public function updateMetadataForDoi($doiValue, $newMeta)
     {
         $response = null;
-        $url = $this->serviceUrl . '/metadata/' . $doiValue;       
+        $url = $this->serviceUrl . '/metadata/' . $doiValue;
         try {
             $client = new Client([
                 'auth' => [$this->username, $this->password],
