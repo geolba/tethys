@@ -5,6 +5,11 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Dataset;
 
+use Illuminate\Support\Facades\Log;
+use App\Library\Search\SolariumAdapter;
+use \Exception;
+
+
 class SolrIndexBuilder extends Command
 {
     /**
@@ -43,17 +48,21 @@ class SolrIndexBuilder extends Command
         // update statistics table
         foreach ($datasets as $dataset) {
             $datasetId = $dataset->id;
-            $time = new \Illuminate\Support\Carbon();
-            $dataset->server_date_modified = $time;
-            $dataset->save();
-            // try {
-            //     // Opus_Search_Service::selectIndexingService('onDocumentChange')
-            //     $service = new SolariumAdapter("solr", config('solarium'));
-            //     $service->addDatasetsToIndex($dataset);
-            // } catch (Exception $e) {
-            //     Log::debug(__METHOD__ . ': ' . 'Indexing document ' . $datasetId . ' failed: ' . $e->getMessage());
-            // }
+            // $time = new \Illuminate\Support\Carbon();
+            // $dataset->server_date_modified = $time;
+            // $dataset->save();
+            // Log::debug(__METHOD__ . ': ' . 'Adding index job for dataset ' . $datasetId . '.');
+
+            try {
+                // Opus_Search_Service::selectIndexingService('onDocumentChange')
+                $service = new SolariumAdapter("solr", config('solarium'));
+                $service->addDatasetsToIndex($dataset);
+            } catch (Exception $e) {
+                $this->error(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
+            }
         }
         return 0;
     }
+
+    
 }

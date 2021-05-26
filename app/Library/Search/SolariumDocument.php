@@ -3,7 +3,7 @@
 namespace App\Library\Search;
 
 use App\Models\Dataset;
-use Solarium\QueryType\Update\Query\Document\Document;
+use Solarium\QueryType\Update\Query\Document;
 use Solarium\QueryType\Update\Query\Document\DocumentInterface;
 
 class SolariumDocument extends SolrDocumentXslt
@@ -13,10 +13,10 @@ class SolariumDocument extends SolrDocumentXslt
         parent::__construct($options);
     }
     
-    public function toSolrUpdateDocument(Dataset $rdrDataset, DocumentInterface $solrDoc)
+    public function toSolrUpdateDocument(Dataset $rdrDataset, $solrDoc)
     {
         if (!($solrDoc instanceof Document)) {
-            throw new \Exception('provided Solr document must be instance of Solarium Update Document');
+            throw new \Exception(get_class($solrDoc) . 'provided Solr document must be instance of Solarium Update Document');
         }
         
         // convert Opus document to Solr XML document for supporting custom transformations

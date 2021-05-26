@@ -4,10 +4,12 @@ namespace App\Library\Search;
 
 //use App\Library\Util\SolrSearchQuery;
 use App\Library\Search\SearchResult;
-use App\Library\Util\SearchParameter;
-use Illuminate\Support\Facades\Log;
 use App\Library\Search\SolariumDocument;
+use App\Library\Util\SearchParameter;
 use App\Models\Dataset;
+use Illuminate\Support\Facades\Log;
+use Solarium\Core\Client\Adapter\Curl;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use \Solarium\QueryType\Select\Query\Query;
 
 class SolariumAdapter
@@ -22,7 +24,11 @@ class SolariumAdapter
     public function __construct($serviceName, $options)
     {
         $this->options = $options;
-        $this->client = new \Solarium\Client($options);
+        $adapter = new Curl();
+        $dispatcher = new EventDispatcher();
+
+        $this->client = new \Solarium\Client($adapter, $dispatcher, $options);
+        // $this->client = new \Solarium\Client($options);
 
         // ensure service is basically available
         $ping = $this->client->createPing();
@@ -61,25 +67,30 @@ class SolariumAdapter
         $slices = array_chunk($datasets, 16);
         // update documents of every chunk in a separate request
         foreach ($slices as $slice) {
+            // get an update query instance
             $update = $this->client->createUpdate();
 
             $updateDocs = array_map(function ($rdrDoc) use ($builder, $update) {
-                $solarium_document =  $update->createDocument();
+                $solarium_document = $update->createDocument();
                 return $builder->toSolrUpdateDocument($rdrDoc, $solarium_document);
             }, $slice);
 
-            // adding the document to the update query
+            // add the documents and a commit command to the update query
             $update->addDocuments($updateDocs);
-             // Then commit the update:
-             $update->addCommit();
-             $result = $this->client->update($update);
+            $update->addCommit();
+
+            // this executes the query and returns the result
+            $result = $this->client->update($update);
+            echo '<b>Update query executed</b><br/>';
+            echo 'Query status: ' . $result->getStatus() . '<br/>';
+            echo 'Query time: ' . $result->getQueryTime();
 
             //$this->execute($update, 'failed updating slice of documents');
         }
 
         // finally commit all updates
         // $update = $this->client->createUpdate();
-       
+
         // $update->addCommit();
 
         // $this->execute($update, 'failed committing update of documents');
@@ -196,7 +207,7 @@ class SolariumAdapter
         $result = null;
         try {
             $result = $this->client->execute($query);
-        } catch (\Solarium\Exception\HttpException $e) {
+        } catch (\Solarium\Exception\HttpException$e) {
             sprintf('%s: %d %s', $actionText, $e->getCode(), $e->getStatusMessage());
         } finally {
             return $result;
@@ -207,7 +218,7 @@ class SolariumAdapter
         // }
     }
 
-    protected function processQuery(\Solarium\QueryType\Select\Query\Query $query): SearchResult
+    protected function processQuery(\Solarium\QueryType\Select\Query\Query$query): SearchResult
     {
         // send search query to service
         $request = $this->execute($query, 'failed querying search engine');
