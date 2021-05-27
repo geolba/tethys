@@ -23,6 +23,10 @@ class License extends Model
         'pod_allowed'
     ];
 
+     // See the array called $touches? This is where you put all the relationships you want to get
+     // updated_at as soon as this Model is updated
+     protected $touches = ['datasets'];
+
     public function datasets()
     {
         return $this->belongsToMany(Dataset::class, 'link_documents_licences', 'licence_id', 'document_id');

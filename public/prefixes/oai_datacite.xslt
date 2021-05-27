@@ -30,6 +30,7 @@
 -->
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:str="http://exslt.org/strings"
     xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -45,7 +46,7 @@
       <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
             <xsl:choose>
                 <xsl:when test="Identifier">
-                   <xsl:apply-templates name="Identifier" mode="oai_datacite" />
+                    <xsl:apply-templates name="Identifier" mode="oai_datacite" />
                 </xsl:when>
                 <xsl:otherwise>
                     <identifier>
@@ -198,17 +199,38 @@
             </xsl:attribute>
             <xsl:if test="@Type != ''">
                 <xsl:attribute name="descriptionType">
-                    <xsl:value-of select="@Type" />
+                    <xsl:call-template name="CamelCaseWord">
+                        <xsl:with-param name="text" select="@Type"/>
+                    </xsl:call-template>
                 </xsl:attribute>
             </xsl:if>
             <xsl:value-of select="@Value" />
         </description>
     </xsl:template>
-    
+
+
+    <xsl:template name="CamelCaseWord">
+        <xsl:param name="text"/>
+        <xsl:param name="firstLower" select="true()"/>
+        <xsl:variable name="Upper">ABCDEFGHIJKLMNOPQRSTUVQXYZ</xsl:variable>
+        <xsl:variable name="Lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
+        <xsl:for-each select="str:split($text,'_')">
+            <xsl:choose>
+                <xsl:when test="position()=1 and $firstLower = true()">
+                    <xsl:value-of select="substring(node(),1,1)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="translate(substring(node(),1,1),$Lower,$Upper)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:value-of select="substring(node(),2,string-length(node()))"/>
+        </xsl:for-each>
+    </xsl:template>
+
     <xsl:template match="Identifier" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <identifier identifierType="DOI">
-         <xsl:value-of select="@Value" />
+            <xsl:value-of select="@Value" />
         </identifier>
     </xsl:template>
 
