@@ -3,6 +3,7 @@ namespace App\Models;
 
 use App\Models\Dataset;
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
 
 class Coverage extends Model
 {
@@ -46,6 +47,16 @@ class Coverage extends Model
     public function setTimeMaxAttribute($date)
     {
         $this->attributes['time_max'] = empty($date) ? null : \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $date);
+    }
+        /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**

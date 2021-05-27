@@ -6,6 +6,7 @@ namespace App\Observers;
 use App\Models\Dataset;
 use Illuminate\Support\Facades\Log;
 use App\Library\Search\SolariumAdapter;
+use \Exception;
 
 class DatasetObserver
 {
@@ -92,10 +93,8 @@ class DatasetObserver
             // Opus_Search_Service::selectIndexingService('onDocumentChange')
             $service = new SolariumAdapter("solr", config('solarium'));
             $service->addDatasetsToIndex($dataset);
-        } catch (Opus_Search_Exception $e) {
-            Log::debug(__METHOD__ . ': ' . 'Indexing document ' . $datasetId . ' failed: ' . $e->getMessage());
-        } catch (InvalidArgumentException $e) {
-            Log::warning(__METHOD__ . ': ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
         }
     }
 }
