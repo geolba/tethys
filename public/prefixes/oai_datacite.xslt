@@ -373,6 +373,9 @@
     <xsl:template match="Licence" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <rights>
+            <xsl:attribute name="xml:lang">
+                <xsl:value-of select="@Language" />
+            </xsl:attribute>
             <xsl:if test="@LinkLicence != ''">
                 <xsl:attribute name="rightsURI">
                     <xsl:value-of select="@LinkLicence" />
@@ -385,11 +388,11 @@
                 <xsl:text>SPDX</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="rightsIdentifier">
-                <xsl:text>CC-BY-NC-ND-4.0</xsl:text>
+                 <xsl:value-of select="@Name" />
             </xsl:attribute>
             <xsl:value-of select="@NameLong" />
         </rights>
-        <xsl:if test="@Name = 'CC BY' or @Name = 'CC BY-SA'">
+        <xsl:if test="@Name = 'CC-BY-4.0' or @Name = 'CC-BY-SA-4.0'">
             <rights>
                 <xsl:attribute name="rightsURI">
                     <xsl:text>info:eu-repo/semantics/openAccess</xsl:text>

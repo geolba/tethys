@@ -11,6 +11,7 @@ class License extends Model
 
     protected $fillable = [
         'name_long',
+        'name',
         'language',
         'link_licence',
         'link_logo',
@@ -19,6 +20,7 @@ class License extends Model
         'comment_internal',
         'mime_type',
         'sort_order',
+        'language',
         'active',
         'pod_allowed'
     ];

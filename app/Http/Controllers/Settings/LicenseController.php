@@ -32,7 +32,7 @@ class LicenseController extends Controller
         //$languages = Language::where('active', true)->pluck('part2_t');
         $languages = DB::table('languages')
         ->where('active', true)
-        ->pluck('part2_t', 'part2_t');
+        ->pluck('part1', 'part1');
 
         return view('settings.license.edit', compact('license', 'languages'));
     }

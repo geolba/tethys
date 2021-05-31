@@ -9,6 +9,12 @@
         </div>
 
         <div class="pure-u-1 pure-u-md-1-2 pure-div">
+            {!! Form::label('name', 'Identifier') !!} 
+            {!! Form::text('name', null, ['class' => 'pure-u-23-24', 'placeholder'
+            => '--no identifier--']) !!}
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2 pure-div">
             {!! Form::label('language', 'Sprache') !!}
             <div class="select  pure-u-23-24">
                 {!! Form::select('language', $languages, null, ['id' => 'language', 'placeholder' => '--no language--']) !!}

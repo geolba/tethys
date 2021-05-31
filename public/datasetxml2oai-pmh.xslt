@@ -576,8 +576,8 @@
   <xsl:template match="Licence" mode="oai_dc">
     <dc:rights>
       <xsl:value-of select="@NameLong" />
-    </dc:rights>    
-    <xsl:if test="@Name = 'CC BY' or @Name = 'CC BY-SA'">
+    </dc:rights>
+    <xsl:if test="@Name = 'CC-BY-4.0' or @Name = 'CC-BY-SA-4.0'">
       <dc:rights>
         <xsl:text>info:eu-repo/semantics/openAccess</xsl:text>
       </dc:rights>
