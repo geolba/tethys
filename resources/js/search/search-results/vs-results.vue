@@ -21,13 +21,23 @@
       
       <div v-for="document in results" :key="document.id" class="row record-elem">
         <div  class="twelve columns post">
-         
-            <span class="label label-info" data-container="div" data-title="Publication date">
-              {{ convert(document.server_date_published) }}
-            </span>
-            <span class="label label-default ng-binding">{{ document.doctype }}</span>
-            <span v-if="openAccessLicences.includes(document.licence)" class="label label-success titlecase">Open Access</span>
 
+			
+			<span class="label label-info" data-container="div" data-title="Publication date">
+			{{ convert(document.server_date_published) }}
+			</span>
+			<span class="label label-default ng-binding">{{ document.doctype }}</span>
+			<span v-if="openAccessLicences.includes(document.licence)" class="label label-success titlecase">Open Access</span>
+			
+
+            <h4 v-if="document.identifier && document.identifier.length > 0">
+                <!-- <span>Author: {{ document.identifier.join(', ') }}</span> -->
+                <!-- <span v-for="(author,index) in document.author" :key="index">{{ author }}; </span> -->
+                <!-- <span>'https://doi.org/' + {{ document.identifier[0] }}</span> -->
+                <a target="_blank" v-bind:href="'https://doi.org/' + document.identifier[0]" class="ng-binding"> 
+                  {{ 'https://doi.org/' + document.identifier[0] }}
+                </a>
+            </h4>
 
             <h4>
               <a target="_self" v-bind:href="'dataset/' + document.id" class="ng-binding">               

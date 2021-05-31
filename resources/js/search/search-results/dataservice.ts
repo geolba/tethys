@@ -27,6 +27,7 @@ export default {
     var fields = ["id", "licence",
       "server_date_published",
       "abstract_output",
+      "identifier",
       "title_output",
       "title_additional",
       "author",
