@@ -46,7 +46,7 @@
       <datacentreSymbol>RDR.GBA</datacentreSymbol> -->
             <xsl:choose>
                 <xsl:when test="Identifier">
-                    <xsl:apply-templates name="Identifier" mode="oai_datacite" />
+                    <xsl:apply-templates select="Identifier" mode="oai_datacite" />
                 </xsl:when>
                 <xsl:otherwise>
                     <identifier>
@@ -229,7 +229,10 @@
 
     <xsl:template match="Identifier" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
-        <identifier identifierType="DOI">
+        <identifier>
+            <xsl:attribute name="identifierType">
+                <xsl:text>DOI</xsl:text>
+            </xsl:attribute>
             <xsl:value-of select="@Value" />
         </identifier>
     </xsl:template>
