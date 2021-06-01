@@ -1,5 +1,6 @@
 let mix = require('laravel-mix');
-
+require('dotenv').config(); 
+let webpack = require('webpack')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management siehe https://laravel.com/docs/5.5/mix
@@ -55,7 +56,13 @@ mix.js('resources/js/datasetPublish.js', 'public/backend/publish').vue()
            // defaults.
            extensions: ['*', '.js', '.jsx', '.vue', '.ts', '.tsx'],
        },
-    });
+       plugins: [
+        new webpack.DefinePlugin({ // Remove this plugin if you don't plan to define any global constants
+            DATACITE_PREFIX: JSON.stringify(process.env.DATACITE_PREFIX),
+            APP_URL: JSON.stringify(process.env.APP_URL)
+        }),
+    ]
+});
 // .options({
 //     //publicPath: '../'
 //     processCssUrls: false

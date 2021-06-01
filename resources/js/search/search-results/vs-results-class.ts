@@ -1,9 +1,12 @@
-import { Component, Vue, Prop, Provide } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import { DATACITE_PREFIX, APP_URL } from "../../constants";
 
 @Component
 export default class VsResults extends Vue {
 
-    openAccessLicences: Array<string> = ['CC BY', 'CC BY-SA'];
+    openAccessLicences: Array<string> = ['CC-BY-4.0', 'CC-BY-SA-4.0'];
+    datacite_prefix= DATACITE_PREFIX;
+    app_url=APP_URL;
 
     @Prop()
     data;

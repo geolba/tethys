@@ -30,17 +30,17 @@
 			<span v-if="openAccessLicences.includes(document.licence)" class="label label-success titlecase">Open Access</span>
 			
 
-            <h4 v-if="document.identifier && document.identifier.length > 0">
+            <p v-if="document.identifier && document.identifier.length > 0">
                 <!-- <span>Author: {{ document.identifier.join(', ') }}</span> -->
                 <!-- <span v-for="(author,index) in document.author" :key="index">{{ author }}; </span> -->
                 <!-- <span>'https://doi.org/' + {{ document.identifier[0] }}</span> -->
                 <a target="_blank" v-bind:href="'https://doi.org/' + document.identifier[0]" class="ng-binding"> 
                   {{ 'https://doi.org/' + document.identifier[0] }}
                 </a>
-            </h4>
+            </p>
 
             <h4>
-              <a target="_self" v-bind:href="'dataset/' + document.id" class="ng-binding">               
+              <a target="_self" v-bind:href="'https://doi.'+ app_url +'/' + datacite_prefix + '/tethys.' + document.id" class="ng-binding">               
                 {{ document.title_output }}
               </a>
             </h4>
