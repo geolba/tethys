@@ -21,10 +21,10 @@ Route::group([
     'domain' => 'doi.' . $base_domain,
     'as' => 'doi'
 ], function () {
-    $dataset_prefix = config('tethys.datacite_prefix');
+    // $dataset_prefix = config('tethys.datacite_prefix');
  
 
-    Route::get('/' . $dataset_prefix . '/tethys.{id}', [
+    Route::get('/{dataset_prefix}/tethys.{id}', [
         'as' => 'dataset.show', 'uses' => 'Frontend\PagesController@show',
     ]);
 

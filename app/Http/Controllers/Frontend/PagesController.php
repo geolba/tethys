@@ -26,7 +26,7 @@ class PagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id): View
+    public function show($dataset_prefix, $id): View
     {
         //$dataset = Dataset::findOrFail($id);
         $dataset = Dataset::where('publish_id', '=', $id)->firstOrFail();

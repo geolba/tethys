@@ -43,6 +43,9 @@
               <a v-if="document.identifier && document.identifier.length > 0" target="_self" v-bind:href="'https://doi.'+ getDomainWithoutSubdomain() +'/' + document.identifier[0]" class="ng-binding">               
                 {{ document.title_output }}
               </a>
+              <a v-else target="_self" v-bind:href="'dataset/' + document.id" class="ng-binding">               
+                {{ document.title_output }}
+              </a>
             </h4>
 
             
