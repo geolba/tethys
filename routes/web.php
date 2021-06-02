@@ -172,17 +172,17 @@ $appRoutes = function () {
                 'as' => 'workflow.editor.doiStore', 'uses' => 'EditorController@doiStore',
             ]);
 
-            //doi
+            //doi update list for admin:
             Route::get('workflow/doi/index', [
-                'middleware' => ['permission:dataset-editor-list'],
+                'middleware' => ['permission:settings'],
                 'as' => 'workflow.doi.index', 'uses' => 'DoiController@index',
             ]);
             Route::get('workflow/doi/edit/{id}', [
-                'middleware' => ['permission:dataset-publish'],
+                'middleware' => ['permission:settings'],
                 'as' => 'workflow.doi.edit', 'uses' => 'DoiController@edit',
             ]);
             Route::post('workflow/doi/update/{publish_id}', [
-                'middleware' => ['permission:dataset-publish'],
+                'middleware' => ['permission:settings'],
                 'as' => 'workflow.doi.update', 'uses' => 'DoiController@update',
             ]);
 

@@ -59,6 +59,9 @@
                         {{-- <li class="pure-menu-item {{ Route::is('settings.collection*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.collection') }}"><i class="fa fa-archive"></i> Collections</a>
                         </li> --}}
+                         <li class="pure-menu-item {{ Route::is('publish.workflow.doi*') ? 'active' : '' }}">
+                            <a class="pure-menu-link" href="{{ URL::route('publish.workflow.doi.index') }}"><i class="fas fa-list"></i> DOI UPDATE LIST</a>
+                        </li>	
                         <li class="pure-menu-item {{ Route::is('settings.collectionrole*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ route('settings.collectionrole.index') }}"><i class="fa fa-archive"></i> Collection Roles</a>
                         </li>
@@ -107,9 +110,9 @@
                         <li class="pure-menu-item {{ Route::is('publish.workflow.editor*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.editor.index') }}"><i class="fas fa-list"></i> EDITOR PAGE: Released datasets</a>
                         </li>	
-                        <li class="pure-menu-item {{ Route::is('publish.workflow.doi*') ? 'active' : '' }}">
+                        {{-- <li class="pure-menu-item {{ Route::is('publish.workflow.doi*') ? 'active' : '' }}">
                             <a class="pure-menu-link" href="{{ URL::route('publish.workflow.doi.index') }}"><i class="fas fa-list"></i> DOI UPDATE LIST</a>
-                        </li>	
+                        </li>	 --}}
                         @endpermission
                         @permission('dataset-review-list')
                         <li class="pure-menu-item {{ Route::is('publish.workflow.review*') ? 'active' : '' }}">
