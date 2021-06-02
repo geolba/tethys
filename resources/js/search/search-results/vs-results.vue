@@ -34,7 +34,7 @@
                 <!-- <span>Author: {{ document.identifier.join(', ') }}</span> -->
                 <!-- <span v-for="(author,index) in document.author" :key="index">{{ author }}; </span> -->
                 <!-- <span>'https://doi.org/' + {{ document.identifier[0] }}</span> -->
-                <a target="_blank" v-bind:href="'https://doi.org/' + document.identifier[0]" class="ng-binding"> 
+                <a target="_blank" v-bind:href="'https://doi.org/' + document.identifier[0]"> 
                   {{ 'https://doi.org/' + document.identifier[0] }}
                 </a>
             </p>

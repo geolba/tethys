@@ -25,7 +25,7 @@ Route::group([
  
 
     Route::get('/{dataset_prefix}/tethys.{id}', [
-        'as' => 'dataset.show', 'uses' => 'Frontend\PagesController@show',
+        'as' => 'dataset.show', 'uses' => 'Frontend\PagesController@showDoi',
     ]);
 
     Route::get('/', function () {
