@@ -30,13 +30,12 @@ Route::group([
 
     Route::get('/', function () {
         redirect()->route('frontend.home.index');
-    }); 
-
+    });
 });
 
 // Route::group([
 //     'domain' => ($base_domain|'www.tethys.at')
-// ], 
+// ],
 $appRoutes = function () {
 
     Route::match(array('GET', 'POST'), '/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
@@ -540,26 +539,6 @@ $appRoutes = function () {
         ]);
     });
 
-//=================================================borrow====================================================
-    Route::get('borrow', [
-        'as' => 'borrow.borrow', 'uses' => 'BorrowController@index',
-    ]);
-    Route::post('borrow.post', [
-        'as' => 'borrow.post', 'uses' => 'BorrowController@store',
-    ]);
-    Route::get('laporan', [
-        'as' => 'borrow.report', 'uses' => 'BorrowController@report',
-    ]);
-    Route::get('pengembalian/{id}', [
-        'as' => 'borrow.pengembalian', 'uses' => 'BorrowController@pengembalian',
-    ]);
-    Route::get('perpanjang/{id}', [
-        'as' => 'borrow.perpanjang', 'uses' => 'BorrowController@perpanjang',
-    ]);
-    Route::get('history', [
-        'as' => 'borrow.history', 'uses' => 'BorrowController@histori',
-    ]);
-
 //====================================authentication===========================================================================
 // Route::controllers([
 // 'auth' => 'Auth\AuthController',
@@ -583,7 +562,6 @@ $appRoutes = function () {
     Route::get('refresh-csrf', function () {
         return csrf_token();
     });
-
 };
 
 Route::group(array('domain' => $base_domain), $appRoutes);

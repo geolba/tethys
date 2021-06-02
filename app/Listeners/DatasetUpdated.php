@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
-// use Illuminate\Queue\InteractsWithQueue;
-// use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Events\Dataset\DatasetUpdated as DatasetUpdatedEvent;
 use App\Models\Dataset;
 use Illuminate\Support\Facades\Log;
 use App\Library\Search\SolariumAdapter;
+use \Exception;
 
 class DatasetUpdated
 {
@@ -59,10 +58,8 @@ class DatasetUpdated
             // Opus_Search_Service::selectIndexingService('onDocumentChange')
             $service = new SolariumAdapter("solr", config('solarium'));
             $service->addDatasetsToIndex($dataset);
-        } catch (Opus_Search_Exception $e) {
-            Log::debug(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
-        } catch (InvalidArgumentException $e) {
-            Log::warning(__METHOD__ . ': ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::warning(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
         }
     }
 }
