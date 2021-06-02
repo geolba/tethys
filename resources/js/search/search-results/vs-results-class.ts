@@ -15,6 +15,15 @@ export default class VsResults extends Vue {
         return this.data;
     };
 
+    getDomainWithoutSubdomain () {
+        const urlParts = new URL(window.location.href).hostname.split('.')
+      
+        return urlParts
+          .slice(0)
+          .slice(-(urlParts.length === 4 ? 3 : 2))
+          .join('.')
+      }
+
     truncate(text, limit) {
         text = text === undefined ? '' : text;
         const content = text.split(' ').slice(0, limit);

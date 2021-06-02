@@ -40,7 +40,7 @@
             </p>
 
             <h4>
-              <a target="_self" v-bind:href="'https://doi.'+ app_url +'/' + datacite_prefix + '/tethys.' + document.id" class="ng-binding">               
+              <a v-if="document.identifier && document.identifier.length > 0" target="_self" v-bind:href="'https://doi.'+ getDomainWithoutSubdomain() +'/' + document.identifier[0]" class="ng-binding">               
                 {{ document.title_output }}
               </a>
             </h4>
