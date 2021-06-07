@@ -78,6 +78,7 @@ trait DatasetExtension
         ),
         'Subject' => array(
             'model' => Subject::class,
+            'through' => 'link_dataset_subjects',
             'relation' => 'subjects',
             'fetch' => 'eager'
         ),

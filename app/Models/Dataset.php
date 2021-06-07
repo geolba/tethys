@@ -260,9 +260,13 @@ class Dataset extends Model
         return $this->hasMany(\App\Models\DatasetReference::class, 'document_id', 'id');
     }
 
+    // public function subjects()
+    // {
+    //     return $this->hasMany(\App\Models\Subject::class, 'document_id', 'id');
+    // }
     public function subjects()
     {
-        return $this->hasMany(\App\Models\Subject::class, 'document_id', 'id');
+        return $this->belongsToMany(\App\Models\Subject::class, 'link_dataset_subjects', 'document_id', 'subject_id');
     }
 
     /**

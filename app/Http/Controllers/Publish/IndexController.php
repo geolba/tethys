@@ -479,8 +479,13 @@ class IndexController extends Controller
                 //save keywords
                 if (isset($data['keywords'])) {
                     foreach ($request->get('keywords') as $key => $keyword) {
-                        $dataKeyword = new Subject($keyword);
-                        $dataset->subjects()->save($dataKeyword);
+                        // $dataKeyword = new Subject($keyword);
+                        // $dataset->subjects()->save($dataKeyword);                       
+                        $keyword = Subject::firstOrCreate(
+                            ['value' => $keyword['value']],
+                            $keyword
+                        );
+                        $dataset->subjects()->attach($keyword);
                     }
                 }
 

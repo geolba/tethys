@@ -14,8 +14,11 @@ use App\Models\Person;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+$base_domain = config('app.url');
+$alias_domain = config('app.alias_url');
 
-Route::domain('tethys.at')->group(function () {
+// Route::domain('tethys.at')->group(function () {
+$appRoutes = function () {
     
     Route::match(array('GET', 'POST'), '/oai', ['as' => 'oai', 'uses' => 'Oai\RequestController@index']);
 
@@ -79,4 +82,9 @@ Route::domain('tethys.at')->group(function () {
             ->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET');
     });
-});
+};
+
+Route::group(array('domain' => $base_domain), $appRoutes);
+if ($alias_domain) {
+    Route::group(array('domain' => $alias_domain), $appRoutes);
+}

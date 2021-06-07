@@ -7,13 +7,18 @@ use App\Models\Dataset;
 
 class Subject extends Model
 {
-    protected $table = 'document_subjects';
+    // protected $table = 'document_subjects';
+    protected $table = 'dataset_subjects';
     public $timestamps = false;
 
     protected $fillable = ['value', 'type', 'language'];
 
-    public function dataset()
+    // public function dataset()
+    // {
+    //     return $this->belongsTo(Dataset::class, 'document_id', 'id');
+    // }
+    public function datasets()
     {
-        return $this->belongsTo(Dataset::class, 'document_id', 'id');
+        return $this->belongsToMany(Dataset::class, 'link_dataset_subjects', 'subject_id', 'document_id');
     }
 }
