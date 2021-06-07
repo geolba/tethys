@@ -17,30 +17,39 @@ class LicencesTableSeeder extends Seeder
         DB::table('document_licences')->insert([
             [
                 'active' => true,
-                'comment_internal' => "Lediglich die Namensnennung ist zwingend.",
+                'comment_internal' => "Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use..",
                 'desc_markup' => '<p><strong>Dieser Inhalt </strong>is unter einer <a href="\">Creative Commons License</a> lizenziert.</p>',
-                'desc_text' => "Diese Lizenz erlaubt anderen, Ihr Werk/Ihren Inhalt zu verbreiten, zu remixen, zu verbessern und darauf aufzubauen, auch kommerziell, solange Sie als Urheber des Originals genannt werden. Dies ist die freieste CC-Lizenz, empfohlen für maximale Verbreitung und Nutzung des lizenzierten Materials.",
-                'language' => 'de',
+                'desc_text' => "You are free to:
+                Share — copy and redistribute the material in any medium or  format
+                Adapt — remix, transform, and build upon the material
+                for any purpose, even commercially.
+                This license is acceptable for Free Cultural Works.            
+                The licensor cannot revoke these freedoms as long as you follow the license terms.",
+                'language' => 'en',
                 'link_licence' => 'https://creativecommons.org/licenses/by/3.0/de/deed.de',
-                'link_logo' => 'https://i.creativecommons.org/l/by/3.0/de/88x31.png',
+                'link_logo' => 'https://licensebuttons.net/l/by/4.0/88x31.png',
                 'mime_type' => 'text/html',
-                'name_long' => 'Creative Commons - Namensnennung (CC BY)',
-                'name' => 'CC BY',
+                'name_long' => 'Creative Commons Attribution 4.0 International (CC BY 4.0)',     
+                'name' => 'CC-BY-4.0',
                 'pod_allowed' => true,
                 'sort_order' => 1,
             ],
 
             [
                 'active' => true,
-                'comment_internal' => "Namensnennung-BearbeitungUnterGleichenBedingungen\r\n\r\nIn Einschränkung zur CC-BY-Lizenz muss hier bei der Weiterverabeitung die Lizenz beibehalten werden.",
+                'comment_internal' => "Attribution — You must give appropriate credit, provide a link to the license, 
+                and indicate if changes were made. You may do so in any reasonable manner, 
+                but not in any way that suggests the licensor endorses you or your use.
+                ShareAlike — If you remix, transform, or build upon the material, 
+                you must distribute your contributions under the same license as the original.",
                 'desc_markup' => '<p>Dieser Inhalt ist unter einer <a href="\">Creative Commons-Lizenz</a> lizenziert.</p>',
                 'desc_text' => "Diese Lizenz erlaubt es anderen, Ihr Werk/Ihren Inhalt zu verbreiten, zu remixen, zu verbessern und darauf aufzubauen, auch kommerziell, solange Sie als Urheber des Originals genannt werden und die auf Ihrem Werk/Inhalt basierenden neuen Werke unter denselben Bedingungen veröffentlicht werden. Diese Lizenz wird oft mit \"Copyleft\"-Lizenzen im Bereich freier und Open Source Software verglichen. Alle neuen Werke/Inhalte, die auf Ihrem aufbauen, werden unter derselben Lizenz stehen, also auch kommerziell nutzbar sein. Dies ist die Lizenz, die auch von der Wikipedia eingesetzt wird, empfohlen für Material, für das eine Einbindung von Wikipedia-Material oder anderen so lizenzierten Inhalten sinnvoll sein kann.",
-                'language' => 'de',
-                'link_licence' => 'https://creativecommons.org/licenses/by-sa/3.0/de/deed.de',
-                'link_logo' => 'https://i.creativecommons.org/l/by-sa/3.0/de/88x31.png',
+                'language' => 'en',
+                'link_licence' => 'https://creativecommons.org/licenses/by-sa/4.0/deed.en',
+                'link_logo' => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
                 'mime_type' => 'text/html',
-                'name_long' => 'Creative Commons - Namensnennung - Weitergabe unter gleichen Bedingungen (CC BY-SA)',
-                'name' => 'CC BY-SA',
+                'name_long' => 'Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)',
+                'name' => 'CC-BY-SA-4.0',
                 'pod_allowed' => true,
                 'sort_order' => 2,
             ],

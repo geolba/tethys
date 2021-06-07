@@ -23,8 +23,11 @@ class CreateDocumentReferencesTable extends Migration
           
             $table->enum(
                 'type',
-                ["doi", "handle", "isbn", "issn",  "url", "urn"]
+                ["DOI", "Handle", "ISBN", "ISSN",  "URL", "URN"]
             );
+            // ALTER TABLE gba.document_references
+            //   DROP CONSTRAINT document_references_type_check
+            // , ADD CONSTRAINT document_references_type_check CHECK (type::text = ANY (ARRAY['DOI'::character varying,  'Handle'::character varying, 'ISBN'::character varying, 'ISSN'::character varying, 'URL'::character varying, 'URN'::character varying]::text[]));
             $table->enum(
                 'relation',
                 ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",

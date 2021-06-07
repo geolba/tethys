@@ -105,7 +105,7 @@ class SubmitController extends Controller
 
         $keywordTypes = ['uncontrolled' => 'uncontrolled', 'swd' => 'swd'];
 
-        $referenceTypes = ["rdr-id", "doi", "handle", "isbn", "issn", "url", "urn"];
+        $referenceTypes = ["DOI", "Handle", "ISBN", "ISSN", "URL", "URN"];
         $referenceTypes = array_combine($referenceTypes, $referenceTypes);
 
         $relationTypes =  ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
