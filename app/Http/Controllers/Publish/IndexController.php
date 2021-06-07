@@ -482,7 +482,7 @@ class IndexController extends Controller
                         // $dataKeyword = new Subject($keyword);
                         // $dataset->subjects()->save($dataKeyword);                       
                         $keyword = Subject::firstOrCreate(
-                            ['value' => $keyword['value']],
+                            ['value' => $keyword['value'], 'language' => $keyword['language']],
                             $keyword
                         );
                         $dataset->subjects()->attach($keyword);

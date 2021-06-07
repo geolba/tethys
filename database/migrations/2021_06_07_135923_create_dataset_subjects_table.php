@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDatasetSubjects extends Migration
+class CreateDatasetSubjectsTable extends Migration
 {
     // php artisan make:migration create_dataset_subjects_table --table=dataset_subjects --create=dataset_subjects
 // php artisan migrate
