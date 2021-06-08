@@ -16,9 +16,19 @@ use Illuminate\Support\Facades\Route;
 $base_domain = config('app.url');
 $alias_domain = config('app.alias_url');
 
+function get_domain($host){
+    $myhost = strtolower(trim($host));
+    $count = substr_count($myhost, '.');
+    if($count === 2){
+      if(strlen(explode('.', $myhost)[1]) > 3) $myhost = explode('.', $myhost, 2)[1];
+    } else if($count > 2){
+      $myhost = get_domain(explode('.', $myhost, 2)[1]);
+    }
+    return $myhost;
+  }
 
 Route::group([
-    'domain' => 'doi.' . $base_domain,
+    'domain' => 'doi.' . get_domain($base_domain),
     'as' => 'doi'
 ], function () {
     // $dataset_prefix = config('tethys.datacite_prefix');
