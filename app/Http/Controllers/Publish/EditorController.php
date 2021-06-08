@@ -703,7 +703,8 @@ class EditorController extends Controller
         //create doiValue and correspunfing landingpage of tehtys
         $doiValue = $prefix . '/tethys.' . $dataset->publish_id;
         // $appUrl = config('app.url');
-        $landingPageUrl = $base_domain . "/dataset/" . $dataset->publish_id;
+        // $landingPageUrl = $base_domain . "/dataset/" . $dataset->publish_id;
+        $landingPageUrl = 'https://doi.' . get_domain($base_domain) . "/" . $prefix . "/tethys." . $dataset->publish_id;
         $response = $this->doiClient->registerDoi($doiValue, $xmlMeta, $landingPageUrl);
         // if operation successful, store dataste identifier
         if ($response->getStatusCode() == 201) {
@@ -713,6 +714,8 @@ class EditorController extends Controller
             $doi['type'] = "doi";
             $doi['status'] = "findable";
             if ($doi->save()) {
+                // touch doi (and dataset) for solr
+                $doi->touch();
                 // update server_date_modified for triggering nex xml cache (doi interface)
                 // $time = new \Illuminate\Support\Carbon();
                 // $dataset->server_date_modified = $time;
