@@ -11,6 +11,8 @@ use App\Models\Oai\OaiModelError;
 use App\Exceptions\OaiModelException;
 use Illuminate\Support\Facades\View;
 use App\Exceptions\GeneralException;
+use App\Library\Search\SolariumAdapter;
+use \Exception;
 
 class DoiController extends Controller
 {
@@ -233,6 +235,12 @@ class DoiController extends Controller
             // $doi['status'] = "findable";
             // $doi->save();
             $doi->touch();
+            try {
+                $service = new SolariumAdapter("solr", config('solarium'));
+                $service->addDatasetsToIndex($dataset);
+            } catch (Exception $e) {
+                $this->error(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
+            }
             return redirect()
                     ->route('publish.workflow.doi.index')
                     ->with('flash_message', 'You have successfully updated a DOI for the dataset!');

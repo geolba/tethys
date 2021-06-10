@@ -33,6 +33,7 @@ use App\Models\DatasetIdentifier;
 use App\Models\Oai\OaiModelError;
 use App\Exceptions\OaiModelException;
 use App\Interfaces\DoiInterface;
+use App\Library\Search\SolariumAdapter;
 
 class EditorController extends Controller
 {
@@ -714,13 +715,16 @@ class EditorController extends Controller
             $doi['type'] = "doi";
             $doi['status'] = "findable";
             if ($doi->save()) {
-                // touch doi (and dataset) for solr
-                $doi->touch();
-                // update server_date_modified for triggering nex xml cache (doi interface)
-                // $time = new \Illuminate\Support\Carbon();
-                // $dataset->server_date_modified = $time;
-                // $dataset->save();
-                // dataset gets automatically updated because of touches array
+                // touch unnecessary, save() also updates datasat modified date
+                 // $doi->touch();
+                 $dataset = Dataset::where('publish_id', '=', $dataId)->firstOrFail();
+                 // add to solr
+                try {
+                    $service = new SolariumAdapter("solr", config('solarium'));
+                    $service->addDatasetsToIndex($dataset);
+                } catch (Exception $e) {
+                    $this->error(__METHOD__ . ': ' . 'Indexing document ' . $dataset->id . ' failed: ' . $e->getMessage());
+                }
                 return redirect()
                     ->route('publish.workflow.editor.index')
                     ->with('flash_message', 'You have successfully created a DOI for the dataset!');
