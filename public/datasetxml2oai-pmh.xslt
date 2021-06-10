@@ -24,6 +24,7 @@
   <xsl:param name="repositoryName" />
   <xsl:param name="repIdentifier" />
   <xsl:param name="downloadLink" />
+    <xsl:param name="doiLink" />
   <xsl:param name="sampleIdentifier" />
   <xsl:param name="docId" />
   <xsl:param name="dateDelete" />
@@ -370,6 +371,9 @@
       <!-- <dc:format> -->
       <xsl:apply-templates select="File" mode="oai_dc" />
       <!-- dc:identifier -->
+      <xsl:if test="Identifier">
+       <xsl:apply-templates select="Identifier" mode="oai_dc" />
+       </xsl:if>
       <dc:identifier>
         <xsl:value-of select="@landingpage"/>
       </dc:identifier>
@@ -560,6 +564,12 @@
       <xsl:value-of select="concat($downloadLink, @Id)" />
     </dc:identifier>
   </xsl:template>
+
+   <xsl:template match="Identifier" mode="oai_dc">
+         <dc:identifier>           
+            <xsl:value-of select="concat($doiLink, @Value)" />
+         </dc:identifier>
+    </xsl:template>
 
   <xsl:template match="@CreatingCorporation" mode="oai_dc">
     <dc:language>

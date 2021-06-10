@@ -546,7 +546,7 @@
                 
                 <td>
                     <input v-bind:name="'subjects[' +  index +'][id]'" readonly class="form-control" v-model="item.id" hidden />
-                    <input v-bind:name="'subjects[' +  index +'][value]'" class="form-control"
+                    <input v-bind:name="'subjects[' +  index +'][value]'" :readonly="item.id != undefined" class="form-control"
                         placeholder="[KEYWORD VALUE]" v-model="item.value" v-validate="'required'" />
                     {{-- {{ Form::text('keywords['.$keyword->id.'][value]', $keyword->value, ['class' => 'form-control',  'placeholder' => '[KEYWORD VALUE]']) }}
                     --}}

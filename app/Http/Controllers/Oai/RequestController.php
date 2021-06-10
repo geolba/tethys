@@ -125,6 +125,7 @@ class RequestController extends Controller
         $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
         $this->proc->setParameter('', 'repURL', url('/'));
         $this->proc->setParameter('', 'downloadLink', url('/') . '/file/download/');
+        $this->proc->setParameter('', 'doiLink', 'https://doi.org/');
 
         // $resumptionPath = $this->configuration->getResumptionTokenPath();
 

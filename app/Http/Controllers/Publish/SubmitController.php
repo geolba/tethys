@@ -317,14 +317,19 @@ class SubmitController extends Controller
                 foreach ($keywords as $key => $formKeyword) {
                     if (isset($formKeyword['id'])) {
                         $subject = Subject::findOrFail($formKeyword['id']);
-                        $subject->value = $formKeyword['value'];
-                        $subject->type = $formKeyword['type'];
-                        if ($subject->isDirty()) {
-                            $subject->save();
-                        }
+                        // $subject->value = $formKeyword['value'];
+                        // $subject->type = $formKeyword['type'];
+                        // if ($subject->isDirty()) {
+                        //     $subject->save();
+                        // }
                     } else {
-                        $subject = new Subject($formKeyword);
-                        $dataset->subjects()->save($subject);
+                        // $subject = new Subject($formKeyword);
+                        // $dataset->subjects()->save($subject);
+                        $keyword = Subject::firstOrCreate(
+                            ['value' => $formKeyword['value'], 'language' => $formKeyword['language']],
+                            $formKeyword
+                        );
+                        $dataset->subjects()->attach($keyword);
                     }
                 }
             }
