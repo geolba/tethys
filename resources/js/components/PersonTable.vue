@@ -36,7 +36,7 @@
           </td>
           <td>
             <input v-bind:name="heading+'['+index+'][first_name]'" class="form-control" placeholder="[FIRST NAME]"
-              v-model="item.first_name" v-bind:readonly="item.status==1" v-validate="'required'"
+              v-model="item.first_name" v-bind:readonly="item.status==1" v-validate="item.name_type == 'Personal' ? 'required' : ''"
               data-vv-scope="step-1" />
           </td>
           <td>
