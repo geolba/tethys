@@ -342,12 +342,17 @@
                     <xsl:text>)</xsl:text>
                 </xsl:if>
             </creatorName>
-            <givenName>
-                <xsl:value-of select="@FirstName" />
-            </givenName>
-            <familyName>
-                <xsl:value-of select="@LastName" />
-            </familyName>
+
+            <xsl:if test="@NameType = 'Personal'">
+                <givenName>
+                    <xsl:value-of select="@FirstName" />
+                </givenName>
+                <familyName>
+                    <xsl:value-of select="@LastName" />
+                </familyName>
+                 <affiliation>GBA</affiliation>
+            </xsl:if>
+
             <xsl:if test="@IdentifierOrcid != ''">
                 <nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">
                     <xsl:value-of select="@IdentifierOrcid" />
@@ -356,7 +361,7 @@
             <!-- 
         <nameType><xsl:value-of select="@NameType" /></nameType>
       </xsl:if> -->
-            <affiliation>GBA</affiliation>
+           
         </creator>
     </xsl:template>
 
