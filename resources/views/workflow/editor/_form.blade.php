@@ -538,6 +538,7 @@
             <tr>
                 <th style="width: 20px;">Keyword</th>
                 <th>Type</th>
+                <th>Language</th>
                 <th style="width: 130px;"></th>
             </tr>
         </thead>
@@ -563,6 +564,9 @@
                     </select> --}}
                     <input v-bind:name="'subjects[' +  index +'][type]'" readonly class="form-control"
                         placeholder="[KEYWORD TYPE]" v-model="item.type" v-validate="'required'" />
+                </td>
+                <td>
+                    <input v-bind:name="'subjects[' +  index +'][language]'" readonly class="form-control" v-model="item.language" v-validate="'required'" />
                 </td>
                 <td>
                     <button v-if="item.id == undefined" class="pure-button button-small is-warning"

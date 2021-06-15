@@ -61,7 +61,8 @@ class IndexController extends Controller
             ->pluck('help_text', 'metadata_element');
 
         $projects = Project::pluck('label', 'id');
-        $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn", "url", "urn"];
+        // $relatedIdentifierTypes = ["doi", "handle", "isbn", "issn", "url", "urn"];
+        $relatedIdentifierTypes = ["DOI", "Handle", "ISBN", "ISSN",  "URL", "URN"];
         $relatedIdentifierTypes = array_combine($relatedIdentifierTypes, $relatedIdentifierTypes);
 
         $relationTypes = ["IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
