@@ -24,5 +24,6 @@ function get_domain($host)
     } else if ($count > 2) {
         $myhost = get_domain(explode('.', $myhost, 2)[1]);
     }
+    $myhost = preg_replace( "#^[^:/.]*[:/]+#i", "", $myhost);
     return $myhost;
 }
