@@ -430,12 +430,18 @@
 
   <xsl:template match="TitleMain" mode="oai_dc">
     <dc:title>
+    <xsl:attribute name="xml:lang">
+        <xsl:value-of select="@Language" />
+      </xsl:attribute>
       <xsl:value-of select="@Value"/>
     </dc:title>
   </xsl:template>
 
   <xsl:template match="TitleAdditional" mode="oai_dc">
     <dc:title>
+    <xsl:attribute name="xml:lang">
+        <xsl:value-of select="@Language" />
+      </xsl:attribute>
       <xsl:value-of select="@Value"/>
     </dc:title>
   </xsl:template>
