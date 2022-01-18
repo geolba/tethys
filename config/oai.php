@@ -16,7 +16,7 @@ return [
     'workspacePath' => public_path() . DIRECTORY_SEPARATOR . "workspace",
 
     'max' => [
-        'listidentifiers' => 15,
-        'listrecords' => 15
+        'listidentifiers' => 100,
+        'listrecords' => 100
     ],
 ];

@@ -121,8 +121,10 @@ class RequestController extends Controller
         $this->proc->setParameter('', 'unixTimestamp', $unixTimestamp);
 
         // set OAI base url
+        $frontend = config('tethys.frontend');
         $uri = explode('?', $_SERVER['REQUEST_URI'], 2);
-        $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
+        // $this->proc->setParameter('', 'baseURL', url('/') . $uri[0]);
+        $this->proc->setParameter('', 'baseURL', $frontend. '/oai');// . $uri[0]);
         $this->proc->setParameter('', 'repURL', url('/'));
         $this->proc->setParameter('', 'downloadLink', url('/') . '/file/download/');
         $this->proc->setParameter('', 'doiLink', 'https://doi.org/');
@@ -437,7 +439,9 @@ class RequestController extends Controller
 
             if (array_key_exists('from', $oaiRequest) && array_key_exists('until', $oaiRequest)) {
                 $from = $oaiRequest['from'];
+                $fromDate = \Illuminate\Support\Carbon::parse($from);
                 $until = $oaiRequest['until'];
+                $untilDate = \Illuminate\Support\Carbon::parse($until);
                 
                 if (strlen($from) != strlen($until)) {
                     throw new OaiModelException(
@@ -445,9 +449,10 @@ class RequestController extends Controller
                         OaiModelError::BADARGUMENT
                     );
                 }
-            }
-
-            if (array_key_exists('until', $oaiRequest)) {
+                $finder->whereDate('server_date_published', '>=', $fromDate)
+                ->whereDate('server_date_published', '<=', $untilDate);
+                $test = $finder->toSql();
+            } else if (array_key_exists('until', $oaiRequest) && !array_key_exists('from', $oaiRequest)) {
                 $until = $oaiRequest['until'];
                 try {
                     $untilDate = \Illuminate\Support\Carbon::parse($until);
@@ -473,9 +478,7 @@ class RequestController extends Controller
                         OaiModelError::BADARGUMENT
                     );
                 }
-            }
-
-            if (array_key_exists('from', $oaiRequest)) {
+            } else if (array_key_exists('from', $oaiRequest) && !array_key_exists('until', $oaiRequest)) {
                 $from = $oaiRequest['from'];
                 try {
                     $fromDate = \Illuminate\Support\Carbon::parse($from);
@@ -550,7 +553,8 @@ class RequestController extends Controller
      */
     private function setParamResumption($res, $cursor, $totalIds)
     {
-        $tomorrow = str_replace('+00:00', 'Z', Carbon::now()->addHour(1)->setTimeZone('UTC'));
+        // $tomorrow = str_replace('+00:00', 'Z', Carbon::now()->addHour(1)->setTimeZone('UTC'));
+        $tomorrow = Carbon::now()->addDay(1)->toIso8601ZuluString();
         $this->proc->setParameter('', 'dateDelete', $tomorrow);
         $this->proc->setParameter('', 'res', $res);
         $this->proc->setParameter('', 'cursor', $cursor);

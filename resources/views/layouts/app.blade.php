@@ -79,7 +79,7 @@
             {{-- <a href="https://www.geologie.ac.at/" target="_blank" class="logo">
                 <img src="/images/gba_logo.png" alt="Logo white" width="60" height="30">               
             </a> --}}
-            <a href="/" class="logo">
+            <a href="{{route('frontend.home.index')}}" class="logo">
                 TETHYS             
             </a>
             <div class="container">
@@ -87,7 +87,7 @@
                     <!-- <li><a href="#hero">Home</a></li> -->
                     <li>
                         <a class="{{ Route::currentRouteName() == 'frontend.home.index' ? 'current' : '' }}"
-                            href="{{ url('/') }}">Home</a>
+                            href="{{route('frontend.home.index')}}">Home</a>
                     </li>
                     <!-- <li><a href="#introduction">Introduction</a></li> -->
                     <li>

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Person;
+use App\Models\Dataset;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,70 @@ $appRoutes = function () {
     });
     
     Route::get('/oai', 'Oai\RequestController@identify');
+
+    Route::get('/api/years', function () {
+        //return["2019", "2020", "2021"];
+        $serverState = 'published';
+        $select = DB::table('documents')
+            ->where('server_state', 'LIKE', "%" . $serverState . "%");
+
+        $select
+            ->select(DB::raw('EXTRACT(YEAR FROM server_date_published) as published_date'))
+            // ->select(DB::raw("DATE_PART('year', server_date_published) as published_date"))
+            // ->select(DB::raw("YEAR(server_date_published) AS published_date"))
+            ->distinct(true);
+            $years  = $select->pluck('published_date')->toArray();
+        return response()
+                ->json($years)
+                ->header('Access-Control-Allow-Origin', '*')
+                ->header('Access-Control-Allow-Methods', 'GET');
+    }); 
+
+    Route::get('api/sitelinks/{year}', function($year) {
+          //$select = DB::table('documents')
+            //->where('server_state','LIKE', "%".$serverState."%");
+            $serverState = 'published';
+            $select = Dataset::with('titles', 'authors')
+                ->where('server_state', 'LIKE', "%" . $serverState . "%");
+
+            $from = (int) $year;
+            $until = $year + 1;
+            $select
+                ->whereYear('server_date_published', '>=', $from)
+                ->whereYear('server_date_published', '<', $until);
+
+            $documents = $select->orderBy('publish_id', 'asc')
+                ->get();
+            return response()
+                ->json($documents)
+                ->header('Access-Control-Allow-Origin', '*')
+                ->header('Access-Control-Allow-Methods', 'GET');
+    });
+
+    Route::get('/api/dataset/{id}', function($id) {
+        $dataset = Dataset::where('publish_id', '=', $id)
+        ->with([
+            'titles',
+            'abstracts',
+            'user',
+            'authors',
+            'contributors',
+            'subjects',
+            'coverage',
+            'licenses',
+            'project',
+            'files',
+            'identifier'
+        ])
+        ->firstOrFail();
+        // $dataset->load('titles');
+        // $dataset->load('abstracts');
+
+        return response()
+        ->json($dataset)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET');
+    }); 
     
     Route::get('/api/persons', function () {
         $request = request();

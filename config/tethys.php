@@ -18,5 +18,6 @@ return [
     'datacite_test_service_url' => env('DATACITE_TEST_SERVICE_URL'),
 
     'base_domain' => env('BASE_DOMAIN', 'https://tethys.at'),
-    'test_base_domain' => env('TEST_BASE_DOMAIN')
+    'test_base_domain' => env('TEST_BASE_DOMAIN'),
+    'frontend' => env('FRONTEND', 'https://tethys.at')
 ];
