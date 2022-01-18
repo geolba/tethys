@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use \Exception;
-use Carbon\Carbon;
+// use Carbon\Carbon;
+use \Illuminate\Support\Carbon;
 
 class RequestController extends Controller
 {
@@ -439,23 +440,29 @@ class RequestController extends Controller
 
             if (array_key_exists('from', $oaiRequest) && array_key_exists('until', $oaiRequest)) {
                 $from = $oaiRequest['from'];
-                $fromDate = \Illuminate\Support\Carbon::parse($from);
+                $fromDate = Carbon::parse($from);
                 $until = $oaiRequest['until'];
                 $untilDate = \Illuminate\Support\Carbon::parse($until);
-                
                 if (strlen($from) != strlen($until)) {
                     throw new OaiModelException(
                         'The request has different granularities for the from and until parameters.',
                         OaiModelError::BADARGUMENT
                     );
                 }
-                $finder->whereDate('server_date_published', '>=', $fromDate)
-                ->whereDate('server_date_published', '<=', $untilDate);
+                if ($fromDate->hour == 0) {
+                    $fromDate = $fromDate->startOfDay();
+                    $untilDate = $untilDate->endOfDay();
+                }
+                $finder->where('server_date_published', '>=', $fromDate)
+                    ->where('server_date_published', '<=', $untilDate);
                 $test = $finder->toSql();
-            } else if (array_key_exists('until', $oaiRequest) && !array_key_exists('from', $oaiRequest)) {
+            } elseif (array_key_exists('until', $oaiRequest) && !array_key_exists('from', $oaiRequest)) {
                 $until = $oaiRequest['until'];
                 try {
                     $untilDate = \Illuminate\Support\Carbon::parse($until);
+                    if ($untilDate->hour == 0) {
+                        $untilDate = $untilDate->endOfDay();
+                    }
                     // if (strtotime($untilDate) > 0) {
                     $earliestPublicationDate = Dataset::earliestPublicationDate()->server_date_published;
                     if ($earliestPublicationDate->gt($untilDate)) {
@@ -478,10 +485,13 @@ class RequestController extends Controller
                         OaiModelError::BADARGUMENT
                     );
                 }
-            } else if (array_key_exists('from', $oaiRequest) && !array_key_exists('until', $oaiRequest)) {
+            } elseif (array_key_exists('from', $oaiRequest) && !array_key_exists('until', $oaiRequest)) {
                 $from = $oaiRequest['from'];
                 try {
                     $fromDate = \Illuminate\Support\Carbon::parse($from);
+                    if ($fromDate->hour == 0) {
+                        $fromDate = $fromDate->startOfDay();
+                    }
                     // if (strtotime($fromDate) > 0) {
                     $now = new Carbon();
                     if ($fromDate->gt($now)) {
@@ -720,7 +730,7 @@ class RequestController extends Controller
         $identify->addChild('protocolVersion', '2.0');
         $identify->addChild('adminEmail', 'repository@geologie.ac.at');
         //$identify->addChild('earliestDatestamp', '2017-04-07');
-        $identify->addChild('earliestDatestamp', $earliestDateFromDb);
+        $identify->addChild('earliestDatestamp', $earliestDateFromDb->toDateString());
         $identify->addChild('deletedRecord', 'persistent');
 
         //$description = $identify->addChild('description');
