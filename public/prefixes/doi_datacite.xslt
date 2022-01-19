@@ -350,13 +350,20 @@
                 <familyName>
                     <xsl:value-of select="@LastName" />
                 </familyName>
-                 <affiliation>GBA</affiliation>
-            </xsl:if>
-
-            <xsl:if test="@IdentifierOrcid != ''">
+                 <xsl:if test="@IdentifierOrcid != ''">
                 <nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">
                     <xsl:value-of select="@IdentifierOrcid" />
                 </nameIdentifier>
+            </xsl:if>
+                 <affiliation>GBA</affiliation>
+            </xsl:if>
+
+            <xsl:if test="@NameType = 'Organizational'">
+                <xsl:if test="@IdentifierOrcid != ''">
+                    <nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">
+                        <xsl:value-of select="@IdentifierOrcid" />
+                    </nameIdentifier>
+                </xsl:if>
             </xsl:if>
             <!-- 
         <nameType><xsl:value-of select="@NameType" /></nameType>

@@ -609,7 +609,9 @@ class RequestController extends Controller
      */
     private function addLandingPageAttribute(\DOMNode $document, $dataid)
     {
-        $url = route('frontend.dataset.show', $dataid);
+        // $url = route('frontend.dataset.show', $dataid);
+        $base_domain = config('tethys.base_domain');
+        $url ='https://' . get_domain($base_domain) . "/dataset/" . $dataid;
 
         $owner = $document->ownerDocument;
         $attr = $owner->createAttribute('landingpage');
