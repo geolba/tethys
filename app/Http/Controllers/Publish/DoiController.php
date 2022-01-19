@@ -217,6 +217,7 @@ class DoiController extends Controller
         $cache = ($dataset->xmlCache) ? $dataset->xmlCache : new \App\Models\XmlCache();
         $xmlModel->setXmlCache($cache);
         $domNode = $xmlModel->getDomDocument()->getElementsByTagName('Rdr_Dataset')->item(0);
+        $this->addAlternateLandingPageAttribute($domNode, $dataset->publish_id);
         $node = $this->xml->importNode($domNode, true);
         $this->addSpecInformation($node, 'data-type:' . $dataset->type);
 
@@ -259,6 +260,24 @@ class DoiController extends Controller
             // $this->log($message, 'err');
             throw new GeneralException($message);
         }
+    }
+
+    /**
+     * Add the landingpage attribute to Rdr_Dataset XML output.
+     *
+     * @param \DOMNode $document Rdr_Dataset XML serialisation
+     * @param string  $docid    Id of the dataset
+     * @return void
+     */
+    private function addAlternateLandingPageAttribute(\DOMNode $document, $dataid)
+    {
+        $base_domain = config('tethys.base_domain');
+        $url ='https://' . get_domain($base_domain) . "/dataset/" . $dataid;
+
+        $owner = $document->ownerDocument;
+        $attr = $owner->createAttribute('landingpage');
+        $attr->appendChild($owner->createTextNode($url));
+        $document->appendChild($attr);
     }
 
     /**
