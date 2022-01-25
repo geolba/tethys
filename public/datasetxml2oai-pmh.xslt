@@ -564,12 +564,12 @@
     </dc:format>
   </xsl:template>
 
-  <xsl:template match="File" mode="oai_dc">
+  <!--  <xsl:template match="File" mode="oai_dc">
     <dc:identifier>
-      <!-- <xsl:value-of select="@PathName" /> -->      
+     <xsl:value-of select="@PathName" />        
       <xsl:value-of select="concat($downloadLink, @Id)" />
     </dc:identifier>
-  </xsl:template>
+  </xsl:template> -->
 
    <xsl:template match="Identifier" mode="oai_dc">
          <dc:identifier>           

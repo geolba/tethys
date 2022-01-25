@@ -26,7 +26,7 @@ class RequestController extends Controller
      */
     private $deliveringDocumentStates = array('published', 'deleted'); // maybe deleted documents too
     //private $xMetaDissRestriction = array('doctoralthesis', 'habilitation');
-    const SET_SPEC_PATTERN = '[A-Za-z0-9\-_\.!~\*\'\(\)]+';
+    const SET_SPEC_PATTERN = '[A-Za-zäöüÄÖÜß0-9\-_\.!~\*\'\(\)]+';
 
     /**
      * Holds xml representation of document information to be processed.
@@ -323,6 +323,7 @@ class RequestController extends Controller
 
         //$oaiSets = new Oai_Model_Sets();
         $sets = array(
+            'open_access' => 'Set for open access licenses',
             // 'bibliography:true' => 'Set for bibliographic entries',
             // 'bibliography:false' => 'Set for non-bibliographic entries',
         );
@@ -435,6 +436,13 @@ class RequestController extends Controller
                             $q->where('label', $setarray[1]);
                         });
                     }
+                } elseif (!empty($setarray[0]) && $setarray[0] == 'open_access') {                   
+                    $openAccessLicences = ["CC-BY-4.0", "CC-BY-SA-4.0"];
+                    $finder->whereHas('licenses', function ($q) use ($openAccessLicences) {
+                        $q->whereIn('name', $openAccessLicences);
+                        // $q->where('name', '=', "CC-BY-4.0")->orWhere('name', '=',"CC-BY-SA-4.0");
+                    });
+                    //$test = $finder->toSql();
                 }
             }
 
@@ -455,7 +463,7 @@ class RequestController extends Controller
                 }
                 $finder->where('server_date_published', '>=', $fromDate)
                     ->where('server_date_published', '<=', $untilDate);
-                $test = $finder->toSql();
+                // $test = $finder->toSql();
             } elseif (array_key_exists('until', $oaiRequest) && !array_key_exists('from', $oaiRequest)) {
                 $until = $oaiRequest['until'];
                 try {
@@ -467,7 +475,8 @@ class RequestController extends Controller
                     $earliestPublicationDate = Dataset::earliestPublicationDate()->server_date_published;
                     if ($earliestPublicationDate->gt($untilDate)) {
                         throw new OaiModelException(
-                            "earliestDatestamp is greater than given until date. The given values results in an empty list.",
+                            "earliestDatestamp is greater than given until date.
+                            The given values results in an empty list.",
                             OaiModelError::NORECORDSMATCH
                         );
                     } else {
@@ -476,7 +485,8 @@ class RequestController extends Controller
                     }
                 } catch (OaiModelException $e) {
                     throw new OaiModelException(
-                        "earliestDatestamp is greater than given until date. The given values results in an empty list.",
+                        "earliestDatestamp is greater than given until date.
+                        The given values results in an empty list.",
                         OaiModelError::NORECORDSMATCH
                     );
                 } catch (\Exception $e) {
