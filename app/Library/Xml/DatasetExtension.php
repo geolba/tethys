@@ -39,7 +39,7 @@ trait DatasetExtension
         ),
         'TitleAbstractAdditional' => array(
             'model' => Description::class,
-            'options' => array('type' => ['Methods', 'Technical_info', 'Series_information', 'Other']),
+            'options' => array('type' => ['Translated', 'Methods', 'Technical_info', 'Series_information', 'Other']),
             'fetch' => 'eager'
         ),
         'Licence' => array(
@@ -298,7 +298,8 @@ trait DatasetExtension
                 //$through = $this->externalFields[$fieldname]['through'];
                 $rows = $this->{$relation}()->wherePivot('role', $pivotValue)->get();
                 //$rows = $this->{$relation}()->get();
-                //$rows = $this->belongsToMany($modelclass, $through, 'document_id')->wherePivot('role', $pivotValue)->get();
+                //$rows = $this->belongsToMany($modelclass, $through, 'document_id')
+                //->wherePivot('role', $pivotValue)->get();
             }
         } else {
             $rows = $select->whereHas('dataset', function ($q) use ($datasetId) {

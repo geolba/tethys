@@ -24,7 +24,8 @@
   <xsl:param name="repositoryName" />
   <xsl:param name="repIdentifier" />
   <xsl:param name="downloadLink" />
-    <xsl:param name="doiLink" />
+  <xsl:param name="doiLink" />
+  <xsl:param name="doiPrefix" />
   <xsl:param name="sampleIdentifier" />
   <xsl:param name="docId" />
   <xsl:param name="dateDelete" />
@@ -371,15 +372,18 @@
       <!-- <dc:format> -->
       <xsl:apply-templates select="File" mode="oai_dc" />
       <!-- dc:identifier -->
-      <xsl:if test="Identifier">
+      <!-- <xsl:if test="Identifier">
        <xsl:apply-templates select="Identifier" mode="oai_dc" />
-       </xsl:if>
+       </xsl:if> -->
       <dc:identifier>
         <xsl:value-of select="@landingpage"/>
       </dc:identifier>
       <!-- dc:language -->
       <xsl:apply-templates select="@Language" mode="oai_dc" />
       <!-- dc:relation -->
+       <xsl:if test="Identifier">
+       <xsl:apply-templates select="Identifier" mode="oai_dc" />
+       </xsl:if>
       <xsl:apply-templates select="Reference" mode="oai_dc" />
       <!-- dc:coverage -->
       <xsl:apply-templates select="Coverage" mode="oai_dc" />
@@ -564,7 +568,7 @@
     </dc:format>
   </xsl:template>
 
-  <!--  <xsl:template match="File" mode="oai_dc">
+   <!-- <xsl:template match="File" mode="oai_dc">
     <dc:identifier>
      <xsl:value-of select="@PathName" />        
       <xsl:value-of select="concat($downloadLink, @Id)" />
@@ -572,9 +576,10 @@
   </xsl:template> -->
 
    <xsl:template match="Identifier" mode="oai_dc">
-         <dc:identifier>           
-            <xsl:value-of select="concat($doiLink, @Value)" />
-         </dc:identifier>
+         <dc:relation>           
+            <!-- <xsl:value-of select="concat($doiLink, @Value)" /> -->
+            <xsl:value-of select="concat($doiPrefix, @Value)" />
+         </dc:relation>
     </xsl:template>
 
   <xsl:template match="@CreatingCorporation" mode="oai_dc">

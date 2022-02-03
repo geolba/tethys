@@ -129,6 +129,7 @@ class RequestController extends Controller
         $this->proc->setParameter('', 'repURL', url('/'));
         $this->proc->setParameter('', 'downloadLink', url('/') . '/file/download/');
         $this->proc->setParameter('', 'doiLink', 'https://doi.org/');
+        $this->proc->setParameter('', 'doiPrefix', 'info:eu-repo/semantics/altIdentifier/doi/');
 
         // $resumptionPath = $this->configuration->getResumptionTokenPath();
 
@@ -436,7 +437,7 @@ class RequestController extends Controller
                             $q->where('label', $setarray[1]);
                         });
                     }
-                } elseif (!empty($setarray[0]) && $setarray[0] == 'open_access') {                   
+                } elseif (!empty($setarray[0]) && $setarray[0] == 'open_access') {
                     $openAccessLicences = ["CC-BY-4.0", "CC-BY-SA-4.0"];
                     $finder->whereHas('licenses', function ($q) use ($openAccessLicences) {
                         $q->whereIn('name', $openAccessLicences);
