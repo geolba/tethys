@@ -183,7 +183,8 @@
             </xsl:attribute>
             <xsl:if test="@Type != ''">
                 <xsl:attribute name="descriptionType">
-                    <xsl:value-of select="@Type" />
+                    <!-- <xsl:value-of select="@Type" /> -->
+                    <xsl:text>Abstract</xsl:text>
                 </xsl:attribute>
             </xsl:if>
             <xsl:value-of select="@Value" />

@@ -185,7 +185,8 @@
             </xsl:attribute>
             <xsl:if test="@Type != ''">
                 <xsl:attribute name="descriptionType">
-                    <xsl:value-of select="@Type" />
+                    <!-- <xsl:value-of select="@Type" /> -->
+                    <xsl:text>Abstract</xsl:text>
                 </xsl:attribute>
             </xsl:if>
             <xsl:value-of select="@Value" />
@@ -261,11 +262,20 @@
                     <xsl:value-of select="@Language" />
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="@Type != '' and @Type != 'Main'">
-                <xsl:attribute name="titleType">
-                    <xsl:value-of select="@Type" />
-                </xsl:attribute>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="@Type != '' and @Type != 'Sub' and @Type != 'Main'">
+                    <xsl:attribute name="titleType">
+                        <xsl:value-of select="@Type" />
+                        <xsl:text>Title</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="@Type = 'Sub'">
+                    <xsl:attribute name="titleType">
+                        <xsl:value-of select="@Type" />
+                        <xsl:text>title</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
             <xsl:value-of select="@Value"/>
         </title>
     </xsl:template>
@@ -353,7 +363,7 @@
                 <familyName>
                     <xsl:value-of select="@LastName" />
                 </familyName>
-                 <affiliation>GBA</affiliation>
+                <affiliation>GBA</affiliation>
             </xsl:if>
 
             <xsl:if test="@IdentifierOrcid != ''">
@@ -364,14 +374,21 @@
             <!-- 
         <nameType><xsl:value-of select="@NameType" /></nameType>
       </xsl:if> -->
-           
+
         </creator>
     </xsl:template>
 
     <xsl:template match="File/@MimeType" mode="oai_datacite"
         xmlns="http://datacite.org/schema/kernel-4">
         <format>
-            <xsl:value-of select="." />
+            <xsl:choose>
+                <xsl:when test=". = 'application/x-sqlite3'">
+                    <xsl:text>application/geopackage+sqlite3</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="." />
+                </xsl:otherwise>
+            </xsl:choose>
         </format>
     </xsl:template>
 
@@ -393,7 +410,7 @@
                 <xsl:text>SPDX</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="rightsIdentifier">
-                 <xsl:value-of select="@Name" />
+                <xsl:value-of select="@Name" />
             </xsl:attribute>
             <xsl:value-of select="@NameLong" />
         </rights>

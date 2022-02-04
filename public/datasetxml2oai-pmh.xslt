@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<xsl:stylesheet version="1.0" 
-  xmlns="http://www.openarchives.org/OAI/2.0/" 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:dc="http://purl.org/dc/elements/1.1/" 
-  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" 
+<xsl:stylesheet version="1.0"
+  xmlns="http://www.openarchives.org/OAI/2.0/"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
   xmlns:php="http://php.net/xsl">
 
   <!--<xsl:param name="urnResolverUrl" />-->
@@ -17,7 +17,7 @@
   <xsl:output method="xml" indent="yes" encoding="utf-8" />
 
   <xsl:param name="responseDate" />
-   <xsl:param name="unixTimestamp" />
+  <xsl:param name="unixTimestamp" />
   <xsl:param name="email" />
   <xsl:param name="earliestDatestamp" />
   <xsl:param name="setPubType" />
@@ -53,7 +53,7 @@
       <xsl:text>type="text/xsl" href="xsl/oai2_style.xslt"</xsl:text>
     </xsl:processing-instruction>
 
-    <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
       <responseDate>
         <xsl:value-of select="$responseDate" />
@@ -381,9 +381,9 @@
       <!-- dc:language -->
       <xsl:apply-templates select="@Language" mode="oai_dc" />
       <!-- dc:relation -->
-       <xsl:if test="Identifier">
-       <xsl:apply-templates select="Identifier" mode="oai_dc" />
-       </xsl:if>
+      <xsl:if test="Identifier">
+        <xsl:apply-templates select="Identifier" mode="oai_dc" />
+      </xsl:if>
       <xsl:apply-templates select="Reference" mode="oai_dc" />
       <!-- dc:coverage -->
       <xsl:apply-templates select="Coverage" mode="oai_dc" />
@@ -434,7 +434,7 @@
 
   <xsl:template match="TitleMain" mode="oai_dc">
     <dc:title>
-    <xsl:attribute name="xml:lang">
+      <xsl:attribute name="xml:lang">
         <xsl:value-of select="@Language" />
       </xsl:attribute>
       <xsl:value-of select="@Value"/>
@@ -443,7 +443,7 @@
 
   <xsl:template match="TitleAdditional" mode="oai_dc">
     <dc:title>
-    <xsl:attribute name="xml:lang">
+      <xsl:attribute name="xml:lang">
         <xsl:value-of select="@Language" />
       </xsl:attribute>
       <xsl:value-of select="@Value"/>
@@ -540,14 +540,14 @@
   </xsl:template>
 
   <xsl:template match="EmbargoDate" mode="oai_dc">
-  <xsl:if test="$unixTimestamp &lt; ./@UnixTimestamp" >
-    <dc:date>
-      <xsl:text>info:eu-repo/date/embargoEnd/</xsl:text>
-      <xsl:value-of select="./@Year"/>
--      <xsl:value-of select="format-number(./@Month,'00')"/>
--      <xsl:value-of select="format-number(./@Day,'00')"/>
-    </dc:date>
-  </xsl:if>
+    <xsl:if test="$unixTimestamp &lt; ./@UnixTimestamp">
+      <dc:date>
+        <xsl:text>info:eu-repo/date/embargoEnd/</xsl:text>
+        <xsl:value-of select="./@Year"/>
+-        <xsl:value-of select="format-number(./@Month,'00')"/>
+-        <xsl:value-of select="format-number(./@Day,'00')"/>
+      </dc:date>
+    </xsl:if>
   </xsl:template>
 
 
@@ -564,23 +564,30 @@
 
   <xsl:template match="File/@MimeType" mode="oai_dc">
     <dc:format>
-      <xsl:value-of select="." />
+      <xsl:choose>
+        <xsl:when test=". = 'application/x-sqlite3'">
+          <xsl:text>application/geopackage+sqlite3</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="." />
+        </xsl:otherwise>
+      </xsl:choose>
     </dc:format>
   </xsl:template>
 
-   <!-- <xsl:template match="File" mode="oai_dc">
+  <!-- <xsl:template match="File" mode="oai_dc">
     <dc:identifier>
      <xsl:value-of select="@PathName" />        
       <xsl:value-of select="concat($downloadLink, @Id)" />
     </dc:identifier>
   </xsl:template> -->
 
-   <xsl:template match="Identifier" mode="oai_dc">
-         <dc:relation>           
-            <!-- <xsl:value-of select="concat($doiLink, @Value)" /> -->
-            <xsl:value-of select="concat($doiPrefix, @Value)" />
-         </dc:relation>
-    </xsl:template>
+  <xsl:template match="Identifier" mode="oai_dc">
+    <dc:relation>
+      <!-- <xsl:value-of select="concat($doiLink, @Value)" /> -->
+      <xsl:value-of select="concat($doiPrefix, @Value)" />
+    </dc:relation>
+  </xsl:template>
 
   <xsl:template match="@CreatingCorporation" mode="oai_dc">
     <dc:language>

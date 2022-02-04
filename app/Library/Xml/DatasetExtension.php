@@ -34,12 +34,12 @@ trait DatasetExtension
         ),
         'TitleAbstract' => array(
             'model' => Description::class,
-            'options' => array('type' => ['Abstract']),
+            'options' => array('type' => ['Abstract', 'Translated']),
             'fetch' => 'eager'
         ),
         'TitleAbstractAdditional' => array(
             'model' => Description::class,
-            'options' => array('type' => ['Translated', 'Methods', 'Technical_info', 'Series_information', 'Other']),
+            'options' => array('type' => ['Methods', 'Technical_info', 'Series_information', 'Other']),
             'fetch' => 'eager'
         ),
         'Licence' => array(
