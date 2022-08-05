@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Session;
-use App;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Input;
+// use Illuminate\Support\Facades\Session;
+// use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 

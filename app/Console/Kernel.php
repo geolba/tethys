@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -12,11 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\Inspire',
-        'App\Console\Commands\DatasetState',
-        'App\Console\Commands\SolrIndexBuilder',
-        'App\Console\Commands\Log\ClearLogFile',
-        'App\Console\Commands\UpdateSolrDataset'
+        \App\Console\Commands\Inspire::class,
+        \App\Console\Commands\DatasetState::class,
+        \App\Console\Commands\SolrIndexBuilder::class,
+        \App\Console\Commands\Log\ClearLogFile::class,
+        \App\Console\Commands\UpdateSolrDataset::class,
     ];
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\Models\Dataset;
@@ -6,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-
     protected $fillable = [
         'academic_title',
         'date_of_birth',
@@ -15,10 +15,13 @@ class Person extends Model
         'email',
         'identifier_orcid',
         'status',
-        'name_type'
+        'name_type',
     ];
+
     protected $table = 'persons';
+
     public $timestamps = false;
+
     protected $appends = ['full_name'];
 
     public function documents()
@@ -39,7 +42,7 @@ class Person extends Model
      */
     public function getFullNameAttribute()
     {
-        return $this->first_name . " " . $this->last_name . " " . $this->date_of_birth;
+        return $this->first_name.' '.$this->last_name.' '.$this->date_of_birth;
     }
 
     public function scopeActive($query)

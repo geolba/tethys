@@ -53,6 +53,7 @@ class LoginController extends Controller
         $request->session()->flush();
         $request->session()->regenerate();
         $frontend = config('tethys.frontend');
+        
         return redirect($frontend);
     }
 }

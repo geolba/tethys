@@ -33,7 +33,7 @@ class DoiServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->singleton('App\Interfaces\DoiInterface', function ($app) {
+        $this->app->singleton(\App\Interfaces\DoiInterface::class, function ($app) {
             return new DoiClient();
         });
     }

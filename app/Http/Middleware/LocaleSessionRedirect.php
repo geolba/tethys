@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Session;
-use App;
-use Config;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
+// use Illuminate\Support\Facades\Config;
+// use Illuminate\Http\RedirectResponse;
 use Mcamara\LaravelLocalization\LanguageNegotiator;
 
 class LocaleSessionRedirect extends LaravelLocalizationMiddlewareBase
