@@ -304,7 +304,7 @@ trait DatasetExtension
         } else {
             $rows = $select->whereHas('dataset', function ($q) use ($datasetId) {
                 $q->where('id', $datasetId);
-            })->get();
+            })->orderBy('id')->get();
         }
 
         foreach ($rows as $row) {

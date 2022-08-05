@@ -106,7 +106,9 @@ class RequestController extends Controller
         //$xml = $this->doc->asXML();
         return response($xml) //->view('rss', array('rss'=>$this->rss))
         ->header('Content-Type', 'application/xml')
-            ->header('charset', 'utf-8');
+            ->header('charset', 'utf-8')
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'GET');
     }
 
     private function __handleRequest(array $oaiRequest)
