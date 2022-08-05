@@ -28,7 +28,7 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^12.4.0",
         "@fortawesome/fontawesome-free": "^5.14.0",
-        "axios": "^0.21.1",
+        "axios": "^0.27.2",
         "datatables.net": "^1.10.21",
         "datatables.net-buttons": "^1.6.3",
         "dotenv": "^8.6.0",
