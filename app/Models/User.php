@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
+// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Collection;
@@ -12,7 +14,7 @@ use App\Models\Dataset;
 class User extends Authenticatable
 {
     // use Authenticatable, CanResetPassword, Authorizable;
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     // use HasRoles;
     use EntrustUserTrait;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Library\Xml\DatasetExtension;
 use App\Models\Collection;
 use App\Models\Coverage;
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dataset extends Model
 {
-    use DatasetExtension;
+    use DatasetExtension, HasFactory;
     protected $table = 'documents';
 
     //public $timestamps = false; //default true

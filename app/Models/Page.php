@@ -8,9 +8,11 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;// use Dimsav\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Page extends Model implements TranslatableContract
 {
+    use HasFactory;
     use ModelTrait;
     use Translatable; // 2. To add translation methods
    

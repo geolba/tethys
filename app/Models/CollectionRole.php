@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Models\Collection;
-use App\Models\Dataset;
+// use App\Models\Dataset;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CollectionRole extends Model
 {
+    use HasFactory;
+    
     protected $table = 'collections_roles';
     public $timestamps = false;
     protected $fillable = [

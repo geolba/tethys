@@ -44,7 +44,7 @@
                     <td>
                         {{ $dataset->server_state }}
                     </td>                
-                    <td>editor: {{ optional($dataset->editor)->login }}</td>
+                    <td>editor: {{ $dataset->editor?->login }}</td>
                    <td>
                         {{-- @php                       
                         $dateDiff = $dataset['server_date_modified']->addDays(14);

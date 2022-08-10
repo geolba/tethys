@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Dataset;
 
 class Collection extends Model
 {
+    use HasFactory;
+
     public $timestamps = false;
     //mass assignable
     protected $fillable = [

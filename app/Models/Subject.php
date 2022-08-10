@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Dataset;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subject extends Model
 {
+    Use HasFactory;
     // protected $table = 'document_subjects';
     protected $table = 'dataset_subjects';
     public $timestamps = false;

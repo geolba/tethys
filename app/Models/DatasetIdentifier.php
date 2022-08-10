@@ -3,9 +3,11 @@ namespace App\Models;
 
 use App\Models\Dataset;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DatasetIdentifier extends Model
 {
+    use HasFactory;
     protected $table = 'dataset_identifiers';
     protected $guarded = array();
     public $timestamps = true;

@@ -1,11 +1,12 @@
 <?php
 
-use Carbon\Carbon;
-use Database\DisableForeignKeys;
-use Database\TruncateTable;
+namespace Database\Seeders;
+
+// use Carbon\Carbon;
+// use Database\DisableForeignKeys;
+// use Database\TruncateTable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
 
 class LanguagesTableSeeder extends Seeder
 {

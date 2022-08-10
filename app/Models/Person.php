@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Models\Dataset;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Person extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'academic_title',
         'date_of_birth',

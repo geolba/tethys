@@ -1,7 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+
 use Carbon\Carbon;
-use Database\DisableForeignKeys;
+// use Database\DisableForeignKeys;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

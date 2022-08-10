@@ -2,11 +2,13 @@
 namespace App\Models;
 
 use App\Models\Dataset;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 
 class Coverage extends Model
 {
+    use HasFactory;
     protected $table = 'coverage';
     public $timestamps = true;
     protected $dateFormat = 'Y-m-d H:i:s';

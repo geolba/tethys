@@ -53,7 +53,7 @@
                         {{ $dataset->user->login }}
                     </td>
                     {{-- <td>
-                        {{ optional($dataset->editor)->login }}
+                        {{ $dataset->editor?->login }}
                     </td> --}}
                     <td>
                         {{ $dataset->server_state }}

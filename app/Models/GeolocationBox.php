@@ -3,9 +3,11 @@ namespace App\Models;
 
 use App\Models\Dataset;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GeolocationBox extends Model
 {
+    use HasFactory;
     protected $table = 'geolocation_box';
     public $timestamps = false;
 

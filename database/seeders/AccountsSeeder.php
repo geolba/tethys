@@ -1,6 +1,8 @@
 <?php
 
-use Carbon\Carbon;
+namespace Database\Seeders;
+
+use Illuminate\Support\Carbon;
 // use Database\DisableForeignKeys;
 // use Database\TruncateTable;
 use Illuminate\Database\Seeder;
@@ -8,9 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class AccountsTableSeeder extends Seeder
 {
-    public function run()
+        /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run(): void
     {
-      
+        
+        // \App\Models\User::factory(10)->create();  
         DB::table('accounts')->insert([
             [
                 'login' => "admin",

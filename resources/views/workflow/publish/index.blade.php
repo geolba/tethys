@@ -46,11 +46,11 @@
                     </td>
 
                     <td>                         
-                        {{ optional($dataset->editor)->login }}                           
+                        {{ $dataset->editor?->login }}                           
                     </td>
                                       
                     <td>                        
-                       {{ optional($dataset->reviewer)->login }}                       
+                       {{ $dataset->reviewer?->login }}                       
                     </td>
                    
                    
