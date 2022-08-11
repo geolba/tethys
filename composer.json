@@ -14,7 +14,6 @@
 		"diglactic/laravel-breadcrumbs": "7.2",
 		"doctrine/dbal": "^3.3",
 		"felixkiss/uniquewith-validator": "^3.1",
-		"fideloper/proxy": "^4.4",
 		"gghughunishvili/entrust": "4.0",
 		"guzzlehttp/guzzle": "^7.2",
 		"laravel/framework": "^8.75",

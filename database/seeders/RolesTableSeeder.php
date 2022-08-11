@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class RolesTableSeeder extends Seeder
-{   
+{
     /**
      * Run the database seeds.
      *
@@ -104,7 +104,8 @@ class RolesTableSeeder extends Seeder
                 // 5
                 'name' => 'dataset-editor-list',
                 'display_name' => 'list released, editor_accepted and  rejected_reviewer datasets',
-                'description' => 'allow editor role to see all released. editor_accepted and  rejected_reviewer datasets',
+                'description' => 'allow editor role to see all released. editor_accepted and 
+                rejected_reviewer datasets',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

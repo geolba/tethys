@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-// use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,6 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call('PagesTableSeeder');
         $this->call('CollectionsTableSeeder');
         $this->call('ProjectsTableSeeder');
-        $this->call('MessagesTableSeeder');        
+        $this->call('MessagesTableSeeder');
     }
 }
