@@ -28,7 +28,10 @@ class UpdatePageRequest extends Request
     public function rules()
     {
         return [
-            'en_title' => 'required|max:191'
+            'en_title' => [
+                'required',
+                'max:191',
+            ],
             // 'description_en' => 'required'
         ];
     }

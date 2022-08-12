@@ -53,7 +53,7 @@ class SitelinkController extends Controller
                 ->whereYear('server_date_published', '>=', $from)
                 ->whereYear('server_date_published', '<', $until);
 
-            $documents = $select->orderBy('publish_id', 'asc')
+            $documents = $select->orderBy('publish_id')
                 ->get();
 
             //$this->years = Dataset::select(DB::raw('YEAR(server_date_modified) as server_date_modified'))

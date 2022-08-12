@@ -27,8 +27,13 @@ class CollectionRequest extends Request
     public function rules()
     {
         return [
-            'name'       => 'required|max:255',
-            'role_id' => 'required',
+            'name'       => [
+                'required',
+                'max:255',
+            ],
+            'role_id' => [
+                'required',
+            ],
         ];
     }
 }

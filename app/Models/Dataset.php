@@ -301,7 +301,7 @@ class Dataset extends Model
         $result = Dataset::select('server_date_published')
             ->where('server_date_published', '<>', null)
             ->where('server_state', 'published')
-            ->orderBy('server_date_published', 'asc')
+            ->orderBy('server_date_published')
             ->first();
         //->server_date_published;
         return $result;

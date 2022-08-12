@@ -70,7 +70,7 @@ $appRoutes = function () {
                 ->whereYear('server_date_published', '>=', $from)
                 ->whereYear('server_date_published', '<', $until);
 
-            $documents = $select->orderBy('publish_id', 'asc')
+            $documents = $select->orderBy('publish_id')
                 ->get();
             return response()
                 ->json($documents)
@@ -118,7 +118,7 @@ $appRoutes = function () {
                 $query = $query->orderBy($sortCol, $sortDir);
             }
         } else {
-            $query = $query->orderBy('id', 'asc');
+            $query = $query->orderBy('id');
         }
     
         //handle filter

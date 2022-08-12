@@ -30,7 +30,7 @@ class UserController extends Controller
         //}
 
         $users = User::with('roles')
-            ->orderBy('id', 'DESC')
+            ->orderByDesc('id')
             ->paginate(5);
         return view('settings.access.user.user', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * 5);

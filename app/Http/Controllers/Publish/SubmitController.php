@@ -47,7 +47,7 @@ class SubmitController extends Controller
             'released', 'editor_accepted', 'approved', 'reviewed', 'rejected_editor', 'rejected_reviewer'])
             ->where('account_id', $user_id)
             ->with('user:id,login')
-            ->orderBy('server_date_modified', 'desc')
+            ->orderByDesc('server_date_modified')
             ->get();
         return View::make('workflow.submitter.index', [
             'datasets' => $myDatasets,

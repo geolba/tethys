@@ -87,7 +87,7 @@ class EditorController extends Controller
                 $query->whereIn('server_state', ['editor_accepted', 'rejected_reviewer', 'reviewed', 'published'])
                     ->where('editor_id', $user_id)->doesntHave('identifier', 'and');
             })
-            ->orderBy('server_date_modified', 'desc')
+            ->orderByDesc('server_date_modified')
             ->get();
         // return View::make('workflow.editor.index', compact('datasets'));
         return View::make('workflow.editor.index', [

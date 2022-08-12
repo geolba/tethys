@@ -64,7 +64,7 @@ class DoiController extends Controller
     {
         $datasets = Dataset::query()
             ->has('identifier')
-            ->orderBy('server_date_modified', 'desc')
+            ->orderByDesc('server_date_modified')
             ->get();
         return View::make('workflow.doi.index', [
             'datasets' => $datasets,

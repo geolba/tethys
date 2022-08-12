@@ -24,15 +24,40 @@ class LicenseRequest extends Request
     public function rules()
     {
         return [
-            'desc_text' =>  'max:4000',
-            'language' =>  'max:3',
-            'link_licence' => 'required|url:max:255',
-            'link_logo' => 'url|max:255',
-            'mime_type' =>  'max:30',
-            'name_long' =>  'required|min:5|max:255',
-            'sort_order' => 'required|integer',
-            'active' => 'required|boolean',
-            'pod_allowed' => 'required|boolean'
+            'desc_text' => [
+                'max:4000',
+            ],
+            'language' => [
+                'max:3',
+            ],
+            'link_licence' => [
+                'required',
+                'url:max:255',
+            ],
+            'link_logo' => [
+                'url',
+                'max:255',
+            ],
+            'mime_type' => [
+                'max:30',
+            ],
+            'name_long' => [
+                'required',
+                'min:5',
+                'max:255',
+            ],
+            'sort_order' => [
+                'required',
+                'integer',
+            ],
+            'active' => [
+                'required',
+                'boolean',
+            ],
+            'pod_allowed' => [
+                'required',
+                'boolean',
+            ],
         ];
     }
 }
