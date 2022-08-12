@@ -18,7 +18,7 @@ use App\Models\User;
 use App\Rules\RdrFilesize;
 use App\Rules\RdrFiletypes;
 // use Illuminate\View\View;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

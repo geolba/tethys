@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Config;
 
@@ -102,7 +103,7 @@ class RdrFilesize implements Rule
     private function getSize($attribute, $value)
     {
         if (is_numeric($value) && $hasNumeric) {
-            return array_get($this->data, $attribute);
+            return Arr::get($this->data, $attribute);
         } elseif (is_array($value)) {
             return count($value);
         } elseif ($value instanceof File) {

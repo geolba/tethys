@@ -1,7 +1,7 @@
 <?php
 namespace App\Library\Util;
 
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 /**
  * Describes local document as a match in context of a related search query.

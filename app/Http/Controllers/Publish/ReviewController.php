@@ -82,7 +82,7 @@ class ReviewController extends Controller
                             $fieldval = $fieldValue->{$property_name};
                             $value = $value . $fieldName . ": "  . $fieldval . "; ";
                         }
-                    } elseif ($fieldValue instanceof \Carbon\Carbon) {
+                    } elseif ($fieldValue instanceof \Illuminate\Support\Carbon) {
                         $value = $value . " Year " . $fieldValue->year;
                         $value = $value . " Month " . $fieldValue->month;
                         $value = $value . " Day " . $fieldValue->day;

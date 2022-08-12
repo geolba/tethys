@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Carbon\Carbon;
+// use Illuminate\Support\Carbon;
 // use Database\DisableForeignKeys;
 // use Database\TruncateTable;
 use Illuminate\Database\Seeder;

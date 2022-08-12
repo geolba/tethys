@@ -93,7 +93,7 @@
 
     {{-- <div class="form-group">
 	{!! Form::label('licenses[]', 'Licenses..') !!}
-	{!! Form::select('licenses[]', $options, array_pluck($document->licenses, 'id'), ['multiple' ]) !!}
+	{!! Form::select('licenses[]', $options, Arr::pluck($document->licenses, 'id'), ['multiple' ]) !!}
     </div> --}}
 
     <div class="pure-control-group checkboxlist">

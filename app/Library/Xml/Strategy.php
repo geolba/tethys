@@ -157,7 +157,7 @@ class Strategy
 
                 if ($value instanceof \Illuminate\Database\Eloquent\Model) {
                     $this->_mapModelAttributes($value, $dom, $childNode);
-                } elseif ($value instanceof \Carbon\Carbon) {
+                } elseif ($value instanceof \Illuminate\Support\Carbon) {
                     $this->_mapDateAttributes($value, $dom, $childNode);
                 } elseif (is_array($value)) {
                     $this->_mapArrayAttributes($value, $dom, $childNode);
@@ -181,7 +181,7 @@ class Strategy
         return $dom->createElement($fieldName);
     }
 
-    protected function _mapDateAttributes(\Carbon\Carbon $model, DOMDocument $dom, \DOMNode $rootNode)
+    protected function _mapDateAttributes(\Illuminate\Support\Carbon $model, DOMDocument $dom, \DOMNode $rootNode)
     {
         $rootNode->setAttribute("Year", $model->year);
         $rootNode->setAttribute("Month", $model->month);

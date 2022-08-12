@@ -234,7 +234,7 @@ trait DatasetExtension
                     if (true === empty($fieldval)) {
                         $fieldval = null;
                     } else {
-                        $fieldval = new \Carbon\Carbon($fieldval);
+                        $fieldval = new \Illuminate\Support\Carbon($fieldval);
                     }
                 }
 
